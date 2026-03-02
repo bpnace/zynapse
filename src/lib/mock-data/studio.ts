@@ -5,9 +5,9 @@ export const campaignAngles: CampaignAngle[] = [
     title: "Angle 01",
     angle: "Zeit bis Ergebnis",
     hooks: [
-      "72 Stunden von Brief bis freigabebereit",
+      "72 Stunden von Briefing bis freigabebereit",
       "Weniger Produktions-Deadlines, mehr getestete Creatives",
-      "Aus einem Brief werden direkt testbare Assets",
+      "Aus einem Briefing werden direkt testbare Assets",
     ],
     lengths: ["12s", "20s", "30s"],
   },
@@ -35,7 +35,7 @@ export const campaignAngles: CampaignAngle[] = [
 
 export const videoVariants: VideoVariantPreview[] = [
   { id: "v1", angle: "Zeit bis Ergebnis", hookTitle: "Fertig in 72 Stunden", format: "9:16", length: "12s", objective: "Conversion" },
-  { id: "v2", angle: "Zeit bis Ergebnis", hookTitle: "Vom Brief zum Launch", format: "1:1", length: "20s", objective: "Awareness" },
+  { id: "v2", angle: "Zeit bis Ergebnis", hookTitle: "Vom Briefing bis Launch", format: "1:1", length: "20s", objective: "Awareness" },
   { id: "v3", angle: "Zeit bis Ergebnis", hookTitle: "Schneller launchen, früher testen", format: "4:5", length: "30s", objective: "Retention" },
   { id: "v4", angle: "Rollenklarheit", hookTitle: "Der Manager führt die Strategie", format: "9:16", length: "15s", objective: "Conversion" },
   { id: "v5", angle: "Rollenklarheit", hookTitle: "Markenkontext ohne Agentur-Bremse", format: "1:1", length: "25s", objective: "Awareness" },

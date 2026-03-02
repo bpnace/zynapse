@@ -16,7 +16,7 @@ export function ProblemCards() {
         {problemCards.map((card) => (
           <article
             key={card.title}
-            className="section-card rounded-[1.8rem] p-6"
+            className="section-card rounded-[var(--radius-card)] p-6"
             data-animate-item
           >
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--gold)]">
@@ -25,12 +25,14 @@ export function ProblemCards() {
             <h3 className="mt-4 font-display text-2xl font-semibold tracking-[-0.05em]">
               {card.title}
             </h3>
-            <p className="mt-4 text-[color:var(--copy-muted)]">{card.description}</p>
+            <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">
+              {card.description}
+            </p>
           </article>
         ))}
       </div>
       <div
-        className="section-card-muted rounded-[1.8rem] px-6 py-5 text-center text-lg text-[color:var(--foreground)]"
+        className="section-card-muted rounded-[var(--radius-card)] px-6 py-5 text-center text-base leading-7 text-[color:var(--copy-body)] sm:text-lg"
         data-animate-item
       >
         Du bekommst Strategie durch Experten und Output durch Automatisierung.

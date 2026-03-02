@@ -22,7 +22,7 @@ export function PricingTeaser() {
         {pricingPlans.map((plan) => (
           <article
             key={plan.name}
-            className={`section-card rounded-[1.9rem] p-6 ${plan.featured ? "ring-1 ring-[rgba(156,244,215,0.28)]" : ""}`}
+            className={`section-card rounded-[var(--radius-card)] p-6 ${plan.featured ? "ring-1 ring-[rgba(156,244,215,0.28)]" : ""}`}
             data-animate-item
           >
             <div className="flex items-start justify-between gap-4">
@@ -30,12 +30,12 @@ export function PricingTeaser() {
                 <p className="font-display text-3xl font-semibold tracking-[-0.05em]">
                   {plan.name}
                 </p>
-                <p className="mt-2 text-sm text-[color:var(--copy-muted)]">
+                <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
                   {plan.audience}
                 </p>
               </div>
               {plan.featured ? (
-                <span className="rounded-full bg-[rgba(156,244,215,0.14)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--mint)]">
+                <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#236851]">
                   Beliebteste
                 </span>
               ) : null}
@@ -43,12 +43,12 @@ export function PricingTeaser() {
             <p className="mt-6 font-display text-5xl font-semibold tracking-[-0.06em]">
               {plan.price}
             </p>
-            <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[var(--copy-muted)]">
+            <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[var(--copy-soft)]">
               {plan.cadence}
             </p>
             <ul className="mt-6 space-y-3">
               {plan.deliverables.map((item) => (
-                <li key={item} className="text-sm text-[color:var(--copy-muted)]">
+                <li key={item} className="text-sm leading-6 text-[color:var(--copy-body)]">
                   {item}
                 </li>
               ))}

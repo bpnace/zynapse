@@ -39,7 +39,7 @@ export function FinalCta() {
       data-reveal-section
       data-stagger="dense"
     >
-      <div className="section-card overflow-hidden rounded-[2.2rem] p-7 sm:p-9">
+      <div className="section-card overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
           <div className="space-y-5">
             <span className="eyebrow" data-animate-heading>
@@ -49,10 +49,10 @@ export function FinalCta() {
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-5xl"
               data-animate-heading
             >
-              Start mit einem kompakten Brief. Den Rest baut das System.
+              Start mit einem kompakten Briefing. Den Rest baut das System.
             </h2>
             <p
-              className="max-w-xl text-base leading-7 text-[color:var(--copy-muted)] sm:text-lg sm:leading-8"
+              className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
               Ein Satz, ein klarer CTA und nur die fünf wichtigsten Felder. Danach

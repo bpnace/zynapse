@@ -6,13 +6,20 @@
   --font-body: "Avenir Next", "Segoe UI", sans-serif;
   --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
   --font-mono: "SFMono-Regular", "SF Mono", "Menlo", monospace;
+  --radius-panel: 1.5rem;
+  --radius-card: 0.9rem;
+  --radius-subcard: 0.7rem;
+  --radius-chip: 0.45rem;
   --surface: rgba(255, 255, 255, 0.92);
-  --surface-strong: rgba(255, 252, 247, 0.98);
+  --surface-strong: rgba(251, 244, 232, 0.98);
   --surface-muted: rgba(255, 245, 235, 0.72);
   --line: rgba(56, 67, 84, 0.12);
   --line-strong: rgba(56, 67, 84, 0.22);
-  --copy-muted: #6d7686;
+  --copy-soft: #5b6472;
+  --copy-body: #434c5a;
+  --copy-muted: var(--copy-soft);
   --accent: #f66b4c;
+  --accent-strong: #e05e43;
   --accent-soft: #bf6a53;
   --mint: #9cf4d7;
   --gold: #f9c56a;
@@ -92,7 +99,7 @@ select {
     0 18px 44px rgba(31, 36, 48, 0.08),
     0 3px 10px rgba(31, 36, 48, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.76);
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(18px);
 }
 
 .section-card-muted {
@@ -116,23 +123,25 @@ select {
 
 .field-input {
   width: 100%;
-  border-radius: 1.25rem;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.94);
+  border-radius: var(--radius-subcard);
+  border: 1px solid rgba(56, 67, 84, 0.18);
+  background: rgba(255, 255, 255, 0.96);
   padding: 0.95rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   color: var(--foreground);
   outline: none;
 }
 
 .field-input::placeholder {
-  color: rgba(109, 118, 134, 0.66);
+  color: rgba(91, 100, 114, 0.78);
 }
 
 .field-input:focus {
-  border-color: rgba(246, 107, 76, 0.42);
+  border-color: rgba(224, 94, 67, 0.48);
   box-shadow:
-    0 0 0 1px rgba(246, 107, 76, 0.18),
-    0 0 0 6px rgba(246, 107, 76, 0.08);
+    0 0 0 1px rgba(224, 94, 67, 0.2),
+    0 0 0 5px rgba(224, 94, 67, 0.08);
 }
 
 .field-error {

@@ -48,7 +48,7 @@ export default function StudioPage() {
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--gold)]">
                       {angle.title}
                     </p>
-                    <h3 className="mt-1 text-xl font-semibold">{angle.angle}</h3>
+                    <h3 className="mt-1 font-display text-xl font-semibold">{angle.angle}</h3>
                   </div>
                   <Badge tone="mint">{angle.lengths.join(" / ")}</Badge>
                 </div>
@@ -74,7 +74,7 @@ export default function StudioPage() {
                 <p className="text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
                   {variant.angle}
                 </p>
-                <h3 className="mt-2 text-lg font-semibold tracking-[-0.03em]">
+                <h3 className="mt-2 font-display text-lg font-semibold tracking-[-0.03em]">
                   {variant.hookTitle}
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">

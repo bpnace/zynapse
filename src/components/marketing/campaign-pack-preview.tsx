@@ -14,7 +14,7 @@ export function CampaignPackPreview() {
           title="Der Differenzierer ist nicht das Video. Es ist das Kampagnen-Pack davor."
           copy="Zynapse verkauft keine isolierten Clips. Jede Anfrage wird zuerst in Angles, Hooks, CTA-Varianten, Cuts und Längen übersetzt. Dadurch wird Video-Output planbar und testbar."
         />
-        <ul className="space-y-3 text-[color:var(--copy-muted)]">
+        <ul className="space-y-3 text-base leading-7 text-[color:var(--copy-body)]">
           <li data-animate-copy>3 Angles pro Pack</li>
           <li data-animate-copy>10 Hook-Richtungen pro Kampagne</li>
           <li data-animate-copy>5 CTA-Varianten pro Offer</li>
@@ -22,17 +22,17 @@ export function CampaignPackPreview() {
           <li data-animate-copy>3 Längen für Platzierung und Testing</li>
         </ul>
       </div>
-      <div className="section-card rounded-[2rem] p-6" data-animate-item>
+      <div className="section-card rounded-[var(--radius-card)] p-6 sm:p-7" data-animate-item>
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
+            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
               Beispiel-Kampagnen-Pack
             </p>
             <h3 className="mt-2 font-display text-3xl font-semibold tracking-[-0.05em]">
               Creative-Testing-Struktur
             </h3>
           </div>
-          <span className="rounded-full bg-[rgba(156,244,215,0.14)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--mint)]">
+          <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#236851]">
             Freigabebereit
           </span>
         </div>
@@ -40,7 +40,7 @@ export function CampaignPackPreview() {
           {campaignAngles.map((angle) => (
             <article
               key={angle.title}
-              className="rounded-[1.5rem] border border-[color:var(--line)] bg-black/20 p-5"
+              className="rounded-[var(--radius-subcard)] border border-[rgba(56,67,84,0.12)] bg-[rgba(255,252,248,0.92)] p-5 shadow-[0_10px_26px_rgba(31,36,48,0.05)]"
               data-animate-item
             >
               <div className="flex items-center justify-between">
@@ -48,11 +48,11 @@ export function CampaignPackPreview() {
                   <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
                     {angle.title}
                   </p>
-                  <h4 className="mt-1 text-lg font-semibold tracking-[-0.03em]">
+                  <h4 className="mt-1 font-display text-lg font-semibold tracking-[-0.03em]">
                     {angle.angle}
                   </h4>
                 </div>
-                <span className="rounded-full border border-[color:var(--line)] px-3 py-1 text-xs text-[color:var(--copy-muted)]">
+                <span className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-white px-2.5 py-1 text-[11px] text-[color:var(--copy-soft)]">
                   {angle.lengths.join(" · ")}
                 </span>
               </div>
@@ -60,7 +60,7 @@ export function CampaignPackPreview() {
                 {angle.hooks.map((hook) => (
                   <li
                     key={hook}
-                    className="rounded-2xl bg-white/[0.04] px-4 py-3 text-sm text-[color:var(--copy-muted)]"
+                    className="rounded-[var(--radius-subcard)] border border-[rgba(56,67,84,0.1)] bg-[rgba(255,255,255,0.82)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]"
                   >
                     {hook}
                   </li>

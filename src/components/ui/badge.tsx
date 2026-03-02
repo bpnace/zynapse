@@ -8,16 +8,18 @@ export function Badge({
   tone?: "default" | "accent" | "mint";
 }) {
   const toneStyles = {
-    default: "border-[color:var(--line)] bg-white/80 text-[var(--foreground)]",
+    default:
+      "border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.88)] text-[var(--foreground)]",
     accent:
-      "border-transparent bg-[rgba(246,107,76,0.14)] text-[var(--accent-soft)]",
-    mint: "border-transparent bg-[rgba(156,244,215,0.18)] text-[#317d65]",
+      "border-[rgba(224,94,67,0.16)] bg-[rgba(224,94,67,0.1)] text-[var(--accent-strong)]",
+    mint:
+      "border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] text-[#236851]",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium tracking-[0.14em] uppercase",
+        "inline-flex items-center rounded-[var(--radius-chip)] border px-2.5 py-1 text-[11px] font-semibold tracking-[0.12em] uppercase",
         toneStyles[tone],
       )}
     >

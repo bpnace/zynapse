@@ -17,21 +17,21 @@ export function ProcessStepper() {
         {processSteps.map((step, index) => (
           <article
             key={step.title}
-            className="section-card rounded-[1.6rem] p-5"
+            className="section-card rounded-[var(--radius-card)] p-5"
             data-animate-item
           >
             <div className="flex items-center justify-between">
               <span className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--accent)]">
                 0{index + 1}
               </span>
-              <span className="rounded-full border border-[color:var(--line)] px-3 py-1 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-muted)]">
+              <span className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                 {step.owner}
               </span>
             </div>
-            <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">
+            <h3 className="mt-5 font-display text-xl font-semibold tracking-[-0.03em]">
               {step.title}
             </h3>
-            <p className="mt-3 text-sm leading-7 text-[color:var(--copy-muted)]">
+            <p className="mt-3 text-base leading-7 text-[color:var(--copy-body)]">
               {step.description}
             </p>
           </article>

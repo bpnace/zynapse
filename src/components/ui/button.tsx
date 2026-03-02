@@ -6,11 +6,11 @@ type ButtonSize = "md" | "lg";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--accent)] text-[var(--ink-strong)] shadow-[0_20px_50px_rgba(246,107,76,0.28)] hover:-translate-y-0.5 hover:bg-[#ff7b61]",
+    "rounded-[var(--radius-panel)] bg-[var(--accent-strong)] text-white shadow-[0_16px_34px_rgba(224,94,67,0.24)] hover:-translate-y-0.5 hover:bg-[#cf543c] focus-visible:ring-[rgba(224,94,67,0.25)]",
   secondary:
-    "border border-[color:var(--line-strong)] bg-white/80 text-[var(--foreground)] shadow-[0_10px_25px_rgba(31,36,48,0.06)] hover:-translate-y-0.5 hover:border-[color:rgba(246,107,76,0.35)] hover:bg-white",
+    "rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.18)] bg-[rgba(255,255,255,0.92)] text-[var(--foreground)] shadow-[0_8px_20px_rgba(31,36,48,0.05)] hover:-translate-y-0.5 hover:border-[rgba(56,67,84,0.28)] hover:bg-white focus-visible:ring-[rgba(56,67,84,0.12)]",
   ghost:
-    "text-[var(--foreground)] hover:bg-[rgba(31,36,48,0.04)]",
+    "rounded-[var(--radius-chip)] text-[var(--foreground)] hover:bg-[rgba(31,36,48,0.04)] focus-visible:ring-[rgba(56,67,84,0.1)]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -28,7 +28,7 @@ export function buttonStyles({
   className?: string;
 }) {
   return cn(
-    "inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-[-0.02em]",
+    "inline-flex items-center justify-center gap-2 font-semibold tracking-[-0.02em] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
     variantStyles[variant],
     sizeStyles[size],
     className,

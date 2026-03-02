@@ -6,14 +6,14 @@ import { brandBenefits } from "@/lib/content/site";
 export const metadata = buildMetadata({
   title: "Für Brands | Zynapse",
   description:
-    "Für Marken, die aus einem Brief planbaren Video-Output mit klarer Rollenverteilung und weniger Agentur-Overhead erzielen wollen.",
+    "Für Marken, die aus einem Briefing planbaren Video-Output mit klarer Rollenverteilung und weniger Agentur-Overhead erzielen wollen.",
   path: "/brands",
 });
 
 const brandSections = [
   {
     title: "Planbare Produktion",
-    copy: "Vom ersten Brief bis zur finalen Freigabe bleibt sichtbar, was als Nächstes entsteht und wo Entscheidungen wirklich gebraucht werden.",
+    copy: "Vom ersten Briefing bis zur finalen Freigabe bleibt sichtbar, was als Nächstes entsteht und wo Entscheidungen gebraucht werden.",
   },
   {
     title: "Performance-orientierte Creatives",

@@ -24,7 +24,7 @@ export default function ContactPage() {
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
               {channel.label}
             </p>
-            <h2 className="mt-4 text-2xl font-semibold">{channel.value}</h2>
+            <h2 className="mt-4 font-display text-2xl font-semibold">{channel.value}</h2>
             <p className="mt-4 text-[color:var(--copy-muted)]">{channel.copy}</p>
           </article>
         ))}

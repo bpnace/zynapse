@@ -17,7 +17,7 @@ export const primaryCta: NavItem = {
 
 export const heroMetrics = [
   { value: "72h", label: "typischer Kampagnen-Setup" },
-  { value: "18+", label: "Video-Varianten pro Brief" },
+  { value: "18+", label: "Video-Varianten pro Briefing" },
   { value: "6", label: "Export-Formate für Ads Manager" },
 ];
 

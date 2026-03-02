@@ -17,21 +17,23 @@ export function TrustSection() {
         {trustSignals.map((signal) => (
           <article
             key={signal.title}
-            className="section-card rounded-[1.7rem] p-6"
+            className="section-card rounded-[var(--radius-card)] p-6"
             data-animate-item
           >
-            <h3 className="text-2xl font-semibold tracking-[-0.04em]">
+            <h3 className="font-display text-2xl font-semibold tracking-[-0.04em]">
               {signal.title}
             </h3>
-            <p className="mt-4 text-[color:var(--copy-muted)]">{signal.description}</p>
+            <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">
+              {signal.description}
+            </p>
           </article>
         ))}
       </div>
       <div
-        className="flex flex-wrap items-center justify-between gap-4 rounded-[1.8rem] border border-[color:var(--line)] bg-black/20 px-6 py-5"
+        className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,252,247,0.9)] px-6 py-5"
         data-animate-item
       >
-        <p className="max-w-2xl text-sm text-[color:var(--copy-muted)]">
+        <p className="max-w-2xl text-sm leading-6 text-[color:var(--copy-body)]">
           Rechtliche Details bleiben vor Launch fachlich zu prüfen, die technische
           Architektur ist aber bereits auf minimale Datenerhebung und klare
           Review-Schritte ausgerichtet.

@@ -10,7 +10,7 @@ export const caseStudies: CaseStudyEntry[] = [
     challenge:
       "Das Team hatte genug Rohmaterial, aber keine klare Testing-Struktur und keinen konsistenten Output-Rhythmus.",
     outcome:
-      "Zynapse übersetzte den Brief in drei Messaging-Linien und lieferte daraus 18 testbare Varianten.",
+      "Zynapse übersetzte dein Briefing in drei Messaging-Linien und lieferte daraus 18 testbare Varianten.",
     metrics: ["18 Varianten", "3 Kernangles", "72h bis freigabebereit"],
   },
   {
@@ -34,7 +34,7 @@ export const caseStudies: CaseStudyEntry[] = [
     challenge:
       "Das Team brauchte schnelle Erklärformate für Paid Social, ohne jedes Asset einzeln zu konzipieren.",
     outcome:
-      "Aus einem technischen Brief entstand ein klares Kampagnen-Pack mit Segment- und CTA-Logik.",
+      "Aus einem technischen Briefing entstand ein klares Kampagnen-Paket mit Segment- und CTA-Logik.",
     metrics: ["6 Formate", "5 CTA-Varianten", "1 zentrale Datenquelle"],
   },
 ];

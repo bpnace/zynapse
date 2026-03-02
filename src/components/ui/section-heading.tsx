@@ -12,18 +12,18 @@ export function SectionHeading({
   const alignment = align === "center" ? "mx-auto text-center" : "";
 
   return (
-    <div className={`max-w-3xl space-y-5 ${alignment}`}>
+    <div className={`max-w-3xl space-y-4 ${alignment}`}>
       <span className="eyebrow" data-animate-heading>
         {eyebrow}
       </span>
       <h2
-        className="font-display text-4xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-5xl"
+        className="font-display text-4xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-[3.2rem]"
         data-animate-heading
       >
         {title}
       </h2>
       <p
-        className="max-w-2xl text-lg leading-8 text-[color:var(--copy-muted)]"
+        className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
         data-animate-copy
       >
         {copy}

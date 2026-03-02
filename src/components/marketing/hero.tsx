@@ -111,7 +111,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative left-1/2 w-screen max-w-none -translate-x-1/2 -mt-28 pb-14"
+      className="shadow-bottom relative left-1/2 w-screen max-w-none -translate-x-1/2 -mt-28 pb-14"
       data-hero
     >
       <div className="relative min-h-[50rem] overflow-hidden">
