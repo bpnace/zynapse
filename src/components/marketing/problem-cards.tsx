@@ -26,9 +26,6 @@ export function ProblemCards() {
             className={`section-card section-surface-paper rounded-[var(--radius-card)] p-6 lg:p-7 ${cardAccentClasses[index % cardAccentClasses.length]}`}
             data-animate-item
           >
-            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
-              Problem
-            </p>
             <h3 className="mt-4 font-display text-[1.75rem] leading-[0.95] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
               {card.title}
             </h3>

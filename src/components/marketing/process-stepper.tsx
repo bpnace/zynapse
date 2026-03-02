@@ -26,21 +26,24 @@ export function ProcessStepper() {
         {processSteps.map((step, index) => (
           <article
             key={step.title}
-            className={`section-card section-surface-contrast rounded-[var(--radius-card)] p-5 ${stepAccentClasses[index % stepAccentClasses.length]}`}
+            className={`section-card section-surface-contrast flex flex-col rounded-[var(--radius-card)] p-5 ${stepAccentClasses[index % stepAccentClasses.length]}`}
             data-animate-item
           >
-            <div className="flex items-center justify-between">
-              <span className="font-display text-[2rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
+            {/* Row 1: Step number + owner badge — fixed height */}
+            <div className="flex h-10 items-center justify-between gap-2">
+              <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
                 0{index + 1}
               </span>
-              <span className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+              <span className="max-w-[5.5rem] rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 text-end font-mono text-[10px] leading-tight tracking-[0.14em] uppercase text-[var(--copy-soft)]">
                 {step.owner}
               </span>
             </div>
-            <h3 className="mt-5 font-display text-[1.35rem] leading-[1] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
+            {/* Row 2: Title — fixed height so descriptions align */}
+            <h3 className="mt-4 flex h-[3.4rem] items-start font-display text-[1.25rem] leading-[1.15] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
               {step.title}
             </h3>
-            <p className="mt-3 text-base leading-7 text-[color:var(--copy-body)]">
+            {/* Row 3: Description */}
+            <p className="mt-2 text-[0.975rem] leading-[1.65] text-[color:var(--copy-body)]">
               {step.description}
             </p>
           </article>
