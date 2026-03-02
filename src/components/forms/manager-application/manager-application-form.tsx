@@ -120,11 +120,12 @@ export function ManagerApplicationForm() {
       <div className="section-card rounded-[2rem] p-8">
         <span className="eyebrow">Manager-Track</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Bewerbung eingereicht.
+          Deine Bewerbung ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
-          Der Qualifizierungsflow ist abgeschlossen. Sobald ein Webhook konfiguriert
-          ist, läuft die Übergabe automatisch in den ausgewählten Ops-Kanal.
+          Wir prüfen jetzt deine Angaben, Cases und Fokuskanäle. Bis die Übergabe
+          live geschaltet ist, läuft die Bewerbung intern noch als strukturierter
+          Testeintrag.
         </p>
       </div>
     );
@@ -136,11 +137,11 @@ export function ManagerApplicationForm() {
         <div className="space-y-5">
           <span className="eyebrow">Manager-Bewerbung</span>
           <h2 className="font-display text-4xl font-semibold tracking-[-0.05em]">
-            Qualifizierung statt generischer Lead-Form.
+            Wir prüfen Passung. Nicht nur Kontaktdaten.
           </h2>
           <p className="text-[color:var(--copy-muted)]">
-            Die Form sammelt genau die Informationen, die für einen passgenauen
-            Einsatz im Zynapse-Modell relevant sind.
+            Uns interessieren die Informationen, die für starke Kampagnenarbeit
+            wirklich zählen: Cases, Kanäle, Verfügbarkeit und strategische Tiefe.
           </p>
         </div>
         <div className="space-y-8">
@@ -150,7 +151,7 @@ export function ManagerApplicationForm() {
             <Field label="Name" error={errors.name?.message}>
               <TextInput {...register("name")} placeholder="Dein Name" />
             </Field>
-            <Field label="Email" error={errors.email?.message}>
+            <Field label="E-Mail" error={errors.email?.message}>
               <TextInput {...register("email")} placeholder="name@example.com" />
             </Field>
           </div>
@@ -183,7 +184,7 @@ export function ManagerApplicationForm() {
             <Field label="Verfügbarkeit" error={errors.availability?.message}>
               <TextInput
                 {...register("availability")}
-                placeholder="z. B. 2 neue Marken / Monat"
+                placeholder="z. B. 2 neue Kunden oder 1 Retainer pro Monat"
               />
             </Field>
             <Field
@@ -193,7 +194,7 @@ export function ManagerApplicationForm() {
             >
               <TextInput
                 {...register("compensationNotes")}
-                placeholder="Retainer, Revenue Share oder Projektbasis"
+                placeholder="z. B. Retainer, Projektbasis oder Revenue Share"
               />
             </Field>
           </div>
@@ -203,7 +204,7 @@ export function ManagerApplicationForm() {
           >
             <TextareaInput
               {...register("caseSummary")}
-              placeholder="Welche Art von Kampagnen, Marken oder Growth-Situationen hast du bereits geführt?"
+              placeholder="Welche Kampagnen, Marken oder Growth-Situationen hast du bereits geführt und was war dein Beitrag?"
             />
           </Field>
           {submitError ? (

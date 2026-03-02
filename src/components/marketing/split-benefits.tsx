@@ -3,6 +3,7 @@ import { brandBenefits, managerBenefits } from "@/lib/content/site";
 
 function BenefitColumn({
   title,
+  headline,
   copy,
   benefits,
   href,
@@ -10,6 +11,7 @@ function BenefitColumn({
   tone,
 }: {
   title: string;
+  headline: React.ReactNode;
   copy: string;
   benefits: string[];
   href: string;
@@ -25,17 +27,7 @@ function BenefitColumn({
         {title}
       </p>
       <h3 className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl">
-        {title === "Für Brands" ? (
-          <>
-            Planbarer <span className="title-accent">Output</span> ohne Agentur
-            Overhead
-          </>
-        ) : (
-          <>
-            Kampagnenplanung wird zur{" "}
-            <span className="title-accent">skalierbaren Kernleistung</span>
-          </>
-        )}
+        {headline}
       </h3>
       <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">{copy}</p>
       <ul className="mt-8 space-y-4">
@@ -62,16 +54,28 @@ export function SplitBenefits() {
       data-reveal-section
     >
       <BenefitColumn
-        title="Für Brands"
-        copy="Du kaufst keine diffuse Plattform, sondern einen strukturierten Weg von Kampagnenbriefing zu fertigem Creative-Output."
+        title="Für Marken"
+        headline={
+          <>
+            Mehr <span className="title-accent">Creative-Klarheit</span>, weniger
+            Produktionschaos
+          </>
+        }
+        copy="Teams kaufen hier keinen diffusen Tool-Zugang, sondern einen strukturierten Weg vom Briefing zu testbaren Creatives mit klarer Freigabelogik."
         benefits={brandBenefits}
         href="/brands"
-        cta="Mehr für Brands"
+        cta="Mehr für Marken"
         tone="paper"
       />
       <BenefitColumn
-        title="Für Manager"
-        copy="Dein strategischer Wert wird nicht von Produktionschaos verdrängt. Du steuerst Kampagnenlogik, Zynapse skaliert die Umsetzung."
+        title="Für Social Media Manager"
+        headline={
+          <>
+            Deine Strategie bleibt sichtbar, auch wenn{" "}
+            <span className="title-accent">Output skaliert</span>
+          </>
+        }
+        copy="Du führst Messaging, Hooks und Testing-Richtung. Zynapse nimmt dir die operative Skalierung ab, damit dein Wert nicht im Produktionschaos verschwindet."
         benefits={managerBenefits}
         href="/managers"
         cta="Mehr für Manager"

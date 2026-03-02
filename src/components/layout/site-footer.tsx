@@ -8,10 +8,12 @@ export function SiteFooter() {
         <div className="space-y-4">
           <p className="eyebrow">Zynapse</p>
           <h2 className="font-display text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
-            Vom Briefing zur fertigen Videokampagne in 72 Stunden.
+            Vom Briefing zu Creatives, die schneller getestet werden können.
           </h2>
           <p className="max-w-md text-[color:var(--copy-muted)]">
-            Wir glauben, dass die Zukunft der Kampagnenproduktion in klaren, testbaren Prozessen liegt. Zynapse ist der erste Schritt in diese Richtung.
+            Zynapse verbindet Kampagnenlogik, klare Freigaben und skalierbaren
+            Output in einem Prozess, der für Marken, Growth-Teams und Manager
+            anschlussfähig bleibt.
           </p>
         </div>
         {footerGroups.map((group) => (

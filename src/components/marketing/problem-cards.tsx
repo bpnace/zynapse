@@ -14,10 +14,10 @@ export function ProblemCards() {
       data-reveal-section
     >
       <SectionHeading
-        eyebrow="Klarheit in 15 Sekunden"
-        title="Brands brauchen keinen Marketplace-Pitch. Sie brauchen Entscheidungssicherheit."
-        accent="Entscheidungssicherheit"
-        copy="Zynapse nimmt die drei größten Unsicherheiten aus dem Prozess: Was wird überhaupt gebraucht, wer ist wofür verantwortlich und wie kommt daraus verlässlich Output."
+        eyebrow="Wo Teams heute Zeit verlieren"
+        title="Creative scheitert selten am Willen. Meist fehlt die klare Struktur davor."
+        accent="klare Struktur"
+        copy="Zynapse nimmt die drei typischen Bremsen aus dem Prozess: fehlende Prioritäten, teure Abstimmungsschleifen und zu viel Hoffnung auf einzelne Hero-Creatives."
       />
       <div className="grid gap-5 lg:grid-cols-3">
         {problemCards.map((card, index) => (
@@ -42,7 +42,7 @@ export function ProblemCards() {
         className="section-surface-contrast rounded-[var(--radius-subcard)] border border-[rgba(56,67,84,0.14)] px-6 py-4 text-center text-base font-medium leading-7 text-[color:var(--copy-strong)] sm:text-lg"
         data-animate-item
       >
-        Du bekommst Strategie durch Experten und Output durch Automatisierung.
+        Strategie bleibt menschlich. Skalierung wird systematisch.
       </div>
     </section>
   );

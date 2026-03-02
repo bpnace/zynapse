@@ -21,33 +21,33 @@ import {
 
 const steps = [
   {
-    title: "Branche",
-    copy: "Welche Kategorie, welches Produkt und welche Ausgangslage bringt die Kampagne mit?",
+    title: "Ausgangslage",
+    copy: "Welche Kategorie, welches Produkt und welche Ausgangslage bringt das Team mit?",
     fields: ["industry"] as const,
   },
   {
     title: "Produktlink",
-    copy: "Ein Link reicht. Das Studio braucht einen klaren Ausgangspunkt.",
+    copy: "Ein Link reicht. Entscheidend ist ein sauberer Ausgangspunkt für Briefing und Creative-Richtung.",
     fields: ["productUrl"] as const,
   },
   {
     title: "Ziel & Kanal",
-    copy: "Worauf soll das Creative optimieren und wo wird es zuerst ausgespielt?",
+    copy: "Worauf soll das Creative zuerst optimieren und wo wird es als Erstes ausgespielt?",
     fields: ["goal", "channel"] as const,
   },
   {
     title: "Budget & Timing",
-    copy: "Damit Kampagnen-Pack und Umfang sauber eingerahmt werden können.",
+    copy: "Damit Kampagnen-Pack, Umfang und Priorität realistisch eingeordnet werden können.",
     fields: ["budgetRange", "timeline"] as const,
   },
   {
     title: "Freitext",
-    copy: "Optionaler Kontext zu Stil, Offer, Creator-Referenzen oder Restriktionen.",
+    copy: "Optionaler Kontext zu Stil, Offer, Creator-Referenzen, Claims oder Restriktionen.",
     fields: ["notes"] as const,
   },
   {
     title: "Überprüfung",
-    copy: "Jetzt fehlen nur noch die Kontaktangaben für die Übergabe.",
+    copy: "Zum Schluss fehlen nur noch die Kontaktdaten für die Übergabe.",
     fields: ["contactName", "workEmail", "company"] as const,
   },
 ];
@@ -124,7 +124,7 @@ export function BrandInquiryWizard() {
         <Field label="Branche" error={errors.industry?.message}>
           <TextInput
             {...register("industry")}
-            placeholder="z. B. D2C Wellness, Fashion, B2B SaaS"
+            placeholder="z. B. D2C Wellness, Beauty, Food, B2B SaaS"
           />
         </Field>
       );
@@ -144,7 +144,7 @@ export function BrandInquiryWizard() {
           <Field label="Ziel" error={errors.goal?.message}>
             <TextInput
               {...register("goal")}
-              placeholder="z. B. TikTok Conversion, Awareness Launch"
+              placeholder="z. B. Conversion-Testing, Launch, Awareness"
             />
           </Field>
           <Field label="Kanal" error={errors.channel?.message}>
@@ -191,7 +191,7 @@ export function BrandInquiryWizard() {
         >
           <TextareaInput
             {...register("notes")}
-            placeholder="Was sollte das Kampagnen-Pack unbedingt berücksichtigen?"
+            placeholder="Was sollte das Kampagnen-Pack inhaltlich, tonal oder rechtlich unbedingt berücksichtigen?"
           />
         </Field>
       );
@@ -207,7 +207,7 @@ export function BrandInquiryWizard() {
             <TextInput {...register("workEmail")} placeholder="team@brand.com" />
           </Field>
           <Field label="Firma" error={errors.company?.message}>
-            <TextInput {...register("company")} placeholder="Brand GmbH" />
+            <TextInput {...register("company")} placeholder="Beispiel GmbH" />
           </Field>
         </div>
         <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-black/20 p-5">
@@ -227,7 +227,7 @@ export function BrandInquiryWizard() {
                 <dt className="text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
                   {label}
                 </dt>
-                <dd className="mt-1 text-sm">{value || "Noch nicht ausgefüllt"}</dd>
+                <dd className="mt-1 text-sm">{value || "Noch offen"}</dd>
               </div>
             ))}
           </dl>
@@ -274,12 +274,12 @@ export function BrandInquiryWizard() {
       <div className="section-card rounded-[2rem] p-8">
         <span className="eyebrow">Anfrage erhalten</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Die Kampagnenanfrage ist im System.
+          Die Marken-Anfrage ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
-          Nächster Schritt: Qualifizierung und Übergabe in die Kampagnenplanung.
-          Ohne konfigurierten Webhook landet die Submission aktuell als strukturierter
-          Server-Log, damit die Architektur testbar bleibt.
+          Als Nächstes wird das Briefing eingeordnet und in die Kampagnenplanung
+          überführt. Bis die Übergabe live geschaltet ist, läuft die Anfrage intern
+          noch als strukturierter Testeintrag.
         </p>
         <div className="mt-8 flex gap-3">
           <ButtonLink href="/" variant="secondary">
@@ -358,7 +358,7 @@ export function BrandInquiryWizard() {
                 className: "disabled:cursor-wait disabled:opacity-70",
               })}
             >
-              {isPending ? "Sende Anfrage..." : "Anfrage abschicken"}
+              {isPending ? "Sende Anfrage..." : "Marken-Anfrage absenden"}
             </button>
           ) : null}
         </div>

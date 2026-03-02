@@ -10,9 +10,9 @@ export function TrustSection() {
     >
       <SectionHeading
         eyebrow="Vertrauen & Sicherheit"
-        title="Video- und AI-nahe Prozesse brauchen sichtbare Kontrolle."
-        accent="sichtbare Kontrolle"
-        copy="Gerade bei automatisierter Produktion zählt nicht nur Output-Geschwindigkeit. Entscheidend sind Rechte, Review, Brand Safety und nachvollziehbare Freigaben."
+        title="AI-nahe Produktion braucht Kontrolle, nicht blindes Tempo."
+        accent="Kontrolle"
+        copy="Je mehr Output skaliert wird, desto wichtiger werden Rechte, Review, Brand Safety und klare Freigaben."
       />
       <div className="grid gap-4 md:grid-cols-2">
         {trustSignals.map((signal) => (
@@ -35,9 +35,9 @@ export function TrustSection() {
         data-animate-item
       >
         <p className="max-w-2xl text-sm leading-6 text-[color:var(--copy-body)]">
-          Rechtliche Details bleiben vor Launch fachlich zu prüfen, die technische
-          Architektur ist aber bereits auf minimale Datenerhebung und klare
-          Review-Schritte ausgerichtet.
+          Rechtliche Details müssen vor dem Launch fachlich geprüft werden. Die
+          Architektur ist aber schon auf minimale Datenerhebung, klare
+          Verantwortlichkeiten und nachvollziehbare Review-Schritte ausgelegt.
         </p>
         <ButtonLink href="/legal/privacy" variant="secondary">
           Datenschutz ansehen

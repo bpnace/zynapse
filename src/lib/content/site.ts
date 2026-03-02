@@ -1,7 +1,7 @@
 import type { NavItem } from "@/types/site";
 
 export const siteNav: NavItem[] = [
-  { href: "/brands", label: "Für Brands" },
+  { href: "/brands", label: "Für Marken" },
   { href: "/managers", label: "Für Manager" },
   { href: "/studio", label: "Studio" },
   { href: "/pricing", label: "Preise" },
@@ -11,101 +11,101 @@ export const siteNav: NavItem[] = [
 
 export const primaryCta: NavItem = {
   href: "/request",
-  label: "Kampagne anfragen",
+  label: "Marken-Anfrage",
   kind: "cta",
 };
 
 export const heroMetrics = [
-  { value: "72h", label: "typischer Kampagnen-Setup" },
-  { value: "18+", label: "Video-Varianten pro Briefing" },
-  { value: "6", label: "Export-Formate für Ads Manager" },
+  { value: "72h", label: "bis zum ersten Upload" },
+  { value: "18+", label: "testbare Varianten pro Briefing" },
+  { value: "6", label: "Formate für Ads und Social" },
 ];
 
 export const problemCards = [
   {
-    title: "Zu viele Optionen, keine klare Entscheidung",
+    title: "Zu viele Ideen, aber keine klare Priorität",
     description:
-      "UGC, Ads, Creator, Strategie und AI-Tools verschwimmen schnell. Zynapse ordnet das in einen klaren Produktionspfad.",
+      "Zwischen UGC, Trends, Hooks und AI-Tools fehlt oft die Reihenfolge. Zynapse übersetzt Creative-Druck in eine Kampagnenlogik, die testbar bleibt.",
   },
   {
-    title: "Agenturen teuer, Output unplanbar",
+    title: "Zu viele Schleifen zwischen Team, Freigabe und Produktion",
     description:
-      "Kein Overhead-Pitching, keine offenen Schleifen. Jede Anfrage startet mit einem festen Kampagnen-Setup und sichtbaren Deliverables.",
+      "Wenn Briefing, Feedback und Ausspielung nicht sauber getrennt sind, wird jede Iteration teuer. Zynapse macht den nächsten Schritt und die erwarteten Deliverables sichtbar.",
   },
   {
-    title: "Content-Druck jede Woche, Creative Fatigue",
+    title: "Zu viel Druck auf einzelne Hero-Creatives",
     description:
-      "Statt Einzelvideos entsteht ein Testsystem aus Hooks, Angles, Varianten und Formaten, das laufend nachgebaut werden kann.",
+      "Statt auf ein einzelnes Video zu hoffen, entstehen systematisch Varianten für unterschiedliche Hooks, Angles, Formate und Platzierungen.",
   },
 ];
 
 export const processSteps = [
   {
     title: "Marken-Anfrage",
-    owner: "Marke",
+    owner: "Marke / Team",
     description:
-      "Produkt, Ziel, Tonalität, Budget und Kanal werden in einen kompakten Intake übersetzt.",
+      "Das Team gibt Produkt, Ziel, Stil, Budget und Freigaben vor. Daraus entsteht ein Briefing, mit dem alle Beteiligten sauber arbeiten können.",
   },
   {
     title: "Kampagnenplanung",
     owner: "Social Media Manager",
     description:
-      "Angles, Hooks, CTA-Logik und Testing-Struktur werden ausformuliert und priorisiert.",
+      "Angles, Hooks, CTA-Logik und Testprioritäten werden so aufgebaut, dass sie im Performance-Alltag wirklich tragen.",
   },
   {
     title: "Briefing-Paket",
-    owner: "System + Manager",
+    owner: "Manager + System",
     description:
-      "Ein Creator-Pack mit Formatregeln, Messaging und Freigabegrenzen wird gebaut.",
+      "Aus der Kampagnenlogik entsteht ein Briefing-Paket mit Messaging, Formatregeln und klaren Freigabegrenzen.",
   },
   {
     title: "Videogenerierung",
     owner: "Studio",
     description:
-      "Aus jedem Angle entstehen mehrere Cuts, Längen und Platzierungsvarianten ohne Creator-Chaos.",
+      "Aus jedem Angle entstehen mehrere Cuts, Längen und Platzierungsvarianten, ohne dass das Team neue Produktionsschleifen öffnen muss.",
   },
   {
     title: "Review und Export",
-    owner: "Marke",
+    owner: "Team",
     description:
-      "Freigaben, Iterationen und Exporte laufen zentral, bevor Assets live in Media Buying oder Social Publishing gehen.",
+      "Das Team prüft Freigaben zentral. Erst danach gehen Varianten in Media Buying, Publishing oder die nächste Iteration.",
   },
 ];
 
 export const brandBenefits = [
   "Planbare Produktion mit klaren Meilensteinen",
-  "Performance-orientierte Creatives statt Einzelstücke",
-  "Weniger Agentur-Overhead, mehr Transparenz",
-  "Saubere Rollen zwischen Brand, Manager und System",
+  "Mehr testbare Creatives pro Briefing",
+  "Weniger Abstimmungsschleifen zwischen Team, Manager und Studio",
+  "Freigaben und Feedback bleiben bis zum Export nachvollziehbar",
 ];
 
 export const managerBenefits = [
-  "Neue Kunden ohne Kaltakquise-Druck",
-  "Kampagnenlogik als bezahlter Kernwert",
-  "Skalierbarer Output ohne Creator-Operations",
-  "Wiederkehrende Revenue pro Kunde oder Kampagne",
+  "Du verkaufst Strategie statt Produktionschaos",
+  "Klare Briefings statt endloser Creator-Schleifen",
+  "Skalierbarer Output ohne operative Überlastung",
+  "Planbare Erlöse pro Kunde oder Kampagne",
 ];
 
 export const trustSignals = [
   {
     title: "Rechte & Nutzung",
     description:
-      "Jede Produktion wird mit klarer Nutzungslogik, Asset-Grenzen und später erweiterbaren Vertragsbausteinen gedacht.",
+      "Jede Produktion ist so gedacht, dass Nutzungslogik, Asset-Grenzen und spätere Vertragserweiterungen sauber anschlussfähig bleiben.",
   },
   {
     title: "Markensicherheit",
     description:
-      "Freigaben bleiben beim Brand. Hooks, Claims und CTA-Räume werden vor Export sichtbar gemacht.",
+      "Freigaben bleiben im Team. Hooks, Claims und CTA-Räume werden vor Export sichtbar und nachvollziehbar geprüft.",
   },
   {
     title: "Freigabeprozess",
     description:
-      "Assets werden nicht blind ausgespielt. Das Studio liefert Versionen, die vor Veröffentlichung abgenommen werden.",
+      "Keine Variante geht blind live. Das Studio liefert eine klare Review-Spur, bevor Assets in Ads oder Social ausgesteuert werden.",
   },
   {
     title: "DSGVO-ready Setup",
     description:
-      "Die v1-Architektur ist für EU-konforme Prozesse, Hosting-Transparenz und minimierte Datenerhebung vorbereitet.",
+      "Die v1 ist auf geringe Datenerhebung, nachvollziehbare Prozesse und eine EU-kompatible Weiterentwicklung ausgelegt.",
   },
 ];
 
@@ -124,7 +124,7 @@ export const footerGroups = [
     title: "Ressourcen",
     links: [
       { href: "/request", label: "Marken-Anfrage" },
-      { href: "/apply", label: "Manager Bewerbung" },
+      { href: "/apply", label: "Manager-Bewerbung" },
       { href: "/contact", label: "Kontakt" },
     ],
   },
@@ -141,16 +141,16 @@ export const contactChannels = [
   {
     label: "Vertrieb",
     value: "hello@zynapse.example",
-    copy: "Briefings, Preisgestaltung, Launch-Planung",
+    copy: "Marken-Anfragen, Preise, Erstgespräche",
   },
   {
     label: "Manager-Netzwerk",
     value: "network@zynapse.example",
-    copy: "Bewerbungen, Qualifizierung, Partnerfragen",
+    copy: "Bewerbungen, Qualifizierung, Partneranfragen",
   },
   {
     label: "Betrieb",
     value: "ops@zynapse.example",
-    copy: "Datenschutz, Rechte, Produktionsabläufe",
+    copy: "Rechte, Datenschutz, Prozessfragen",
   },
 ];

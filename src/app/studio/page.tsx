@@ -7,7 +7,7 @@ import { campaignAngles, studioTimeline, videoVariants } from "@/lib/mock-data/s
 export const metadata = buildMetadata({
   title: "Studio | Zynapse",
   description:
-    "Das Zynapse Studio visualisiert, wie aus einer Marken-Anfrage ein Kampagnen-Pack und daraus skalierter Video-Output wird.",
+    "Das Zynapse Studio zeigt, wie aus einem Briefing Kampagnenlogik, Freigaben und skalierbarer Video-Output entstehen.",
   path: "/studio",
 });
 
@@ -16,8 +16,8 @@ export default function StudioPage() {
     <>
       <PageHero
         label="Studio"
-        title="Der geführte Flow von Anfrage zu Kampagnenlogik zu Varianten."
-        description="Das Studio ist in v1 eine produktnahe Demo-Oberfläche. Es zeigt nicht jeden internen Schritt, sondern macht sichtbar, wie Briefing, Kampagnenstruktur und Output zusammenhängen."
+        title="So wird aus einem Briefing ein Kampagnen-Setup, das skalierbar bleibt."
+        description="Die Studio-Seite macht sichtbar, wie Zynapse Briefing, Kampagnenlogik, Freigaben und Output zusammenführt. Nicht jeder interne Schritt ist sichtbar, aber die operative Logik dahinter schon."
         badges={["Eingabe", "Kampagnen-Pack", "Freigabe", "Export"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-4 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
@@ -90,10 +90,10 @@ export default function StudioPage() {
       <section className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-12 sm:px-8 lg:px-10">
         <div>
           <p className="font-display text-3xl font-semibold tracking-[-0.05em]">
-            Studio-Demo gesehen. Jetzt den echten Intake starten.
+            Studio gesehen. Jetzt mit echtem Briefing starten.
           </p>
           <p className="mt-2 text-[color:var(--copy-muted)]">
-            Der Brand Wizard übergibt sauber an den nächsten operativen Schritt.
+            Die Marken-Anfrage führt sauber in den nächsten operativen Schritt.
           </p>
         </div>
         <ButtonLink href="/request" size="lg">

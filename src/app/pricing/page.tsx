@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo";
 import { pricingPlans } from "@/lib/content/pricing";
 
 export const metadata = buildMetadata({
-  title: "Pricing | Zynapse",
+  title: "Preise | Zynapse",
   description:
-    "Drei Einstiegspunkte für Brand- und Growth-Teams: Starter, Growth und Pro.",
+    "Drei Einstiegspunkte für Marken-, Growth- und Agentur-Teams: Starter, Growth und Pro.",
   path: "/pricing",
 });
 
@@ -13,9 +13,9 @@ export default function PricingPage() {
   return (
     <>
       <PageHero
-        label="Pricing"
-        title="Klarer Einstieg statt Preismodell mit Fragezeichen."
-        description="Die Pricing-Seite ist auf erste Entscheidungen optimiert: einmaliger Launch, laufender Growth-Modus oder Team-Setup für mehrere Brands."
+        label="Preise"
+        title="Ein Einstieg, der zur Arbeitsrealität des Teams passt."
+        description="Die Preisübersicht ist auf erste Entscheidungen gebaut: ein schneller Start, ein laufender Growth-Modus oder ein Setup für mehrere Marken und Stakeholder."
         badges={["Starter", "Growth", "Pro"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">

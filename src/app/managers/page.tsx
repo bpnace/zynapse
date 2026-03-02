@@ -6,22 +6,22 @@ import { managerBenefits } from "@/lib/content/site";
 export const metadata = buildMetadata({
   title: "Für Social Media Manager | Zynapse",
   description:
-    "Für Social Media Manager, die Kampagnenlogik als Kernleistung anbieten und Output skalieren wollen, ohne Creator-Operations zu tragen.",
+    "Für Social Media Manager, die Kampagnenlogik als Kernleistung verkaufen und Output skalieren wollen, ohne im Operativen zu verschwinden.",
   path: "/managers",
 });
 
 const managerSections = [
   {
     title: "Strategie bleibt sichtbar",
-    copy: "Dein Wert verschwindet nicht in Operative-Noise. Kampagnenplanung, Hooks und Testing-Logik bleiben als Premium-Leistung präsent.",
+    copy: "Dein Wert verschwindet nicht im Tagesgeschäft. Kampagnenplanung, Hooks und Testing-Logik bleiben als bezahlte Kernleistung sichtbar.",
   },
   {
-    title: "Wiederkehrende Einnahmen",
-    copy: "Statt Projektchaos entsteht ein laufender Prozess mit klaren Deliverables pro Kunde oder Monat.",
+    title: "Planbare Erlöse",
+    copy: "Statt Projektfeuerwehr entsteht ein laufender Prozess mit klaren Deliverables pro Kunde, Kampagne oder Monat.",
   },
   {
     title: "Weniger Creator-Chaos",
-    copy: "Kein endloses Koordinieren von Assets, Briefings und Variationen. Das Studio übernimmt die Skalierung.",
+    copy: "Kein endloses Hinterherlaufen bei Assets, Briefings und Varianten. Das Studio übernimmt die operative Skalierung.",
   },
 ];
 
@@ -30,9 +30,9 @@ export default function ManagersPage() {
     <>
       <PageHero
         label="Für Manager"
-        title="Manager-geführte Kampagnenlogik statt unsichtbarer Operative."
-        description="Zynapse richtet sich an Social Media Manager und Strategen, die Kunden über Kampagnenlogik führen wollen, ohne sich im Produktionsbetrieb zu verlieren."
-        badges={["Wiederkehrende Einnahmen", "Kampagnen-Pakete", "Kein Creator-Chaos"]}
+        title="Du führst die Kampagnenlogik. Nicht das Produktionschaos."
+        description="Zynapse richtet sich an Social Media Manager und Strategen, die ihren Wert über Kampagnenlogik, Messaging und Testing beweisen wollen, ohne im Operativen zu verschwinden."
+        badges={["Planbare Erlöse", "Kampagnen-Packs", "Kein Creator-Chaos"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {managerSections.map((section) => (
@@ -48,12 +48,12 @@ export default function ManagersPage() {
         <div className="space-y-4">
           <span className="eyebrow">Manager-Profil</span>
           <h2 className="font-display text-4xl leading-[0.95] font-semibold tracking-[-0.05em]">
-            Wofür Manager zu Zynapse passen.
+            Für wen Zynapse wirklich passt.
           </h2>
           <p className="text-[color:var(--copy-muted)]">
-            Wenn du Messaging, Testing und Kampagnenstruktur stark führen kannst,
+            Wenn du Messaging, Testing und Kampagnenstruktur sicher führen kannst,
             aber nicht mehr jede Produktionsschleife selbst tragen willst, passt
-            das Modell.
+            dieses Modell.
           </p>
         </div>
         <div className="section-card rounded-[2rem] p-7">
@@ -72,10 +72,11 @@ export default function ManagersPage() {
       <section className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-12 sm:px-8 lg:px-10">
         <div>
           <p className="font-display text-3xl font-semibold tracking-[-0.05em]">
-            Bewirb dich auf den Manager-Track.
+            Bewirb dich für den Manager-Track.
           </p>
           <p className="mt-2 text-[color:var(--copy-muted)]">
-            Zeig Portfolio, Fokuskanäle und Cases. Der Flow ist auf Qualifizierung gebaut, nicht auf generische Leads.
+            Zeig Portfolio, Fokuskanäle und Cases. Der Flow ist auf echte
+            Qualifizierung gebaut, nicht auf generische Leads.
           </p>
         </div>
         <ButtonLink href="/apply" size="lg">

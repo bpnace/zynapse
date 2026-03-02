@@ -5,7 +5,7 @@ import { contactChannels } from "@/lib/content/site";
 export const metadata = buildMetadata({
   title: "Kontakt | Zynapse",
   description:
-    "Kontaktpunkte für Vertrieb, Manager-Netzwerk und Betrieb.",
+    "Direkte Kontaktwege für Vertrieb, Manager-Netzwerk und operative Fragen.",
   path: "/contact",
 });
 
@@ -14,8 +14,8 @@ export default function ContactPage() {
     <>
       <PageHero
         label="Kontakt"
-        title="Drei direkte Kontaktpfade statt eines allgemeinen Kontaktpostfachs."
-        description="Vertrieb, Manager-Netzwerk und Betrieb sind getrennt gedacht, damit Briefings, Bewerbungen und operative Fragen nicht im selben Kanal landen."
+        title="Drei direkte Kontaktwege statt eines allgemeinen Sammelpostfachs."
+        description="Vertrieb, Manager-Netzwerk und Betrieb sind getrennt, damit Marken-Anfragen, Bewerbungen und operative Fragen nicht im selben Kanal landen."
         badges={["Vertrieb", "Netzwerk", "Betrieb"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">

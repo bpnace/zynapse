@@ -16,10 +16,10 @@ export function VideoOutputGrid() {
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="Video-Output-Vorschau"
-        title="Später echte Beispiele. Heute schon die richtige Struktur."
-        accent="richtige Struktur"
-        copy="Jede Kachel zeigt, wie Zynapse Output denkt: Angle, Hook, Format, Länge und Ziel. Nicht als lose Clips, sondern als Creative-System."
+        eyebrow="Output-Vorschau"
+        title="So sieht skalierbarer Output aus, bevor echte Cases live sind."
+        accent="skalierbarer Output"
+        copy="Die Demo zeigt keine losen Clips, sondern die Logik dahinter: Angle, Hook, Format, Länge und Ziel. Genau diese Struktur macht spätere Learnings belastbar."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {videoVariants.map((variant, index) => (

@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Manager Bewerbung | Zynapse",
   description:
-    "Qualifizierungsflow für Social Media Manager mit Portfolio, Fokuskanälen und Case-Erfahrung.",
+    "Qualifizierungsflow für Social Media Manager mit Cases, Fokuskanälen und echter Performance-Erfahrung.",
   path: "/apply",
 });
 
@@ -14,11 +14,11 @@ export default function ApplyPage() {
       <div className="space-y-5">
         <span className="eyebrow">Manager-Einstieg</span>
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-6xl">
-          Bewirb dich auf den Manager-Track.
+          Bewirb dich für den Manager-Track, wenn du Kampagnen wirklich führen kannst.
         </h1>
         <p className="max-w-3xl text-lg leading-8 text-[color:var(--copy-muted)]">
-          Fokus liegt auf Kampagnenlogik, Kanalverständnis und echter Growth-Erfahrung
-          statt auf generischen Kontaktfeldern.
+          Uns interessieren Kampagnenlogik, Kanalverständnis und echte
+          Growth-Erfahrung. Nicht generische Kontaktdaten ohne Substanz.
         </p>
       </div>
       <ManagerApplicationForm />

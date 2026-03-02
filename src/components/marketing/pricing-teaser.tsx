@@ -11,9 +11,9 @@ export function PricingTeaser() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
           eyebrow="Preise"
-          title="Drei Einstiegspunkte statt eines komplexen Modells."
+          title="Drei Einstiegspunkte, die zur Arbeitsrealität verschiedener Teams passen."
           accent="Drei Einstiegspunkte"
-          copy="Die Preislogik bleibt bewusst kompakt. Ziel ist nicht Tarifdetail, sondern ein klarer Startpunkt für unterschiedliche Teamgrößen."
+          copy="Statt Tarifnebel zeigt Zynapse drei klare Modelle: ein schneller Start, ein laufender Growth-Modus und ein Setup für mehrere Marken oder Stakeholder."
         />
         <ButtonLink href="/pricing" variant="secondary" className="lg:self-end">
           Alle Preise ansehen
@@ -37,7 +37,7 @@ export function PricingTeaser() {
               </div>
               {plan.featured ? (
                 <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#236851]">
-                  Beliebteste
+                  Meist gewählt
                 </span>
               ) : null}
             </div>

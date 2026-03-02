@@ -17,10 +17,10 @@ export function ProcessStepper() {
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="So funktioniert es"
-        title="Ein horizontaler Produktionsprozess mit klarer Delegationslogik."
-        accent="Delegationslogik"
-        copy="Brands liefern Kontext und Freigaben. Manager liefern Kampagnenlogik, Hooks und Struktur. Das System liefert Skalierung, Varianten und Formate."
+        eyebrow="So arbeitet Zynapse"
+        title="Ein Produktionsfluss, der Rollen klärt und Creative beschleunigt."
+        accent="Creative beschleunigt"
+        copy="Das Team liefert Kontext und Freigaben. Der Manager führt Kampagnenlogik und Testing. Das Studio skaliert daraus Varianten, die schneller geprüft und ausgespielt werden können."
       />
       <div className="grid gap-4 lg:grid-cols-5">
         {processSteps.map((step, index) => (

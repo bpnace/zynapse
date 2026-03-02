@@ -11,16 +11,16 @@ export function CampaignPackPreview() {
       <div className="space-y-6">
         <SectionHeading
           eyebrow="Kampagnenlogik zuerst"
-          title="Der Differenzierer ist nicht das Video. Es ist das Kampagnen-Pack davor."
-          accent="Kampagnen-Pack"
-          copy="Zynapse verkauft keine isolierten Clips. Jede Anfrage wird zuerst in Angles, Hooks, CTA-Varianten, Cuts und Längen übersetzt. Dadurch wird Video-Output planbar und testbar."
+          title="Nicht das einzelne Video macht den Unterschied. Sondern die Logik davor."
+          accent="Logik davor"
+          copy="Bevor ein Creative gebaut wird, wird die Kampagne in Angles, Hooks, CTA-Routen, Cuts und Längen zerlegt. So wird aus 'wir brauchen Content' ein System, das sich testen und weiterdrehen lässt."
         />
         <ul className="space-y-3 text-base leading-7 text-[color:var(--copy-body)]">
-          <li data-animate-copy>3 Angles pro Pack</li>
-          <li data-animate-copy>10 Hook-Richtungen pro Kampagne</li>
+          <li data-animate-copy>3 strategische Angles pro Pack</li>
+          <li data-animate-copy>10 Hook-Richtungen mit klarer Testabsicht</li>
           <li data-animate-copy>5 CTA-Varianten pro Offer</li>
-          <li data-animate-copy>6 Video Cuts pro Angle</li>
-          <li data-animate-copy>3 Längen für Platzierung und Testing</li>
+          <li data-animate-copy>6 Cuts pro Angle</li>
+          <li data-animate-copy>3 Längen für Platzierung, Test und Iteration</li>
         </ul>
       </div>
       <div
@@ -30,7 +30,7 @@ export function CampaignPackPreview() {
         <div className="flex items-center justify-between">
           <div>
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
-              Beispiel-Kampagnen-Pack
+              Beispiel für ein Kampagnen-Pack
             </p>
             <h3 className="mt-2 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
               Creative-Testing-<span className="title-accent">Struktur</span>

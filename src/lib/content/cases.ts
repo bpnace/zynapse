@@ -6,11 +6,11 @@ export const caseStudies: CaseStudyEntry[] = [
     brand: "Nutri Spark",
     sector: "Wellness / D2C",
     summary:
-      "Aus einer neuen Produktlinie entstand in fünf Tagen ein Conversion-first Hook-Stack für TikTok und Reels.",
+      "Aus einer neuen Produktlinie wurde in fünf Tagen ein conversion-orientierter Hook-Stack für TikTok und Reels.",
     challenge:
-      "Das Team hatte genug Rohmaterial, aber keine klare Testing-Struktur und keinen konsistenten Output-Rhythmus.",
+      "Dem Team fehlte trotz vorhandenem Rohmaterial eine klare Teststruktur und ein verlässlicher Output-Rhythmus.",
     outcome:
-      "Zynapse übersetzte dein Briefing in drei Messaging-Linien und lieferte daraus 18 testbare Varianten.",
+      "Zynapse übersetzte das Briefing in drei Messaging-Linien und lieferte daraus 18 testbare Varianten.",
     metrics: ["18 Varianten", "3 Kernangles", "72h bis freigabebereit"],
   },
   {
@@ -18,7 +18,7 @@ export const caseStudies: CaseStudyEntry[] = [
     brand: "North Atelier",
     sector: "Mode",
     summary:
-      "Eine visuell starke Marke brauchte mehr Performance-Creatives, ohne den Premium-Look zu verlieren.",
+      "Eine visuell starke Marke brauchte mehr Performance-Creatives, ohne ihren Premium-Look zu verlieren.",
     challenge:
       "Agentur-Output war ästhetisch hochwertig, aber zu langsam und zu schwer in laufende Tests zu übersetzen.",
     outcome:
@@ -34,7 +34,7 @@ export const caseStudies: CaseStudyEntry[] = [
     challenge:
       "Das Team brauchte schnelle Erklärformate für Paid Social, ohne jedes Asset einzeln zu konzipieren.",
     outcome:
-      "Aus einem technischen Briefing entstand ein klares Kampagnen-Paket mit Segment- und CTA-Logik.",
+      "Aus einem technischen Briefing entstand ein klares Kampagnen-Pack mit Segment- und CTA-Logik.",
     metrics: ["6 Formate", "5 CTA-Varianten", "1 zentrale Datenquelle"],
   },
 ];

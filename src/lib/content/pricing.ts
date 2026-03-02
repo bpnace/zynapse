@@ -6,13 +6,13 @@ export const pricingPlans: PricingPlan[] = [
     price: "2.400",
     cadence: "pro Launch",
     description:
-      "Für erste Testläufe mit einer klaren Value Proposition und einem kompakten Channel-Fokus.",
-    audience: "Für Teams, die zügig einen ersten Creative-Test aufsetzen wollen.",
+      "Für Teams, die ein erstes Kampagnen-Setup schnell, sauber und ohne lange Vorlaufzeit live bringen wollen.",
+    audience: "Für Marken- und Growth-Teams mit klarem Offer und erstem Testfenster.",
     deliverables: [
       "1 Kampagnen-Pack mit 3 Angles",
       "12 Video-Varianten in 2 Formaten",
-      "1 Review-Runde mit Brand-Freigabe",
-      "Exportfertige Asset-Lieferung",
+      "1 Review-Runde mit Team-Freigabe",
+      "Exportfertige Assets für Paid Social",
     ],
   },
   {
@@ -20,8 +20,8 @@ export const pricingPlans: PricingPlan[] = [
     price: "5.900",
     cadence: "pro Monat",
     description:
-      "Der laufende Produktionsmodus für Teams mit regelmäßigen Kampagnen und wachsendem Testing-Need.",
-    audience: "Für Brands mit wiederkehrendem Paid-Social oder Creator-Output.",
+      "Der laufende Produktionsmodus für Teams, die Creative systematisch testen und regelmäßig neue Varianten brauchen.",
+    audience: "Für Marken mit wiederkehrendem Paid-Social-Bedarf oder laufender Creative-Rotation.",
     featured: true,
     deliverables: [
       "Monatlicher Kampagnen-Stack für mehrere Messaging-Routen",
@@ -35,12 +35,12 @@ export const pricingPlans: PricingPlan[] = [
     price: "Individuell",
     cadence: "Multi-Marke / Team",
     description:
-      "Für Inhouse-Teams oder Agenturgruppen mit mehreren Marken, Stakeholdern und parallelen Ausspielungen.",
-    audience: "Für größere Teams mit Freigabeprozessen und mehreren Marken-Streams.",
+      "Für Teams und Agenturstrukturen mit mehreren Marken, Stakeholdern und parallelen Freigabewegen.",
+    audience: "Für größere Setups mit mehreren Workstreams und abgestimmter Planungslogik.",
     deliverables: [
       "Mehrere Marken-Workstreams",
-      "Gemeinsame Planungsrituale",
-      "Team-basierte Review-Spur",
+      "Gemeinsame Kampagnen- und Review-Rituale",
+      "Teambasierte Freigabe-Spur",
       "Flexible Export- und Rechte-Logik",
     ],
   },

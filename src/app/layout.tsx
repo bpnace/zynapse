@@ -30,7 +30,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="de">
+    <html lang="de" suppressHydrationWarning>
       <body className="antialiased">
         <script
           type="application/ld+json"

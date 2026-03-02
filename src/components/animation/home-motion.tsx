@@ -25,9 +25,30 @@ export function HomeMotion({ children }: HomeMotionProps) {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const hero = container.querySelector<HTMLElement>("[data-hero]");
+        const heroImage = container.querySelector<HTMLElement>("[data-hero-image]");
         const sections = Array.from(
           container.querySelectorAll<HTMLElement>("[data-reveal-section]"),
         );
+
+        if (hero && heroImage) {
+          gsap.fromTo(
+            heroImage,
+            {
+              yPercent: -6,
+            },
+            {
+              yPercent: 8,
+              ease: "none",
+              scrollTrigger: {
+                trigger: hero,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            },
+          );
+        }
 
         sections.forEach((section) => {
           const heading = section.querySelectorAll<HTMLElement>("[data-animate-heading]");

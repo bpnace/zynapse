@@ -49,16 +49,16 @@ export function FinalCta() {
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Start mit einem <span className="title-accent">kompakten Briefing</span>.
-              {" "}Den Rest baut das System.
+              Der Einstieg beginnt mit einem{" "}
+              <span className="title-accent">kompakten Briefing</span>. Nicht mit
+              einem langen Setup-Call.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              Ein Satz, ein klarer CTA und nur die fünf wichtigsten Felder. Danach
-              übernimmt der vollständige Wizard mit Review, Kontaktangaben und
-              finaler Übergabe.
+              Fünf Felder reichen für den Start. Danach übernimmt der vollständige
+              Anfrage-Flow mit Kontext, Review und Übergabe in die Kampagnenplanung.
             </p>
           </div>
           <form
@@ -108,7 +108,7 @@ export function FinalCta() {
                     goal: event.target.value,
                   }))
                 }
-                placeholder="Awareness oder Conversion"
+                placeholder="z. B. Launch, Testing, Conversion"
               />
             </label>
             <label className="field-shell">
@@ -138,14 +138,14 @@ export function FinalCta() {
                     budgetRange: event.target.value,
                   }))
                 }
-                placeholder="z. B. 3k bis 8k pro Monat"
+                placeholder="z. B. 3.000 bis 8.000 Euro pro Monat"
               />
             </label>
             <button
               type="submit"
               className={`${buttonStyles({ size: "lg" })} md:col-span-2`}
             >
-              Kampagne anfragen
+              Marken-Anfrage starten
             </button>
           </form>
         </div>

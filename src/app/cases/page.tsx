@@ -5,7 +5,7 @@ import { caseStudies } from "@/lib/content/cases";
 export const metadata = buildMetadata({
   title: "Referenzen | Zynapse",
   description:
-    "Beispielhafte Referenzen und eine strukturierte Bibliothek für Kampagnen-Outputs.",
+    "Beispielhafte Referenzen und die Struktur, in der spätere echte Cases erzählt werden.",
   path: "/cases",
 });
 
@@ -14,8 +14,8 @@ export default function CasesPage() {
     <>
       <PageHero
         label="Referenzen"
-        title="Fertige Strukturen für spätere echte Performance-Referenzen."
-        description="Die v1 startet mit realistischen Platzhaltern, aber die Informationsarchitektur ist bereits auf echte Referenzen ausgelegt: Herausforderung, Ergebnis, Kennzahlen und Kampagnen-Pack."
+        title="So werden echte Performance-Cases später erzählt."
+        description="Die ersten Beispiele sind modellhaft. Die Struktur dahinter ist aber genau auf das ausgelegt, was Teams später sehen wollen: Ausgangslage, Lösung, Ergebnis und Kennzahlen."
         badges={["Herausforderung", "Ergebnis", "Kennzahlen"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
