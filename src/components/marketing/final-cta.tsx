@@ -39,17 +39,18 @@ export function FinalCta() {
       data-reveal-section
       data-stagger="dense"
     >
-      <div className="section-card overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
+      <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 shadow-[0_24px_54px_rgba(31,36,48,0.1)] sm:p-9">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
           <div className="space-y-5">
             <span className="eyebrow" data-animate-heading>
               Jetzt starten
             </span>
             <h2
-              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-5xl"
+              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Start mit einem kompakten Briefing. Den Rest baut das System.
+              Start mit einem <span className="title-accent">kompakten Briefing</span>.
+              {" "}Den Rest baut das System.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
@@ -62,7 +63,7 @@ export function FinalCta() {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="grid gap-4 md:grid-cols-2"
+            className="section-surface-paper grid gap-4 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.14)] p-5 md:grid-cols-2 md:p-6"
             data-animate-item
           >
             <label className="field-shell">

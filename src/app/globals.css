@@ -13,8 +13,12 @@
   --surface: rgba(255, 255, 255, 0.92);
   --surface-strong: rgba(251, 244, 232, 0.98);
   --surface-muted: rgba(255, 245, 235, 0.72);
+  --surface-warm: rgba(255, 246, 236, 0.96);
+  --surface-amber: rgba(251, 236, 215, 0.92);
+  --surface-paper: rgba(255, 252, 248, 0.98);
   --line: rgba(56, 67, 84, 0.12);
   --line-strong: rgba(56, 67, 84, 0.22);
+  --copy-strong: #2f3745;
   --copy-soft: #5b6472;
   --copy-body: #434c5a;
   --copy-muted: var(--copy-soft);
@@ -76,6 +80,20 @@ select {
   color: transparent;
 }
 
+.title-accent {
+  background: linear-gradient(120deg, var(--foreground) 0%, var(--accent) 56%, #f0a84d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.title-accent-soft {
+  background: linear-gradient(120deg, var(--accent-strong) 0%, #f0a84d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -106,6 +124,41 @@ select {
   border: 1px solid rgba(56, 67, 84, 0.08);
   background: rgba(255, 252, 248, 0.76);
   backdrop-filter: blur(16px);
+}
+
+.section-surface-paper {
+  border-color: rgba(56, 67, 84, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 245, 239, 0.98)),
+    var(--surface-paper);
+  box-shadow:
+    0 14px 34px rgba(31, 36, 48, 0.06),
+    0 2px 8px rgba(31, 36, 48, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
+}
+
+.section-surface-warm {
+  border-color: rgba(191, 106, 83, 0.14);
+  background:
+    radial-gradient(circle at top right, rgba(249, 197, 106, 0.18), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(246, 107, 76, 0.1), transparent 30%),
+    linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(249, 238, 225, 0.96)),
+    var(--surface-warm);
+  box-shadow:
+    0 18px 42px rgba(31, 36, 48, 0.08),
+    0 4px 12px rgba(31, 36, 48, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.section-surface-contrast {
+  border-color: rgba(56, 67, 84, 0.16);
+  background:
+    linear-gradient(180deg, rgba(252, 253, 254, 0.98), rgba(242, 245, 248, 0.96)),
+    rgba(246, 248, 251, 0.95);
+  box-shadow:
+    0 12px 28px rgba(31, 36, 48, 0.06),
+    0 2px 8px rgba(31, 36, 48, 0.025),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 .field-shell {
@@ -169,6 +222,23 @@ select {
   filter: blur(18px);
   content: "";
   z-index: -1;
+}
+
+.shadow-bottom {
+  position: relative;
+  border-bottom: 1px solid rgba(56, 67, 84, 0.1);
+}
+
+.shadow-bottom::after {
+  position: absolute;
+  right: 0;
+  bottom: -2.5rem;
+  left: 0;
+  height: 2.5rem;
+  background: linear-gradient(180deg, rgba(31, 36, 48, 0.12), rgba(31, 36, 48, 0));
+  opacity: 0.26;
+  pointer-events: none;
+  content: "";
 }
 
 @keyframes float {

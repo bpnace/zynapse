@@ -12,6 +12,7 @@ export function PricingTeaser() {
         <SectionHeading
           eyebrow="Preise"
           title="Drei Einstiegspunkte statt eines komplexen Modells."
+          accent="Drei Einstiegspunkte"
           copy="Die Preislogik bleibt bewusst kompakt. Ziel ist nicht Tarifdetail, sondern ein klarer Startpunkt für unterschiedliche Teamgrößen."
         />
         <ButtonLink href="/pricing" variant="secondary" className="lg:self-end">
@@ -22,12 +23,12 @@ export function PricingTeaser() {
         {pricingPlans.map((plan) => (
           <article
             key={plan.name}
-            className={`section-card rounded-[var(--radius-card)] p-6 ${plan.featured ? "ring-1 ring-[rgba(156,244,215,0.28)]" : ""}`}
+            className={`section-card rounded-[var(--radius-card)] p-6 ${plan.featured ? "section-surface-warm ring-1 ring-[rgba(224,94,67,0.18)]" : "section-surface-paper border-t-[3px] border-t-[rgba(56,67,84,0.14)]"}`}
             data-animate-item
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="font-display text-3xl font-semibold tracking-[-0.05em]">
+                <p className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
                   {plan.name}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
@@ -40,7 +41,7 @@ export function PricingTeaser() {
                 </span>
               ) : null}
             </div>
-            <p className="mt-6 font-display text-5xl font-semibold tracking-[-0.06em]">
+            <p className="mt-6 font-display text-5xl font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
               {plan.price}
             </p>
             <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[var(--copy-soft)]">

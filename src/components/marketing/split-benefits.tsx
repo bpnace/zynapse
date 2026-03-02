@@ -7,27 +7,42 @@ function BenefitColumn({
   benefits,
   href,
   cta,
+  tone,
 }: {
   title: string;
   copy: string;
   benefits: string[];
   href: string;
   cta: string;
+  tone: "paper" | "warm";
 }) {
+  const surfaceClass =
+    tone === "warm" ? "section-surface-warm border-[rgba(191,106,83,0.14)]" : "section-surface-paper";
+
   return (
-    <article className="section-card rounded-[var(--radius-card)] p-7" data-animate-item>
+    <article className={`section-card rounded-[var(--radius-card)] p-7 ${surfaceClass}`} data-animate-item>
       <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
         {title}
       </p>
-      <h3 className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
-        {title === "Für Brands" ? "Planbarer Output ohne Agentur Overhead" : "Kampagnenplanung wird zur skalierbaren Kernleistung"}
+      <h3 className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl">
+        {title === "Für Brands" ? (
+          <>
+            Planbarer <span className="title-accent">Output</span> ohne Agentur
+            Overhead
+          </>
+        ) : (
+          <>
+            Kampagnenplanung wird zur{" "}
+            <span className="title-accent">skalierbaren Kernleistung</span>
+          </>
+        )}
       </h3>
       <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">{copy}</p>
       <ul className="mt-8 space-y-4">
         {benefits.map((benefit) => (
           <li
             key={benefit}
-            className="rounded-[var(--radius-subcard)] border border-[rgba(56,67,84,0.12)] bg-[rgba(255,255,255,0.68)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]"
+            className="rounded-[0.55rem] border border-[rgba(56,67,84,0.12)] bg-[rgba(255,255,255,0.68)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]"
           >
             {benefit}
           </li>
@@ -52,6 +67,7 @@ export function SplitBenefits() {
         benefits={brandBenefits}
         href="/brands"
         cta="Mehr für Brands"
+        tone="paper"
       />
       <BenefitColumn
         title="Für Manager"
@@ -59,6 +75,7 @@ export function SplitBenefits() {
         benefits={managerBenefits}
         href="/managers"
         cta="Mehr für Manager"
+        tone="warm"
       />
     </section>
   );

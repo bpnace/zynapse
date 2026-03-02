@@ -2,6 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { videoVariants } from "@/lib/mock-data/studio";
 
+const outputAccentClasses = [
+  "border-t-[3px] border-t-[rgba(224,94,67,0.24)]",
+  "border-t-[3px] border-t-[rgba(249,197,106,0.3)]",
+  "border-t-[3px] border-t-[rgba(56,67,84,0.2)]",
+] as const;
+
 export function VideoOutputGrid() {
   return (
     <section
@@ -12,13 +18,14 @@ export function VideoOutputGrid() {
       <SectionHeading
         eyebrow="Video-Output-Vorschau"
         title="Später echte Beispiele. Heute schon die richtige Struktur."
+        accent="richtige Struktur"
         copy="Jede Kachel zeigt, wie Zynapse Output denkt: Angle, Hook, Format, Länge und Ziel. Nicht als lose Clips, sondern als Creative-System."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {videoVariants.map((variant) => (
+        {videoVariants.map((variant, index) => (
           <article
             key={variant.id}
-            className="section-card rounded-[var(--radius-card)] p-5"
+            className={`section-card section-surface-paper rounded-[var(--radius-card)] p-5 ${outputAccentClasses[index % outputAccentClasses.length]}`}
             data-animate-item
           >
             <div className="flex items-center justify-between">
@@ -27,7 +34,7 @@ export function VideoOutputGrid() {
               </span>
               <Badge tone="accent">{variant.format}</Badge>
             </div>
-            <h3 className="mt-4 font-display text-2xl font-semibold tracking-[-0.04em]">
+            <h3 className="mt-4 font-display text-[1.7rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
               {variant.hookTitle}
             </h3>
             <div className="mt-4 flex flex-wrap gap-1.5">

@@ -11,16 +11,17 @@ export function TrustSection() {
       <SectionHeading
         eyebrow="Vertrauen & Sicherheit"
         title="Video- und AI-nahe Prozesse brauchen sichtbare Kontrolle."
+        accent="sichtbare Kontrolle"
         copy="Gerade bei automatisierter Produktion zählt nicht nur Output-Geschwindigkeit. Entscheidend sind Rechte, Review, Brand Safety und nachvollziehbare Freigaben."
       />
       <div className="grid gap-4 md:grid-cols-2">
         {trustSignals.map((signal) => (
           <article
             key={signal.title}
-            className="section-card rounded-[var(--radius-card)] p-6"
+            className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
             data-animate-item
           >
-            <h3 className="font-display text-2xl font-semibold tracking-[-0.04em]">
+            <h3 className="font-display text-[1.7rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
               {signal.title}
             </h3>
             <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">
@@ -30,7 +31,7 @@ export function TrustSection() {
         ))}
       </div>
       <div
-        className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,252,247,0.9)] px-6 py-5"
+        className="section-surface-contrast flex flex-wrap items-center justify-between gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] px-6 py-5"
         data-animate-item
       >
         <p className="max-w-2xl text-sm leading-6 text-[color:var(--copy-body)]">
