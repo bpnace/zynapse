@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fcf8f2;
+  --background: #f0f0f0;
   --foreground: #1f2430;
   --font-body: "Avenir Next", "Segoe UI", sans-serif;
   --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
@@ -35,23 +35,9 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-   linear-gradient(180deg, #fffdfa 0%, var(--background) 42%, #fff9f2 100%);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
-}
-
-body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.5;
-  background-image:
-    linear-gradient(rgba(44, 52, 66, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(44, 52, 66, 0.045) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(circle at center, black 42%, transparent 88%);
-  content: "";
 }
 
 main {
@@ -188,12 +174,6 @@ select {
 
 .float-slow {
   animation: float 7s ease-in-out infinite;
-}
-
-@media (max-width: 640px) {
-  body::before {
-    background-size: 48px 48px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
