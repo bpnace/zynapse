@@ -1,0 +1,65 @@
+import { ButtonLink } from "@/components/ui/button";
+import { brandBenefits, managerBenefits } from "@/lib/content/site";
+
+function BenefitColumn({
+  title,
+  copy,
+  benefits,
+  href,
+  cta,
+}: {
+  title: string;
+  copy: string;
+  benefits: string[];
+  href: string;
+  cta: string;
+}) {
+  return (
+    <article className="section-card rounded-[2rem] p-7" data-animate-item>
+      <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
+        {title}
+      </p>
+      <h3 className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+        {title === "Für Brands" ? "Planbarer Output ohne Agentur Overhead" : "Kampagnenplanung wird zur skalierbaren Kernleistung"}
+      </h3>
+      <p className="mt-4 text-[color:var(--copy-muted)]">{copy}</p>
+      <ul className="mt-8 space-y-4">
+        {benefits.map((benefit) => (
+          <li
+            key={benefit}
+            className="rounded-[1.3rem] border border-[color:var(--line)] bg-white/[0.04] px-4 py-3 text-sm"
+          >
+            {benefit}
+          </li>
+        ))}
+      </ul>
+      <ButtonLink href={href} variant="secondary" className="mt-8">
+        {cta}
+      </ButtonLink>
+    </article>
+  );
+}
+
+export function SplitBenefits() {
+  return (
+    <section
+      className="mx-auto grid w-full max-w-6xl gap-5 px-6 py-14 sm:px-8 lg:grid-cols-2 lg:px-10"
+      data-reveal-section
+    >
+      <BenefitColumn
+        title="Für Brands"
+        copy="Du kaufst keine diffuse Plattform, sondern einen strukturierten Weg von Kampagnenbrief zu fertigem Creative-Output."
+        benefits={brandBenefits}
+        href="/brands"
+        cta="Mehr für Brands"
+      />
+      <BenefitColumn
+        title="Für Manager"
+        copy="Dein strategischer Wert wird nicht von Produktionschaos verdrängt. Du steuerst Kampagnenlogik, Zynapse skaliert die Umsetzung."
+        benefits={managerBenefits}
+        href="/managers"
+        cta="Mehr für Manager"
+      />
+    </section>
+  );
+}

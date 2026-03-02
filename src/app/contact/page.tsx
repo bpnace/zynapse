@@ -1,0 +1,34 @@
+import { PageHero } from "@/components/ui/page-hero";
+import { buildMetadata } from "@/lib/seo";
+import { contactChannels } from "@/lib/content/site";
+
+export const metadata = buildMetadata({
+  title: "Kontakt | Zynapse",
+  description:
+    "Kontaktpunkte für Sales, Manager Network und Operations.",
+  path: "/contact",
+});
+
+export default function ContactPage() {
+  return (
+    <>
+      <PageHero
+        label="Kontakt"
+        title="Drei direkte Kontaktpfade statt eines allgemeinen Kontaktpostfachs."
+        description="Sales, Manager Network und Operations sind getrennt gedacht, damit Briefings, Bewerbungen und operative Fragen nicht im selben Kanal landen."
+        badges={["Sales", "Network", "Operations"]}
+      />
+      <section className="mx-auto grid w-full max-w-6xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
+        {contactChannels.map((channel) => (
+          <article key={channel.label} className="section-card rounded-[1.9rem] p-6">
+            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
+              {channel.label}
+            </p>
+            <h2 className="mt-4 text-2xl font-semibold">{channel.value}</h2>
+            <p className="mt-4 text-[color:var(--copy-muted)]">{channel.copy}</p>
+          </article>
+        ))}
+      </section>
+    </>
+  );
+}
