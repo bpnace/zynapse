@@ -19,7 +19,6 @@ export default function HomePage() {
       <VideoOutputGrid />
       <SplitBenefits />
       <TrustSection />
-      <PricingTeaser />
       <FinalCta />
     </HomeMotion>
   );

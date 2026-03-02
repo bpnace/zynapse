@@ -50,6 +50,27 @@ export function HomeMotion({ children }: HomeMotionProps) {
           );
         }
 
+        const parallaxWindows = Array.from(
+          container.querySelectorAll<HTMLElement>("[data-parallax-window]"),
+        );
+
+        parallaxWindows.forEach((el) => {
+          gsap.fromTo(
+            el,
+            { yPercent: 8 },
+            {
+              yPercent: -8,
+              ease: "none",
+              scrollTrigger: {
+                trigger: el,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
+            },
+          );
+        });
+
         sections.forEach((section) => {
           const heading = section.querySelectorAll<HTMLElement>("[data-animate-heading]");
           const copy = section.querySelectorAll<HTMLElement>("[data-animate-copy]");
