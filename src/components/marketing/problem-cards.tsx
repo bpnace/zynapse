@@ -4,11 +4,11 @@ import { problemCards } from "@/lib/content/site";
 export function ProblemCards() {
   return (
     <section
-      className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
     >
       <SectionHeading
-        eyebrow="Clarity in 15 seconds"
+        eyebrow="Klarheit in 15 Sekunden"
         title="Brands brauchen keinen Marketplace-Pitch. Sie brauchen Entscheidungssicherheit."
         copy="Zynapse nimmt die drei größten Unsicherheiten aus dem Prozess: Was wird überhaupt gebraucht, wer ist wofür verantwortlich und wie kommt daraus verlässlich Output."
       />

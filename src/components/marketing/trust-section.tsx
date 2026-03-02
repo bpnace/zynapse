@@ -5,11 +5,11 @@ import { trustSignals } from "@/lib/content/site";
 export function TrustSection() {
   return (
     <section
-      className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
     >
       <SectionHeading
-        eyebrow="Trust & safety"
+        eyebrow="Vertrauen & Sicherheit"
         title="Video- und AI-nahe Prozesse brauchen sichtbare Kontrolle."
         copy="Gerade bei automatisierter Produktion zählt nicht nur Output-Geschwindigkeit. Entscheidend sind Rechte, Review, Brand Safety und nachvollziehbare Freigaben."
       />

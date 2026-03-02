@@ -4,13 +4,13 @@ import { campaignAngles } from "@/lib/mock-data/studio";
 export function CampaignPackPreview() {
   return (
     <section
-      className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:px-10"
+      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Campaign logic first"
+          eyebrow="Kampagnenlogik zuerst"
           title="Der Differenzierer ist nicht das Video. Es ist das Kampagnen-Pack davor."
           copy="Zynapse verkauft keine isolierten Clips. Jede Anfrage wird zuerst in Angles, Hooks, CTA-Varianten, Cuts und Längen übersetzt. Dadurch wird Video-Output planbar und testbar."
         />
@@ -26,14 +26,14 @@ export function CampaignPackPreview() {
         <div className="flex items-center justify-between">
           <div>
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
-              Example Campaign Pack
+              Beispiel-Kampagnen-Pack
             </p>
             <h3 className="mt-2 font-display text-3xl font-semibold tracking-[-0.05em]">
-              Creative Testing Stack
+              Creative-Testing-Struktur
             </h3>
           </div>
           <span className="rounded-full bg-[rgba(156,244,215,0.14)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--mint)]">
-            Review-ready
+            Freigabebereit
           </span>
         </div>
         <div className="mt-6 grid gap-4">

@@ -12,7 +12,7 @@ export function PageHero({
   badges: string[];
 }) {
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 pt-32 pb-10 sm:px-8 lg:px-10">
+    <section className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-32 pb-10 sm:px-8 lg:px-10">
       <span className="eyebrow">{label}</span>
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,0.28fr)] lg:items-end">
         <div className="space-y-6">

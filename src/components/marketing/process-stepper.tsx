@@ -4,7 +4,7 @@ import { processSteps } from "@/lib/content/site";
 export function ProcessStepper() {
   return (
     <section
-      className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >

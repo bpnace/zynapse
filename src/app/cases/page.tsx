@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo";
 import { caseStudies } from "@/lib/content/cases";
 
 export const metadata = buildMetadata({
-  title: "Cases | Zynapse",
+  title: "Referenzen | Zynapse",
   description:
-    "Beispielhafte Case Studies und eine strukturierte Library für Kampagnen-Outputs.",
+    "Beispielhafte Referenzen und eine strukturierte Bibliothek für Kampagnen-Outputs.",
   path: "/cases",
 });
 
@@ -13,12 +13,12 @@ export default function CasesPage() {
   return (
     <>
       <PageHero
-        label="Case Studies"
-        title="Library-ready Strukturen für spätere echte Performance-Cases."
-        description="Die v1 startet mit realistischen Platzhaltern, aber die Informationsarchitektur ist bereits auf echte Referenzen ausgelegt: Challenge, Outcome, Metrics und Kampagnen-Pack."
-        badges={["Challenge", "Outcome", "Metrics"]}
+        label="Referenzen"
+        title="Fertige Strukturen für spätere echte Performance-Referenzen."
+        description="Die v1 startet mit realistischen Platzhaltern, aber die Informationsarchitektur ist bereits auf echte Referenzen ausgelegt: Herausforderung, Ergebnis, Kennzahlen und Kampagnen-Pack."
+        badges={["Herausforderung", "Ergebnis", "Kennzahlen"]}
       />
-      <section className="mx-auto grid w-full max-w-6xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
+      <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {caseStudies.map((entry) => (
           <article key={entry.slug} className="section-card rounded-[1.9rem] p-6">
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--gold)]">

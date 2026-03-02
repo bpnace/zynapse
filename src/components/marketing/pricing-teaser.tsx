@@ -5,17 +5,17 @@ import { pricingPlans } from "@/lib/content/pricing";
 export function PricingTeaser() {
   return (
     <section
-      className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
     >
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
-          eyebrow="Pricing"
+          eyebrow="Preise"
           title="Drei Einstiegspunkte statt eines komplexen Modells."
           copy="Die Preislogik bleibt bewusst kompakt. Ziel ist nicht Tarifdetail, sondern ein klarer Startpunkt für unterschiedliche Teamgrößen."
         />
         <ButtonLink href="/pricing" variant="secondary" className="lg:self-end">
-          Volles Pricing
+          Alle Preise ansehen
         </ButtonLink>
       </div>
       <div className="grid gap-5 lg:grid-cols-3">
@@ -36,7 +36,7 @@ export function PricingTeaser() {
               </div>
               {plan.featured ? (
                 <span className="rounded-full bg-[rgba(156,244,215,0.14)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--mint)]">
-                  Most used
+                  Beliebteste
                 </span>
               ) : null}
             </div>

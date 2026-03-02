@@ -12,7 +12,7 @@ export const pricingPlans: PricingPlan[] = [
       "1 Kampagnen-Pack mit 3 Angles",
       "12 Video-Varianten in 2 Formaten",
       "1 Review-Runde mit Brand-Freigabe",
-      "Export-ready Asset Delivery",
+      "Exportfertige Asset-Lieferung",
     ],
   },
   {
@@ -26,21 +26,21 @@ export const pricingPlans: PricingPlan[] = [
     deliverables: [
       "Monatlicher Kampagnen-Stack für mehrere Messaging-Routen",
       "24 bis 36 Video-Varianten",
-      "Manager-led Testing Roadmap",
+      "Manager-geführte Testing-Roadmap",
       "Priorisierte Iterations-Slots",
     ],
   },
   {
     name: "Pro",
-    price: "Custom",
-    cadence: "Multi-Brand / Team",
+    price: "Individuell",
+    cadence: "Multi-Marke / Team",
     description:
       "Für Inhouse-Teams oder Agenturgruppen mit mehreren Marken, Stakeholdern und parallelen Ausspielungen.",
-    audience: "Für größere Teams mit Freigabeprozessen und mehreren Brand Streams.",
+    audience: "Für größere Teams mit Freigabeprozessen und mehreren Marken-Streams.",
     deliverables: [
-      "Mehrere Brand Workstreams",
-      "Gemeinsame Planning-Rituale",
-      "Team-basierte Review-Lane",
+      "Mehrere Marken-Workstreams",
+      "Gemeinsame Planungsrituale",
+      "Team-basierte Review-Spur",
       "Flexible Export- und Rechte-Logik",
     ],
   },

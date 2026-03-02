@@ -19,7 +19,7 @@ import {
   TextInput,
 } from "@/components/forms/form-primitives";
 
-const focusChannelOptions = ["TikTok", "Instagram Reels", "YouTube Shorts", "Meta Ads", "UGC Concepts"];
+const focusChannelOptions = ["TikTok", "Instagram Reels", "YouTube Shorts", "Meta Ads", "UGC-Konzepte"];
 
 export function ManagerApplicationForm() {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -98,7 +98,7 @@ export function ManagerApplicationForm() {
 
         if (!response.ok) {
           const payload = (await response.json()) as { error?: string };
-          throw new Error(payload.error ?? "Submission failed.");
+          throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
         }
 
         window.localStorage.removeItem(MANAGER_APPLICATION_STORAGE_KEY);
@@ -118,7 +118,7 @@ export function ManagerApplicationForm() {
   if (isSuccess) {
     return (
       <div className="section-card rounded-[2rem] p-8">
-        <span className="eyebrow">Manager Track</span>
+        <span className="eyebrow">Manager-Track</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
           Bewerbung eingereicht.
         </h2>
@@ -134,7 +134,7 @@ export function ManagerApplicationForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="section-card rounded-[2rem] p-6 sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.32fr)_minmax(0,0.68fr)]">
         <div className="space-y-5">
-          <span className="eyebrow">Manager Application</span>
+          <span className="eyebrow">Manager-Bewerbung</span>
           <h2 className="font-display text-4xl font-semibold tracking-[-0.05em]">
             Qualifizierung statt generischer Lead-Form.
           </h2>
@@ -183,7 +183,7 @@ export function ManagerApplicationForm() {
             <Field label="Verfügbarkeit" error={errors.availability?.message}>
               <TextInput
                 {...register("availability")}
-                placeholder="z. B. 2 neue Brands / Monat"
+                placeholder="z. B. 2 neue Marken / Monat"
               />
             </Field>
             <Field
@@ -203,7 +203,7 @@ export function ManagerApplicationForm() {
           >
             <TextareaInput
               {...register("caseSummary")}
-              placeholder="Welche Art von Kampagnen, Brands oder Growth-Situationen hast du bereits geführt?"
+              placeholder="Welche Art von Kampagnen, Marken oder Growth-Situationen hast du bereits geführt?"
             />
           </Field>
           {submitError ? (

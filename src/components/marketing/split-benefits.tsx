@@ -43,7 +43,7 @@ function BenefitColumn({
 export function SplitBenefits() {
   return (
     <section
-      className="mx-auto grid w-full max-w-6xl gap-5 px-6 py-14 sm:px-8 lg:grid-cols-2 lg:px-10"
+      className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-14 sm:px-8 lg:grid-cols-2 lg:px-10"
       data-reveal-section
     >
       <BenefitColumn

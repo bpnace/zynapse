@@ -5,12 +5,12 @@ import { videoVariants } from "@/lib/mock-data/studio";
 export function VideoOutputGrid() {
   return (
     <section
-      className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="Video output preview"
+        eyebrow="Video-Output-Vorschau"
         title="Später echte Beispiele. Heute schon die richtige Struktur."
         copy="Jede Kachel zeigt, wie Zynapse Output denkt: Angle, Hook, Format, Länge und Ziel. Nicht als lose Clips, sondern als Creative-System."
       />
@@ -33,7 +33,7 @@ export function VideoOutputGrid() {
             <div className="mt-5 flex flex-wrap gap-2">
               <Badge>{variant.length}</Badge>
               <Badge tone="mint">{variant.objective}</Badge>
-              <Badge>Hook Variant</Badge>
+              <Badge>Hook-Variante</Badge>
             </div>
           </article>
         ))}

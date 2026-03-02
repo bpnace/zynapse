@@ -35,7 +35,7 @@ export function FinalCta() {
 
   return (
     <section
-      className="mx-auto w-full max-w-6xl px-6 py-16 sm:px-8 lg:px-10"
+      className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
@@ -43,7 +43,7 @@ export function FinalCta() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
           <div className="space-y-5">
             <span className="eyebrow" data-animate-heading>
-              Final CTA
+              Jetzt starten
             </span>
             <h2
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-5xl"
@@ -126,7 +126,7 @@ export function FinalCta() {
               />
             </label>
             <label className="field-shell md:col-span-2">
-              <span className="field-label">Budget Range</span>
+              <span className="field-label">Budgetrahmen</span>
               <input
                 required
                 className="field-input"

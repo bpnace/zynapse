@@ -18,7 +18,7 @@ export default function PricingPage() {
         description="Die Pricing-Seite ist auf erste Entscheidungen optimiert: einmaliger Launch, laufender Growth-Modus oder Team-Setup für mehrere Brands."
         badges={["Starter", "Growth", "Pro"]}
       />
-      <section className="mx-auto grid w-full max-w-6xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
+      <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {pricingPlans.map((plan) => (
           <article
             key={plan.name}

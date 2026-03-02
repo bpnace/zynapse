@@ -2,17 +2,17 @@ import { BrandInquiryWizard } from "@/components/forms/brand-inquiry/brand-inqui
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Brand Inquiry | Zynapse",
+  title: "Marken-Anfrage | Zynapse",
   description:
-    "Geführter Kampagnen-Intake für Brands mit klaren Schritten von Branche bis Review.",
+    "Geführte Kampagnen-Anfrage für Marken mit klaren Schritten von Branche bis Freigabe.",
   path: "/request",
 });
 
 export default function RequestPage() {
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 pt-32 pb-16 sm:px-8 lg:px-10">
+    <section className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-32 pb-16 sm:px-8 lg:px-10">
       <div className="space-y-5">
-        <span className="eyebrow">Brand Onramp</span>
+        <span className="eyebrow">Marken-Einstieg</span>
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-6xl">
           Kampagne anfragen, ohne erst den gesamten Produktionsprozess zu verstehen.
         </h1>

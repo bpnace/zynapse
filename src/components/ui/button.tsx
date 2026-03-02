@@ -6,11 +6,11 @@ type ButtonSize = "md" | "lg";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--accent)] text-slate-950 shadow-[0_20px_50px_rgba(246,107,76,0.28)] hover:-translate-y-0.5 hover:bg-[#ff7b61]",
+    "bg-[var(--accent)] text-[var(--ink-strong)] shadow-[0_20px_50px_rgba(246,107,76,0.28)] hover:-translate-y-0.5 hover:bg-[#ff7b61]",
   secondary:
-    "border border-[color:var(--line-strong)] bg-white/[0.04] text-[var(--foreground)] hover:-translate-y-0.5 hover:border-[color:var(--mint)] hover:bg-white/[0.06]",
+    "border border-[color:var(--line-strong)] bg-white/80 text-[var(--foreground)] shadow-[0_10px_25px_rgba(31,36,48,0.06)] hover:-translate-y-0.5 hover:border-[color:rgba(246,107,76,0.35)] hover:bg-white",
   ghost:
-    "text-[var(--foreground)] hover:bg-white/[0.04]",
+    "text-[var(--foreground)] hover:bg-[rgba(31,36,48,0.04)]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

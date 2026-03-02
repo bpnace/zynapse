@@ -11,19 +11,19 @@ export const caseStudies: CaseStudyEntry[] = [
       "Das Team hatte genug Rohmaterial, aber keine klare Testing-Struktur und keinen konsistenten Output-Rhythmus.",
     outcome:
       "Zynapse übersetzte den Brief in drei Messaging-Linien und lieferte daraus 18 testbare Varianten.",
-    metrics: ["18 Varianten", "3 Kernangles", "72h bis Review-ready"],
+    metrics: ["18 Varianten", "3 Kernangles", "72h bis freigabebereit"],
   },
   {
     slug: "north-atelier",
     brand: "North Atelier",
-    sector: "Fashion",
+    sector: "Mode",
     summary:
       "Eine visuell starke Marke brauchte mehr Performance-Creatives, ohne den Premium-Look zu verlieren.",
     challenge:
       "Agentur-Output war ästhetisch hochwertig, aber zu langsam und zu schwer in laufende Tests zu übersetzen.",
     outcome:
       "Der Manager führte die Messaging-Strategie, das Studio skalierte daraus neue Hooks, Cuts und Formate.",
-    metrics: ["4:5 + 9:16", "10 Hook Lines", "2 Freigabezyklen"],
+    metrics: ["4:5 + 9:16", "10 Hook-Varianten", "2 Freigabezyklen"],
   },
   {
     slug: "volt-grid",
@@ -35,6 +35,6 @@ export const caseStudies: CaseStudyEntry[] = [
       "Das Team brauchte schnelle Erklärformate für Paid Social, ohne jedes Asset einzeln zu konzipieren.",
     outcome:
       "Aus einem technischen Brief entstand ein klares Kampagnen-Pack mit Segment- und CTA-Logik.",
-    metrics: ["6 Formate", "5 CTA Varianten", "1 gemeinsame Source of Truth"],
+    metrics: ["6 Formate", "5 CTA-Varianten", "1 zentrale Datenquelle"],
   },
 ];

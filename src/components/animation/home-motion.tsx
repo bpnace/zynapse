@@ -25,54 +25,6 @@ export function HomeMotion({ children }: HomeMotionProps) {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const hero = container.querySelector<HTMLElement>("[data-hero]");
-        const heroPanel = container.querySelector<HTMLElement>("[data-hero-panel]");
-        const heroIntro = Array.from(
-          container.querySelectorAll<HTMLElement>("[data-hero-intro]"),
-        );
-        const heroMetrics = Array.from(
-          container.querySelectorAll<HTMLElement>("[data-hero-metric]"),
-        );
-
-        if (hero) {
-          const heroTimeline = gsap.timeline({
-            defaults: {
-              duration: 0.86,
-              ease: "power3.out",
-            },
-          });
-
-          heroTimeline
-            .from(heroIntro, {
-              autoAlpha: 0,
-              y: 28,
-              stagger: 0.1,
-            })
-            .from(
-              heroMetrics,
-              {
-                autoAlpha: 0,
-                y: 20,
-                stagger: 0.08,
-                duration: 0.65,
-              },
-              "-=0.45",
-            );
-
-          if (heroPanel) {
-            heroTimeline.from(
-              heroPanel,
-              {
-                autoAlpha: 0,
-                y: 34,
-                scale: 0.98,
-                duration: 0.95,
-              },
-              "-=0.65",
-            );
-          }
-        }
-
         const sections = Array.from(
           container.querySelectorAll<HTMLElement>("[data-reveal-section]"),
         );
@@ -127,29 +79,6 @@ export function HomeMotion({ children }: HomeMotionProps) {
           }
         });
       });
-
-      mm.add(
-        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-        () => {
-          const hero = container.querySelector<HTMLElement>("[data-hero]");
-          const heroPanel = container.querySelector<HTMLElement>("[data-hero-panel]");
-
-          if (!hero || !heroPanel) {
-            return;
-          }
-
-          gsap.to(heroPanel, {
-            yPercent: -6,
-            ease: "none",
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "bottom top",
-              scrub: 0.8,
-            },
-          });
-        },
-      );
 
       return () => {
         mm.revert();

@@ -46,7 +46,7 @@ const steps = [
     fields: ["notes"] as const,
   },
   {
-    title: "Review",
+    title: "Überprüfung",
     copy: "Jetzt fehlen nur noch die Kontaktangaben für die Übergabe.",
     fields: ["contactName", "workEmail", "company"] as const,
   },
@@ -160,13 +160,13 @@ export function BrandInquiryWizard() {
     if (stepIndex === 3) {
       return (
         <div className="grid gap-5 md:grid-cols-2">
-          <Field label="Budget Range" error={errors.budgetRange?.message}>
+          <Field label="Budgetrahmen" error={errors.budgetRange?.message}>
             <TextInput
               {...register("budgetRange")}
               placeholder="z. B. 3k bis 8k pro Monat"
             />
           </Field>
-          <Field label="Timeline" error={errors.timeline?.message}>
+          <Field label="Zeitplan" error={errors.timeline?.message}>
             <SelectInput {...register("timeline")} defaultValue="">
               <option value="" disabled>
                 Bitte auswählen
@@ -203,7 +203,7 @@ export function BrandInquiryWizard() {
           <Field label="Name" error={errors.contactName?.message}>
             <TextInput {...register("contactName")} placeholder="Max Mustermann" />
           </Field>
-          <Field label="Work Email" error={errors.workEmail?.message}>
+          <Field label="Geschäftliche E-Mail" error={errors.workEmail?.message}>
             <TextInput {...register("workEmail")} placeholder="team@brand.com" />
           </Field>
           <Field label="Firma" error={errors.company?.message}>
@@ -212,7 +212,7 @@ export function BrandInquiryWizard() {
         </div>
         <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-black/20 p-5">
           <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
-            Review
+            Überprüfung
           </p>
           <dl className="mt-4 grid gap-4 md:grid-cols-2">
             {[
@@ -221,7 +221,7 @@ export function BrandInquiryWizard() {
               ["Ziel", getValues("goal")],
               ["Kanal", getValues("channel")],
               ["Budget", getValues("budgetRange")],
-              ["Timeline", getValues("timeline")],
+              ["Zeitplan", getValues("timeline")],
             ].map(([label, value]) => (
               <div key={label}>
                 <dt className="text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
@@ -252,7 +252,7 @@ export function BrandInquiryWizard() {
 
         if (!response.ok) {
           const payload = (await response.json()) as { error?: string };
-          throw new Error(payload.error ?? "Submission failed.");
+          throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
         }
 
         window.localStorage.removeItem(BRAND_INQUIRY_STORAGE_KEY);
@@ -285,7 +285,7 @@ export function BrandInquiryWizard() {
           <ButtonLink href="/" variant="secondary">
             Zur Landing
           </ButtonLink>
-          <ButtonLink href="/cases">Cases ansehen</ButtonLink>
+          <ButtonLink href="/cases">Referenzen ansehen</ButtonLink>
         </div>
       </div>
     );
@@ -295,7 +295,7 @@ export function BrandInquiryWizard() {
     <div className="section-card rounded-[2rem] p-6 sm:p-8">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <span className="eyebrow">Brand Inquiry Wizard</span>
+          <span className="eyebrow">Marken-Anfrage</span>
           <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em]">
             Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
           </h2>

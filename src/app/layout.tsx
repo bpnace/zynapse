@@ -6,7 +6,7 @@ import { SiteAnalytics } from "@/components/layout/site-analytics";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "From one brief to a finished video campaign",
+  title: "Von einem Brief zur fertigen Videokampagne",
   description: siteConfig.description,
   path: "/",
 });

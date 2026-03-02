@@ -8,10 +8,10 @@ export function Badge({
   tone?: "default" | "accent" | "mint";
 }) {
   const toneStyles = {
-    default: "border-[color:var(--line)] bg-white/[0.05] text-[var(--foreground)]",
+    default: "border-[color:var(--line)] bg-white/80 text-[var(--foreground)]",
     accent:
-      "border-transparent bg-[rgba(246,107,76,0.16)] text-[var(--accent-soft)]",
-    mint: "border-transparent bg-[rgba(156,244,215,0.14)] text-[var(--mint)]",
+      "border-transparent bg-[rgba(246,107,76,0.14)] text-[var(--accent-soft)]",
+    mint: "border-transparent bg-[rgba(156,244,215,0.18)] text-[#317d65]",
   };
 
   return (

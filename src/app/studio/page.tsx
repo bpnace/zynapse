@@ -7,7 +7,7 @@ import { campaignAngles, studioTimeline, videoVariants } from "@/lib/mock-data/s
 export const metadata = buildMetadata({
   title: "Studio | Zynapse",
   description:
-    "Das Zynapse Studio visualisiert, wie aus einem Brand-Intake ein Kampagnen-Pack und daraus skalierter Video-Output wird.",
+    "Das Zynapse Studio visualisiert, wie aus einer Marken-Anfrage ein Kampagnen-Pack und daraus skalierter Video-Output wird.",
   path: "/studio",
 });
 
@@ -18,9 +18,9 @@ export default function StudioPage() {
         label="Studio"
         title="Der geführte Flow von Anfrage zu Kampagnenlogik zu Varianten."
         description="Das Studio ist in v1 eine produktnahe Demo-Oberfläche. Es zeigt nicht jeden internen Schritt, sondern macht sichtbar, wie Briefing, Kampagnenstruktur und Output zusammenhängen."
-        badges={["Input", "Campaign Pack", "Review", "Export"]}
+        badges={["Eingabe", "Kampagnen-Pack", "Freigabe", "Export"]}
       />
-      <section className="mx-auto grid w-full max-w-6xl gap-4 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
+      <section className="mx-auto grid w-full max-w-7xl gap-4 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {studioTimeline.map((item) => (
           <article key={item.title} className="section-card rounded-[1.8rem] p-6">
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
@@ -32,10 +32,10 @@ export default function StudioPage() {
           </article>
         ))}
       </section>
-      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:px-10">
+      <section className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:px-10">
         <div className="section-card rounded-[2rem] p-7">
           <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
-            Campaign Stack
+            Kampagnen-Struktur
           </p>
           <div className="mt-6 space-y-4">
             {campaignAngles.map((angle) => (
@@ -63,7 +63,7 @@ export default function StudioPage() {
         </div>
         <div className="section-card rounded-[2rem] p-7">
           <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
-            Output Board
+            Output-Board
           </p>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {videoVariants.slice(0, 8).map((variant) => (
@@ -87,7 +87,7 @@ export default function StudioPage() {
           </div>
         </div>
       </section>
-      <section className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-12 sm:px-8 lg:px-10">
+      <section className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-12 sm:px-8 lg:px-10">
         <div>
           <p className="font-display text-3xl font-semibold tracking-[-0.05em]">
             Studio-Demo gesehen. Jetzt den echten Intake starten.

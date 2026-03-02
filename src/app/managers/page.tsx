@@ -16,7 +16,7 @@ const managerSections = [
     copy: "Dein Wert verschwindet nicht in Operative-Noise. Kampagnenplanung, Hooks und Testing-Logik bleiben als Premium-Leistung präsent.",
   },
   {
-    title: "Wiederkehrende Revenue",
+    title: "Wiederkehrende Einnahmen",
     copy: "Statt Projektchaos entsteht ein laufender Prozess mit klaren Deliverables pro Kunde oder Monat.",
   },
   {
@@ -30,11 +30,11 @@ export default function ManagersPage() {
     <>
       <PageHero
         label="Für Manager"
-        title="Manager-led campaign logic statt unsichtbarer Operative."
+        title="Manager-geführte Kampagnenlogik statt unsichtbarer Operative."
         description="Zynapse richtet sich an Social Media Manager und Strategen, die Kunden über Kampagnenlogik führen wollen, ohne sich im Produktionsbetrieb zu verlieren."
-        badges={["Recurring revenue", "Campaign packs", "No creator chaos"]}
+        badges={["Wiederkehrende Einnahmen", "Kampagnen-Pakete", "Kein Creator-Chaos"]}
       />
-      <section className="mx-auto grid w-full max-w-6xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
+      <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {managerSections.map((section) => (
           <article key={section.title} className="section-card rounded-[1.8rem] p-6">
             <h2 className="font-display text-3xl font-semibold tracking-[-0.05em]">
@@ -44,9 +44,9 @@ export default function ManagersPage() {
           </article>
         ))}
       </section>
-      <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:px-10">
+      <section className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:px-10">
         <div className="space-y-4">
-          <span className="eyebrow">Manager fit</span>
+          <span className="eyebrow">Manager-Profil</span>
           <h2 className="font-display text-4xl leading-[0.95] font-semibold tracking-[-0.05em]">
             Wofür Manager zu Zynapse passen.
           </h2>
@@ -69,10 +69,10 @@ export default function ManagersPage() {
           </ul>
         </div>
       </section>
-      <section className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-12 sm:px-8 lg:px-10">
+      <section className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-12 sm:px-8 lg:px-10">
         <div>
           <p className="font-display text-3xl font-semibold tracking-[-0.05em]">
-            Bewerbe dich auf den Manager Track.
+            Bewirb dich auf den Manager-Track.
           </p>
           <p className="mt-2 text-[color:var(--copy-muted)]">
             Zeig Portfolio, Fokuskanäle und Cases. Der Flow ist auf Qualifizierung gebaut, nicht auf generische Leads.

@@ -4,8 +4,8 @@ export const siteNav: NavItem[] = [
   { href: "/brands", label: "Für Brands" },
   { href: "/managers", label: "Für Manager" },
   { href: "/studio", label: "Studio" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/cases", label: "Cases" },
+  { href: "/pricing", label: "Preise" },
+  { href: "/cases", label: "Referenzen" },
   { href: "/contact", label: "Kontakt" },
 ];
 
@@ -33,7 +33,7 @@ export const problemCards = [
       "Kein Overhead-Pitching, keine offenen Schleifen. Jede Anfrage startet mit einem festen Kampagnen-Setup und sichtbaren Deliverables.",
   },
   {
-    title: "Content Druck jede Woche, Creative Fatigue",
+    title: "Content-Druck jede Woche, Creative Fatigue",
     description:
       "Statt Einzelvideos entsteht ein Testsystem aus Hooks, Angles, Varianten und Formaten, das laufend nachgebaut werden kann.",
   },
@@ -41,8 +41,8 @@ export const problemCards = [
 
 export const processSteps = [
   {
-    title: "Brand Anfrage",
-    owner: "Brand",
+    title: "Marken-Anfrage",
+    owner: "Marke",
     description:
       "Produkt, Ziel, Tonalität, Budget und Kanal werden in einen kompakten Intake übersetzt.",
   },
@@ -53,7 +53,7 @@ export const processSteps = [
       "Angles, Hooks, CTA-Logik und Testing-Struktur werden ausformuliert und priorisiert.",
   },
   {
-    title: "Briefing Paket",
+    title: "Briefing-Paket",
     owner: "System + Manager",
     description:
       "Ein Creator-Pack mit Formatregeln, Messaging und Freigabegrenzen wird gebaut.",
@@ -66,7 +66,7 @@ export const processSteps = [
   },
   {
     title: "Review und Export",
-    owner: "Brand",
+    owner: "Marke",
     description:
       "Freigaben, Iterationen und Exporte laufen zentral, bevor Assets live in Media Buying oder Social Publishing gehen.",
   },
@@ -93,12 +93,12 @@ export const trustSignals = [
       "Jede Produktion wird mit klarer Nutzungslogik, Asset-Grenzen und später erweiterbaren Vertragsbausteinen gedacht.",
   },
   {
-    title: "Brand Safety Controls",
+    title: "Markensicherheit",
     description:
       "Freigaben bleiben beim Brand. Hooks, Claims und CTA-Räume werden vor Export sichtbar gemacht.",
   },
   {
-    title: "Review Prozess",
+    title: "Freigabeprozess",
     description:
       "Assets werden nicht blind ausgespielt. Das Studio liefert Versionen, die vor Veröffentlichung abgenommen werden.",
   },
@@ -121,15 +121,15 @@ export const footerGroups = [
     links: siteNav,
   },
   {
-    title: "Resources",
+    title: "Ressourcen",
     links: [
-      { href: "/request", label: "Brand Intake" },
+      { href: "/request", label: "Marken-Anfrage" },
       { href: "/apply", label: "Manager Bewerbung" },
       { href: "/contact", label: "Kontakt" },
     ],
   },
   {
-    title: "Legal",
+    title: "Rechtliches",
     links: [
       { href: "/legal/imprint", label: "Impressum" },
       { href: "/legal/privacy", label: "Datenschutz" },
@@ -139,17 +139,17 @@ export const footerGroups = [
 
 export const contactChannels = [
   {
-    label: "Sales",
+    label: "Vertrieb",
     value: "hello@zynapse.example",
-    copy: "Briefings, Pricing, Launch-Planung",
+    copy: "Briefings, Preisgestaltung, Launch-Planung",
   },
   {
-    label: "Manager Network",
+    label: "Manager-Netzwerk",
     value: "network@zynapse.example",
     copy: "Bewerbungen, Qualifizierung, Partnerfragen",
   },
   {
-    label: "Operations",
+    label: "Betrieb",
     value: "ops@zynapse.example",
     copy: "Datenschutz, Rechte, Produktionsabläufe",
   },
