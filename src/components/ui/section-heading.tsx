@@ -6,16 +6,17 @@ export function SectionHeading({
   accent,
 }: {
   eyebrow: string;
-  title: string;
+  title: React.ReactNode;
   copy: string;
   align?: "left" | "center";
   accent?: string;
 }) {
   const alignment = align === "center" ? "mx-auto text-center" : "";
-  const accentIndex = accent ? title.indexOf(accent) : -1;
+  const accentIndex =
+    typeof title === "string" && accent ? title.indexOf(accent) : -1;
 
   const titleContent =
-    accent && accentIndex >= 0 ? (
+    typeof title === "string" && accent && accentIndex >= 0 ? (
       <>
         {title.slice(0, accentIndex)}
         <span className="title-accent">{accent}</span>

@@ -27,9 +27,40 @@ export function HomeMotion({ children }: HomeMotionProps) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const hero = container.querySelector<HTMLElement>("[data-hero]");
         const heroImage = container.querySelector<HTMLElement>("[data-hero-image]");
+        const heroIntro = container.querySelector<HTMLElement>("[data-hero-intro]");
         const sections = Array.from(
           container.querySelectorAll<HTMLElement>("[data-reveal-section]"),
         );
+
+        const addWordAnimations = (
+          timeline: gsap.core.Timeline,
+          words: HTMLElement[],
+          startAt = 0.08,
+        ) => {
+          if (!words.length) {
+            return;
+          }
+
+          words.forEach((word, index) => {
+            gsap.set(word, {
+              autoAlpha: 0,
+              yPercent: 32,
+              display: "inline-block",
+              willChange: "transform, opacity",
+            });
+
+            timeline.to(
+              word,
+              {
+                autoAlpha: 1,
+                yPercent: 0,
+                duration: 0.32 + index * 0.08,
+                ease: index % 2 === 0 ? "power3.out" : "power2.out",
+              },
+              startAt + index * 0.06,
+            );
+          });
+        };
 
         if (hero && heroImage) {
           gsap.fromTo(
@@ -48,6 +79,62 @@ export function HomeMotion({ children }: HomeMotionProps) {
               },
             },
           );
+        }
+
+        if (heroIntro) {
+          const heroHeading = heroIntro.querySelectorAll<HTMLElement>(
+            "[data-animate-heading]",
+          );
+          const heroCopy = heroIntro.querySelectorAll<HTMLElement>(
+            "[data-animate-copy]",
+          );
+          const heroItems = heroIntro.querySelectorAll<HTMLElement>(
+            "[data-animate-item]",
+          );
+          const heroWords = Array.from(
+            heroIntro.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          );
+
+          const heroTimeline = gsap.timeline({
+            defaults: {
+              duration: 0.72,
+              ease: "power2.out",
+            },
+          });
+
+          if (heroHeading.length) {
+            heroTimeline.from(heroHeading, {
+              autoAlpha: 0,
+              y: 26,
+              stagger: 0.08,
+            });
+          }
+
+          addWordAnimations(heroTimeline, heroWords, heroHeading.length ? 0.08 : 0);
+
+          if (heroCopy.length) {
+            heroTimeline.from(
+              heroCopy,
+              {
+                autoAlpha: 0,
+                y: 20,
+                stagger: 0.06,
+              },
+              heroHeading.length ? "-=0.42" : 0,
+            );
+          }
+
+          if (heroItems.length) {
+            heroTimeline.from(
+              heroItems,
+              {
+                autoAlpha: 0,
+                y: 22,
+                stagger: 0.08,
+              },
+              heroHeading.length || heroCopy.length ? "-=0.32" : 0,
+            );
+          }
         }
 
         const parallaxWindows = Array.from(
@@ -75,6 +162,9 @@ export function HomeMotion({ children }: HomeMotionProps) {
           const heading = section.querySelectorAll<HTMLElement>("[data-animate-heading]");
           const copy = section.querySelectorAll<HTMLElement>("[data-animate-copy]");
           const items = section.querySelectorAll<HTMLElement>("[data-animate-item]");
+          const words = Array.from(
+            section.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          );
 
           const timeline = gsap.timeline({
             defaults: {
@@ -95,6 +185,8 @@ export function HomeMotion({ children }: HomeMotionProps) {
               stagger: 0.08,
             });
           }
+
+          addWordAnimations(timeline, words, heading.length ? 0.08 : 0);
 
           if (copy.length) {
             timeline.from(

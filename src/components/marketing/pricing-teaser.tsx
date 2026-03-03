@@ -11,8 +11,13 @@ export function PricingTeaser() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
           eyebrow="Preise"
-          title="Drei Einstiegspunkte, die zur Arbeitsrealität verschiedener Teams passen."
-          accent="Drei Einstiegspunkte"
+          title={
+            <>
+              <span className="title-accent">Drei Einstiegspunkte</span>, die zur
+              Arbeitsrealität verschiedener Teams{" "}
+              <span data-animate-word>passen.</span>
+            </>
+          }
           copy="Statt Tarifnebel zeigt Zynapse drei klare Modelle: ein schneller Start, ein laufender Growth-Modus und ein Setup für mehrere Marken oder Stakeholder."
         />
         <ButtonLink href="/pricing" variant="secondary" className="lg:self-end">

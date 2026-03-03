@@ -37,8 +37,12 @@ export function VideoOutputGrid() {
     >
       <SectionHeading
         eyebrow="Output-Vorschau"
-        title="So sieht skalierbarer Output aus, bevor echte Cases live sind."
-        accent="skalierbarer Output"
+        title={
+          <>
+            So sieht <span className="title-accent">skalierbarer Output</span>{" "}
+            aus, bevor echte Cases <span data-animate-word>live sind.</span>
+          </>
+        }
         copy="Die Demo zeigt keine losen Clips, sondern die Logik dahinter: Angle, Hook, Format, Länge und Ziel. Genau diese Struktur macht spätere Learnings belastbar."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

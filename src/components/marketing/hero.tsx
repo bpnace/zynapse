@@ -34,19 +34,25 @@ export function Hero() {
             <div className="flex h-full flex-col justify-between border-r border-white/45 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.52))] px-6 pt-32 pb-8 shadow-[18px_0_50px_rgba(31,36,48,0.08),inset_0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-[25px] sm:px-8 sm:pt-36 sm:pb-8 lg:px-10 lg:pt-36 lg:pb-10">
               <div className="space-y-5">
                 <div className="space-y-4">
-                  <h1 className="max-w-3xl font-display text-5xl leading-[0.88] font-semibold tracking-[-0.07em] text-balance sm:text-6xl lg:text-[4.95rem]">
-                    Aus einem Briefing wird ein{" "}
+                  <h1
+                    className="max-w-3xl font-display text-5xl leading-[0.88] font-semibold tracking-[-0.07em] text-balance sm:text-6xl lg:text-[4.95rem]"
+                    data-animate-heading
+                  >
+                    Aus einem <span data-animate-word>Briefing</span> wird ein{" "}
                     <span className="text-gradient">Kampagnen-System</span>, das
-                    sofort nutzbar ist.
+                    sofort <span data-animate-word>nutzbar ist.</span>
                   </h1>
-                  <p className="max-w-2xl text-base leading-7 text-[color:var(--copy-muted)] sm:text-lg sm:leading-8">
+                  <p
+                    className="max-w-2xl text-base leading-7 text-[color:var(--copy-muted)] sm:text-lg sm:leading-8"
+                    data-animate-copy
+                  >
                     Zynapse bringt Marken, Growth-Teams und erfahrene Social Media
                     Manager in einen klaren Produktionsfluss. Aus Ziel, Offer, Stil
                     und Budget entstehen Kampagnenlogik, Freigaben und testbare
                     Varianten für TikTok, Reels und Shorts.
                   </p>
                 </div>
-                <div className="flex flex-col gap-3 sm:flex-row">
+                <div className="flex flex-col gap-3 sm:flex-row" data-animate-item>
                   <ButtonLink href="/request" size="lg">
                     Als Marke starten
                   </ButtonLink>
@@ -62,6 +68,7 @@ export function Hero() {
                     key={metric.label}
                     className="rounded-sm bg-white/12 px-5 py-4 shadow-[0_12px_28px_rgba(31,36,48,0.06)]"
                     data-hero-metric
+                    data-animate-item
                   >
                     <p className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-muted)]">
                       {metric.value}

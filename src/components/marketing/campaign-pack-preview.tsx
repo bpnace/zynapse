@@ -13,8 +13,13 @@ export function CampaignPackPreview() {
       <div className="space-y-6">
         <SectionHeading
           eyebrow="Kampagnenlogik zuerst"
-          title="Nicht das einzelne Video macht den Unterschied. Sondern die Logik davor."
-          accent="Logik davor"
+          title={
+            <>
+              Nicht das einzelne Video macht den{" "}
+              <span data-animate-word>Unterschied.</span> Sondern die{" "}
+              <span className="title-accent">Logik davor</span>.
+            </>
+          }
           copy="Bevor ein Creative gebaut wird, wird die Kampagne in Angles, Hooks, CTA-Routen, Cuts und Längen zerlegt. So wird aus 'wir brauchen Content' ein System, das sich testen und weiterdrehen lässt."
         />
         <ul className="space-y-3 text-base leading-7 text-[color:var(--copy-body)]">

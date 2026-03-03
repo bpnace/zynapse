@@ -49,7 +49,7 @@ export function FinalCta() {
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Der Einstieg beginnt mit einem{" "}
+              Der <span data-animate-word>Einstieg</span> beginnt mit einem{" "}
               <span className="title-accent">kompakten Briefing</span>. Nicht mit
               einem langen Setup-Call.
             </h2>

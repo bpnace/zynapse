@@ -84,8 +84,8 @@ export function SplitBenefits() {
         title="Für Marken"
         headline={
           <>
-            Mehr <span className="title-accent">Creative-Klarheit</span>, weniger
-            Produktionschaos
+            Mehr <span className="title-accent">Creative-Klarheit</span>, weniger{" "}
+            <span data-animate-word>Produktionschaos</span>
           </>
         }
         copy="Teams kaufen hier keinen diffusen Tool-Zugang, sondern einen strukturierten Weg vom Briefing zu testbaren Creatives mit klarer Freigabelogik."
@@ -99,7 +99,7 @@ export function SplitBenefits() {
         title="Für Social Media Manager"
         headline={
           <>
-            Deine Strategie bleibt sichtbar, auch wenn{" "}
+            Deine Strategie bleibt <span data-animate-word>sichtbar</span>, auch wenn{" "}
             <span className="title-accent">Output skaliert</span>
           </>
         }

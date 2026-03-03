@@ -18,8 +18,12 @@ export function ProcessStepper() {
     >
       <SectionHeading
         eyebrow="So arbeitet Zynapse"
-        title="Ein Produktionsfluss, der Rollen klärt und Creative beschleunigt."
-        accent="Creative beschleunigt"
+        title={
+          <>
+            Ein Produktionsfluss, der <span data-animate-word>Rollen klärt</span>{" "}
+            und <span className="title-accent">Creative beschleunigt</span>.
+          </>
+        }
         copy="Das Team liefert Kontext und Freigaben. Der Manager führt Kampagnenlogik und Testing. Das Studio skaliert daraus Varianten, die schneller geprüft und ausgespielt werden können."
       />
       <div className="grid gap-4 lg:grid-cols-5">

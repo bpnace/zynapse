@@ -10,8 +10,12 @@ export function TrustSection() {
     >
       <SectionHeading
         eyebrow="Vertrauen & Sicherheit"
-        title="AI-nahe Produktion braucht Kontrolle, nicht blindes Tempo."
-        accent="Kontrolle"
+        title={
+          <>
+            AI-nahe Produktion braucht <span className="title-accent">Kontrolle</span>,
+            nicht <span data-animate-word>blindes Tempo.</span>
+          </>
+        }
         copy="Je mehr Output skaliert wird, desto wichtiger werden Rechte, Review, Brand Safety und klare Freigaben."
       />
       <div className="grid gap-4 md:grid-cols-2">

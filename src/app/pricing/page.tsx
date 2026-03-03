@@ -16,6 +16,29 @@ function buildContactHref(planId: string) {
   return `/contact?tier=${encodeURIComponent(planId)}#kontaktformular`;
 }
 
+const serviceComparisons = [
+  {
+    label: "Agentur",
+    zynapse: "Feste Rollen, Kampagnenlogik vor Produktion und ein planbarer Review-Fluss.",
+    traditional: "Projektbasiert, wechselnde Ansprechpartner und lange Abstimmungsschleifen.",
+  },
+  {
+    label: "Creator-Marktplatz",
+    zynapse: "Strategie, Testing-Richtung und Output laufen in einem System zusammen.",
+    traditional: "Creator-Sourcing steht oft vor Messaging, Testing und sauberer Freigabelogik.",
+  },
+  {
+    label: "Inhouse-Aufbau",
+    zynapse: "Skalierbarer Output ohne zusätzliches Team, Tool-Stack und operative Überlastung.",
+    traditional: "Kapazität, Recruiting und Produktionssteuerung müssen intern erst aufgebaut werden.",
+  },
+  {
+    label: "Freelancer-Setups",
+    zynapse: "Ein gemeinsamer Produktionsfluss mit klaren Übergaben, Review und Exportlogik.",
+    traditional: "Viele Einzelgewerke, fragmentierte Kommunikation und wenig sichtbare Verantwortung.",
+  },
+];
+
 export default function PricingPage() {
   return (
     <>
@@ -127,21 +150,19 @@ export default function PricingPage() {
                 </div>
 
                 <div className="flex flex-1 flex-col px-6 py-5 sm:px-7">
-                  <div
-                    className={`grid gap-0 border ${
-                      plan.featured ? "border-[rgba(191,106,83,0.16)]" : "border-[rgba(56,67,84,0.12)]"
-                    }`}
-                  >
+                  <div className="grid gap-3">
                     {plan.deliverables.slice(0, 3).map((deliverable, index) => (
                       <div
                         key={deliverable}
-                        className={`px-4 py-3 text-sm leading-6 ${
-                          plan.featured
-                            ? "bg-white/68 text-[color:var(--copy-body)]"
-                            : "bg-white/70 text-[color:var(--copy-body)]"
-                        } ${index > 0 ? (plan.featured ? "border-t border-[rgba(191,106,83,0.14)]" : "border-t border-[rgba(56,67,84,0.08)]") : ""}`}
+                        className="flex items-start gap-3 text-sm leading-6 text-[color:var(--copy-body)]"
                       >
-                        {deliverable}
+                        <span className="relative mt-[0.62rem] block h-1.5 w-1.5 shrink-0">
+                          <span className="absolute -inset-1.5 rounded-full bg-[rgba(224,94,67,0.14)] blur-[8px]" />
+                          <span className="absolute inset-0 rounded-full bg-[var(--accent)]" />
+                        </span>
+                        <span className={index === 0 ? "text-[color:var(--copy-strong)]" : ""}>
+                          {deliverable}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -201,69 +222,46 @@ export default function PricingPage() {
                 Vergleich im Detail
               </p>
               <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[2.4rem]">
-                Die längeren Infos stehen hier. Nicht in den Karten.
+                Nicht Paket gegen Paket. Sondern Zynapse gegen andere Wege.
               </h2>
             </div>
             <p className="max-w-xl text-sm leading-6 text-[color:var(--copy-body)]">
-              So bleiben die Preisstufen oben schnell scannbar und die Einordnung
-              darunter trotzdem vollständig.
+              Preise beantworten die Einstiegshöhe. Dieser Block beantwortet die
+              wichtigere Frage: Warum Zynapse statt Agentur, Creator-Marktplatz,
+              Inhouse-Aufbau oder losem Freelancer-Setup?
             </p>
           </div>
 
-          <div className="mt-8 grid gap-4 xl:grid-cols-3">
-            {pricingPlans.map((plan) => (
+          <div className="mt-8 grid gap-4 xl:grid-cols-2">
+            {serviceComparisons.map((entry) => (
               <article
-                key={`${plan.id}-detail`}
-                className={`rounded-[var(--radius-card)] border p-5 ${
-                  plan.featured
-                    ? "border-[rgba(191,106,83,0.16)] bg-[rgba(255,249,243,0.94)]"
-                    : "border-[rgba(56,67,84,0.12)] bg-white/76"
-                }`}
+                key={entry.label}
+                className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/76 p-5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                    {plan.name}
+                    {entry.label}
                   </h3>
                   <span className="text-xs uppercase tracking-[0.16em] text-[var(--copy-soft)]">
-                    {plan.cadence}
+                    Vergleich
                   </span>
                 </div>
 
                 <div className="mt-5 space-y-4">
                   <div>
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-                      Markiert als
+                      Mit Zynapse
                     </p>
-                    <div className="mt-2 grid gap-2">
-                      {plan.highlights.map((highlight) => (
-                        <p key={highlight} className="border-l-[3px] border-[rgba(246,107,76,0.28)] pl-3 text-sm leading-6 text-[color:var(--copy-body)]">
-                          {highlight}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-                      Ideal für
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {plan.fit}
+                    <p className="mt-2 border-l-[3px] border-[rgba(246,107,76,0.28)] pl-3 text-sm leading-6 text-[color:var(--copy-body)]">
+                      {entry.zynapse}
                     </p>
                   </div>
                   <div>
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-                      Zusammenarbeit
+                      Typisch sonst
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {plan.collaboration}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-                      Geeignet für
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {plan.audience}
+                      {entry.traditional}
                     </p>
                   </div>
                 </div>

@@ -15,8 +15,13 @@ export function ProblemCards() {
     >
       <SectionHeading
         eyebrow="Wo Teams heute Zeit verlieren"
-        title="Creative scheitert selten am Willen. Meist fehlt die klare Struktur davor."
-        accent="klare Struktur"
+        title={
+          <>
+            Creative <span data-animate-word>scheitert</span> selten am Willen.
+            Meist fehlt die <span className="title-accent">klare Struktur</span>{" "}
+            davor.
+          </>
+        }
         copy="Zynapse nimmt die drei typischen Bremsen aus dem Prozess: fehlende Prioritäten, teure Abstimmungsschleifen und zu viel Hoffnung auf einzelne Hero-Creatives."
       />
       <div className="grid gap-5 lg:grid-cols-3">
