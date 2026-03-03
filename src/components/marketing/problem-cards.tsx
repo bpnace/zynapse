@@ -36,8 +36,7 @@ export function ProblemCards() {
         ))}
       </div>
       <div
-        className="section-surface-contrast rounded-[var(--radius-subcard)] border border-[rgba(56,67,84,0.14)] px-6 py-4 text-center text-base font-medium leading-7 text-[color:var(--copy-strong)] sm:text-lg"
-        data-animate-item
+        className="px-6 py-4 text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] sm:text-lg"
       >
         Strategie bleibt menschlich. Skalierung wird systematisch.
       </div>

@@ -285,7 +285,7 @@ export function BrandInquiryWizard() {
           <ButtonLink href="/" variant="secondary">
             Zur Landing
           </ButtonLink>
-          <ButtonLink href="/cases">Referenzen ansehen</ButtonLink>
+          <ButtonLink href="/pricing#referenzen">Referenzen ansehen</ButtonLink>
         </div>
       </div>
     );

@@ -3,9 +3,8 @@ import type { NavItem } from "@/types/site";
 export const siteNav: NavItem[] = [
   { href: "/brands", label: "Für Marken" },
   { href: "/managers", label: "Für Manager" },
-  { href: "/studio", label: "Studio" },
+  { href: "/about", label: "Studio" },
   { href: "/pricing", label: "Preise" },
-  { href: "/cases", label: "Referenzen" },
   { href: "/contact", label: "Kontakt" },
 ];
 

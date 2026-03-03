@@ -25,3 +25,14 @@ export type ManagerApplication = {
   startedAt: number;
   website: string;
 };
+
+export type ContactInquiry = {
+  name: string;
+  email: string;
+  company: string;
+  teamContext: string;
+  topic: string;
+  message: string;
+  startedAt: number;
+  website: string;
+};

@@ -1,3 +1,4 @@
+import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
 import { PageHero } from "@/components/ui/page-hero";
 import { buildMetadata } from "@/lib/seo";
 import { contactChannels } from "@/lib/content/site";
@@ -14,9 +15,9 @@ export default function ContactPage() {
     <>
       <PageHero
         label="Kontakt"
-        title="Drei direkte Kontaktwege statt eines allgemeinen Sammelpostfachs."
-        description="Vertrieb, Manager-Netzwerk und Betrieb sind getrennt, damit Marken-Anfragen, Bewerbungen und operative Fragen nicht im selben Kanal landen."
-        badges={["Vertrieb", "Netzwerk", "Betrieb"]}
+        title="Direkte Kontaktwege plus ein Formular, das schon sinnvoll vorbefüllt starten kann."
+        description="Vertrieb, Manager-Netzwerk und Betrieb bleiben getrennt. Für Preis- und Paketfragen gibt es zusätzlich einen kompakten Anfrage-Flow, der Paketinteresse direkt übernimmt."
+        badges={["Vertrieb", "Formular", "Betrieb"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {contactChannels.map((channel) => (
@@ -28,6 +29,9 @@ export default function ContactPage() {
             <p className="mt-4 text-[color:var(--copy-muted)]">{channel.copy}</p>
           </article>
         ))}
+      </section>
+      <section className="mx-auto w-full max-w-7xl px-6 pt-2 pb-16 sm:px-8 lg:px-10">
+        <ContactIntakeForm />
       </section>
     </>
   );

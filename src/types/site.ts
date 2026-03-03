@@ -1,3 +1,5 @@
+export type PricingPlanId = "starter" | "growth" | "pro";
+
 export type NavItem = {
   href: string;
   label: string;
@@ -5,12 +7,17 @@ export type NavItem = {
 };
 
 export type PricingPlan = {
+  id: PricingPlanId;
   name: string;
   price: string;
   cadence: string;
   description: string;
   audience: string;
   featured?: boolean;
+  highlights: string[];
+  fit: string;
+  collaboration: string;
+  contactMessage: string;
   deliverables: string[];
 };
 
