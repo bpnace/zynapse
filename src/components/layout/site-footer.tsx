@@ -12,7 +12,7 @@ export function SiteFooter() {
           </h2>
           <p className="max-w-md text-[color:var(--copy-muted)]">
             Zynapse verbindet Kampagnenlogik, klare Freigaben und skalierbaren
-            Output in einem Prozess, der für Marken, Growth-Teams und Manager
+            Output in einem Prozess, der für Brands, Growth-Teams und Manager
             anschlussfähig bleibt.
           </p>
         </div>

@@ -204,7 +204,7 @@ export function ManagerApplicationForm() {
           >
             <TextareaInput
               {...register("caseSummary")}
-              placeholder="Welche Kampagnen, Marken oder Growth-Situationen hast du bereits geführt und was war dein Beitrag?"
+              placeholder="Welche Kampagnen, Brands oder Growth-Situationen hast du bereits geführt und was war dein Beitrag?"
             />
           </Field>
           {submitError ? (

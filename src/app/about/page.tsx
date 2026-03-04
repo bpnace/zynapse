@@ -19,7 +19,7 @@ const pillars = [
   {
     title: "Klare Rollen, klare Übergaben",
     description:
-      "Marken geben Kontext und Freigaben. Manager führen Strategie und Testing-Richtung. Das Studio skaliert die Ausführung. Kein Rollenchaos, keine doppelten Zuständigkeiten.",
+      "Brands geben Kontext und Freigaben. Manager führen Strategie und Testing-Richtung. Das Studio skaliert die Ausführung. Kein Rollenchaos, keine doppelten Zuständigkeiten.",
   },
   {
     title: "Skalierung ohne Qualitätsverlust",
@@ -57,7 +57,7 @@ const codex = [
     number: "05",
     title: "System statt Tool",
     description:
-      "Zynapse ersetzt keine Teams – es verbindet sie. Marken, Manager und Studio arbeiten in einem gemeinsamen Produktionsfluss, nicht in parallelen Silos.",
+      "Zynapse ersetzt keine Teams – es verbindet sie. Brands, Manager und Studio arbeiten in einem gemeinsamen Produktionsfluss, nicht in parallelen Silos.",
   },
 ];
 
@@ -103,7 +103,7 @@ const values = [
   {
     title: "Partnerschaft",
     description:
-      "Zynapse funktioniert nur, wenn alle Seiten funktionieren. Marken, Manager und Studio sind gleichwertige Teile eines Systems.",
+      "Zynapse funktioniert nur, wenn alle Seiten funktionieren. Brands, Manager und Studio sind gleichwertige Teile eines Systems.",
   },
 ];
 
@@ -121,7 +121,7 @@ const studioGlossary = [
   {
     term: "Rollenklarheit",
     explanation:
-      "Marke, Manager und Studio arbeiten mit klaren Zuständigkeiten statt mit parallelen Abstimmungen.",
+      "Brand, Manager und Studio arbeiten mit klaren Zuständigkeiten statt mit parallelen Abstimmungen.",
   },
 ];
 
@@ -497,13 +497,13 @@ export default function AboutPage() {
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Ob als Marke oder Manager – der Einstieg braucht nur wenige
+                Ob als Brand oder Manager – der Einstieg braucht nur wenige
                 Minuten. Kein Sales-Call, kein langes Setup.
               </p>
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/request" size="lg">
-                Marken-Anfrage
+                Brand-Anfrage
               </ButtonLink>
               <ButtonLink href="/apply" variant="secondary" size="lg">
                 Manager-Bewerbung

@@ -1,7 +1,7 @@
 import type { NavItem } from "@/types/site";
 
 export const siteNav: NavItem[] = [
-  { href: "/brands", label: "Für Marken" },
+  { href: "/brands", label: "Für Brands" },
   { href: "/managers", label: "Für Manager" },
   { href: "/about", label: "Studio" },
   { href: "/pricing", label: "Preise" },
@@ -10,7 +10,7 @@ export const siteNav: NavItem[] = [
 
 export const primaryCta: NavItem = {
   href: "/request",
-  label: "Marken-Anfrage",
+  label: "Brand-Anfrage",
   kind: "cta",
 };
 
@@ -40,8 +40,8 @@ export const problemCards = [
 
 export const processSteps = [
   {
-    title: "Marken-Anfrage",
-    owner: "Marke / Team",
+    title: "Brand-Anfrage",
+    owner: "Brand / Team",
     description:
       "Das Team gibt Produkt, Ziel, Stil, Budget und Freigaben vor. Daraus entsteht ein Briefing, mit dem alle Beteiligten sauber arbeiten können.",
   },
@@ -122,7 +122,7 @@ export const footerGroups = [
   {
     title: "Ressourcen",
     links: [
-      { href: "/request", label: "Marken-Anfrage" },
+      { href: "/request", label: "Brand-Anfrage" },
       { href: "/apply", label: "Manager-Bewerbung" },
       { href: "/contact", label: "Kontakt" },
     ],
@@ -140,7 +140,7 @@ export const contactChannels = [
   {
     label: "Vertrieb",
     value: "hello@zynapse.example",
-    copy: "Marken-Anfragen, Preise, Erstgespräche",
+    copy: "Brand-Anfragen, Paketberatung und Erstgespräche",
   },
   {
     label: "Manager-Netzwerk",

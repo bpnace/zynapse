@@ -1,13 +1,14 @@
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Badge } from "@/components/ui/badge";
+import { PageMotion } from "@/components/animation/page-motion";
 import { buildMetadata } from "@/lib/seo";
 import { brandBenefits } from "@/lib/content/site";
 
 export const metadata = buildMetadata({
-  title: "Für Marken – Videoproduktion für Performance-Teams | Zynapse",
+  title: "Für Brands – Videoproduktion für Performance-Teams | Zynapse",
   description:
-    "Skalierbare Videoproduktion für Marken- und Growth-Teams. Vom Briefing zum testbaren Kampagnen-Pack in 72 Stunden – mit klarer Freigabelogik und strukturierter Zusammenarbeit.",
+    "Skalierbare Videoproduktion für Brand- und Growth-Teams. Vom Briefing zum testbaren Kampagnen-Pack in 72 Stunden – mit klarer Freigabelogik und strukturierter Zusammenarbeit.",
   path: "/brands",
 });
 
@@ -20,7 +21,7 @@ const painPoints = [
   {
     title: "Briefings ohne Produktionslogik",
     description:
-      "Das Team liefert Markenkontext, aber was daraus entsteht, ist Zufall statt System. Angles, Hooks und Varianten werden nicht strukturiert geplant.",
+      "Das Team liefert Brand-Kontext, aber was daraus entsteht, ist Zufall statt System. Angles, Hooks und Varianten werden nicht strukturiert geplant.",
   },
   {
     title: "Freigaben ohne Übersicht",
@@ -32,7 +33,7 @@ const painPoints = [
 const howItWorks = [
   {
     step: "01",
-    title: "Marken-Anfrage",
+    title: "Brand-Anfrage",
     description:
       "Das Team gibt Produkt, Zielgruppe, Stil, Budget und Freigabeprozess vor. In wenigen Minuten entsteht ein strukturiertes Briefing.",
   },
@@ -58,14 +59,14 @@ const results = [
 
 export default function BrandsPage() {
   return (
-    <>
+    <PageMotion>
       {/* ── Hero ── */}
       <section
         className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
         <span className="eyebrow" data-animate-heading>
-          Für Marken- und Growth-Teams
+          Für Brand- und Growth-Teams
         </span>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-end">
           <div className="space-y-6">
@@ -73,7 +74,7 @@ export default function BrandsPage() {
               className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
               data-animate-heading
             >
-              Skalierbare Videoproduktion ohne{" "}
+              Skalierbare <span data-animate-word>Videoproduktion</span> ohne{" "}
               <span className="title-accent">Produktionschaos</span>.
             </h1>
             <p
@@ -81,12 +82,12 @@ export default function BrandsPage() {
               data-animate-copy
             >
               Euer Team gibt Richtung, Kontext und Freigaben vor. Zynapse
-              übersetzt das in testbare Kampagnen-Packs – strukturiert, planbar
-              und ohne endlose Abstimmungsschleifen.
+              übersetzt das in testbare Kampagnen-Packs mit 18+ Varianten pro
+              Briefing – strukturiert, planbar und ohne Abstimmungsschleifen.
             </p>
             <div className="flex flex-wrap gap-3" data-animate-copy>
               <ButtonLink href="/request" size="lg">
-                Marken-Anfrage starten
+                Brand-Anfrage starten
               </ButtonLink>
               <ButtonLink href="/pricing" variant="secondary" size="lg">
                 Pläne & Preise
@@ -114,10 +115,15 @@ export default function BrandsPage() {
         data-reveal-section
       >
         <SectionHeading
-          eyebrow="Bekannte Probleme"
-          title="Creative-Produktion frisst Zeit, die für Testing und Optimierung fehlt."
-          accent="Testing und Optimierung"
-          copy="Marken- und Growth-Teams stecken in einem Kreislauf aus Briefings, Feedback-Schleifen und manueller Koordination. Der eigentliche Hebel – systematisches Creative Testing – bleibt liegen."
+          eyebrow="Typische Engpässe"
+          title={
+            <>
+              Creative-Produktion <span data-animate-word>frisst Zeit</span>,
+              die für <span className="title-accent">Testing und Optimierung</span>{" "}
+              fehlt.
+            </>
+          }
+          copy="Brand- und Growth-Teams stecken in einem Kreislauf aus Briefings, Feedback-Schleifen und manueller Koordination. Der eigentliche Hebel – systematisches Creative Testing – bleibt liegen."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {painPoints.map((point, index) => (
@@ -151,9 +157,13 @@ export default function BrandsPage() {
       >
         <SectionHeading
           eyebrow="So funktioniert es"
-          title="Vom Briefing zum fertigen Kampagnen-Pack in drei Schritten."
-          accent="drei Schritten"
-          copy="Klare Rollen, klare Übergaben. Das Team muss nicht zum Produktionsexperten werden – sondern kann sich auf Kontext und Freigaben konzentrieren."
+          title={
+            <>
+              Vom <span data-animate-word>Briefing</span> zum fertigen
+              Kampagnen-Pack in <span className="title-accent">drei Schritten</span>.
+            </>
+          }
+          copy="Klare Rollen, klare Übergaben. Euer Team muss nicht zum Produktionsexperten werden – Kontext und Freigaben reichen, den Rest übernehmen Manager und Studio."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {howItWorks.map((step) => (
@@ -191,7 +201,7 @@ export default function BrandsPage() {
                 className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                 data-animate-heading
               >
-                Weniger Aufwand, mehr{" "}
+                Weniger <span data-animate-word>Aufwand</span>, mehr{" "}
                 <span className="title-accent">testbare Creatives</span>.
               </h2>
               <p
@@ -231,9 +241,12 @@ export default function BrandsPage() {
       >
         <div className="space-y-5">
           <SectionHeading
-            eyebrow="Marken-Vorteile"
-            title="Was sich für euer Team konkret ändert."
-            accent="konkret ändert"
+            eyebrow="Brand-Vorteile"
+            title={
+              <>
+                Was sich für euer Team <span className="title-accent">konkret ändert</span>.
+              </>
+            }
             copy="Kein diffuser Tool-Zugang, sondern ein strukturierter Weg vom Briefing zu testbaren Creatives mit klarer Freigabelogik."
           />
         </div>
@@ -269,8 +282,8 @@ export default function BrandsPage() {
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
               <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl" data-animate-heading>
-                Bereit für eine erste{" "}
-                <span className="title-accent">Marken-Anfrage</span>?
+                <span data-animate-word>Bereit</span> für eine erste{" "}
+                <span className="title-accent">Brand-Anfrage</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
@@ -282,11 +295,11 @@ export default function BrandsPage() {
               </p>
             </div>
             <ButtonLink href="/request" size="lg" data-animate-item>
-              Marken-Anfrage starten
+              Brand-Anfrage starten
             </ButtonLink>
           </div>
         </div>
       </section>
-    </>
+    </PageMotion>
   );
 }

@@ -34,7 +34,7 @@ const howItWorks = [
     step: "01",
     title: "Kampagnenplanung",
     description:
-      "Du baust aus dem Marken-Briefing Angles, Hooks, CTA-Logik und Testprioritäten. Dein strategisches Wissen wird zur Grundlage des gesamten Packs.",
+      "Du baust aus dem Brand-Briefing Angles, Hooks, CTA-Logik und Testprioritäten. Dein strategisches Wissen wird zur Grundlage des gesamten Packs.",
   },
   {
     step: "02",
@@ -124,7 +124,7 @@ export default function ManagersPage() {
           eyebrow="Bekannte Probleme"
           title="Dein strategischer Wert verschwindet in operativer Überlastung."
           accent="operativer Überlastung"
-          copy="Social Media Manager stecken zwischen Kampagnenplanung und Produktionskoordination. Das Ergebnis: gute Strategien, aber zu wenig testbare Creatives – und Erlöse, die an der eigenen Kapazität hängen."
+          copy="Social Media Manager investieren 80 % ihrer Zeit in Briefings, Creator-Koordination und Asset-Management. Das Ergebnis: gute Strategien, aber zu wenig testbare Creatives – und Erlöse, die an der eigenen Kapazität hängen."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {painPoints.map((point, index) => (
@@ -158,7 +158,7 @@ export default function ManagersPage() {
       >
         <SectionHeading
           eyebrow="Dein Workflow"
-          title="Vom Marken-Briefing zum skalierbaren Kampagnen-Pack."
+          title="Vom Brand-Briefing zum skalierbaren Kampagnen-Pack."
           accent="skalierbaren Kampagnen-Pack"
           copy="Du konzentrierst dich auf das, was dich wertvoll macht: Kampagnenlogik, Hooks und Testing-Richtung. Der Rest läuft strukturiert weiter."
         />
@@ -206,8 +206,8 @@ export default function ManagersPage() {
                 data-animate-copy
               >
                 Manager, die mit Zynapse arbeiten, skalieren ihren Output pro
-                Kunde – ohne Team aufbauen oder operative Kapazität verdoppeln zu
-                müssen.
+                Kunde – ohne eigenes Team, ohne operative Überlastung, ohne
+                Revenue-Ceiling.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-3" data-animate-item>

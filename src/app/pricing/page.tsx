@@ -8,7 +8,7 @@ import { caseStudies } from "@/lib/content/cases";
 export const metadata = buildMetadata({
   title: "Preise | Zynapse",
   description:
-    "Drei Einstiegspunkte für Marken-, Growth- und Agentur-Teams plus Beispiel-Referenzen auf derselben Seite.",
+    "Drei Einstiegspunkte für Brand-, Growth- und Agentur-Teams plus Beispiel-Referenzen auf derselben Seite.",
   path: "/pricing",
 });
 
@@ -19,23 +19,31 @@ function buildContactHref(planId: string) {
 const serviceComparisons = [
   {
     label: "Agentur",
-    zynapse: "Feste Rollen, Kampagnenlogik vor Produktion und ein planbarer Review-Fluss.",
-    traditional: "Projektbasiert, wechselnde Ansprechpartner und lange Abstimmungsschleifen.",
+    zynapse:
+      "Feste Rollen, Kampagnenlogik vor Produktion und ein planbarer Review-Fluss. Vom Briefing zum fertigen Pack in 72h statt in Wochen.",
+    traditional:
+      "Projektbasiert, wechselnde Ansprechpartner und lange Abstimmungsschleifen. Jede Iteration kostet extra Zeit und Budget.",
   },
   {
     label: "Creator-Marktplatz",
-    zynapse: "Strategie, Testing-Richtung und Output laufen in einem System zusammen.",
-    traditional: "Creator-Sourcing steht oft vor Messaging, Testing und sauberer Freigabelogik.",
+    zynapse:
+      "Strategie, Testing-Richtung und Output laufen in einem System zusammen. Du bekommst ein fertiges Kampagnen-Pack – nicht einzelne Assets ohne Kontext.",
+    traditional:
+      "Creator-Sourcing steht oft vor Messaging und Testing. Das Ergebnis: einzelne Videos ohne Angle-Logik, Hook-Varianten oder Formatstrategie.",
   },
   {
     label: "Inhouse-Aufbau",
-    zynapse: "Skalierbarer Output ohne zusätzliches Team, Tool-Stack und operative Überlastung.",
-    traditional: "Kapazität, Recruiting und Produktionssteuerung müssen intern erst aufgebaut werden.",
+    zynapse:
+      "Skalierbarer Output ohne zusätzliches Team, Tool-Stack oder Recruiting. 18+ Varianten pro Briefing ohne interne Kapazitätsplanung.",
+    traditional:
+      "Eigenes Creative-Team aufbauen heißt: Recruiting, Toolkosten, Management-Overhead und monatelange Vorlaufzeit bis zum ersten Output.",
   },
   {
     label: "Freelancer-Setups",
-    zynapse: "Ein gemeinsamer Produktionsfluss mit klaren Übergaben, Review und Exportlogik.",
-    traditional: "Viele Einzelgewerke, fragmentierte Kommunikation und wenig sichtbare Verantwortung.",
+    zynapse:
+      "Ein gemeinsamer Produktionsfluss mit klaren Übergaben, Review-Logik und zentralem Export. Alle Beteiligten arbeiten in derselben Struktur.",
+    traditional:
+      "Fragmentierte Kommunikation über E-Mail, Slack und WeTransfer. Keine zentrale Freigabelogik, keine sichtbare Verantwortung.",
   },
 ];
 
@@ -44,8 +52,8 @@ export default function PricingPage() {
     <>
       <PageHero
         label="Preise"
-        title="Pakete für schnelle Tests, laufenden Growth und komplexere Team-Setups."
-        description="Die Seite bündelt beides: erst die drei Preisstufen mit klarer Passung, danach Beispiel-Referenzen als Vorschau auf die Art von Cases, die später live hier gezeigt werden."
+        title="Drei Pakete. Vom ersten Test bis zur laufenden Creative-Produktion."
+        description="Jedes Paket ist auf einen klaren Einstieg gebaut: ein schneller Pilotstart, laufendes Creative Testing oder ein Multi-Brand-Setup mit mehreren Stakeholdern."
         badges={["Starter", "Growth", "Pro", "Referenzen"]}
       />
 
@@ -83,7 +91,7 @@ export default function PricingPage() {
                   Pro
                 </p>
                 <p className="mt-1 text-sm leading-6 text-[color:var(--copy-body)]">
-                  Für mehrere Marken oder Stakeholder.
+                  Für mehrere Brands oder Stakeholder.
                 </p>
               </div>
             </div>
@@ -278,12 +286,12 @@ export default function PricingPage() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
             eyebrow="Referenzen"
-            title="Dummy-Referenzen als Vorschau auf spätere echte Cases."
-            accent="Dummy-Referenzen"
-            copy="Diese Beispiele sind Platzhalter. Sie zeigen aber bereits die Struktur, in der spätere reale Ergebnisse, Kennzahlen und Kampagnen-Setups aufbereitet werden."
+            title="Beispiel-Referenzen: So sehen typische Kampagnen-Setups aus."
+            accent="Beispiel-Referenzen"
+            copy="Diese Beispiele zeigen die Struktur, in der Kampagnen-Setups, Ergebnisse und Kennzahlen aufbereitet werden – basierend auf realistischen Szenarien."
           />
           <div className="rounded-full border border-[rgba(56,67,84,0.12)] bg-white/76 px-4 py-2 text-xs uppercase tracking-[0.16em] text-[var(--copy-soft)]">
-            Aktuell Demo-Daten
+            Beispiel-Daten
           </div>
         </div>
 

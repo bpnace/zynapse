@@ -81,7 +81,7 @@ export function SplitBenefits() {
       data-reveal-section
     >
       <BenefitColumn
-        title="Für Marken"
+        title="Für Brands"
         headline={
           <>
             Mehr <span className="title-accent">Creative-Klarheit</span>, weniger{" "}
@@ -91,7 +91,7 @@ export function SplitBenefits() {
         copy="Teams kaufen hier keinen diffusen Tool-Zugang, sondern einen strukturierten Weg vom Briefing zu testbaren Creatives mit klarer Freigabelogik."
         benefits={brandBenefits}
         href="/brands"
-        cta="Mehr für Marken"
+        cta="Mehr für Brands"
         tone="paper"
         glyph="◇"
       />

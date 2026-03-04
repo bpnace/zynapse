@@ -15,8 +15,8 @@ export default function ContactPage() {
     <>
       <PageHero
         label="Kontakt"
-        title="Direkte Kontaktwege plus ein Formular, das schon sinnvoll vorbefüllt starten kann."
-        description="Vertrieb, Manager-Netzwerk und Betrieb bleiben getrennt. Für Preis- und Paketfragen gibt es zusätzlich einen kompakten Anfrage-Flow, der Paketinteresse direkt übernimmt."
+        title="Vertrieb, Netzwerk oder operative Fragen – jeder Kontaktweg hat einen klaren Zweck."
+        description="Für Brand-Anfragen, Paketfragen und Erstgespräche nutzt du den Vertrieb. Für den Manager-Track das Netzwerk. Für alles Operative den direkten Betriebskanal."
         badges={["Vertrieb", "Formular", "Betrieb"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">

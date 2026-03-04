@@ -38,7 +38,7 @@ export const videoVariants: VideoVariantPreview[] = [
   { id: "v2", angle: "Zeit bis Ergebnis", hookTitle: "Vom Briefing bis Launch", format: "1:1", length: "20s", objective: "Awareness" },
   { id: "v3", angle: "Zeit bis Ergebnis", hookTitle: "Schneller launchen, früher testen", format: "4:5", length: "30s", objective: "Retention" },
   { id: "v4", angle: "Rollenklarheit", hookTitle: "Der Manager führt die Strategie", format: "9:16", length: "15s", objective: "Conversion" },
-  { id: "v5", angle: "Rollenklarheit", hookTitle: "Markenkontext ohne Agentur-Bremse", format: "1:1", length: "25s", objective: "Awareness" },
+  { id: "v5", angle: "Rollenklarheit", hookTitle: "Brand-Kontext ohne Agentur-Bremse", format: "1:1", length: "25s", objective: "Awareness" },
   { id: "v6", angle: "Rollenklarheit", hookTitle: "Ein Workflow, klare Übergaben", format: "4:5", length: "35s", objective: "Retention" },
   { id: "v7", angle: "Gegenmittel für Creative Fatigue", hookTitle: "Schluss mit wöchentlichem Content-Stress", format: "9:16", length: "9s", objective: "Awareness" },
   { id: "v8", angle: "Gegenmittel für Creative Fatigue", hookTitle: "Varianten schlagen Ratespiele", format: "1:1", length: "18s", objective: "Conversion" },

@@ -143,9 +143,8 @@ export function ContactIntakeForm() {
           Die Anfrage ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]">
-          Wir haben die Vorauswahl und dein Anliegen übernommen. Bis die Übergabe
-          live geschaltet ist, landet die Nachricht intern noch als strukturierter
-          Testeintrag.
+          Wir haben die Vorauswahl und dein Anliegen übernommen. Wir melden uns
+          innerhalb von 24 Stunden mit den nächsten Schritten.
         </p>
       </div>
     );
@@ -215,7 +214,7 @@ export function ContactIntakeForm() {
               <TextInput {...register("name")} placeholder="Max Mustermann" />
             </Field>
             <Field label="E-Mail" error={errors.email?.message}>
-              <TextInput {...register("email")} placeholder="team@marke.de" />
+              <TextInput {...register("email")} placeholder="team@brand.de" />
             </Field>
           </div>
 
@@ -247,11 +246,11 @@ export function ContactIntakeForm() {
           <Field
             label="Teamkontext"
             error={errors.teamContext?.message}
-            hint="Ein kurzer Satz reicht: Teamgröße, Markenanzahl oder aktueller Bedarf."
+            hint="Ein kurzer Satz reicht: Teamgröße, Anzahl Brands oder aktueller Bedarf."
           >
             <TextInput
               {...register("teamContext")}
-              placeholder="z. B. Growth-Team mit 1 Marke und laufendem Paid-Social-Testing"
+              placeholder="z. B. Growth-Team mit 1 Brand und laufendem Paid-Social-Testing"
             />
           </Field>
 

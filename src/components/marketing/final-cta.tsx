@@ -145,7 +145,7 @@ export function FinalCta() {
               type="submit"
               className={`${buttonStyles({ size: "lg" })} md:col-span-2`}
             >
-              Marken-Anfrage starten
+              Brand-Anfrage starten
             </button>
           </form>
         </div>

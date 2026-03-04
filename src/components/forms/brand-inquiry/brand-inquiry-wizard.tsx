@@ -274,7 +274,7 @@ export function BrandInquiryWizard() {
       <div className="section-card rounded-[2rem] p-8">
         <span className="eyebrow">Anfrage erhalten</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Die Marken-Anfrage ist eingegangen.
+          Die Brand-Anfrage ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
           Als Nächstes wird das Briefing eingeordnet und in die Kampagnenplanung
@@ -295,7 +295,7 @@ export function BrandInquiryWizard() {
     <div className="section-card rounded-[2rem] p-6 sm:p-8">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <span className="eyebrow">Marken-Anfrage</span>
+          <span className="eyebrow">Brand-Anfrage</span>
           <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em]">
             Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
           </h2>
@@ -358,7 +358,7 @@ export function BrandInquiryWizard() {
                 className: "disabled:cursor-wait disabled:opacity-70",
               })}
             >
-              {isPending ? "Sende Anfrage..." : "Marken-Anfrage absenden"}
+              {isPending ? "Sende Anfrage..." : "Brand-Anfrage absenden"}
             </button>
           ) : null}
         </div>

@@ -18,7 +18,7 @@ export function PricingTeaser() {
               <span data-animate-word>passen.</span>
             </>
           }
-          copy="Statt Tarifnebel zeigt Zynapse drei klare Modelle: ein schneller Start, ein laufender Growth-Modus und ein Setup für mehrere Marken oder Stakeholder."
+          copy="Statt Tarifnebel zeigt Zynapse drei klare Modelle: ein schneller Start, ein laufender Growth-Modus und ein Setup für mehrere Brands oder Stakeholder."
         />
         <ButtonLink href="/pricing" variant="secondary" className="lg:self-end">
           Alle Preise ansehen

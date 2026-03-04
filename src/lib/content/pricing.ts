@@ -8,7 +8,7 @@ export const pricingPlans: PricingPlan[] = [
     cadence: "pro Launch",
     description:
       "Für Teams, die ein erstes Kampagnen-Setup schnell, sauber und ohne lange Vorlaufzeit live bringen wollen.",
-    audience: "Für Marken- und Growth-Teams mit klarem Offer und erstem Testfenster.",
+    audience: "Für Brand- und Growth-Teams mit klarem Offer und erstem Testfenster.",
     highlights: ["Pilot-Setup", "1 Offer", "schneller Go-live"],
     fit: "Ideal, wenn ein neues Produkt, ein frisches Messaging oder ein klar umrissener Launch schnell getestet werden soll.",
     collaboration:
@@ -29,7 +29,7 @@ export const pricingPlans: PricingPlan[] = [
     cadence: "pro Monat",
     description:
       "Der laufende Produktionsmodus für Teams, die Creative systematisch testen und regelmäßig neue Varianten brauchen.",
-    audience: "Für Marken mit wiederkehrendem Paid-Social-Bedarf oder laufender Creative-Rotation.",
+    audience: "Für Brands mit wiederkehrendem Paid-Social-Bedarf oder laufender Creative-Rotation.",
     featured: true,
     highlights: ["laufender Modus", "Testing-Rhythmus", "Priorisierte Iteration"],
     fit: "Ideal, wenn Creative nicht nur produziert, sondern jeden Monat strategisch getestet, bewertet und nachgebaut werden soll.",
@@ -48,18 +48,18 @@ export const pricingPlans: PricingPlan[] = [
     id: "pro",
     name: "Pro",
     price: "Individuell",
-    cadence: "Multi-Marke / Team",
+    cadence: "Multi-Brand / Team",
     description:
-      "Für Teams und Agenturstrukturen mit mehreren Marken, Stakeholdern und parallelen Freigabewegen.",
+      "Für Teams und Agenturstrukturen mit mehreren Brands, Stakeholdern und parallelen Freigabewegen.",
     audience: "Für größere Setups mit mehreren Workstreams und abgestimmter Planungslogik.",
     highlights: ["Multi-Brand", "mehrere Stakeholder", "skalierbare Freigaben"],
-    fit: "Ideal, wenn mehrere Marken, interne Teams oder Agenturstrukturen parallel koordiniert und sauber priorisiert werden müssen.",
+    fit: "Ideal, wenn mehrere Brands, interne Teams oder Agenturstrukturen parallel koordiniert und sauber priorisiert werden müssen.",
     collaboration:
       "Gemeinsame Planungsrituale, teambasierte Review-Spuren und flexible Rechte- und Exportlogik für komplexere Setups.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für das Pro Paket. Wir planen ein Setup mit mehreren Marken, Stakeholdern oder parallelen Workstreams und möchten besprechen, wie ihr Planung, Freigaben und Delivery dafür aufsetzt.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für das Pro Paket. Wir planen ein Setup mit mehreren Brands, Stakeholdern oder parallelen Workstreams und möchten besprechen, wie ihr Planung, Freigaben und Delivery dafür aufsetzt.\n\nViele Grüße",
     deliverables: [
-      "Mehrere Marken-Workstreams",
+      "Mehrere Brand-Workstreams",
       "Gemeinsame Kampagnen- und Review-Rituale",
       "Teambasierte Freigabe-Spur",
       "Flexible Export- und Rechte-Logik",

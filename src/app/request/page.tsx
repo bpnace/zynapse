@@ -2,9 +2,9 @@ import { BrandInquiryWizard } from "@/components/forms/brand-inquiry/brand-inqui
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Marken-Anfrage | Zynapse",
+  title: "Brand-Anfrage | Zynapse",
   description:
-    "Geführte Marken-Anfrage mit klaren Schritten von Ausgangslage bis Übergabe.",
+    "Geführte Brand-Anfrage mit klaren Schritten von Ausgangslage bis Übergabe.",
   path: "/request",
 });
 
@@ -12,9 +12,9 @@ export default function RequestPage() {
   return (
     <section className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-32 pb-16 sm:px-8 lg:px-10">
       <div className="space-y-5">
-        <span className="eyebrow">Marken-Einstieg</span>
+        <span className="eyebrow">Brand-Einstieg</span>
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-6xl">
-          Eine Marken-Anfrage, die das Wesentliche sauber einsammelt.
+          Eine Brand-Anfrage, die das Wesentliche sauber einsammelt.
         </h1>
         <p className="max-w-3xl text-lg leading-8 text-[color:var(--copy-muted)]">
           Der Anfrage-Flow reduziert den Einstieg auf die Entscheidungen, die für ein

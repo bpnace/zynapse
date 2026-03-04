@@ -46,7 +46,7 @@ export function Hero() {
                     className="max-w-2xl text-base leading-7 text-[color:var(--copy-muted)] sm:text-lg sm:leading-8"
                     data-animate-copy
                   >
-                    Zynapse bringt Marken, Growth-Teams und erfahrene Social Media
+                    Zynapse bringt Brands, Growth-Teams und erfahrene Social Media
                     Manager in einen klaren Produktionsfluss. Aus Ziel, Offer, Stil
                     und Budget entstehen Kampagnenlogik, Freigaben und testbare
                     Varianten für TikTok, Reels und Shorts.
@@ -54,7 +54,7 @@ export function Hero() {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row" data-animate-item>
                   <ButtonLink href="/request" size="lg">
-                    Als Marke starten
+                    Als Brand starten
                   </ButtonLink>
                   <ButtonLink href="/apply" variant="secondary" size="lg">
                     Als Manager bewerben
