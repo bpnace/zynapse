@@ -36,7 +36,7 @@ const serviceComparisons = [
     zynapse:
       "Skalierbarer Output ohne zusätzliches Team, Tool-Stack oder Recruiting. 18+ Varianten pro Briefing ohne interne Kapazitätsplanung.",
     traditional:
-      "Eigenes Creative-Team aufbauen heißt: Recruiting, Toolkosten, Management-Overhead und monatelange Vorlaufzeit bis zum ersten Output.",
+      "Eigenes Kreativ-Team aufbauen heißt: Recruiting, Toolkosten, Management-Overhead und monatelange Vorlaufzeit bis zum ersten Output.",
   },
   {
     label: "Freelancer-Setups",
@@ -52,8 +52,8 @@ export default function PricingPage() {
     <>
       <PageHero
         label="Preise"
-        title="Drei Pakete. Vom ersten Test bis zur laufenden Creative-Produktion."
-        description="Jedes Paket ist auf einen klaren Einstieg gebaut: ein schneller Pilotstart, laufendes Creative Testing oder ein Multi-Brand-Setup mit mehreren Stakeholdern."
+        title="Drei Pakete. Vom ersten Test bis zur laufenden Kreativproduktion."
+        description="Jedes Paket ist auf einen klaren Einstieg gebaut: ein schneller Pilotstart, laufendes Kreativ-Testing oder ein Multi-Brand-Setup mit mehreren Stakeholdern."
         badges={["Starter", "Growth", "Pro", "Referenzen"]}
       />
 

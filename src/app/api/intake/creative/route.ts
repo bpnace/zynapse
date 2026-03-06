@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { ensureHumanSubmission } from "@/lib/intake/guards";
-import { submitManagerApplication } from "@/lib/intake/submit-manager";
-import { managerApplicationSchema } from "@/lib/validation/manager-application";
+import { submitCreativeApplication } from "@/lib/intake/submit-creative";
+import { creativeApplicationSchema } from "@/lib/validation/creative-application";
 
 export async function POST(request: Request) {
   const payload = await request.json();
-  const parsed = managerApplicationSchema.safeParse(payload);
+  const parsed = creativeApplicationSchema.safeParse(payload);
 
   if (!parsed.success) {
     return NextResponse.json(
       {
-        error: "Ungültige Manager-Bewerbung.",
+        error: "Ungültige Bewerbung für Kreative.",
         details: parsed.error.flatten(),
       },
       { status: 400 },
@@ -27,11 +27,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await submitManagerApplication(parsed.data);
+    const result = await submitCreativeApplication(parsed.data);
 
     return NextResponse.json({ ok: true, mode: result.mode });
   } catch (error) {
-    console.error("[zynapse:manager-intake]", error);
+    console.error("[zynapse:creative-intake]", error);
 
     return NextResponse.json(
       { error: "Die Bewerbung konnte aktuell nicht übergeben werden." },

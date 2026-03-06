@@ -17,12 +17,12 @@ export function ProblemCards() {
         eyebrow="Wo Teams heute Zeit verlieren"
         title={
           <>
-            Creative <span data-animate-word>scheitert</span> selten am Willen.
+            Kreativarbeit <span data-animate-word>scheitert</span> selten am Willen.
             Meist fehlt die <span className="title-accent">klare Struktur</span>{" "}
             davor.
           </>
         }
-        copy="Zynapse nimmt die drei typischen Bremsen aus dem Prozess: fehlende Prioritäten, teure Abstimmungsschleifen und zu viel Hoffnung auf einzelne Hero-Creatives."
+        copy="Zynapse nimmt die drei typischen Bremsen aus dem Prozess: fehlende Prioritäten, teure Abstimmungsschleifen und zu viel Hoffnung auf einzelne Hero-Kreative."
       />
       <div className="grid gap-5 lg:grid-cols-3">
         {problemCards.map((card, index) => (

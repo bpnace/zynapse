@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { videoVariants } from "@/lib/mock-data/studio";
@@ -27,8 +30,20 @@ function formatDuration(s: string): string {
 }
 
 const displayVariants = videoVariants.slice(0, 6);
+const previewVideoSources = [
+  "/videos/video22.mp4",
+  "/videos/m2-res_640p.mp4",
+  "/videos/m2-res_712p.mp4",
+  "/videos/m2-res_716p.mp4",
+  "/videos/m2-res_85422p.mp4",
+  "/videos/m2-res_854p.mp4",
+] as const;
 
 export function VideoOutputGrid() {
+  const [videoLoadFailed, setVideoLoadFailed] = useState<Record<string, boolean>>(
+    {},
+  );
+
   return (
     <section
       className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
@@ -46,68 +61,87 @@ export function VideoOutputGrid() {
         copy="Die Demo zeigt keine losen Clips, sondern die Logik dahinter: Angle, Hook, Format, Länge und Ziel. Genau diese Struktur macht spätere Learnings belastbar."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {displayVariants.map((variant, index) => (
-          <article
-            key={variant.id}
-            className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]}`}
-            data-animate-item
-          >
-            {/* Video frame placeholder */}
-            <div
-              className="relative flex h-[11rem] items-center justify-center overflow-hidden"
-              style={{
-                background:
-                  frameGradients[variant.angle] ?? frameGradients["Studio-System"],
-              }}
+        {displayVariants.map((variant, index) => {
+          const videoSrc = previewVideoSources[index];
+          const showVideo = Boolean(videoSrc) && !videoLoadFailed[variant.id];
+
+          return (
+            <article
+              key={variant.id}
+              className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]}`}
+              data-animate-item
             >
-              {/* Subtle grid pattern overlay */}
               <div
-                className="pointer-events-none absolute inset-0 opacity-[0.04]"
-                aria-hidden="true"
+                className="relative flex h-[11rem] items-center justify-center overflow-hidden"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(56,67,84,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,67,84,1) 1px, transparent 1px)",
-                  backgroundSize: "28px 28px",
+                  background:
+                    frameGradients[variant.angle] ?? frameGradients["Studio-System"],
                 }}
-              />
+              >
+                {showVideo ? (
+                  <video
+                    src={videoSrc}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={() =>
+                      setVideoLoadFailed((state) => ({ ...state, [variant.id]: true }))
+                    }
+                  />
+                ) : null}
 
-              {/* Play button */}
-              <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/50 shadow-[0_4px_16px_rgba(31,36,48,0.08)] backdrop-blur-sm">
-                <span
-                  className="ml-0.5 block h-0 w-0 border-y-[7px] border-l-[11px] border-y-transparent border-l-[var(--copy-strong)]"
-                  style={{ opacity: 0.55 }}
+                {/* Subtle grid pattern overlay */}
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-[0.04]"
                   aria-hidden="true"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(56,67,84,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,67,84,1) 1px, transparent 1px)",
+                    backgroundSize: "28px 28px",
+                  }}
                 />
-              </div>
 
-              {/* Format badge — top right */}
-              <span className="absolute top-3 right-3 rounded-[var(--radius-chip)] border border-white/25 bg-white/55 px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-[var(--copy-strong)] backdrop-blur-sm">
-                {variant.format}
-              </span>
+                {/* Play button */}
+                <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/50 shadow-[0_4px_16px_rgba(31,36,48,0.08)] backdrop-blur-sm">
+                  <span
+                    className="ml-0.5 block h-0 w-0 border-y-[7px] border-l-[11px] border-y-transparent border-l-[var(--copy-strong)]"
+                    style={{ opacity: 0.55 }}
+                    aria-hidden="true"
+                  />
+                </div>
 
-              {/* Duration chip — bottom left */}
-              <span className="absolute bottom-3 left-3 rounded-[var(--radius-chip)] bg-[var(--copy-strong)] px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.06em] text-white/90">
-                {formatDuration(variant.length)}
-              </span>
-            </div>
+                {/* Format badge — top right */}
+                <span className="absolute top-3 right-3 rounded-[var(--radius-chip)] border border-white/25 bg-white/55 px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-[var(--copy-strong)] backdrop-blur-sm">
+                  {variant.format}
+                </span>
 
-            {/* Card content */}
-            <div className="p-5">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
-                  {variant.angle}
+                {/* Duration chip — bottom left */}
+                <span className="absolute bottom-3 left-3 rounded-[var(--radius-chip)] bg-[var(--copy-strong)] px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.06em] text-white/90">
+                  {formatDuration(variant.length)}
                 </span>
               </div>
-              <h3 className="mt-3 font-display text-[1.55rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                {variant.hookTitle}
-              </h3>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <Badge tone="mint">{variant.objective}</Badge>
-                <Badge>Hook-Variante</Badge>
+
+              {/* Card content */}
+              <div className="p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
+                    {variant.angle}
+                  </span>
+                </div>
+                <h3 className="mt-3 font-display text-[1.55rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                  {variant.hookTitle}
+                </h3>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <Badge tone="mint">{variant.objective}</Badge>
+                  <Badge>Hook-Variante</Badge>
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </section>
   );

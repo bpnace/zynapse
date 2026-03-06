@@ -5,13 +5,13 @@ import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { buttonStyles } from "@/components/ui/button";
 import {
-  MANAGER_APPLICATION_STORAGE_KEY,
-  createManagerApplicationDefaults,
+  CREATIVE_APPLICATION_STORAGE_KEY,
+  createCreativeApplicationDefaults,
 } from "@/lib/forms/storage";
 import {
-  managerApplicationSchema,
-  type ManagerApplicationInput,
-} from "@/lib/validation/manager-application";
+  creativeApplicationSchema,
+  type CreativeApplicationInput,
+} from "@/lib/validation/creative-application";
 import {
   CheckboxPill,
   Field,
@@ -19,9 +19,16 @@ import {
   TextInput,
 } from "@/components/forms/form-primitives";
 
-const focusChannelOptions = ["TikTok", "Instagram Reels", "YouTube Shorts", "Meta Ads", "UGC-Konzepte"];
+const focusChannelOptions = [
+  "Prompt Engineering",
+  "Creative Direction",
+  "Prompt Design",
+  "AI Production",
+  "AI Engineering",
+  "AI Strategy",
+];
 
-export function ManagerApplicationForm() {
+export function CreativeApplicationForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -34,22 +41,22 @@ export function ManagerApplicationForm() {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<ManagerApplicationInput>({
-    resolver: zodResolver(managerApplicationSchema),
-    defaultValues: createManagerApplicationDefaults(),
+  } = useForm<CreativeApplicationInput>({
+    resolver: zodResolver(creativeApplicationSchema),
+    defaultValues: createCreativeApplicationDefaults(),
   });
 
   const selectedChannels = watch("focusChannels");
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(MANAGER_APPLICATION_STORAGE_KEY);
+    const saved = window.localStorage.getItem(CREATIVE_APPLICATION_STORAGE_KEY);
 
     if (saved) {
       try {
-        const parsed = JSON.parse(saved) as Partial<ManagerApplicationInput>;
-        reset(createManagerApplicationDefaults(parsed));
+        const parsed = JSON.parse(saved) as Partial<CreativeApplicationInput>;
+        reset(createCreativeApplicationDefaults(parsed));
       } catch {
-        window.localStorage.removeItem(MANAGER_APPLICATION_STORAGE_KEY);
+        window.localStorage.removeItem(CREATIVE_APPLICATION_STORAGE_KEY);
       }
     }
   }, [reset]);
@@ -57,9 +64,9 @@ export function ManagerApplicationForm() {
   useEffect(() => {
     const subscription = watch((value) => {
       window.localStorage.setItem(
-        MANAGER_APPLICATION_STORAGE_KEY,
+        CREATIVE_APPLICATION_STORAGE_KEY,
         JSON.stringify(
-          createManagerApplicationDefaults(value as Partial<ManagerApplicationInput>),
+          createCreativeApplicationDefaults(value as Partial<CreativeApplicationInput>),
         ),
       );
     });
@@ -82,13 +89,13 @@ export function ManagerApplicationForm() {
     });
   }
 
-  async function onSubmit(values: ManagerApplicationInput) {
+  async function onSubmit(values: CreativeApplicationInput) {
     setSubmitError("");
     setIsPending(true);
 
     startTransition(async () => {
       try {
-        const response = await fetch("/api/intake/manager", {
+        const response = await fetch("/api/intake/creative", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -101,7 +108,7 @@ export function ManagerApplicationForm() {
           throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
         }
 
-        window.localStorage.removeItem(MANAGER_APPLICATION_STORAGE_KEY);
+        window.localStorage.removeItem(CREATIVE_APPLICATION_STORAGE_KEY);
         setIsSuccess(true);
       } catch (error) {
         setSubmitError(
@@ -118,7 +125,7 @@ export function ManagerApplicationForm() {
   if (isSuccess) {
     return (
       <div className="section-card rounded-[2rem] p-8">
-        <span className="eyebrow">Manager-Track</span>
+        <span className="eyebrow">Track für Kreative</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
           Deine Bewerbung ist eingegangen.
         </h2>
@@ -135,7 +142,7 @@ export function ManagerApplicationForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="section-card rounded-[2rem] p-6 sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.32fr)_minmax(0,0.68fr)]">
         <div className="space-y-5">
-          <span className="eyebrow">Manager-Bewerbung</span>
+          <span className="eyebrow">Bewerbung für Kreative</span>
           <h2 className="font-display text-4xl font-semibold tracking-[-0.05em]">
             Wir prüfen Passung. Nicht nur Kontaktdaten.
           </h2>
@@ -164,7 +171,7 @@ export function ManagerApplicationForm() {
             </Field>
           </div>
           <Field
-            label="Fokuskanäle"
+            label="Fokusbereiche"
             error={errors.focusChannels?.message}
             hint="Mehrfachauswahl möglich"
           >
@@ -204,7 +211,7 @@ export function ManagerApplicationForm() {
           >
             <TextareaInput
               {...register("caseSummary")}
-              placeholder="Welche Kampagnen, Brands oder Growth-Situationen hast du bereits geführt und was war dein Beitrag?"
+              placeholder="Welche Kreativ-Projekte, AI-Workflows oder Kampagnen hast du bereits geführt und was war dein konkreter Beitrag?"
             />
           </Field>
           {submitError ? (

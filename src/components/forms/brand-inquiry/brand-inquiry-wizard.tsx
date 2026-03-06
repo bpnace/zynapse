@@ -27,12 +27,12 @@ const steps = [
   },
   {
     title: "Produktlink",
-    copy: "Ein Link reicht. Entscheidend ist ein sauberer Ausgangspunkt für Briefing und Creative-Richtung.",
+    copy: "Ein Link reicht. Entscheidend ist ein sauberer Ausgangspunkt für Briefing und Kreativ-Richtung.",
     fields: ["productUrl"] as const,
   },
   {
     title: "Ziel & Kanal",
-    copy: "Worauf soll das Creative zuerst optimieren und wo wird es als Erstes ausgespielt?",
+    copy: "Worauf soll die kreative Route zuerst optimieren und wo wird sie als Erstes ausgespielt?",
     fields: ["goal", "channel"] as const,
   },
   {

@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
-import { brandBenefits, managerBenefits } from "@/lib/content/site";
+import { brandBenefits, creativeBenefits } from "@/lib/content/site";
 
 function BenefitColumn({
   title,
@@ -84,11 +84,11 @@ export function SplitBenefits() {
         title="Für Brands"
         headline={
           <>
-            Mehr <span className="title-accent">Creative-Klarheit</span>, weniger{" "}
+            Mehr <span className="title-accent">Kreativklarheit</span>, weniger{" "}
             <span data-animate-word>Produktionschaos</span>
           </>
         }
-        copy="Teams kaufen hier keinen diffusen Tool-Zugang, sondern einen strukturierten Weg vom Briefing zu testbaren Creatives mit klarer Freigabelogik."
+        copy="Teams kaufen hier keinen diffusen Tool-Zugang, sondern einen strukturierten Weg vom Briefing zu testbaren Kreativvarianten mit klarer Freigabelogik."
         benefits={brandBenefits}
         href="/brands"
         cta="Mehr für Brands"
@@ -96,17 +96,17 @@ export function SplitBenefits() {
         glyph="◇"
       />
       <BenefitColumn
-        title="Für Social Media Manager"
+        title="Für Kreative"
         headline={
           <>
-            Deine Strategie bleibt <span data-animate-word>sichtbar</span>, auch wenn{" "}
+            Deine Kreativ-Logik bleibt <span data-animate-word>sichtbar</span>, auch wenn{" "}
             <span className="title-accent">Output skaliert</span>
           </>
         }
-        copy="Du führst Messaging, Hooks und Testing-Richtung. Zynapse nimmt dir die operative Skalierung ab, damit dein Wert nicht im Produktionschaos verschwindet."
-        benefits={managerBenefits}
-        href="/managers"
-        cta="Mehr für Manager"
+        copy="Du führst Prompt-Logik, Creative Direction und Testing-Richtung. Zynapse nimmt dir die operative Skalierung ab, damit dein Wert nicht im Tagesgeschäft verschwindet."
+        benefits={creativeBenefits}
+        href="/creatives"
+        cta="Mehr für Kreative"
         tone="warm"
         glyph="◎"
       />

@@ -21,10 +21,10 @@ export function ProcessStepper() {
         title={
           <>
             Ein Produktionsfluss, der <span data-animate-word>Rollen klärt</span>{" "}
-            und <span className="title-accent">Creative beschleunigt</span>.
+            und <span className="title-accent">Kreativarbeit beschleunigt</span>.
           </>
         }
-        copy="Das Team liefert Kontext und Freigaben. Der Manager führt Kampagnenlogik und Testing. Das Studio skaliert daraus Varianten, die schneller geprüft und ausgespielt werden können."
+        copy="Das Team liefert Kontext und Freigaben. Ein Creative Lead führt Kampagnenlogik und Testing. Das Studio skaliert daraus Varianten, die schneller geprüft und ausgespielt werden können."
       />
       <div className="grid gap-4 lg:grid-cols-5">
         {processSteps.map((step, index) => (

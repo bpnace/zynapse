@@ -11,6 +11,26 @@ type HomeMotionProps = {
   children: React.ReactNode;
 };
 
+function isElement(value: unknown): value is Element {
+  return value instanceof Element;
+}
+
+function killScopedScrollTriggers(container: HTMLElement) {
+  for (const trigger of ScrollTrigger.getAll()) {
+    const triggerElement = trigger.trigger;
+    const endTrigger = trigger.vars.endTrigger;
+    const pinElement = trigger.pin;
+
+    if (
+      (isElement(triggerElement) && container.contains(triggerElement)) ||
+      (isElement(endTrigger) && container.contains(endTrigger)) ||
+      (isElement(pinElement) && container.contains(pinElement))
+    ) {
+      trigger.kill(true);
+    }
+  }
+}
+
 export function HomeMotion({ children }: HomeMotionProps) {
   const scope = useRef<HTMLDivElement>(null);
 
@@ -215,6 +235,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
       });
 
       return () => {
+        killScopedScrollTriggers(container);
         mm.revert();
       };
     },

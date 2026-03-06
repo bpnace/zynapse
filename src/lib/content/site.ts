@@ -2,7 +2,7 @@ import type { NavItem } from "@/types/site";
 
 export const siteNav: NavItem[] = [
   { href: "/brands", label: "Für Brands" },
-  { href: "/managers", label: "Für Manager" },
+  { href: "/creatives", label: "Für Kreative" },
   { href: "/about", label: "Studio" },
   { href: "/pricing", label: "Preise" },
   { href: "/contact", label: "Kontakt" },
@@ -24,7 +24,7 @@ export const problemCards = [
   {
     title: "Zu viele Ideen, aber keine klare Priorität",
     description:
-      "Zwischen UGC, Trends, Hooks und AI-Tools fehlt oft die Reihenfolge. Zynapse übersetzt Creative-Druck in eine Kampagnenlogik, die testbar bleibt.",
+      "Zwischen UGC, Trends, Hooks und AI-Tools fehlt oft die Reihenfolge. Zynapse übersetzt Kreativ-Druck in eine Kampagnenlogik, die testbar bleibt.",
   },
   {
     title: "Zu viele Schleifen zwischen Team, Freigabe und Produktion",
@@ -32,7 +32,7 @@ export const problemCards = [
       "Wenn Briefing, Feedback und Ausspielung nicht sauber getrennt sind, wird jede Iteration teuer. Zynapse macht den nächsten Schritt und die erwarteten Deliverables sichtbar.",
   },
   {
-    title: "Zu viel Druck auf einzelne Hero-Creatives",
+    title: "Zu viel Druck auf einzelne Hero-Kreative",
     description:
       "Statt auf ein einzelnes Video zu hoffen, entstehen systematisch Varianten für unterschiedliche Hooks, Angles, Formate und Platzierungen.",
   },
@@ -47,13 +47,13 @@ export const processSteps = [
   },
   {
     title: "Kampagnenplanung",
-    owner: "Social Media Manager",
+    owner: "Creative Lead",
     description:
       "Angles, Hooks, CTA-Logik und Testprioritäten werden so aufgebaut, dass sie im Performance-Alltag wirklich tragen.",
   },
   {
     title: "Briefing-Paket",
-    owner: "Manager + System",
+    owner: "Creative Lead + System",
     description:
       "Aus der Kampagnenlogik entsteht ein Briefing-Paket mit Messaging, Formatregeln und klaren Freigabegrenzen.",
   },
@@ -73,16 +73,16 @@ export const processSteps = [
 
 export const brandBenefits = [
   "Planbare Produktion mit klaren Meilensteinen",
-  "Mehr testbare Creatives pro Briefing",
-  "Weniger Abstimmungsschleifen zwischen Team, Manager und Studio",
+  "Mehr testbare Kreativvarianten pro Briefing",
+  "Weniger Abstimmungsschleifen zwischen Team, Kreativen und Studio",
   "Freigaben und Feedback bleiben bis zum Export nachvollziehbar",
 ];
 
-export const managerBenefits = [
-  "Du verkaufst Strategie statt Produktionschaos",
-  "Klare Briefings statt endloser Creator-Schleifen",
-  "Skalierbarer Output ohne operative Überlastung",
-  "Planbare Erlöse pro Kunde oder Kampagne",
+export const creativeBenefits = [
+  "Du verkaufst Kreativstrategie statt Produktionschaos",
+  "Klare Briefings statt endloser Abstimmungsschleifen",
+  "Skalierbarer Output über mehrere AI-Rollen hinweg",
+  "Planbare Erlöse pro Kunde, Sprint oder Kampagne",
 ];
 
 export const trustSignals = [
@@ -111,7 +111,7 @@ export const trustSignals = [
 export const studioPrinciples = [
   "Kampagnenlogik vor Video-Output",
   "Jede Anfrage produziert Varianten statt Einzelassets",
-  "Manager steuern Performance-Richtung, Studio skaliert die Ausführung",
+  "Kreative steuern Performance-Richtung, Studio skaliert die Ausführung",
 ];
 
 export const footerGroups = [
@@ -123,7 +123,7 @@ export const footerGroups = [
     title: "Ressourcen",
     links: [
       { href: "/request", label: "Brand-Anfrage" },
-      { href: "/apply", label: "Manager-Bewerbung" },
+      { href: "/apply", label: "Bewerbung für Kreative" },
       { href: "/contact", label: "Kontakt" },
     ],
   },
@@ -143,7 +143,7 @@ export const contactChannels = [
     copy: "Brand-Anfragen, Paketberatung und Erstgespräche",
   },
   {
-    label: "Manager-Netzwerk",
+    label: "Netzwerk für Kreative",
     value: "network@zynapse.example",
     copy: "Bewerbungen, Qualifizierung, Partneranfragen",
   },

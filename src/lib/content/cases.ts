@@ -20,9 +20,9 @@ export const caseStudies: CaseStudyEntry[] = [
     summary:
       "Premium-Look trifft Performance: Varianten für Paid Social ohne generische Fließbandware.",
     challenge:
-      "Die Marke wollte mehr Variationen für Paid Social, ohne den Look in generische Creative-Fließbandware zu verwandeln.",
+      "Die Marke wollte mehr Variationen für Paid Social, ohne den Look in generische Kreativ-Fließbandware zu verwandeln.",
     outcome:
-      "Das Beispiel zeigt, wie ein Manager die Kampagnenlogik führen und das Studio daraus mehrere Cuts, Formate und Review-Schleifen ableiten kann.",
+      "Das Beispiel zeigt, wie ein Creative Lead die Kampagnenlogik führen und das Studio daraus mehrere Cuts, Formate und Review-Schleifen ableiten kann.",
     metrics: ["4:5 + 9:16", "12 Varianten", "2 Review-Zyklen"],
   },
   {
@@ -30,7 +30,7 @@ export const caseStudies: CaseStudyEntry[] = [
     brand: "Signal Loop",
     sector: "B2B SaaS / Demo",
     summary:
-      "Komplexes B2B-Produkt in klare Demo- und Awareness-Creatives für Paid Social übersetzt.",
+      "Komplexes B2B-Produkt in klare Demo- und Awareness-Kreativvarianten für Paid Social übersetzt.",
     challenge:
       "Das Team brauchte kurze Erklärformate für Paid Social, ohne jedes Asset jedes Mal neu aufzusetzen.",
     outcome:

@@ -1,12 +1,12 @@
 import { getEnv } from "@/lib/env";
 import { dispatchIntakeSubmission } from "@/lib/intake/providers/webhook";
-import type { ManagerApplication } from "@/types/intake";
+import type { CreativeApplication } from "@/types/intake";
 
-export async function submitManagerApplication(payload: ManagerApplication) {
+export async function submitCreativeApplication(payload: CreativeApplication) {
   const env = getEnv();
 
   return dispatchIntakeSubmission({
-    kind: "manager",
+    kind: "creative",
     siteUrl: env.siteUrl,
     notifyEmail: env.notifyEmail,
     submittedAt: new Date().toISOString(),

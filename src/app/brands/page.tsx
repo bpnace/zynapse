@@ -16,7 +16,7 @@ const painPoints = [
   {
     title: "Zu viele Schleifen, zu wenig Output",
     description:
-      "Jedes Video kostet drei Abstimmungsrunden, zwei Überarbeitungen und mindestens eine Woche. Für systematisches Creative Testing bleibt keine Kapazität.",
+      "Jedes Video kostet drei Abstimmungsrunden, zwei Überarbeitungen und mindestens eine Woche. Für systematisches Kreativ-Testing bleibt keine Kapazität.",
   },
   {
     title: "Briefings ohne Produktionslogik",
@@ -41,7 +41,7 @@ const howItWorks = [
     step: "02",
     title: "Kampagnenplanung",
     description:
-      "Der Social Media Manager baut daraus Angles, Hooks, CTA-Logik und Testprioritäten – abgestimmt auf die Performance-Ziele des Teams.",
+      "Der Creative Lead baut daraus Angles, Hooks, CTA-Logik und Testprioritäten – abgestimmt auf die Performance-Ziele des Teams.",
   },
   {
     step: "03",
@@ -118,12 +118,12 @@ export default function BrandsPage() {
           eyebrow="Typische Engpässe"
           title={
             <>
-              Creative-Produktion <span data-animate-word>frisst Zeit</span>,
+              Kreativproduktion <span data-animate-word>frisst Zeit</span>,
               die für <span className="title-accent">Testing und Optimierung</span>{" "}
               fehlt.
             </>
           }
-          copy="Brand- und Growth-Teams stecken in einem Kreislauf aus Briefings, Feedback-Schleifen und manueller Koordination. Der eigentliche Hebel – systematisches Creative Testing – bleibt liegen."
+          copy="Brand- und Growth-Teams stecken in einem Kreislauf aus Briefings, Feedback-Schleifen und manueller Koordination. Der eigentliche Hebel – systematisches Kreativ-Testing – bleibt liegen."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {painPoints.map((point, index) => (
@@ -163,7 +163,7 @@ export default function BrandsPage() {
               Kampagnen-Pack in <span className="title-accent">drei Schritten</span>.
             </>
           }
-          copy="Klare Rollen, klare Übergaben. Euer Team muss nicht zum Produktionsexperten werden – Kontext und Freigaben reichen, den Rest übernehmen Manager und Studio."
+          copy="Klare Rollen, klare Übergaben. Euer Team muss nicht zum Produktionsexperten werden – Kontext und Freigaben reichen, den Rest übernehmen Kreative und Studio."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {howItWorks.map((step) => (
@@ -202,7 +202,7 @@ export default function BrandsPage() {
                 data-animate-heading
               >
                 Weniger <span data-animate-word>Aufwand</span>, mehr{" "}
-                <span className="title-accent">testbare Creatives</span>.
+                <span className="title-accent">testbare Kreativvarianten</span>.
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
@@ -247,7 +247,7 @@ export default function BrandsPage() {
                 Was sich für euer Team <span className="title-accent">konkret ändert</span>.
               </>
             }
-            copy="Kein diffuser Tool-Zugang, sondern ein strukturierter Weg vom Briefing zu testbaren Creatives mit klarer Freigabelogik."
+            copy="Kein diffuser Tool-Zugang, sondern ein strukturierter Weg vom Briefing zu testbaren Kreativvarianten mit klarer Freigabelogik."
           />
         </div>
         <div

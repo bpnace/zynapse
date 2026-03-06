@@ -3,9 +3,9 @@
 Zynapse v1 ist eine conversion-orientierte Marketing-Site mit zwei klaren Onramps:
 
 - Brand Inquiry Wizard für Kampagnenanfragen
-- Manager Application Flow für Social Media Manager
+- Application Flow für Kreative mit AI-Fokus
 
-Die v1 verkauft ein Ergebnis, nicht eine Plattform: Aus einer Anfrage wird in kurzer Zeit eine fertige Video-Kampagne mit klarer Rollenlogik zwischen Brand, Manager und Studio.
+Die v1 verkauft ein Ergebnis, nicht eine Plattform: Aus einer Anfrage wird in kurzer Zeit eine fertige Video-Kampagne mit klarer Rollenlogik zwischen Brand, Kreativen und Studio.
 
 ## Stack
 

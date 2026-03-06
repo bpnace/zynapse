@@ -28,19 +28,19 @@ export const pricingPlans: PricingPlan[] = [
     price: "5.900",
     cadence: "pro Monat",
     description:
-      "Der laufende Produktionsmodus für Teams, die Creative systematisch testen und regelmäßig neue Varianten brauchen.",
-    audience: "Für Brands mit wiederkehrendem Paid-Social-Bedarf oder laufender Creative-Rotation.",
+      "Der laufende Produktionsmodus für Teams, die Kreativarbeit systematisch testen und regelmäßig neue Varianten brauchen.",
+    audience: "Für Brands mit wiederkehrendem Paid-Social-Bedarf oder laufender Kreativ-Rotation.",
     featured: true,
     highlights: ["laufender Modus", "Testing-Rhythmus", "Priorisierte Iteration"],
-    fit: "Ideal, wenn Creative nicht nur produziert, sondern jeden Monat strategisch getestet, bewertet und nachgebaut werden soll.",
+    fit: "Ideal, wenn Kreativarbeit nicht nur produziert, sondern jeden Monat strategisch getestet, bewertet und nachgebaut werden soll.",
     collaboration:
       "Laufende Kampagnenplanung mit wiederkehrenden Iterationen, engerer Abstimmung und sichtbarer Testing-Roadmap.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für das Growth Paket. Wir suchen einen laufenden Modus für regelmäßige Creative-Tests und möchten einschätzen, wie eure monatliche Planung, Iteration und Zusammenarbeit im Detail aussieht.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für das Growth Paket. Wir suchen einen laufenden Modus für regelmäßige Kreativ-Tests und möchten einschätzen, wie eure monatliche Planung, Iteration und Zusammenarbeit im Detail aussieht.\n\nViele Grüße",
     deliverables: [
       "Monatlicher Kampagnen-Stack für mehrere Messaging-Routen",
       "24 bis 36 Video-Varianten",
-      "Manager-geführte Testing-Roadmap",
+      "Kreativ-geführte Testing-Roadmap",
       "Priorisierte Iterations-Slots",
     ],
   },

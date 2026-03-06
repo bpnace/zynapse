@@ -1,4 +1,4 @@
-export type IntakeKind = "brand" | "manager" | "contact";
+export type IntakeKind = "brand" | "creative" | "contact";
 
 export type IntakeEnvelope<TPayload> = {
   kind: IntakeKind;

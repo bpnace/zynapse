@@ -6,7 +6,7 @@ import { contactChannels } from "@/lib/content/site";
 export const metadata = buildMetadata({
   title: "Kontakt | Zynapse",
   description:
-    "Direkte Kontaktwege für Vertrieb, Manager-Netzwerk und operative Fragen.",
+    "Direkte Kontaktwege für Vertrieb, Netzwerk für Kreative und operative Fragen.",
   path: "/contact",
 });
 
@@ -16,7 +16,7 @@ export default function ContactPage() {
       <PageHero
         label="Kontakt"
         title="Vertrieb, Netzwerk oder operative Fragen – jeder Kontaktweg hat einen klaren Zweck."
-        description="Für Brand-Anfragen, Paketfragen und Erstgespräche nutzt du den Vertrieb. Für den Manager-Track das Netzwerk. Für alles Operative den direkten Betriebskanal."
+        description="Für Brand-Anfragen, Paketfragen und Erstgespräche nutzt du den Vertrieb. Für den Track für Kreative nutzt du das Netzwerk. Für alles Operative den direkten Betriebskanal."
         badges={["Vertrieb", "Formular", "Betrieb"]}
       />
       <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">

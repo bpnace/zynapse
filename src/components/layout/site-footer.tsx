@@ -8,11 +8,11 @@ export function SiteFooter() {
         <div className="space-y-4">
           <p className="eyebrow">Zynapse</p>
           <h2 className="font-display text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
-            Vom Briefing zu Creatives, die schneller getestet werden können.
+            Vom Briefing zu Kreativvarianten, die schneller getestet werden können.
           </h2>
           <p className="max-w-md text-[color:var(--copy-muted)]">
             Zynapse verbindet Kampagnenlogik, klare Freigaben und skalierbaren
-            Output in einem Prozess, der für Brands, Growth-Teams und Manager
+            Output in einem Prozess, der für Brands, Growth-Teams und Kreative
             anschlussfähig bleibt.
           </p>
         </div>

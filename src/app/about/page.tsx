@@ -14,12 +14,12 @@ const pillars = [
   {
     title: "Kampagnenlogik vor Footage",
     description:
-      "Jedes Creative beginnt mit Strategie: Angles, Hooks, CTA-Routen und Testprioritäten stehen, bevor ein einziges Frame entsteht. Clips werden Teil eines Systems – nicht isolierte Assets.",
+      "Jede kreative Variante beginnt mit Strategie: Angles, Hooks, CTA-Routen und Testprioritäten stehen, bevor ein einziges Frame entsteht. Clips werden Teil eines Systems – nicht isolierte Assets.",
   },
   {
     title: "Klare Rollen, klare Übergaben",
     description:
-      "Brands geben Kontext und Freigaben. Manager führen Strategie und Testing-Richtung. Das Studio skaliert die Ausführung. Kein Rollenchaos, keine doppelten Zuständigkeiten.",
+      "Brands geben Kontext und Freigaben. Kreative führen Strategie und Testing-Richtung. Das Studio skaliert die Ausführung. Kein Rollenchaos, keine doppelten Zuständigkeiten.",
   },
   {
     title: "Skalierung ohne Qualitätsverlust",
@@ -57,7 +57,7 @@ const codex = [
     number: "05",
     title: "System statt Tool",
     description:
-      "Zynapse ersetzt keine Teams – es verbindet sie. Brands, Manager und Studio arbeiten in einem gemeinsamen Produktionsfluss, nicht in parallelen Silos.",
+      "Zynapse ersetzt keine Teams – es verbindet sie. Brands, Kreative und Studio arbeiten in einem gemeinsamen Produktionsfluss, nicht in parallelen Silos.",
   },
 ];
 
@@ -103,7 +103,7 @@ const values = [
   {
     title: "Partnerschaft",
     description:
-      "Zynapse funktioniert nur, wenn alle Seiten funktionieren. Brands, Manager und Studio sind gleichwertige Teile eines Systems.",
+      "Zynapse funktioniert nur, wenn alle Seiten funktionieren. Brands, Kreative und Studio sind gleichwertige Teile eines Systems.",
   },
 ];
 
@@ -121,7 +121,7 @@ const studioGlossary = [
   {
     term: "Rollenklarheit",
     explanation:
-      "Brand, Manager und Studio arbeiten mit klaren Zuständigkeiten statt mit parallelen Abstimmungen.",
+      "Brand, Kreative und Studio arbeiten mit klaren Zuständigkeiten statt mit parallelen Abstimmungen.",
   },
 ];
 
@@ -159,7 +159,7 @@ export default function AboutPage() {
                 className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
                 data-animate-copy
               >
-                Das Studio übersetzt Briefings in testbare Creative-Strecken:
+                Das Studio übersetzt Briefings in testbare Kreativ-Strecken:
                 mit klaren Angles, sauberen Review-Schritten und Varianten, die
                 für Paid Social, Landingpage-Traffic und Performance-Retargeting
                 gedacht sind. Nicht mehr Content um des Outputs willen, sondern
@@ -294,14 +294,14 @@ export default function AboutPage() {
               className="mt-5 max-w-3xl font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl lg:text-6xl"
               data-animate-heading
             >
-              Creative <span data-animate-word>Testing</span>{" "}
+              Kreativ-<span data-animate-word>Testing</span>{" "}
               <span className="title-accent">zugänglich</span> machen.
             </h2>
             <p
               className="mt-6 max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              Systematisches Creative Testing ist der größte Hebel für
+              Systematisches Kreativ-Testing ist der größte Hebel für
               Performance. Aber der Weg dahin – Briefings,
               Produktionsschleifen, Freigaben, Varianten – ist zu aufwändig.
               Zynapse macht ihn planbar, schnell und wiederholbar.
@@ -497,7 +497,7 @@ export default function AboutPage() {
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Ob als Brand oder Manager – der Einstieg braucht nur wenige
+                Ob als Brand oder Kreative:r – der Einstieg braucht nur wenige
                 Minuten. Kein Sales-Call, kein langes Setup.
               </p>
             </div>
@@ -506,7 +506,7 @@ export default function AboutPage() {
                 Brand-Anfrage
               </ButtonLink>
               <ButtonLink href="/apply" variant="secondary" size="lg">
-                Manager-Bewerbung
+                Bewerbung für Kreative
               </ButtonLink>
             </div>
           </div>

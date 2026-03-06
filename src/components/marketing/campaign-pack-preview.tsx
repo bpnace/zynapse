@@ -20,7 +20,7 @@ export function CampaignPackPreview() {
               <span className="title-accent">Logik davor</span>.
             </>
           }
-          copy="Bevor ein Creative gebaut wird, wird die Kampagne in Angles, Hooks, CTA-Routen, Cuts und Längen zerlegt. So wird aus 'wir brauchen Content' ein System, das sich testen und weiterdrehen lässt."
+          copy="Bevor eine kreative Variante gebaut wird, wird die Kampagne in Angles, Hooks, CTA-Routen, Cuts und Längen zerlegt. So wird aus 'wir brauchen Content' ein System, das sich testen und weiterdrehen lässt."
         />
         <ul className="space-y-3 text-base leading-7 text-[color:var(--copy-body)]">
           <li data-animate-copy>3 strategische Angles pro Pack</li>
@@ -93,7 +93,7 @@ export function CampaignPackPreview() {
                 {[
                   { label: "Übersicht", glyph: "▦", active: false },
                   { label: "Kampagnen", glyph: "◈", active: true },
-                  { label: "Creatives", glyph: "◻", active: false },
+                  { label: "Kreative", glyph: "◻", active: false },
                   { label: "Testing", glyph: "◎", active: false },
                   { label: "Freigaben", glyph: "✓", active: false },
                 ].map(({ label, glyph, active }) => (
@@ -138,10 +138,10 @@ export function CampaignPackPreview() {
               <div className="mt-auto px-3 pt-3">
                 <div className="flex items-center gap-2">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--gold)] text-[8px] font-bold leading-none text-[var(--ink-strong)]">
-                    M
+                    C
                   </span>
                   <span className="truncate font-mono text-[10px] text-[color:var(--copy-soft)]">
-                    Manager
+                    Creative Lead
                   </span>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export function CampaignPackPreview() {
                   <span className="opacity-60">Kampagnen</span>
                   <span className="opacity-30">/</span>
                   <span className="font-semibold text-[var(--copy-strong)]">
-                    Creative-Testing-Struktur
+                    Kreativ-Testing-Struktur
                   </span>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">

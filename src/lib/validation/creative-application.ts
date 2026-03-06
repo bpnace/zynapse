@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const managerApplicationSchema = z.object({
+export const creativeApplicationSchema = z.object({
   name: z.string().trim().min(2, "Bitte einen Namen angeben."),
   email: z
     .string()
@@ -18,4 +18,4 @@ export const managerApplicationSchema = z.object({
   website: z.string().trim(),
 });
 
-export type ManagerApplicationInput = z.infer<typeof managerApplicationSchema>;
+export type CreativeApplicationInput = z.infer<typeof creativeApplicationSchema>;
