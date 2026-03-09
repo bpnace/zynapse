@@ -1,8 +1,8 @@
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Badge } from "@/components/ui/badge";
 import { buildMetadata } from "@/lib/seo";
 import { creativeBenefits } from "@/lib/content/site";
+import Image from "next/image";
 
 export const metadata = buildMetadata({
   title: "Für Kreative – AI-Netzwerk für Kampagnen | Zynapse",
@@ -106,13 +106,13 @@ export default function CreativesPage() {
   return (
     <>
       <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
+        className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
         <span className="eyebrow" data-animate-heading>
           Für Kreative
         </span>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-end">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-start">
           <div className="space-y-6">
             <h1
               className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
@@ -137,17 +137,17 @@ export default function CreativesPage() {
               </ButtonLink>
             </div>
           </div>
-          <div
-            className="flex flex-wrap gap-2 lg:justify-end"
-            data-animate-item
-          >
-            {["Netzwerk für Kreative", "Rollenklarheit", "Skalierbarer Output"].map(
-              (badge) => (
-                <Badge key={badge} tone="mint">
-                  {badge}
-                </Badge>
-              ),
-            )}
+          <div className="flex lg:absolute lg:top-30 lg:right-12 lg:z-10">
+            <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[38rem] lg:w-[22rem]">
+              <Image
+                src="/brand/peep-standing-9.png"
+                alt="Illustration einer stehenden Person"
+                fill
+                className="object-contain object-top"
+                sizes="(min-width: 1024px) 22rem, (min-width: 640px) 18rem, 16rem"
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -173,7 +173,6 @@ export default function CreativesPage() {
                     ? "border-t-[rgba(249,197,106,0.3)]"
                     : "border-t-[rgba(56,67,84,0.2)]"
               }`}
-              data-animate-item
             >
               <h3 className="font-display text-[1.5rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
                 {point.title}
@@ -202,7 +201,6 @@ export default function CreativesPage() {
             <article
               key={step.step}
               className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
-              data-animate-item
             >
               <span className="font-display text-[2.5rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
                 {step.step}
@@ -233,7 +231,6 @@ export default function CreativesPage() {
             <article
               key={entry.role}
               className="section-card section-surface-paper rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] p-6"
-              data-animate-item
             >
               <p className="font-mono text-xs tracking-[0.16em] uppercase text-[var(--accent-soft)]">
                 {entry.role}
@@ -274,7 +271,7 @@ export default function CreativesPage() {
                 in einen messbaren Rhythmus statt in lose Einzelprojekte.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-3" data-animate-item>
+            <div className="grid gap-4 sm:grid-cols-3">
               {results.map((metric) => (
                 <div
                   key={metric.label}
@@ -307,7 +304,6 @@ export default function CreativesPage() {
         </div>
         <div
           className="section-card section-surface-paper rounded-[var(--radius-card)] p-6"
-          data-animate-item
         >
           <ul className="grid gap-3">
             {profileFits.map((item) => (
@@ -343,7 +339,6 @@ export default function CreativesPage() {
             <article
               key={benefit}
               className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
-              data-animate-item
             >
               <p className="text-[1.05rem] leading-7 text-[color:var(--copy-body)]">
                 {benefit}
