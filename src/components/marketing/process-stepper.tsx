@@ -31,7 +31,6 @@ export function ProcessStepper() {
           <article
             key={step.title}
             className={`section-card section-surface-contrast flex flex-col rounded-[var(--radius-card)] p-5 ${stepAccentClasses[index % stepAccentClasses.length]}`}
-            data-animate-item
           >
             {/* Row 1: Step number + owner badge — fixed height */}
             <div className="flex h-10 items-center justify-between gap-2">

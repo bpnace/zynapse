@@ -49,22 +49,20 @@ export function FinalCta() {
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Der <span data-animate-word>Einstieg</span> beginnt mit einem{" "}
-              <span className="title-accent">kompakten Briefing</span>. Nicht mit
-              einem langen Setup-Call.
+              Dein <span data-animate-word>Einstieg</span> beginnt mit einem{" "}
+              <span className="title-accent">kompakten Briefing</span>.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
               Fünf Felder reichen für den Start. Danach übernimmt der vollständige
-              Anfrage-Flow mit Kontext, Review und Übergabe in die Kampagnenplanung.
+              Anfrage-Flow Agent mit Kontext, Review und Übergabe in die Kampagnenplanung.
             </p>
           </div>
           <form
             onSubmit={handleSubmit}
             className="section-surface-paper grid gap-4 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.14)] p-5 md:grid-cols-2 md:p-6"
-            data-animate-item
           >
             <label className="field-shell">
               <span className="field-label">Branche</span>

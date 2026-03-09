@@ -10,7 +10,7 @@ export function Hero() {
     >
       <div className="relative min-h-[50rem] overflow-hidden">
         <div
-          className="pointer-events-none absolute inset-0 will-change-transform"
+          className="pointer-events-none absolute inset-x-0 -inset-y-[14%] will-change-transform"
           data-hero-image
         >
           <Image

@@ -11,6 +11,15 @@ type HomeMotionProps = {
   children: React.ReactNode;
 };
 
+const SECTION_REVEAL_START = "top 65%";
+const REVEAL_DURATION = 0.66;
+const WORD_REVEAL_BASE_DURATION = 0.4;
+const WORD_REVEAL_DURATION_STEP = 0.1;
+const WORD_REVEAL_START_DELAY = 0.15;
+const WORD_REVEAL_STAGGER = 0.15;
+const HERO_TITLE_REVEAL_DURATION = 1;
+const HERO_WORD_REVEAL_START_DELAY = 0.16;
+
 function isElement(value: unknown): value is Element {
   return value instanceof Element;
 }
@@ -55,7 +64,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
         const addWordAnimations = (
           timeline: gsap.core.Timeline,
           words: HTMLElement[],
-          startAt = 0.08,
+          startAt = WORD_REVEAL_START_DELAY,
         ) => {
           if (!words.length) {
             return;
@@ -74,10 +83,11 @@ export function HomeMotion({ children }: HomeMotionProps) {
               {
                 autoAlpha: 1,
                 yPercent: 0,
-                duration: 0.32 + index * 0.08,
+                duration:
+                  WORD_REVEAL_BASE_DURATION + index * WORD_REVEAL_DURATION_STEP,
                 ease: index % 2 === 0 ? "power3.out" : "power2.out",
               },
-              startAt + index * 0.06,
+              startAt + index * WORD_REVEAL_STAGGER,
             );
           });
         };
@@ -86,10 +96,10 @@ export function HomeMotion({ children }: HomeMotionProps) {
           gsap.fromTo(
             heroImage,
             {
-              yPercent: -6,
+              yPercent: -3,
             },
             {
-              yPercent: 8,
+              yPercent: 5,
               ease: "none",
               scrollTrigger: {
                 trigger: hero,
@@ -105,19 +115,13 @@ export function HomeMotion({ children }: HomeMotionProps) {
           const heroHeading = heroIntro.querySelectorAll<HTMLElement>(
             "[data-animate-heading]",
           );
-          const heroCopy = heroIntro.querySelectorAll<HTMLElement>(
-            "[data-animate-copy]",
-          );
-          const heroItems = heroIntro.querySelectorAll<HTMLElement>(
-            "[data-animate-item]",
-          );
           const heroWords = Array.from(
             heroIntro.querySelectorAll<HTMLElement>("[data-animate-word]"),
           );
 
           const heroTimeline = gsap.timeline({
             defaults: {
-              duration: 0.72,
+              duration: HERO_TITLE_REVEAL_DURATION,
               ease: "power2.out",
             },
           });
@@ -130,31 +134,11 @@ export function HomeMotion({ children }: HomeMotionProps) {
             });
           }
 
-          addWordAnimations(heroTimeline, heroWords, heroHeading.length ? 0.08 : 0);
-
-          if (heroCopy.length) {
-            heroTimeline.from(
-              heroCopy,
-              {
-                autoAlpha: 0,
-                y: 20,
-                stagger: 0.06,
-              },
-              heroHeading.length ? "-=0.42" : 0,
-            );
-          }
-
-          if (heroItems.length) {
-            heroTimeline.from(
-              heroItems,
-              {
-                autoAlpha: 0,
-                y: 22,
-                stagger: 0.08,
-              },
-              heroHeading.length || heroCopy.length ? "-=0.32" : 0,
-            );
-          }
+          addWordAnimations(
+            heroTimeline,
+            heroWords,
+            heroHeading.length ? HERO_WORD_REVEAL_START_DELAY : 0,
+          );
         }
 
         const parallaxWindows = Array.from(
@@ -188,12 +172,12 @@ export function HomeMotion({ children }: HomeMotionProps) {
 
           const timeline = gsap.timeline({
             defaults: {
-              duration: 0.72,
+              duration: REVEAL_DURATION,
               ease: "power2.out",
             },
             scrollTrigger: {
               trigger: section,
-              start: "top 82%",
+              start: SECTION_REVEAL_START,
               once: true,
             },
           });
@@ -206,7 +190,11 @@ export function HomeMotion({ children }: HomeMotionProps) {
             });
           }
 
-          addWordAnimations(timeline, words, heading.length ? 0.08 : 0);
+          addWordAnimations(
+            timeline,
+            words,
+            heading.length ? WORD_REVEAL_START_DELAY : 0,
+          );
 
           if (copy.length) {
             timeline.from(

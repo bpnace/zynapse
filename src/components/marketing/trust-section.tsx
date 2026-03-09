@@ -23,7 +23,6 @@ export function TrustSection() {
           <article
             key={signal.title}
             className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
-            data-animate-item
           >
             <h3 className="font-display text-[1.7rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
               {signal.title}
@@ -36,7 +35,6 @@ export function TrustSection() {
       </div>
       <div
         className="section-surface-contrast flex flex-wrap items-center justify-between gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] px-6 py-5"
-        data-animate-item
       >
         <p className="max-w-2xl text-sm leading-6 text-[color:var(--copy-body)]">
           Rechtliche Details müssen vor dem Launch fachlich geprüft werden. Die

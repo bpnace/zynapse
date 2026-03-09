@@ -22,17 +22,34 @@ export function CampaignPackPreview() {
           }
           copy="Bevor eine kreative Variante gebaut wird, wird die Kampagne in Angles, Hooks, CTA-Routen, Cuts und Längen zerlegt. So wird aus 'wir brauchen Content' ein System, das sich testen und weiterdrehen lässt."
         />
-        <ul className="space-y-3 text-base leading-7 text-[color:var(--copy-body)]">
-          <li data-animate-copy>3 strategische Angles pro Pack</li>
-          <li data-animate-copy>10 Hook-Richtungen mit klarer Testabsicht</li>
-          <li data-animate-copy>5 CTA-Varianten pro Offer</li>
-          <li data-animate-copy>6 Cuts pro Angle</li>
-          <li data-animate-copy>3 Längen für Platzierung, Test und Iteration</li>
+        <ul className="grid gap-2.5">
+          {[
+            "3 strategische Angles pro Pack",
+            "10 Hook-Richtungen mit klarer Testabsicht",
+            "5 CTA-Varianten pro Offer",
+            "6 Cuts pro Angle",
+            "3 Längen für Platzierung, Test und Iteration",
+          ].map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-white/80 px-3 py-2.5 text-[1.02rem] leading-7 font-medium text-[var(--copy-strong)] shadow-[0_6px_16px_rgba(31,36,48,0.06)]"
+            >
+              <span
+                aria-hidden="true"
+                className="mt-[0.58rem] h-2 w-2 shrink-0 rounded-full bg-[var(--accent)]"
+              />
+              <span>{item}</span>
+            </li>
+          ))}
         </ul>
       </div>
 
       {/* ── SaaS window frame ── */}
-      <div className="relative" data-animate-item data-parallax-window style={{ perspective: "1200px" }}>
+      <div
+        className="relative mt-4 lg:mt-6"
+        data-parallax-window
+        style={{ perspective: "1200px" }}
+      >
         {/* Ambient glow */}
         <div
           className="pointer-events-none absolute -inset-6 -z-10 rounded-[var(--radius-panel)]"

@@ -2,6 +2,7 @@ import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-for
 import { PageHero } from "@/components/ui/page-hero";
 import { buildMetadata } from "@/lib/seo";
 import { contactChannels } from "@/lib/content/site";
+import { Suspense } from "react";
 
 export const metadata = buildMetadata({
   title: "Kontakt | Zynapse",
@@ -31,8 +32,21 @@ export default function ContactPage() {
         ))}
       </section>
       <section className="mx-auto w-full max-w-7xl px-6 pt-2 pb-16 sm:px-8 lg:px-10">
-        <ContactIntakeForm />
+        <Suspense fallback={<ContactFormFallback />}>
+          <ContactIntakeForm />
+        </Suspense>
       </section>
     </>
+  );
+}
+
+function ContactFormFallback() {
+  return (
+    <div className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8">
+      <span className="eyebrow">Kontaktformular</span>
+      <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
+        Formular wird geladen...
+      </p>
+    </div>
   );
 }

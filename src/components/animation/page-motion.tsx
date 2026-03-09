@@ -7,6 +7,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+const SECTION_REVEAL_START = "top 75%";
+const REVEAL_DURATION = 0.86;
+const WORD_REVEAL_BASE_DURATION = 0.4;
+const WORD_REVEAL_DURATION_STEP = 0.1;
+const WORD_REVEAL_START_DELAY = 0.12;
+const WORD_REVEAL_STAGGER = 0.15;
+
 function isElement(value: unknown): value is Element {
   return value instanceof Element;
 }
@@ -58,10 +65,10 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
           );
 
           const timeline = gsap.timeline({
-            defaults: { duration: 0.72, ease: "power2.out" },
+            defaults: { duration: REVEAL_DURATION, ease: "power2.out" },
             scrollTrigger: {
               trigger: section,
-              start: "top 82%",
+              start: SECTION_REVEAL_START,
               once: true,
             },
           });
@@ -88,10 +95,13 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
                 {
                   autoAlpha: 1,
                   yPercent: 0,
-                  duration: 0.32 + index * 0.08,
+                  duration:
+                    WORD_REVEAL_BASE_DURATION + index * WORD_REVEAL_DURATION_STEP,
                   ease: index % 2 === 0 ? "power3.out" : "power2.out",
                 },
-                heading.length ? 0.08 + index * 0.06 : index * 0.06,
+                heading.length
+                  ? WORD_REVEAL_START_DELAY + index * WORD_REVEAL_STAGGER
+                  : index * WORD_REVEAL_STAGGER,
               );
             });
           }
