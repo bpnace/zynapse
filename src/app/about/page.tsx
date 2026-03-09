@@ -2,6 +2,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PageMotion } from "@/components/animation/page-motion";
 import { buildMetadata } from "@/lib/seo";
+import Image from "next/image";
 
 export const metadata = buildMetadata({
   title: "Studio – Wie Zynapse Videoproduktion neu denkt | Zynapse",
@@ -151,26 +152,31 @@ export default function AboutPage() {
                 data-animate-copy
               >
                 Zynapse verbindet Kampagnenlogik, kreative Skalierung und klare
-                Rollenverteilung. Kein Agenturmodell, kein Creator-Marktplatz
-                und kein loses Produktionsnetzwerk, sondern ein strukturierter
-                Produktionsfluss für Performance-Video.
+                Rollenverteilung in einem durchgehenden Produktionssystem. Statt
+                projektweiser Einzelabgaben arbeitet ihr mit festen Übergaben,
+                definierten Review-Punkten und einem Ablauf, der auf
+                testbare Kampagnen ausgelegt ist.
               </p>
               <p
                 className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
                 data-animate-copy
               >
-                Das Studio übersetzt Briefings in testbare Kreativ-Strecken:
-                mit klaren Angles, sauberen Review-Schritten und Varianten, die
-                für Paid Social, Landingpage-Traffic und Performance-Retargeting
-                gedacht sind. Nicht mehr Content um des Outputs willen, sondern
-                Material, das in einem Kampagnensystem Sinn ergibt.
+                Das Studio übersetzt Briefings in testbare Kreativ-Strecken mit
+                klaren Angles, sauberen Review-Schritten und Varianten für Paid
+                Social, Landingpage-Traffic und Performance-Retargeting.
+              </p>
+              <p
+                className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
+                data-animate-copy
+              >
+                Ihr bekommt keine lose Asset-Sammlung, sondern einen
+                nachvollziehbaren Kampagnen-Output: priorisierte Hooks,
+                CTA-Varianten, passende Formate und eine Freigabespur, mit der
+                Teams schneller entscheiden und direkt weiter testen können.
               </p>
             </div>
 
-            <div
-              className="grid gap-4 sm:grid-cols-3"
-              data-animate-item
-            >
+            <div className="grid gap-4 sm:grid-cols-3">
               {[
                 {
                   label: "Wofür das Studio gebaut ist",
@@ -202,7 +208,6 @@ export default function AboutPage() {
 
           <aside
             className="section-card section-surface-paper relative overflow-hidden rounded-[calc(var(--radius-panel)+0.05rem)] p-5 sm:p-6"
-            data-animate-item
           >
             <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(224,94,67,0),rgba(224,94,67,0.42),rgba(224,94,67,0))]" />
             <p
@@ -211,39 +216,24 @@ export default function AboutPage() {
               Studio Preview
             </p>
             <div className="mt-4 grid gap-5">
-              <div className="relative overflow-hidden rounded-[1.2rem] border border-[rgba(25,28,33,0.08)] bg-[linear-gradient(160deg,rgba(255,255,255,0.94),rgba(241,232,224,0.88)_52%,rgba(231,218,208,0.72))] p-5">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(224,94,67,0.16),transparent_48%),radial-gradient(circle_at_bottom_right,rgba(249,197,106,0.24),transparent_44%)]" />
-                <div className="relative flex aspect-[4/5] flex-col justify-between rounded-[0.95rem] border border-dashed border-[rgba(25,28,33,0.14)] bg-[rgba(255,255,255,0.34)] p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-[0.72rem] leading-4 font-medium tracking-[0.12em] text-[color:var(--copy-muted)] uppercase">
-                        Platzhalter für Studio-Bild
-                      </p>
-                      <p className="mt-2 max-w-[16rem] font-display text-2xl leading-[1] tracking-[-0.04em] text-[var(--copy-strong)]">
-                        Produktionsumgebung, Review-Momente und Materialfluss.
-                      </p>
-                    </div>
-                    <span className="font-display text-4xl leading-none text-[rgba(224,94,67,0.34)]">
-                      Z
-                    </span>
-                  </div>
-
-                  <div className="grid gap-3">
-                    <div className="rounded-[0.85rem] border border-[rgba(25,28,33,0.08)] bg-[rgba(255,255,255,0.55)] px-4 py-3">
-                      <p className="text-[0.7rem] leading-4 font-medium tracking-[0.12em] text-[color:var(--copy-muted)] uppercase">
-                        Was hier später sichtbar sein kann
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                        Setups, Freigabeschleifen, Schnittsituationen oder ein
-                        Einblick in den Produktionsprozess des Studios.
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between border-t border-[rgba(25,28,33,0.08)] pt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-                      <span>72h Turnaround</span>
-                      <span>Review-ready</span>
-                      <span>Paid Social</span>
-                    </div>
-                  </div>
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.2rem] border border-[rgba(25,28,33,0.08)]">
+                <Image
+                  src="/studio/1333.webp"
+                  alt="Studio-Setup für Kampagnenproduktion und Review"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 26rem, (min-width: 640px) 70vw, 92vw"
+                  priority
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(25,28,33,0)_52%,rgba(25,28,33,0.55)_100%)]" />
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                  <p className="text-[0.7rem] leading-4 font-medium tracking-[0.12em] text-white/80 uppercase">
+                    Studio-Material
+                  </p>
+                  <p className="mt-1 max-w-[18rem] font-display text-[1.35rem] leading-[1.02] tracking-[-0.03em] text-white">
+                    Produktionsumgebung, Review-Momente und Materialfluss im
+                    echten Ablauf.
+                  </p>
                 </div>
               </div>
 
@@ -308,10 +298,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div
-            className="relative mt-10 grid gap-3 sm:grid-cols-3"
-            data-animate-item
-          >
+          <div className="relative mt-10 grid gap-3 sm:grid-cols-3">
             {[
               { value: "72h", label: "Briefing bis Freigabe" },
               { value: "18+", label: "testbare Varianten pro Briefing" },
@@ -356,7 +343,6 @@ export default function AboutPage() {
                     ? "border-t-[rgba(249,197,106,0.3)]"
                     : "border-t-[rgba(185,178,255,0.28)]"
               }`}
-              data-animate-item
             >
               <h3 className="font-display text-[1.5rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
                 {pillar.title}
@@ -427,7 +413,6 @@ export default function AboutPage() {
             <article
               key={value.title}
               className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
-              data-animate-item
             >
               <h3 className="font-display text-[1.5rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
                 {value.title}
@@ -440,7 +425,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Comparison ── */}
+      {/* ── Comparison ──
       <section
         className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
@@ -456,7 +441,6 @@ export default function AboutPage() {
             <div
               key={diff.label}
               className="section-card section-surface-paper grid items-center gap-4 rounded-[var(--radius-card)] p-5 sm:grid-cols-[0.25fr_0.375fr_0.375fr]"
-              data-animate-item
             >
               <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
                 {diff.label}
@@ -476,7 +460,7 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ── Final CTA ── */}
       <section

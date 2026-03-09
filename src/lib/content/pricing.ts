@@ -4,7 +4,7 @@ export const pricingPlans: PricingPlan[] = [
   {
     id: "starter",
     name: "Starter Kampagne",
-    price: "2.400",
+    price: "2.400€",
     cadence: "pro Launch",
     description:
       "Für Teams, die ein erstes Kampagnen-Setup schnell, sauber und ohne lange Vorlaufzeit live bringen wollen.",
@@ -25,7 +25,7 @@ export const pricingPlans: PricingPlan[] = [
   {
     id: "growth",
     name: "Growth",
-    price: "5.900",
+    price: "5.900€",
     cadence: "pro Monat",
     description:
       "Der laufende Produktionsmodus für Teams, die Kreativarbeit systematisch testen und regelmäßig neue Varianten brauchen.",
