@@ -1,8 +1,10 @@
-import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
-import { PageHero } from "@/components/ui/page-hero";
-import { buildMetadata } from "@/lib/seo";
-import { contactChannels } from "@/lib/content/site";
+import Image from "next/image";
 import { Suspense } from "react";
+import { PageMotion } from "@/components/animation/page-motion";
+import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
+import { ButtonLink } from "@/components/ui/button";
+import { contactChannels } from "@/lib/content/site";
+import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Kontakt | Zynapse",
@@ -13,30 +15,86 @@ export const metadata = buildMetadata({
 
 export default function ContactPage() {
   return (
-    <>
-      <PageHero
-        label="Kontakt"
-        title="Vertrieb, Netzwerk oder operative Fragen – jeder Kontaktweg hat einen klaren Zweck."
-        description="Für Brand-Anfragen, Paketfragen und Erstgespräche nutzt du den Vertrieb. Für den Track für Kreative nutzt du das Netzwerk. Für alles Operative den direkten Betriebskanal."
-        badges={["Vertrieb", "Formular", "Betrieb"]}
-      />
-      <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
-        {contactChannels.map((channel) => (
-          <article key={channel.label} className="section-card rounded-[1.9rem] p-6">
-            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-              {channel.label}
+    <PageMotion>
+      <section
+        className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
+        data-reveal-section
+      >
+        <span className="eyebrow" data-animate-heading>
+          Kontakt
+        </span>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-start">
+          <div className="space-y-6">
+            <h1
+              className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
+              data-animate-heading
+            >
+              Klare Kontaktwege,{" "}
+              <span className="title-accent">schnelle Antworten</span>.
+            </h1>
+            <p
+              className="max-w-4xl text-lg leading-8 text-[color:var(--copy-body)]"
+              data-animate-copy
+            >
+              Ob Brand-Anfrage, Paketfrage oder operatives Thema: Du landest
+              direkt beim richtigen Kanal. Kein Routing-Chaos, keine unnötigen
+              Schleifen.
             </p>
-            <h2 className="mt-4 font-display text-2xl font-semibold">{channel.value}</h2>
-            <p className="mt-4 text-[color:var(--copy-muted)]">{channel.copy}</p>
-          </article>
-        ))}
+            <div className="flex flex-wrap gap-3" data-animate-item>
+              <ButtonLink href="/contact#kontaktformular" size="lg">
+                Zum Kontaktformular
+              </ButtonLink>
+              <ButtonLink href="/pricing" variant="secondary" size="lg">
+                Pläne & Preise
+              </ButtonLink>
+            </div>
+          </div>
+          <div className="flex lg:absolute lg:top-30 lg:right-12 lg:z-10">
+            <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[20rem] lg:w-[23rem]">
+              <Image
+                src="/brand/peep-sitting-2.png"
+                alt="Illustration einer sitzenden Person"
+                fill
+                className="object-contain object-top"
+                sizes="(min-width: 1024px) 23rem, (min-width: 640px) 18rem, 16rem"
+                priority
+              />
+            </div>
+          </div>
+        </div>
       </section>
-      <section className="mx-auto w-full max-w-7xl px-6 pt-2 pb-16 sm:px-8 lg:px-10">
+
+      <section
+        className="mx-auto w-full max-w-7xl px-6 pt-2 pb-16 sm:px-8 lg:px-10"
+        data-reveal-section
+      >
         <Suspense fallback={<ContactFormFallback />}>
           <ContactIntakeForm />
         </Suspense>
       </section>
-    </>
+          <section
+        className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10"
+        data-reveal-section
+      >
+        {contactChannels.map((channel) => (
+          <article key={channel.label} className="section-card rounded-[1.9rem] p-6">
+            <p
+              className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]"
+              data-animate-heading
+            >
+              {channel.label}
+            </p>
+            <h2 className="mt-4 font-display text-2xl font-semibold" data-animate-heading>
+              {channel.value}
+            </h2>
+            <p className="mt-4 text-[color:var(--copy-muted)]" data-animate-copy>
+              {channel.copy}
+            </p>
+          </article>
+        ))}
+      </section>
+    </PageMotion>
+
   );
 }
 

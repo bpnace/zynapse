@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { PageMotion } from "@/components/animation/page-motion";
 import { buildMetadata } from "@/lib/seo";
 import { creativeBenefits } from "@/lib/content/site";
 import Image from "next/image";
@@ -104,7 +105,7 @@ const results = [
 
 export default function CreativesPage() {
   return (
-    <>
+    <PageMotion>
       <section
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
@@ -128,7 +129,7 @@ export default function CreativesPage() {
               von Prompt Engineering bis AI Strategy. Du führst die Kreativ-Logik,
               das Studio skaliert die Ausführung.
             </p>
-            <div className="flex flex-wrap gap-3" data-animate-copy>
+            <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/apply" size="lg">
                 Bewerbung für Kreative starten
               </ButtonLink>
@@ -376,6 +377,6 @@ export default function CreativesPage() {
           </div>
         </div>
       </section>
-    </>
+    </PageMotion>
   );
 }

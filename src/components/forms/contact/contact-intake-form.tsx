@@ -41,6 +41,7 @@ export function ContactIntakeForm() {
   const [submitError, setSubmitError] = useState("");
   const [activePlan, setActivePlan] = useState<PricingPlan | null>(null);
   const appliedMessageRef = useRef("");
+  const formContainerRef = useRef<HTMLDivElement | null>(null);
 
   const {
     register,
@@ -78,6 +79,28 @@ export function ContactIntakeForm() {
       appliedMessageRef.current = plan.contactMessage;
     }
   }, [getValues, searchParams, setValue]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const arrivedFromPricing =
+      window.location.hash === "#kontaktformular" || Boolean(searchParams.get("tier"));
+
+    if (!arrivedFromPricing || !formContainerRef.current) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      formContainerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 120);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [searchParams]);
 
   function applyPlanPrefill(value: string) {
     const previousPlan = activePlan;
@@ -138,11 +161,19 @@ export function ContactIntakeForm() {
   if (isSuccess) {
     return (
       <div className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-7 sm:p-8">
-        <span className="eyebrow">Kontakt gesendet</span>
-        <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+        <span className="eyebrow" data-animate-heading>
+          Kontakt gesendet
+        </span>
+        <h2
+          className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]"
+          data-animate-heading
+        >
           Die Anfrage ist eingegangen.
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]">
+        <p
+          className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]"
+          data-animate-copy
+        >
           Wir haben die Vorauswahl und dein Anliegen übernommen. Wir melden uns
           innerhalb von 24 Stunden mit den nächsten Schritten.
         </p>
@@ -152,16 +183,25 @@ export function ContactIntakeForm() {
 
   return (
     <div
-      id="kontaktformular"
-      className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8"
-    >
+        id="kontaktformular"
+        ref={formContainerRef}
+        className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8"
+      >
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)]">
         <div className="space-y-5">
-          <span className="eyebrow">Kontaktformular</span>
-          <h2 className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+          <span className="eyebrow" data-animate-heading>
+            Kontaktformular
+          </span>
+          <h2
+            className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]"
+            data-animate-heading
+          >
             Weniger Felder. Mehr Kontext, wenn du schon aus den Preisen kommst.
           </h2>
-          <p className="text-base leading-7 text-[color:var(--copy-body)]">
+          <p
+            className="text-base leading-7 text-[color:var(--copy-body)]"
+            data-animate-copy
+          >
             Wenn du ein Paket auswählst, übernimmt das Formular bereits die
             passende Einordnung. Du musst nur noch die teamrelevanten Details
             ergänzen.
@@ -278,6 +318,7 @@ export function ContactIntakeForm() {
               size: "lg",
               className: "w-full disabled:cursor-wait disabled:opacity-70",
             })}
+            data-animate-item
           >
             {isPending ? "Sende Anfrage..." : "Kontakt-Anfrage senden"}
           </button>
