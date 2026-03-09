@@ -78,7 +78,7 @@ export default function BrandsPage() {
               <span className="title-accent">Produktionschaos</span>.
             </h1>
             <p
-              className="max-w-2xl text-lg leading-8 text-[color:var(--copy-body)]"
+              className="max-w-4xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
               Euer Team gibt Richtung, Kontext und Freigaben vor. Zynapse
@@ -98,13 +98,6 @@ export default function BrandsPage() {
             className="flex flex-wrap gap-2 lg:justify-end"
             data-animate-item
           >
-            {["Planbare Produktion", "Freigabe vor Export", "72h Turnaround"].map(
-              (badge) => (
-                <Badge key={badge} tone="mint">
-                  {badge}
-                </Badge>
-              ),
-            )}
           </div>
         </div>
       </section>

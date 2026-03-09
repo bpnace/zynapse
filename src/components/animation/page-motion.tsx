@@ -14,26 +14,6 @@ const WORD_REVEAL_DURATION_STEP = 0.1;
 const WORD_REVEAL_START_DELAY = 0.12;
 const WORD_REVEAL_STAGGER = 0.15;
 
-function isElement(value: unknown): value is Element {
-  return value instanceof Element;
-}
-
-function killScopedScrollTriggers(container: HTMLElement) {
-  for (const trigger of ScrollTrigger.getAll()) {
-    const triggerElement = trigger.trigger;
-    const endTrigger = trigger.vars.endTrigger;
-    const pinElement = trigger.pin;
-
-    if (
-      (isElement(triggerElement) && container.contains(triggerElement)) ||
-      (isElement(endTrigger) && container.contains(endTrigger)) ||
-      (isElement(pinElement) && container.contains(pinElement))
-    ) {
-      trigger.kill(true);
-    }
-  }
-}
-
 export function PageMotion({ children }: { children: React.ReactNode }) {
   const scope = useRef<HTMLDivElement>(null);
 
@@ -130,7 +110,6 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
       });
 
       return () => {
-        killScopedScrollTriggers(container);
         mm.revert();
       };
     },
