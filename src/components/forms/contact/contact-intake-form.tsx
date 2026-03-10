@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { buttonStyles } from "@/components/ui/button";
 import { pricingPlans } from "@/lib/content/pricing";
 import { createContactInquiryDefaults } from "@/lib/forms/storage";
@@ -161,19 +162,11 @@ export function ContactIntakeForm() {
   if (isSuccess) {
     return (
       <div className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-7 sm:p-8">
-        <span className="eyebrow" data-animate-heading>
-          Kontakt gesendet
-        </span>
-        <h2
-          className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]"
-          data-animate-heading
-        >
+        <span className="eyebrow">Kontakt gesendet</span>
+        <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
           Die Anfrage ist eingegangen.
         </h2>
-        <p
-          className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]"
-          data-animate-copy
-        >
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]">
           Wir haben die Vorauswahl und dein Anliegen übernommen. Wir melden uns
           innerhalb von 24 Stunden mit den nächsten Schritten.
         </p>
@@ -183,25 +176,17 @@ export function ContactIntakeForm() {
 
   return (
     <div
-        id="kontaktformular"
-        ref={formContainerRef}
-        className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8"
-      >
+      id="kontaktformular"
+      ref={formContainerRef}
+      className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8"
+    >
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)]">
         <div className="space-y-5">
-          <span className="eyebrow" data-animate-heading>
-            Kontaktformular
-          </span>
-          <h2
-            className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]"
-            data-animate-heading
-          >
+          <span className="eyebrow">Kontaktformular</span>
+          <h2 className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
             Weniger Felder. Mehr Kontext, wenn du schon aus den Preisen kommst.
           </h2>
-          <p
-            className="text-base leading-7 text-[color:var(--copy-body)]"
-            data-animate-copy
-          >
+          <p className="text-base leading-7 text-[color:var(--copy-body)]">
             Wenn du ein Paket auswählst, übernimmt das Formular bereits die
             passende Einordnung. Du musst nur noch die teamrelevanten Details
             ergänzen.
@@ -258,15 +243,11 @@ export function ContactIntakeForm() {
             </Field>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-5 md:grid-cols-2 md:items-start">
             <Field label="Team / Firma" error={errors.company?.message}>
               <TextInput {...register("company")} placeholder="Beispiel GmbH" />
             </Field>
-            <Field
-              label="Anliegen"
-              error={errors.topic?.message}
-              hint="Wenn du von den Preisen kommst, ist das passende Paket bereits ausgewählt."
-            >
+            <Field label="Anliegen" error={errors.topic?.message}>
               <SelectInput
                 {...topicField}
                 onChange={(event) => {
@@ -301,9 +282,32 @@ export function ContactIntakeForm() {
           >
             <TextareaInput
               {...register("message")}
-              placeholder="Worum geht es konkret und was soll als Nächstes geklärt werden?"
+              placeholder="Worum geht es konkret, welches Budget ist geplant ist und was soll als erstes geklärt werden."
             />
           </Field>
+
+          <label className="grid gap-2">
+            <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+              <input
+                type="checkbox"
+                {...register("datenschutzAccepted")}
+                className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+              />
+              <span>
+                Ich akzeptiere die{" "}
+                <Link
+                  href="/legal/privacy"
+                  className="underline decoration-[color:var(--accent-soft)] underline-offset-4 hover:text-[var(--copy-strong)]"
+                >
+                  Datenschutzerklärung
+                </Link>
+                .
+              </span>
+            </span>
+            {errors.datenschutzAccepted ? (
+              <span className="field-error">{errors.datenschutzAccepted.message}</span>
+            ) : null}
+          </label>
 
           {submitError ? (
             <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
@@ -318,7 +322,6 @@ export function ContactIntakeForm() {
               size: "lg",
               className: "w-full disabled:cursor-wait disabled:opacity-70",
             })}
-            data-animate-item
           >
             {isPending ? "Sende Anfrage..." : "Kontakt-Anfrage senden"}
           </button>

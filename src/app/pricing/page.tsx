@@ -450,9 +450,6 @@ export default function PricingPage() {
               <ButtonLink href="/request" size="lg">
                 Brand-Anfrage
               </ButtonLink>
-              <ButtonLink href="/apply" variant="secondary" size="lg">
-                Bewerbung für Kreative
-              </ButtonLink>
             </div>
           </div>
         </div>

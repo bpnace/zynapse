@@ -33,6 +33,7 @@ export type ContactInquiry = {
   teamContext: string;
   topic: string;
   message: string;
+  datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
 };

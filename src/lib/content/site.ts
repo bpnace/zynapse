@@ -139,17 +139,17 @@ export const footerGroups = [
 export const contactChannels = [
   {
     label: "Vertrieb",
-    value: "hello@zynapse.example",
+    value: "hello@zynapse.de",
     copy: "Brand-Anfragen, Paketberatung und Erstgespräche",
   },
   {
     label: "Netzwerk für Kreative",
-    value: "network@zynapse.example",
+    value: "network@zynapse.de",
     copy: "Bewerbungen, Qualifizierung, Partneranfragen",
   },
   {
     label: "Betrieb",
-    value: "ops@zynapse.example",
+    value: "ops@zynapse.de",
     copy: "Rechte, Datenschutz, Prozessfragen",
   },
 ];

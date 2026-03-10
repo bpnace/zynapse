@@ -51,6 +51,7 @@ export function createContactInquiryDefaults(
     teamContext: "",
     topic: "",
     message: "",
+    datenschutzAccepted: false,
     startedAt: Date.now(),
     website: "",
     ...seed,

@@ -72,24 +72,14 @@ export default function ContactPage() {
           <ContactIntakeForm />
         </Suspense>
       </section>
-          <section
-        className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10"
-        data-reveal-section
-      >
+      <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
         {contactChannels.map((channel) => (
           <article key={channel.label} className="section-card rounded-[1.9rem] p-6">
-            <p
-              className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]"
-              data-animate-heading
-            >
+            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
               {channel.label}
             </p>
-            <h2 className="mt-4 font-display text-2xl font-semibold" data-animate-heading>
-              {channel.value}
-            </h2>
-            <p className="mt-4 text-[color:var(--copy-muted)]" data-animate-copy>
-              {channel.copy}
-            </p>
+            <h2 className="mt-4 font-display text-2xl font-semibold">{channel.value}</h2>
+            <p className="mt-4 text-[color:var(--copy-muted)]">{channel.copy}</p>
           </article>
         ))}
       </section>

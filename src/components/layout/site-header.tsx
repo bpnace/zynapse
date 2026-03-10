@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { primaryCta, siteNav } from "@/lib/content/site";
@@ -16,9 +17,14 @@ export function SiteHeader() {
           href="/"
           className="flex items-center gap-3 text-sm font-semibold tracking-[0.18em] uppercase text-[var(--foreground)]"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--ink-strong)] shadow-[0_10px_24px_rgba(246,107,76,0.25)]">
-            Z
-          </span>
+          <Image
+            src="/zynapseIcon.png"
+            alt="Zynapse Icon"
+            width={36}
+            height={36}
+            className="h-9 w-9 rounded-full object-cover shadow-[0_10px_24px_rgba(246,107,76,0.25)]"
+            priority
+          />
           Zynapse
         </Link>
         <nav className="hidden items-center gap-1 md:flex">

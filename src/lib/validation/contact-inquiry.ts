@@ -14,6 +14,9 @@ export const contactInquirySchema = z.object({
     .trim()
     .min(20, "Bitte das Anliegen kurz einordnen.")
     .max(2000, "Bitte auf maximal 2000 Zeichen kürzen."),
+  datenschutzAccepted: z
+    .boolean()
+    .refine((value) => value, "Bitte der Datenschutzerklärung zustimmen."),
   startedAt: z.number().int().positive(),
   website: z.string().trim(),
 });
