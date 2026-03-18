@@ -119,7 +119,11 @@ export default function CreativesPage() {
               className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
               data-animate-heading
             >
-              Ein Track für alle <span className="title-accent">AI-Kreativrollen</span>.
+              Ein Track für alle{" "}
+              <span className="title-accent" data-animate-word>
+                AI-Kreativrollen
+              </span>
+              .
             </h1>
             <p
               className="max-w-2xl text-lg leading-8 text-[color:var(--copy-body)]"
@@ -159,8 +163,15 @@ export default function CreativesPage() {
       >
         <SectionHeading
           eyebrow="Bekannte Probleme"
-          title="Starke Kreative verlieren Zeit in schwachen Prozessen."
-          accent="schwachen Prozessen"
+          title={
+            <>
+              Starke Kreative verlieren Zeit in{" "}
+              <span className="title-accent" data-animate-word>
+                schwachen Prozessen
+              </span>
+              .
+            </>
+          }
           copy="Viele Teams haben Talent, aber keinen durchgehenden Ablauf von Strategie über Prompting bis Produktion. Zynapse schließt diese Lücke mit klarer Rollenlogik."
         />
         <div className="grid gap-4 md:grid-cols-3">
@@ -193,8 +204,16 @@ export default function CreativesPage() {
       >
         <SectionHeading
           eyebrow="Dein Workflow"
-          title="Vom Brand-Briefing zur Kreativ-Maschine in drei Schritten."
-          accent="Kreativ-Maschine"
+          title={
+            <>
+              Vom{" "}
+              <span data-animate-word>
+                Brand-Briefing
+              </span>{" "}
+              zur <span className="title-accent">Kreativ-Maschine</span> in drei
+              Schritten.
+            </>
+          }
           copy="Du konzentrierst dich auf Strategie, Prompting und Kreativ-Steuerung. Die operative Umsetzung läuft entlang eines klaren Produktionssystems."
         />
         <div className="grid gap-5 lg:grid-cols-3">
@@ -223,8 +242,12 @@ export default function CreativesPage() {
       >
         <SectionHeading
           eyebrow="Kreativ-Beispiele"
-          title="Sechs Rollen. Ein gemeinsamer Kampagnen-Output."
-          accent="Sechs Rollen"
+          title={
+            <>
+              <span data-animate-word>Sechs Rollen</span>. Ein gemeinsamer{" "}
+              <span className="title-accent">Kampagnen-Output</span>.
+            </>
+          }
           copy="So kann dein Beitrag in Zynapse konkret aussehen, wenn mehrere AI-Disziplinen sauber zusammenspielen."
         />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -251,18 +274,21 @@ export default function CreativesPage() {
         className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+        <div className="section-card section-surface-warm rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.5fr)_minmax(0,0.5fr)] lg:items-center">
             <div className="space-y-5">
               <span className="eyebrow" data-animate-heading>
                 Ergebnisse
               </span>
               <h2
-                className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
+                className="pb-[0.40em] font-display text-4xl leading-[1.20] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                 data-animate-heading
               >
                 Mehr Varianten, mehr Klarheit,{" "}
-                <span className="title-accent">weniger Reibung</span>.
+                <span className="title-accent" data-animate-word>
+                  weniger Reibung
+                </span>
+                .
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
@@ -298,8 +324,15 @@ export default function CreativesPage() {
         <div className="space-y-5">
           <SectionHeading
             eyebrow="Profil für Kreative"
-            title="Für wen der Track für Kreative passt."
-            accent="Track für Kreative"
+            title={
+              <>
+                Für wen der{" "}
+                <span className="title-accent" data-animate-word>
+                  Track für Kreative
+                </span>{" "}
+                passt.
+              </>
+            }
             copy="Wenn du kreative Arbeit strategisch strukturieren kannst und in einem skalierbaren Setup statt in Einzelchaos arbeiten willst."
           />
         </div>
@@ -331,8 +364,15 @@ export default function CreativesPage() {
       >
         <SectionHeading
           eyebrow="Deine Vorteile"
-          title="Was sich für dich konkret ändert."
-          accent="konkret ändert"
+          title={
+              <>
+                Was sich für dich{" "}
+                <span className="title-accent" data-animate-word>
+                  konkret ändert
+                </span>
+                .
+              </>
+          }
           copy="Zynapse nimmt dir operative Komplexität ab, ohne dir die kreative Kontrolle zu entziehen."
         />
         <div className="grid gap-4 md:grid-cols-2">
@@ -360,7 +400,7 @@ export default function CreativesPage() {
                 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
                 data-animate-heading
               >
-                Bewirb dich für den{" "}
+                <span data-animate-word>Bewirb dich</span> für den{" "}
                 <span className="title-accent">Track für Kreative</span>.
               </h2>
               <p

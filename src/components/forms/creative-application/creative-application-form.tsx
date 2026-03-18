@@ -194,14 +194,10 @@ export function CreativeApplicationForm() {
                 placeholder="z. B. 2 neue Kunden oder 1 Retainer pro Monat"
               />
             </Field>
-            <Field
-              label="Preis / Vergütung"
-              error={errors.compensationNotes?.message}
-              hint="Optional"
-            >
+            <Field label="Preis / Vergütung" error={errors.compensationNotes?.message}>
               <TextInput
                 {...register("compensationNotes")}
-                placeholder="z. B. Retainer, Projektbasis oder Revenue Share"
+                placeholder="Optional: z. B. Retainer, Projektbasis oder Revenue Share"
               />
             </Field>
           </div>

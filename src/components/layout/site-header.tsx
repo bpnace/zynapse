@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { primaryCta, siteNav } from "@/lib/content/site";
 import { buttonStyles } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Wordmark } from "@/components/layout/wordmark";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -13,20 +13,7 @@ export function SiteHeader() {
   return (
     <header className="sticky inset-x-0 top-0 z-50 px-4 pt-4 pb-2 sm:px-6">
       <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[color:var(--line)] bg-[rgba(255,255,255,0.82)] px-4 py-3 shadow-[0_18px_40px_rgba(31,36,48,0.08)] backdrop-blur-2xl sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center gap-3 text-sm font-semibold tracking-[0.18em] uppercase text-[var(--foreground)]"
-        >
-          <Image
-            src="/zynapseIcon.png"
-            alt="Zynapse Icon"
-            width={36}
-            height={36}
-            className="h-9 w-9 rounded-full object-cover shadow-[0_10px_24px_rgba(246,107,76,0.25)]"
-            priority
-          />
-          Zynapse
-        </Link>
+        <Wordmark className="inline-flex items-center" />
         <nav className="hidden items-center gap-1 md:flex">
           {siteNav.map((item) => {
             const active = pathname === item.href;

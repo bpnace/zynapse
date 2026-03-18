@@ -94,6 +94,14 @@ select {
   color: transparent;
 }
 
+[data-animate-word] {
+  display: inline-block;
+}
+
+[data-animate-heading]:has([data-animate-word]) {
+  padding-bottom: 0.08em;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -164,6 +172,7 @@ select {
 .field-shell {
   display: grid;
   gap: 0.55rem;
+  align-content: start;
 }
 
 .field-label {
@@ -176,6 +185,7 @@ select {
 
 .field-input {
   width: 100%;
+  min-height: 3.4rem;
   border-radius: var(--radius-subcard);
   border: 1px solid rgba(56, 67, 84, 0.18);
   background: rgba(255, 255, 255, 0.96);

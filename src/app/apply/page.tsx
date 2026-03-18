@@ -10,9 +10,8 @@ export const metadata = buildMetadata({
 
 export default function ApplyPage() {
   return (
-    <section className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-32 pb-16 sm:px-8 lg:px-10">
+    <section className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-16 sm:px-8 lg:px-10">
       <div className="space-y-5">
-        <span className="eyebrow">Einstieg für Kreative</span>
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-6xl">
           Bewirb dich für den Track für Kreative, wenn du Ideen in testbare Kampagnen übersetzen kannst.
         </h1>
