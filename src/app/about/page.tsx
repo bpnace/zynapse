@@ -1,488 +1,499 @@
+import { PageMotion } from "@/components/animation/page-motion";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { PageMotion } from "@/components/animation/page-motion";
 import { buildMetadata } from "@/lib/seo";
-import Image from "next/image";
 
 export const metadata = buildMetadata({
-  title: "Studio – Wie Zynapse Videoproduktion neu denkt | Zynapse",
+  title: "Studio – Kuratiertes AI-Campaign-System für Brands und Kreative | Zynapse",
   description:
-    "Zynapse verbindet Kampagnenlogik, kreative Skalierung und klare Rollenverteilung zu einem Produktionssystem für Performance-Video. Kein Agenturmodell, kein Creator-Marktplatz – sondern ein strukturierter Workflow.",
+    "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in markenfähige Kampagnen-Setups, Video-Varianten und klare Produktionsabläufe.",
   path: "/about",
 });
 
-const pillars = [
+const heroSignals = [
   {
-    title: "Kampagnenlogik vor Footage",
-    description:
-      "Jede kreative Variante beginnt mit Strategie: Angles, Hooks, CTA-Routen und Testprioritäten stehen, bevor ein einziges Frame entsteht. Clips werden Teil eines Systems – nicht isolierte Assets.",
+    label: "Für Brands",
+    value: "Ein Ansprechpartner, passende AI-Spezialist:innen und ein klarer Kampagnenfluss.",
   },
   {
-    title: "Klare Rollen, klare Übergaben",
-    description:
-      "Brands geben Kontext und Freigaben. Kreative führen Strategie und Testing-Richtung. Das Studio skaliert die Ausführung. Kein Rollenchaos, keine doppelten Zuständigkeiten.",
+    label: "Für Kreative",
+    value: "Kuratiertes Matching statt Kaltakquise, mit Rollen, in denen Strategie und Ausführung zusammenpassen.",
   },
   {
-    title: "Skalierung ohne Qualitätsverlust",
-    description:
-      "Aus einem Angle entstehen Cuts, Längen und Platzierungsvarianten – ohne neue Produktionsschleifen. Mehr Output bei gleicher Kontrolle.",
+    label: "Ergebnis",
+    value: "AI-Marketingkampagnen mit Varianten, Review-Struktur und sauberer Übergabe an Paid Social oder Content Teams.",
   },
 ];
 
-const codex = [
+type SpecialistIcon =
+  | "promptEngineer"
+  | "creativeDirection"
+  | "promptDesign"
+  | "aiProduction"
+  | "aiEngineering"
+  | "aiStrategy";
+
+const specialistRoles = [
   {
-    number: "01",
-    title: "Struktur schlägt Volumen",
+    title: "Prompt Engineer",
+    icon: "promptEngineer" as const,
     description:
-      "Kein Output ohne Kampagnenlogik. Jede Variante hat ein Angle, ein Hook-Ziel und eine Testperspektive – oder wird nicht produziert.",
+      "Baut belastbare Generierungslogik für konsistente Visuals, Wiederholbarkeit und kontrollierbare Varianten.",
   },
   {
-    number: "02",
-    title: "Verantwortung ist nicht verhandelbar",
+    title: "Creative Direction",
+    icon: "creativeDirection" as const,
     description:
-      "Wer liefert, wer freigibt, wer steuert – das steht vor dem ersten Briefing fest. Rollenklarheit ist kein Nice-to-have, sondern operative Grundlage.",
+      "Sichert, dass die Kampagne visuell, tonal und strategisch zur Marke passt und nicht nur technisch funktioniert.",
   },
   {
-    number: "03",
-    title: "Kein Video ohne Freigabespur",
+    title: "Prompt Design",
+    icon: "promptDesign" as const,
     description:
-      "Nichts geht blind live. Jede Variante durchläuft einen Review-Prozess, bevor sie in Ads oder Social ausgespielt wird.",
+      "Übersetzt Kampagnenideen in kreative Prompt-Systeme, die Richtung, Stil und Variation sauber steuern.",
   },
   {
-    number: "04",
-    title: "Schnelligkeit durch Prozess, nicht durch Shortcuts",
+    title: "AI Production",
+    icon: "aiProduction" as const,
     description:
-      "72 Stunden vom Briefing zur Freigabe. Nicht durch Abkürzungen, sondern weil der Workflow Schleifen eliminiert, bevor sie entstehen.",
+      "Steuert Generierung, Auswahl, Feinschliff und Produktionsrhythmus über mehrere Assets und Formate hinweg.",
   },
   {
-    number: "05",
-    title: "System statt Tool",
+    title: "AI Engineering",
+    icon: "aiEngineering" as const,
     description:
-      "Zynapse ersetzt keine Teams – es verbindet sie. Brands, Kreative und Studio arbeiten in einem gemeinsamen Produktionsfluss, nicht in parallelen Silos.",
+      "Verbindet Workflows, Automationen und Modell-Setups so, dass Qualität und Geschwindigkeit nicht gegeneinander arbeiten.",
+  },
+  {
+    title: "AI Strategy",
+    icon: "aiStrategy" as const,
+    description:
+      "Priorisiert Zielgruppen, Hooks, Testing-Routen und kreative Hebel, damit Output in echte Kampagnenleistung übersetzt wird.",
   },
 ];
 
-const differences = [
+const deliverables = [
   {
-    label: "Agentur",
-    zynapse: "Feste Rollen, strukturierter Workflow, planbarer Output",
-    traditional: "Projektbasiert, wechselnde Teams, lange Abstimmung",
+    title: "Kampagnen-Setups statt Einzelfiles",
+    description:
+      "Brands erhalten keine lose Sammlung an Videos, sondern ein durchdachtes Setup mit Creative Direction, Varianten-Logik und klaren Freigabepunkten.",
   },
   {
-    label: "Creator-Marktplatz",
-    zynapse: "Kampagnenlogik vor Produktion",
-    traditional: "Creator-Sourcing vor Strategie",
+    title: "AI-Video mit System",
+    description:
+      "Je nach Briefing entstehen markenfähige Visuals, Sequenzen und Ads aus einem abgestimmten Modellmix, statt aus zufälligen Einzelversuchen.",
   },
   {
-    label: "Inhouse",
-    zynapse: "Skalierbar ohne Teamaufbau",
-    traditional: "Output begrenzt durch Kapazität",
-  },
-  {
-    label: "Freelancer",
-    zynapse: "Integrierter Review- und Freigabeprozess",
-    traditional: "Fragmentierte Kommunikation, kein System",
+    title: "Handover für echte Teams",
+    description:
+      "Paid Social, Content und Brand Teams bekommen Assets, Versionen und Kontext so übergeben, dass direkt weitergearbeitet werden kann.",
   },
 ];
 
-const values = [
+const valueCards = [
   {
-    title: "Transparenz",
+    title: "Lean koordiniert",
     description:
-      "Vom Briefing bis zur Freigabe ist jeder Schritt nachvollziehbar. Keine Black Box, keine versteckten Entscheidungen.",
+      "Zynapse bündelt nur die Rollen, die für den Auftrag gebraucht werden. Das vermeidet klassische Agentur-Overheads und hält die Zusammenarbeit beweglich.",
   },
   {
-    title: "Effizienz",
+    title: "Kuratiert statt beliebig",
     description:
-      "Weniger Schleifen, schnellere Ergebnisse. Der Prozess ist so gebaut, dass Reibung gar nicht erst entsteht.",
+      "Nicht jeder Auftrag braucht dasselbe Setup. Das Matching sorgt dafür, dass Brands nicht selbst erst herausfinden müssen, welche Spezialist:innen fehlen.",
   },
   {
-    title: "Qualität",
+    title: "Wiederholbar statt improvisiert",
     description:
-      "Skalierung heißt nicht Masse statt Klasse. Jede Variante folgt der Kampagnenlogik – mit klarem Angle, Hook und Testziel.",
-  },
-  {
-    title: "Partnerschaft",
-    description:
-      "Zynapse funktioniert nur, wenn alle Seiten funktionieren. Brands, Kreative und Studio sind gleichwertige Teile eines Systems.",
+      "Wenn Kampagnen weiterlaufen oder skaliert werden, bleibt das Produktionswissen im System. So sinkt die Reibung von Sprint zu Sprint.",
   },
 ];
 
-const studioGlossary = [
-  {
-    term: "Kampagnenlogik",
-    explanation:
-      "Welche Botschaft zuerst getestet wird, für wen sie gedacht ist und welche CTA daraus folgen.",
-  },
-  {
-    term: "Skalierung",
-    explanation:
-      "Aus einem starken Angle entstehen Formate, Cuts und Platzierungsvarianten ohne neue Produktionsschleifen.",
-  },
-  {
-    term: "Rollenklarheit",
-    explanation:
-      "Brand, Kreative und Studio arbeiten mit klaren Zuständigkeiten statt mit parallelen Abstimmungen.",
-  },
-];
+function RoleCardIcon({ icon }: { icon: SpecialistIcon }) {
+  const baseClassName =
+    "pointer-events-none absolute right-[-0.55rem] bottom-[-0.45rem] h-20 w-20 text-[rgba(56,67,84,0.08)] opacity-90 transition-all duration-300 ease-out group-hover:right-[-0.4rem] group-hover:bottom-[-0.3rem] group-hover:text-[rgba(56,67,84,0.16)] sm:h-24 sm:w-24";
+
+  switch (icon) {
+    case "promptEngineer":
+      return (
+        <svg
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+          className={baseClassName}
+        >
+          <path
+            d="M24 18L12 32l12 14M40 18l12 14-12 14M34 16L28 48"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "creativeDirection":
+      return (
+        <svg
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+          className={baseClassName}
+        >
+          <path
+            d="M16 22v-6h12M48 22v-6H36M16 42v6h12M48 42v6H36"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <rect
+            x="19"
+            y="19"
+            width="26"
+            height="26"
+            rx="7"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M32 25l1.8 4.9L39 32l-5.2 2.1L32 39l-1.8-4.9L25 32l5.2-2.1L32 25z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "promptDesign":
+      return (
+        <svg
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+          className={baseClassName}
+        >
+          <path
+            d="M18 46l10-4 18-18-6-6-18 18-4 10z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M36 18l10 10M44 14l1 4 4 1-4 1-1 4-1-4-4-1 4-1 1-4z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "aiProduction":
+      return (
+        <svg
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+          className={baseClassName}
+        >
+          <rect
+            x="14"
+            y="18"
+            width="36"
+            height="28"
+            rx="5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M28 26l10 6-10 6V26zM18 24h4M18 40h4M42 24h4M42 40h4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "aiEngineering":
+      return (
+        <svg
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+          className={baseClassName}
+        >
+          <rect
+            x="24"
+            y="22"
+            width="16"
+            height="20"
+            rx="3"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M29 22v-4M35 22v-4M29 46v4M35 46v4M24 27h-5M24 37h-5M40 27h5M40 37h5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          <circle cx="16" cy="27" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="16" cy="37" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="48" cy="27" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="48" cy="37" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+          <path
+            d="M19.5 27H24M19.5 37H24M40 27h4.5M40 37h4.5M29 29h6M29 35h6"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "aiStrategy":
+      return (
+        <svg
+          viewBox="0 0 64 64"
+          fill="none"
+          aria-hidden="true"
+          className={baseClassName}
+        >
+          <rect
+            x="14"
+            y="18"
+            width="36"
+            height="28"
+            rx="6"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          />
+          <circle cx="22" cy="26" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="22" cy="32" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="22" cy="38" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+          <path
+            d="M26 26h10M26 32h8M26 38h6M36 32h2.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          <circle cx="44" cy="32" r="6.5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="44" cy="32" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+  }
+}
 
 export default function AboutPage() {
   return (
     <PageMotion>
-      {/* ── Hero ── */}
       <section
-        className="mx-auto flex min-h-[calc(100svh-5.25rem)] w-full max-w-7xl flex-col justify-center gap-10 px-6 pt-18 pb-20 sm:px-8 lg:px-10 lg:pt-24 lg:pb-24"
+        className="mx-auto w-full max-w-7xl px-6 pt-15 pb-10 sm:px-8 lg:px-10 lg:pt-18 lg:pb-12"
         data-reveal-section
       >
-        <span className="eyebrow" data-animate-heading>
-          Über Zynapse Studio
-        </span>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.6fr)_minmax(21rem,0.4fr)] lg:items-stretch">
-          <div className="flex flex-col justify-between gap-8">
-            <div className="space-y-6">
-              <h1
-                className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
-                data-animate-heading
-              >
-                Videoproduktion als <span className="title-accent">System</span>,
-                nicht als <span data-animate-word>Einzelprojekt.</span>
-              </h1>
-              <p
-                className="max-w-2xl text-lg leading-8 text-[color:var(--copy-body)]"
-                data-animate-copy
-              >
-                Zynapse verbindet Kampagnenlogik, kreative Skalierung und klare
-                Rollenverteilung in einem durchgehenden Produktionssystem. Statt
-                projektweiser Einzelabgaben arbeitet ihr mit festen Übergaben,
-                definierten Review-Punkten und einem Ablauf, der auf
-                testbare Kampagnen ausgelegt ist.
-              </p>
-              <p
-                className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
-                data-animate-copy
-              >
-                Das Studio übersetzt Briefings in testbare Kreativ-Strecken mit
-                klaren Angles, sauberen Review-Schritten und Varianten für Paid
-                Social, Landingpage-Traffic und Performance-Retargeting.
-              </p>
-              <p
-                className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
-                data-animate-copy
-              >
-                Ihr bekommt keine lose Asset-Sammlung, sondern einen
-                nachvollziehbaren Kampagnen-Output: priorisierte Hooks,
-                CTA-Varianten, passende Formate und eine Freigabespur, mit der
-                Teams schneller entscheiden und direkt weiter testen können.
-              </p>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {[
-                {
-                  label: "Wofür das Studio gebaut ist",
-                  value: "Performance-Video mit Testlogik",
-                },
-                {
-                  label: "Wie gearbeitet wird",
-                  value: "Briefing, Review und Varianten in einem Fluss",
-                },
-                {
-                  label: "Was ihr zurückbekommt",
-                  value: "Kontrollierbaren Output statt Einzelabgaben",
-                },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-[0.9rem] border border-[rgba(25,28,33,0.08)] bg-[rgba(255,255,255,0.62)] px-4 py-4 backdrop-blur-[10px]"
-                >
-                  <p className="text-[0.72rem] leading-4 font-medium tracking-[0.12em] text-[color:var(--copy-muted)] uppercase">
-                    {item.label}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[color:var(--copy-strong)]">
-                    {item.value}
-                  </p>
-                </div>
-              ))}
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.6fr)_minmax(21rem,0.4fr)] lg:items-start">
+          <div className="space-y-6">
+            <h1
+              className="max-w-4xl font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
+              data-animate-heading
+            >
+              Die <span className="title-accent">kuratierte Verbindung</span>{" "}
+              zwischen Brands, AI-Spezialist:innen und markenfähiger{" "}
+              <span data-animate-word>Kampagnenproduktion.</span>
+            </h1>
+            <p
+              className="max-w-3xl text-lg leading-8 text-[color:var(--copy-body)]"
+              data-animate-copy
+            >
+              Zynapse ist kein klassisches Studio und kein offener
+              Creator-Marktplatz. Wir bringen Brands mit ausgewählten
+              Spezialist:innen aus Prompt Engineering, Creative Direction,
+              Prompt Design, AI Production, AI Engineering und AI Strategy
+              zusammen und führen daraus einen belastbaren Kampagnenfluss.
+            </p>
+            <p
+              className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
+              data-animate-copy
+            >
+              So entsteht professionelle AI-Marketingproduktion mit klaren
+              Rollen, kontrollierten Reviews und Varianten, die nicht nur gut
+              aussehen, sondern in echten Marketing-Setups weiterverwendet,
+              getestet und ausgesteuert werden können.
+            </p>
+            <div className="flex flex-wrap gap-3" data-animate-item>
+              <ButtonLink href="/request" size="lg">
+                Brand-Anfrage
+              </ButtonLink>
+              <ButtonLink href="/apply" variant="secondary" size="lg">
+                Bewerbung für Kreative
+              </ButtonLink>
             </div>
           </div>
 
-          <aside
-            className="section-card section-surface-paper relative overflow-hidden rounded-[calc(var(--radius-panel)+0.05rem)] p-5 sm:p-6"
-          >
-            <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(224,94,67,0),rgba(224,94,67,0.42),rgba(224,94,67,0))]" />
-            <p
-              className="text-[0.74rem] leading-4 font-medium tracking-[0.14em] text-[var(--accent-strong)] uppercase"
-            >
-              Studio Preview
-            </p>
-            <div className="mt-4 grid gap-5">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.2rem] border border-[rgba(25,28,33,0.08)]">
-                <Image
-                  src="/studio/1333.webp"
-                  alt="Studio-Setup für Kampagnenproduktion und Review"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 26rem, (min-width: 640px) 70vw, 92vw"
-                  priority
-                />
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(25,28,33,0)_52%,rgba(25,28,33,0.55)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                  <p className="text-[0.7rem] leading-4 font-medium tracking-[0.12em] text-white/80 uppercase">
-                    Studio-Material
-                  </p>
-                  <p className="mt-1 max-w-[18rem] font-display text-[1.35rem] leading-[1.02] tracking-[-0.03em] text-white">
-                    Produktionsumgebung, Review-Momente und Materialfluss im
-                    echten Ablauf.
-                  </p>
-                </div>
-              </div>
-
-              <div className="rounded-[1rem] border border-[rgba(25,28,33,0.08)] bg-[rgba(255,255,255,0.54)] p-4">
+          <aside className="grid gap-3">
+            {heroSignals.map((signal, index) => (
+              <div
+                key={signal.label}
+                className={`section-card rounded-[var(--radius-card)] p-5 ${
+                  index === 0
+                    ? "section-surface-warm border-[rgba(191,106,83,0.16)]"
+                    : index === 1
+                      ? "section-surface-paper"
+                      : "section-surface-contrast"
+                }`}
+              >
                 <p className="text-[0.72rem] leading-4 font-medium tracking-[0.12em] text-[color:var(--copy-muted)] uppercase">
-                  Drei Begriffe, die die Arbeitsweise beschreiben
+                  {signal.label}
                 </p>
-                <div className="mt-4 grid gap-3">
-                  {studioGlossary.map((entry) => (
-                    <div
-                      key={entry.term}
-                      className="grid gap-1 border-b border-[rgba(25,28,33,0.07)] pb-3 last:border-b-0 last:pb-0"
-                    >
-                      <p className="font-display text-[1.05rem] leading-6 tracking-[-0.03em] text-[var(--copy-strong)]">
-                        {entry.term}
-                      </p>
-                      <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-                        {entry.explanation}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                <p className="mt-2 font-display text-[1.32rem] leading-[1.02] tracking-[-0.04em] text-[var(--copy-strong)]">
+                  {signal.value}
+                </p>
               </div>
-            </div>
+            ))}
           </aside>
         </div>
       </section>
 
-      {/* ── Mission ── */}
       <section
-        className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
+        className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 py-12 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-warm relative overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] px-7 pt-10 pb-7 sm:px-9 sm:pt-14 sm:pb-9">
-          {/* Decorative glyph */}
-          <span
-            className="pointer-events-none absolute -top-6 -right-4 select-none font-display text-[12rem] leading-none font-bold text-[var(--accent)] opacity-[0.04]"
-            aria-hidden="true"
-          >
-            ◆
-          </span>
-
-          <div className="relative flex flex-col items-center text-center">
-            <span className="eyebrow" data-animate-heading>
-              Unsere Mission
-            </span>
-            <h2
-              className="mt-5 max-w-3xl font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl lg:text-6xl"
-              data-animate-heading
-            >
-              Kreativ-<span data-animate-word>Testing</span>{" "}
-              <span className="title-accent">zugänglich</span> machen.
-            </h2>
-            <p
-              className="mt-6 max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
-              data-animate-copy
-            >
-              Systematisches Kreativ-Testing ist der größte Hebel für
-              Performance. Aber der Weg dahin – Briefings,
-              Produktionsschleifen, Freigaben, Varianten – ist zu aufwändig.
-              Zynapse macht ihn planbar, schnell und wiederholbar.
-            </p>
-          </div>
-
-          <div className="relative mt-10 grid gap-3 sm:grid-cols-3">
-            {[
-              { value: "72h", label: "Briefing bis Freigabe" },
-              { value: "18+", label: "testbare Varianten pro Briefing" },
-              { value: "3→1", label: "Rollen, ein Produktionsfluss" },
-            ].map((metric) => (
-              <div
-                key={metric.label}
-                className="rounded-[0.55rem] border border-[rgba(191,106,83,0.12)] bg-[rgba(255,255,255,0.55)] px-5 py-4 text-center"
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
+          <SectionHeading
+            eyebrow="Kuratiertes Netzwerk"
+            title={
+              <>
+                Die Rollen hinter starker <span className="title-accent">AI-Kreativarbeit</span>.
+              </>
+            }
+            copy="Brands sollen nicht erst selbst Teams zusammenpuzzeln. Zynapse baut die passende Kombination aus Spezialist:innen rund um die Aufgabe, die Marke und den gewünschten Kampagnenrhythmus."
+          />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {specialistRoles.map((role) => (
+              <article
+                key={role.title}
+                className="group section-card section-surface-paper relative isolate overflow-hidden rounded-[var(--radius-card)] p-5"
               >
-                <p className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
-                  {metric.value}
+                <RoleCardIcon icon={role.icon} />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(224,94,67,0.05),rgba(224,94,67,0)_42%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <h3 className="relative font-display text-[1.28rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                  {role.title}
+                </h3>
+                <p className="relative mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
+                  {role.description}
                 </p>
-                <p className="mt-1 text-sm leading-5 text-[color:var(--copy-body)]">
-                  {metric.label}
-                </p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Pillars ── */}
       <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
-        data-reveal-section
-        data-stagger="dense"
-      >
-        <SectionHeading
-          eyebrow="Wie wir arbeiten"
-          title="Drei Prinzipien, die jeden Produktionsschritt leiten."
-          accent="Drei Prinzipien"
-          copy="Zynapse ist kein Tool mit Features – es ist ein Produktionssystem, das auf drei Grundsätzen aufbaut und jeden Schritt daran misst."
-        />
-        <div className="grid gap-5 lg:grid-cols-3">
-          {pillars.map((pillar, index) => (
-            <article
-              key={pillar.title}
-              className={`section-card section-surface-paper rounded-[var(--radius-card)] p-6 border-t-[3px] ${
-                index === 0
-                  ? "border-t-[rgba(224,94,67,0.24)]"
-                  : index === 1
-                    ? "border-t-[rgba(249,197,106,0.3)]"
-                    : "border-t-[rgba(185,178,255,0.28)]"
-              }`}
-            >
-              <h3 className="font-display text-[1.5rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                {pillar.title}
-              </h3>
-              <p className="mt-4 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
-                {pillar.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Codex ── */}
-      <section
-        className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
+        className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-contrast rounded-[var(--radius-card)] p-7 sm:p-9">
-          <div className="space-y-5">
-            <span className="eyebrow" data-animate-heading>
-              Der Zynapse Codex
-            </span>
-            <h2
-              className="max-w-3xl font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
-              data-animate-heading
-            >
-              Fünf <span data-animate-word>Regeln</span>, an denen wir jede{" "}
-              <span className="title-accent">Entscheidung</span> messen.
-            </h2>
-          </div>
-          <div className="mt-8 grid gap-4 lg:grid-cols-1">
-            {codex.map((item) => (
-              <div
-                key={item.number}
-                className="grid items-start gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.12)] bg-[rgba(255,255,255,0.68)] p-5 sm:grid-cols-[3.5rem_1fr]"
-                data-animate-item
+        <div className="section-card section-surface-warm rounded-[calc(var(--radius-panel)+0.08rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:items-start">
+            <div className="space-y-5">
+              <span className="eyebrow" data-animate-heading>
+                Was Brands am Ende bekommen
+              </span>
+              <h2
+                className="max-w-3xl font-display text-4xl leading-[0.94] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
+                data-animate-heading
               >
-                <span className="font-display text-[2rem] leading-none font-semibold tracking-[-0.04em] text-[var(--accent-strong)]">
-                  {item.number}
-                </span>
-                <div>
-                  <h3 className="font-display text-[1.25rem] leading-[1.1] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
+                Aus Matching wird <span data-animate-word>Output</span> mit{" "}
+                <span className="title-accent">Kampagnenrelevanz</span>.
+              </h2>
+              <p
+                className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
+                data-animate-copy
+              >
+                Zynapse übersetzt das Know-how der beteiligten Spezialist:innen
+                in Assets, Varianten und Entscheidungsgrundlagen, die mit dem
+                restlichen Marketing-Team funktionieren. Nicht nur im Pitch,
+                sondern im operativen Alltag.
+              </p>
+            </div>
+
+            <div className="grid gap-3">
+              {deliverables.map((item, index) => (
+                <article
+                  key={item.title}
+                  className={`section-card rounded-[var(--radius-card)] p-5 ${
+                    index === 1 ? "section-surface-contrast" : "section-surface-paper"
+                  }`}
+                >
+                  <h3 className="font-display text-[1.4rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
+                  <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
                     {item.description}
                   </p>
-                </div>
-              </div>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Values ── */}
       <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+        className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 py-12 sm:px-8 lg:px-10"
         data-reveal-section
       >
         <SectionHeading
-          eyebrow="Grundsätze"
-          title="Was Zynapse antreibt – und was nicht."
-          accent="antreibt"
-          copy="Kein Feature-Wettrüsten, kein Tempo um jeden Preis. Ein Produktionssystem, das Kontrolle, Qualität und Skalierung zusammenbringt."
+          eyebrow="Warum dieses Modell funktioniert"
+          title={
+            <>
+              Weniger <span data-animate-word>Overhead</span>, mehr{" "}
+              <span className="title-accent">bewegliche Zusammenarbeit</span>.
+            </>
+          }
+          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in sauberer Orchestrierung. Das hält Produktionen näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
         />
-        <div className="grid gap-4 md:grid-cols-2">
-          {values.map((value) => (
+        <div className="grid gap-4 lg:grid-cols-3">
+          {valueCards.map((item, index) => (
             <article
-              key={value.title}
-              className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
+              key={item.title}
+              className={`section-card rounded-[var(--radius-card)] p-6 ${
+                index === 0
+                  ? "section-surface-contrast"
+                  : index === 1
+                    ? "section-surface-paper"
+                    : "section-surface-warm border-[rgba(191,106,83,0.14)]"
+              }`}
             >
-              <h3 className="font-display text-[1.5rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                {value.title}
+              <h3 className="font-display text-[1.45rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                {item.title}
               </h3>
               <p className="mt-3 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
-                {value.description}
+                {item.description}
               </p>
             </article>
           ))}
         </div>
       </section>
 
-      {/* ── Comparison ──
-      <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
-        data-reveal-section
-      >
-        <SectionHeading
-          eyebrow="Vergleich"
-          title="Was Zynapse von klassischen Modellen unterscheidet."
-          accent="unterscheidet"
-          copy="Agenturen, Creator-Marktplätze, Inhouse-Teams und Freelancer lösen Teile des Problems. Zynapse verbindet Strategie, Produktion und Freigabe in einem System."
-        />
-        <div className="grid gap-4">
-          {differences.map((diff) => (
-            <div
-              key={diff.label}
-              className="section-card section-surface-paper grid items-center gap-4 rounded-[var(--radius-card)] p-5 sm:grid-cols-[0.25fr_0.375fr_0.375fr]"
-            >
-              <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
-                {diff.label}
-              </span>
-              <div className="flex items-start gap-2.5 rounded-[0.55rem] border border-[rgba(156,244,215,0.22)] bg-[rgba(240,255,248,0.5)] px-4 py-3 text-[0.9rem] leading-6 text-[color:var(--copy-body)]">
-                <span
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[rgba(156,244,215,0.28)] text-[10px] font-bold text-[#236851]"
-                  aria-hidden="true"
-                >
-                  ✓
-                </span>
-                {diff.zynapse}
-              </div>
-              <div className="rounded-[0.55rem] border border-[rgba(56,67,84,0.1)] bg-[rgba(56,67,84,0.04)] px-4 py-3 text-[0.9rem] leading-6 text-[color:var(--copy-soft)]">
-                {diff.traditional}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
-
-      {/* ── Final CTA ── */}
       <section
         className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+        <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
+              <span className="eyebrow" data-animate-heading>
+                Nächster Schritt
+              </span>
               <h2
-                className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
+                className="max-w-3xl font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
                 data-animate-heading
               >
-                <span data-animate-word>Bereit</span>,{" "}
-                <span className="title-accent">loszulegen</span>?
+                <span data-animate-word>Bereit</span> für den nächsten{" "}
+                <span className="title-accent">Schritt</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Ob als Brand oder Kreative:r – der Einstieg braucht nur wenige
-                Minuten. Kein Sales-Call, kein langes Setup.
+                Ob als Brand oder Kreative:r: Der Einstieg bleibt kompakt. Ihr
+                bringt Briefing oder Profil mit, Zynapse prüft Match und
+                Produktionsfit.
               </p>
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>

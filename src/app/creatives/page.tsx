@@ -110,9 +110,6 @@ export default function CreativesPage() {
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <span className="eyebrow" data-animate-heading>
-          Für Kreative
-        </span>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-start">
           <div className="space-y-6">
             <h1
@@ -142,7 +139,7 @@ export default function CreativesPage() {
               </ButtonLink>
             </div>
           </div>
-          <div className="flex lg:absolute lg:top-30 lg:right-12 lg:z-10">
+          <div className="flex lg:absolute lg:top-20 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[38rem] lg:w-[22rem]">
               <Image
                 src="/brand/peep-standing-9.png"

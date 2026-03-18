@@ -1,7 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
 import { PageMotion } from "@/components/animation/page-motion";
-import { PageHero } from "@/components/ui/page-hero";
-import { SectionHeading } from "@/components/ui/section-heading";
 import { buildMetadata } from "@/lib/seo";
 import { pricingPlans } from "@/lib/content/pricing";
 
@@ -47,86 +45,31 @@ const serviceComparisons = [
   },
 ];
 
-const pricingReferences = [
-  {
-    slug: "d2c-skincare-dach",
-    brand: "D2C Hautpflege (DACH)",
-    sector: "E-Commerce · 7-stelliger Jahresumsatz",
-    summary:
-      "Von sporadischen Einzelvideos zu einem testbaren Kreativ-Rhythmus für Meta und TikTok.",
-    challenge:
-      "Das Team hatte starke UGC-Ideen, aber keine klare Testlogik. Freigaben liefen über Slack-Threads, wodurch neue Varianten oft erst nach 10–14 Tagen live gingen.",
-    setup:
-      "Starter → Growth in zwei Sprints. Zuerst wurden drei Kernangles mit mehreren Hooks und CTA-Routen definiert; danach lief die Produktion in festen Wochenfenstern mit einem zentralen Review-Slot.",
-    outcome:
-      "Innerhalb von acht Wochen stieg die Zahl sauber vergleichbarer Creatives deutlich. Winning Hooks konnten schneller nachproduziert und auf neue Platzierungen übertragen werden.",
-    metrics: [
-      { label: "Time-to-Live", value: "72h" },
-      { label: "CPA", value: "-29%" },
-      { label: "Varianten / Monat", value: "24" },
-    ],
-    quote:
-      "Wir haben nicht einfach mehr Assets bekommen, sondern endlich ein System, mit dem wir jede Woche fundiert testen können.",
-    quoteBy: "Performance Lead",
-  },
-  {
-    slug: "b2b-saas-leadgen",
-    brand: "B2B SaaS (Lead-Gen)",
-    sector: "MarTech · 5-köpfiges Growth-Team",
-    summary:
-      "Komplexes Produktversprechen in klare Ad-Angles für die Demo-Pipeline übersetzt.",
-    challenge:
-      "Sales und Marketing hatten unterschiedliche Messaging-Prioritäten. Creatives wurden häufig neu geschrieben, bevor überhaupt belastbare Learnings vorlagen.",
-    setup:
-      "Gemeinsames Messaging-Framework für TOFU/MOFU inklusive klarer CTA-Routen für Demo, Audit und Vergleich. Jede Runde lief über einen festen Freigabepfad statt Ad-hoc-Feedback.",
-    outcome:
-      "Die Kampagnen wurden planbarer: weniger Rework, schnellere Freigaben und bessere Übergabe der Learnings in den nächsten Sprint.",
-    metrics: [
-      { label: "Demo-CTR", value: "+41%" },
-      { label: "CPL", value: "-18%" },
-      { label: "Freigabezeit", value: "-46%" },
-    ],
-    quote:
-      "Zum ersten Mal hatten wir eine Linie von Hook bis Demo-CTA, die auch intern sofort verständlich war.",
-    quoteBy: "Head of Growth",
-  },
-  {
-    slug: "home-living-multibrand",
-    brand: "Home & Living Retail",
-    sector: "3 Marken · DACH Paid-Social-Team",
-    summary:
-      "Ein zentrales Produktionssetup für drei Marken mit unterschiedlichen Zielgruppen.",
-    challenge:
-      "Jede Marke arbeitete mit eigenen Freelancer-Strukturen. Das führte zu inkonsistenter Qualität, hohem Koordinationsaufwand und kaum wiederverwendbaren Learnings.",
-    setup:
-      "Pro-Setup mit markenübergreifenden Templates für Angle-Logik, Review und Export sowie einem gemeinsamen Wochenrhythmus für Priorisierung und Produktion.",
-    outcome:
-      "Das Team testete parallel für mehrere Brands, ohne dass Abstimmung die Iteration ausbremste. Learnings wurden erstmals systematisch zwischen Marken übertragen.",
-    metrics: [
-      { label: "Brands parallel", value: "3" },
-      { label: "Review-Schleifen", value: "-52%" },
-      { label: "Output / Sprint", value: "+2.1x" },
-    ],
-    quote:
-      "Früher haben wir drei Inseln gesteuert. Jetzt haben wir ein gemeinsames System mit klaren Verantwortlichkeiten.",
-    quoteBy: "Paid Social Lead",
-  },
-];
-
 export default function PricingPage() {
   return (
     <PageMotion>
-      <PageHero
-        label="Preise"
-        title={
-          <>
+      <section
+        className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-10 sm:px-8 lg:px-10"
+        data-reveal-section
+      >
+        <div className="space-y-6">
+          <h1
+            className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
+            data-animate-heading
+          >
             Drei Pakete. Vom ersten Test bis zur{" "}
             <span className="title-accent">laufenden Kreativproduktion</span>.
-          </>
-        }
-        description="Jedes Paket ist auf einen klaren Einstieg gebaut: ein schneller Pilotstart, laufendes Kreativ-Testing oder ein Multi-Brand-Setup mit mehreren Stakeholdern."
-        badges={["Starter", "Growth", "Pro", "Referenzen"]}
-      />
+          </h1>
+          <p
+            className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
+            data-animate-copy
+          >
+            Jedes Paket ist auf einen klaren Einstieg gebaut: ein schneller
+            Pilotstart, laufendes Kreativ-Testing oder ein Multi-Brand-Setup
+            mit mehreren Stakeholdern.
+          </p>
+        </div>
+      </section>
 
       <section
         className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-10 sm:px-8 lg:px-10"
@@ -263,12 +206,9 @@ export default function PricingPage() {
         <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.14)] p-6 sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p
-                className="font-mono text-xs tracking-[0.18em] uppercase "
-                data-animate-heading
-              >
+              <span className="eyebrow" data-animate-heading>
                 Vergleich im Detail
-              </p>
+              </span>
               <h2
                 className="mt-3 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[2.4rem]"
                 data-animate-heading
