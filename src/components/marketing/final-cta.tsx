@@ -49,15 +49,16 @@ export function FinalCta() {
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Dein <span data-animate-word>Einstieg</span> beginnt mit einem{" "}
-              <span className="title-accent">kompakten Briefing</span>.
+              Der nächste <span data-animate-word>Schritt</span> ist ein{" "}
+              <span className="title-accent">kompaktes Brand-Briefing</span>.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              Fünf Felder reichen für den Start. Danach übernimmt der vollständige
-              Anfrage-Flow Agent mit Kontext, Review und Übergabe in die Kampagnenplanung.
+              Wenige Angaben reichen, damit Zynapse das passende Setup einordnen
+              und die nächsten Spezialist:innen, Schritte und Deliverables
+              ableiten kann.
             </p>
           </div>
           <form
@@ -106,7 +107,7 @@ export function FinalCta() {
                     goal: event.target.value,
                   }))
                 }
-                placeholder="z. B. Launch, Testing, Conversion"
+                placeholder="z. B. erster Pilot, laufender Rhythmus, neue Kampagnenrichtung"
               />
             </label>
             <label className="field-shell">
@@ -121,7 +122,7 @@ export function FinalCta() {
                     channel: event.target.value,
                   }))
                 }
-                placeholder="TikTok, Reels, Shorts"
+                placeholder="TikTok, Reels, Paid Social"
               />
             </label>
             <label className="field-shell md:col-span-2">
@@ -136,7 +137,7 @@ export function FinalCta() {
                     budgetRange: event.target.value,
                   }))
                 }
-                placeholder="z. B. 3.000 bis 8.000 Euro pro Monat"
+                placeholder="z. B. Starter, Growth oder individueller Rahmen"
               />
             </label>
             <button

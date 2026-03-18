@@ -5,7 +5,7 @@ const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.exam
 export const siteConfig = {
   name: "Zynapse",
   description:
-    "Zynapse verwandelt ein Brand-Briefing in eine fertige Videokampagne – mit klarer, kreativ-geführter Kampagnenlogik und skalierbarem Studio-Output.",
+    "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in lean koordinierte Kampagnen-Setups, markenfähige Varianten und klare Handover.",
   url: defaultSiteUrl,
 };
 

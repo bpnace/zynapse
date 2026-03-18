@@ -9,12 +9,11 @@ export function SiteFooter() {
         <div className="space-y-4">
           <Wordmark className="inline-flex items-center" />
           <h2 className="font-display text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
-            Vom Briefing zu Kreativvarianten, die schneller getestet werden können.
+            Vom Briefing zum kuratierten Kampagnen-Setup, das schneller einsatzbereit ist.
           </h2>
           <p className="max-w-md text-[color:var(--copy-muted)]">
-            Zynapse verbindet Kampagnenlogik, klare Freigaben und skalierbaren
-            Output in einem Prozess, der für Brands, Growth-Teams und Kreative
-            anschlussfähig bleibt.
+            Zynapse verbindet Brands mit passenden AI-Spezialist:innen und
+            übersetzt Briefings in klare Setups, Varianten und Handover.
           </p>
         </div>
         {footerGroups.map((group) => (

@@ -1,11 +1,25 @@
 # Zynapse
 
-Zynapse v1 ist eine conversion-orientierte Marketing-Site mit zwei klaren Onramps:
+Zynapse v1 ist eine brands-first Marketing-Site für AI-Marketingkampagnen mit
+zwei klaren Onramps:
 
-- Brand Inquiry Wizard für Kampagnenanfragen
-- Application Flow für Kreative mit AI-Fokus
+- Brand Inquiry Wizard für Brands mit Kampagnenbedarf
+- Application Flow für AI-Kreative und Spezialist:innen im kuratierten Netzwerk
 
-Die v1 verkauft ein Ergebnis, nicht eine Plattform: Aus einer Anfrage wird in kurzer Zeit eine fertige Video-Kampagne mit klarer Rollenlogik zwischen Brand, Kreativen und Studio.
+Die v1 verkauft kein Tool und keinen offenen Creator-Marktplatz, sondern ein
+koordiniertes Ergebnis:
+
+- Brands kommen mit Briefing, Ziel, Offer und Budget
+- Zynapse kuratiert das passende Spezialist:innen-Setup
+- Daraus entstehen lean koordinierte Kampagnen-Setups mit Varianten, Review und
+  Handover
+
+## Current positioning
+
+- Nicht: generische AI-Video-Plattform
+- Nicht: offener Creator-Marktplatz
+- Nicht: klassischer Agentur-Overhead
+- Sondern: kuratiertes Netzwerk plus orchestrierter Kampagnenfluss
 
 ## Stack
 
@@ -54,4 +68,4 @@ pnpm test:e2e
 - `src/lib/*`: content, validation, intake adapters, SEO helpers, utilities
 - `src/types/*`: public types for site content and intake payloads
 - `tests/e2e/*`: browser coverage for key user paths
-- `docs/*`: launch and operating notes
+- `docs/*`: aktive Messaging-, Launch- und Operating-Notes

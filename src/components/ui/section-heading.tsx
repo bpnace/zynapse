@@ -27,7 +27,7 @@ export function SectionHeading({
     );
 
   return (
-    <div className={`max-w-3xl space-y-4 ${alignment}`}>
+    <div className={`max-w-5xl space-y-4 ${alignment}`}>
       <h2
         className="font-display text-4xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-[3.2rem]"
         data-animate-heading

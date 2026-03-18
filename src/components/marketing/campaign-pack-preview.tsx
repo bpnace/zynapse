@@ -12,23 +12,23 @@ export function CampaignPackPreview() {
     >
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Kampagnenlogik zuerst"
+          eyebrow="Kuratiertes Setup zuerst"
           title={
             <>
-              Nicht das einzelne Video macht den{" "}
-              <span data-animate-word>Unterschied.</span> Sondern die{" "}
-              <span className="title-accent">Logik davor</span>.
+              Nicht das einzelne Asset macht den{" "}
+              <span data-animate-word>Unterschied.</span> Sondern das{" "}
+              <span className="title-accent">Setup dahinter</span>.
             </>
           }
-          copy="Bevor eine kreative Variante gebaut wird, wird die Kampagne in Angles, Hooks, CTA-Routen, Cuts und Längen zerlegt. So wird aus 'wir brauchen Content' ein System, das sich testen und weiterdrehen lässt."
+          copy="Bevor produziert wird, werden Rollen, Hooks, CTA-Routen, Formate und Freigaben zusammengeführt. So wird aus einer Anfrage kein loses Asset-Bundle, sondern ein Kampagnen-Setup, das Varianten nicht dem Zufall überlässt."
         />
         <ul className="grid gap-2.5">
           {[
-            "3 strategische Angles pro Pack",
-            "10 Hook-Richtungen mit klarer Testabsicht",
-            "5 CTA-Varianten pro Offer",
-            "6 Cuts pro Angle",
-            "3 Längen für Platzierung, Test und Iteration",
+            "Kernbriefing mit Ziel, Offer und Guardrails",
+            "Passende Rollen für Strategie, Prompting, Produktion und Review",
+            "Hooks, CTA-Routen und Formatlogik pro Setup",
+            "Klare Freigabepunkte statt offener Slack-Schleifen",
+            "Varianten, Versionen und Handover in einem Fluss",
           ].map((item) => (
             <li
               key={item}
@@ -73,11 +73,11 @@ export function CampaignPackPreview() {
               <span className="block h-3 w-3 rounded-full" style={{ background: "#febc2e" }} />
               <span className="block h-3 w-3 rounded-full" style={{ background: "#28c840" }} />
             </div>
-            <div className="flex flex-1 items-center justify-center">
-              <p className="font-mono text-[11px] tracking-[0.08em] text-[color:var(--copy-soft)]">
-                Zynapse Studio — Kampagnen-Pack
-              </p>
-            </div>
+              <div className="flex flex-1 items-center justify-center">
+                <p className="font-mono text-[11px] tracking-[0.08em] text-[color:var(--copy-soft)]">
+                Zynapse — Kampagnen-Setup
+                </p>
+              </div>
             <span
               className="font-mono text-[11px] text-[color:var(--copy-soft)] opacity-40"
               aria-hidden="true"
@@ -109,10 +109,10 @@ export function CampaignPackPreview() {
               <nav className="mt-1 flex flex-col gap-0.5 px-2">
                 {[
                   { label: "Übersicht", glyph: "▦", active: false },
-                  { label: "Kampagnen", glyph: "◈", active: true },
-                  { label: "Kreative", glyph: "◻", active: false },
-                  { label: "Testing", glyph: "◎", active: false },
-                  { label: "Freigaben", glyph: "✓", active: false },
+                  { label: "Briefing", glyph: "◈", active: false },
+                  { label: "Setups", glyph: "◻", active: true },
+                  { label: "Produktion", glyph: "◎", active: false },
+                  { label: "Review", glyph: "✓", active: false },
                 ].map(({ label, glyph, active }) => (
                   <div
                     key={label}
@@ -135,7 +135,7 @@ export function CampaignPackPreview() {
               {/* Pack list */}
               <div className="px-2">
                 <p className="mb-1.5 px-2 font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50">
-                  Packs
+                  Routen
                 </p>
                 {campaignAngles.map((a, i) => (
                   <div
@@ -158,7 +158,7 @@ export function CampaignPackPreview() {
                     C
                   </span>
                   <span className="truncate font-mono text-[10px] text-[color:var(--copy-soft)]">
-                    Creative Lead
+                    Kuratiertes Setup
                   </span>
                 </div>
               </div>
@@ -169,18 +169,18 @@ export function CampaignPackPreview() {
               {/* Toolbar */}
               <div className="flex h-[38px] shrink-0 items-center justify-between gap-3 border-b border-[rgba(56,67,84,0.09)] bg-[rgba(255,252,248,0.99)] px-4">
                 <div className="flex items-center gap-1.5 font-mono text-[10px] text-[color:var(--copy-soft)]">
-                  <span className="opacity-60">Kampagnen</span>
+                  <span className="opacity-60">Setups</span>
                   <span className="opacity-30">/</span>
                   <span className="font-semibold text-[var(--copy-strong)]">
-                    Kreativ-Testing-Struktur
+                    Brand-Kampagnen-Setup
                   </span>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
                   <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.12em] text-[#236851]">
-                    Freigabebereit
+                    Reviewbereit
                   </span>
                   <span className="hidden font-mono text-[10px] text-[color:var(--copy-soft)] opacity-50 sm:inline">
-                    3 Angles
+                    3 Routen
                   </span>
                 </div>
               </div>
@@ -188,7 +188,7 @@ export function CampaignPackPreview() {
               {/* Column headers */}
               <div className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-b border-[rgba(56,67,84,0.07)] px-4 py-2">
                 <span className="font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50">
-                  Angle · Hook-Richtungen
+                  Route · Hook-Richtungen
                 </span>
                 <span className="font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50 text-right">
                   Längen

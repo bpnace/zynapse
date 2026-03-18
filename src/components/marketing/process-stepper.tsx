@@ -20,11 +20,11 @@ export function ProcessStepper() {
         eyebrow="So arbeitet Zynapse"
         title={
           <>
-            Ein Produktionsfluss, der <span data-animate-word>Rollen klärt</span>{" "}
-            und <span className="title-accent">Kreativarbeit beschleunigt</span>.
+            Ein Ablauf, der <span data-animate-word>Anfrage,</span> Matching und{" "}
+            <span className="title-accent">Kampagnenproduktion verbindet</span>.
           </>
         }
-        copy="Das Team liefert Kontext und Freigaben. Ein Creative Lead führt Kampagnenlogik und Testing. Das Studio skaliert daraus Varianten, die schneller geprüft und ausgespielt werden können."
+        copy="Die Brand liefert Ziel, Kontext und Guardrails. Zynapse kuratiert das passende Spezialist:innen-Setup und führt daraus Produktion, Review und Handover in einem klaren Kampagnenfluss."
       />
       <div className="grid gap-4 lg:grid-cols-5">
         {processSteps.map((step, index) => (

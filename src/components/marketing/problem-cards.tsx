@@ -14,15 +14,15 @@ export function ProblemCards() {
       data-reveal-section
     >
       <SectionHeading
-        eyebrow="Wo Teams heute Zeit verlieren"
+        eyebrow="Wo Brands heute Reibung verlieren"
         title={
           <>
-            Kreativarbeit <span data-animate-word>scheitert</span> selten am Willen.
-            Meist fehlt die <span className="title-accent">klare Struktur</span>{" "}
-            davor.
+            Nicht das Briefing ist das <span data-animate-word>Problem</span>.
+            Meist fehlt das <span className="title-accent">passende Setup</span>{" "}
+            dazwischen.
           </>
         }
-        copy="Zynapse nimmt die drei typischen Bremsen aus dem Prozess: fehlende Prioritäten, teure Abstimmungsschleifen und zu viel Hoffnung auf einzelne Hero-Kreative."
+        copy="Zynapse nimmt die drei typischen Bremsen aus dem Weg: falsche Rollenbesetzung, zu viele Koordinationsschleifen und Kampagnen, die jedes Mal wieder organisatorisch bei null starten."
       />
       <div className="grid gap-5 lg:grid-cols-3">
         {problemCards.map((card, index) => (
@@ -42,7 +42,7 @@ export function ProblemCards() {
       <div
         className="px-6 py-4 text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] sm:text-lg"
       >
-        Strategie bleibt menschlich. Skalierung wird systematisch.
+        Nicht mehr Tools lösen das Problem. Sondern das passende Setup.
       </div>
     </section>
   );

@@ -12,13 +12,13 @@ const outputAccentClasses = [
 ] as const;
 
 const frameGradients: Record<string, string> = {
-  "Zeit bis Ergebnis":
+  "Schnellerer Start":
     "linear-gradient(135deg, rgba(224,94,67,0.10) 0%, rgba(249,197,106,0.16) 60%, rgba(224,94,67,0.06) 100%)",
-  Rollenklarheit:
+  "Passende Rollen":
     "linear-gradient(135deg, rgba(56,67,84,0.08) 0%, rgba(185,178,255,0.14) 60%, rgba(56,67,84,0.05) 100%)",
-  "Gegenmittel für Creative Fatigue":
+  "Mehr Varianten pro Runde":
     "linear-gradient(135deg, rgba(156,244,215,0.12) 0%, rgba(249,197,106,0.10) 60%, rgba(156,244,215,0.06) 100%)",
-  "Studio-System":
+  "Kampagnen-Handover":
     "linear-gradient(135deg, rgba(56,67,84,0.06) 0%, rgba(156,244,215,0.12) 60%, rgba(185,178,255,0.10) 100%)",
 };
 
@@ -51,14 +51,15 @@ export function VideoOutputGrid() {
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="Output-Vorschau"
+        eyebrow="Was Brands bekommen"
         title={
           <>
-            So sieht <span className="title-accent">skalierbarer Output</span>{" "}
-            aus, bevor echte Cases <span data-animate-word>live sind.</span>
+            Kein loses Asset-Bundle. Sondern{" "}
+            <span className="title-accent">kampagnenfähige Varianten</span> mit{" "}
+            <span data-animate-word>Kontext.</span>
           </>
         }
-        copy="Die Demo zeigt keine losen Clips, sondern die Logik dahinter: Angle, Hook, Format, Länge und Ziel. Genau diese Struktur macht spätere Learnings belastbar."
+        copy="Die Vorschau zeigt die Art von Deliverables, die aus einem kuratierten Setup entsteht: Varianten mit Hook, Format, Länge und klarer Einsatzlogik für Review, Paid Social und nächste Iterationen."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {displayVariants.map((variant, index) => {
@@ -75,7 +76,7 @@ export function VideoOutputGrid() {
                 className="relative flex h-[11rem] items-center justify-center overflow-hidden"
                 style={{
                   background:
-                    frameGradients[variant.angle] ?? frameGradients["Studio-System"],
+                    frameGradients[variant.angle] ?? frameGradients["Kampagnen-Handover"],
                 }}
               >
                 {showVideo ? (
@@ -143,6 +144,11 @@ export function VideoOutputGrid() {
           );
         })}
       </div>
+      <p className="max-w-3xl text-sm leading-6 text-[color:var(--copy-muted)]">
+        Je nach Setup arbeitet Zynapse mit einem abgestimmten Modellmix, etwa
+        aus Seedance 2.0, Kling und weiteren Tools. Entscheidend bleibt nicht
+        das Modell, sondern das markenfähige Ergebnis.
+      </p>
     </section>
   );
 }

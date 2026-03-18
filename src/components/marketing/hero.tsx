@@ -38,23 +38,24 @@ export function Hero() {
                     className="max-w-3xl font-display text-5xl leading-[0.88] font-semibold tracking-[-0.07em] text-balance sm:text-6xl lg:text-[4.95rem]"
                     data-animate-heading
                   >
-                    Aus einem <span data-animate-word>Briefing</span> wird ein{" "}
-                    <span className="text-gradient">Kampagnen-System</span>, das
-                    sofort <span data-animate-word>nutzbar ist.</span>
+                    Aus einer <span data-animate-word>Brand-Anfrage</span> wird
+                    ein <span className="text-gradient">kuratiertes Kampagnen-Setup</span>,
+                    das schneller in <span data-animate-word>Produktion geht.</span>
                   </h1>
                   <p
                     className="max-w-2xl text-base leading-7 text-[color:var(--copy-muted)] sm:text-lg sm:leading-8"
                     data-animate-copy
                   >
-                    Zynapse bringt Brands, Growth-Teams und erfahrene Kreative in
-                    einen klaren Produktionsfluss. Aus Ziel, Offer, Stil
-                    und Budget entstehen Kampagnenlogik, Freigaben und testbare
-                    Varianten für TikTok, Reels und Shorts.
+                    Brands kommen mit Ziel, Offer, Stil und Budget. Zynapse
+                    kuratiert das passende Spezialist:innen-Setup und
+                    orchestriert daraus Kampagnenlogik, Produktion, Review und
+                    markenfähige Varianten für Paid Social, Reels und weitere
+                    Short-Form-Formate.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row" data-animate-item>
                   <ButtonLink href="/request" size="lg">
-                    Als Brand starten
+                    Brand-Anfrage starten
                   </ButtonLink>
                   <ButtonLink href="/apply" variant="secondary" size="lg">
                     Als Kreative bewerben

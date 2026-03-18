@@ -102,11 +102,11 @@ export function SplitBenefits() {
         title="Für Brands"
         headline={
           <>
-            Mehr <span className="title-accent">Kreativklarheit</span>, weniger{" "}
-            <span data-animate-word>Produktionschaos</span>
+            Das passende <span className="title-accent">Setup</span> statt neuem{" "}
+            <span data-animate-word>Koordinationschaos</span>
           </>
         }
-        copy="Teams kaufen hier keinen diffusen Tool-Zugang, sondern einen strukturierten Weg vom Briefing zu testbaren Kreativvarianten mit klarer Freigabelogik."
+        copy="Ihr kauft hier keinen Tool-Zugang und kein loses Creator-Sourcing, sondern einen koordinierten Weg vom Briefing zum kampagnenfähigen Output."
         benefits={brandBenefits}
         href="/brands"
         cta="Mehr für Brands"
@@ -118,11 +118,11 @@ export function SplitBenefits() {
         title="Für Kreative"
         headline={
           <>
-            Deine Kreativ-Logik bleibt <span data-animate-word>sichtbar</span>, auch wenn{" "}
-            <span className="title-accent">Output skaliert</span>
+            Teil eines <span className="title-accent">kuratierten Netzwerks</span>, nicht
+            eines offenen <span data-animate-word>Marktplatzes</span>
           </>
         }
-        copy="Du führst Prompt-Logik, Creative Direction und Testing-Richtung. Zynapse nimmt dir die operative Skalierung ab, damit dein Wert nicht im Tagesgeschäft verschwindet."
+        copy="Wenn Strategie, Prompting, Production oder AI Engineering gefragt sind, verbindet Zynapse dich mit Brand-Anfragen, in denen deine Rolle wirklich gebraucht wird."
         benefits={creativeBenefits}
         href="/creatives"
         cta="Mehr für Kreative"

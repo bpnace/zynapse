@@ -7,7 +7,7 @@ import { RouteScrollReset } from "@/components/layout/route-scroll-reset";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Vom Briefing zur fertigen Videokampagne",
+  title: "Kuratiertes AI-Kampagnensystem für Brands | Zynapse",
   description: siteConfig.description,
   path: "/",
 });

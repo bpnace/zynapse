@@ -9,14 +9,15 @@ export function TrustSection() {
       data-reveal-section
     >
       <SectionHeading
-        eyebrow="Vertrauen & Sicherheit"
+        eyebrow="Vertrauen & Kontrolle"
         title={
           <>
-            AI-nahe Produktion braucht <span className="title-accent">Kontrolle</span>,
-            nicht <span data-animate-word>blindes Tempo.</span>
+            Kuratiertes AI-Marketing braucht{" "}
+            <span className="title-accent">klare Verantwortung</span>, nicht{" "}
+            <span data-animate-word>blinden Output.</span>
           </>
         }
-        copy="Je mehr Output skaliert wird, desto wichtiger werden Rechte, Review, Brand Safety und klare Freigaben."
+        copy="Je mehr Spezialist:innen, Modelle und Varianten zusammenspielen, desto wichtiger werden Rechte, Review, Brand Safety und saubere Handover."
       />
       <div className="grid gap-4 md:grid-cols-2">
         {trustSignals.map((signal) => (
@@ -37,9 +38,10 @@ export function TrustSection() {
         className="section-surface-contrast flex flex-wrap items-center justify-between gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] px-6 py-5"
       >
         <p className="max-w-2xl text-sm leading-6 text-[color:var(--copy-body)]">
-          Rechtliche Details müssen vor dem Launch fachlich geprüft werden. Die
-          Architektur ist aber schon auf minimale Datenerhebung, klare
-          Verantwortlichkeiten und nachvollziehbare Review-Schritte ausgelegt.
+          Rechtliche Details müssen vor dem Launch fachlich geprüft werden. Das
+          System ist aber bereits auf minimale Datenerhebung, klare
+          Verantwortlichkeiten und nachvollziehbare Review- und Handover-Schritte
+          ausgelegt.
         </p>
         <ButtonLink href="/legal/privacy" variant="secondary">
           Datenschutz ansehen

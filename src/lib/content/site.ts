@@ -15,26 +15,26 @@ export const primaryCta: NavItem = {
 };
 
 export const heroMetrics = [
-  { value: "72h", label: "bis zum ersten Upload" },
-  { value: "18+", label: "testbare Varianten pro Briefing" },
-  { value: "6", label: "Formate für Ads und Social" },
+  { value: "72h", label: "bis zum ersten kuratierten Setup" },
+  { value: "6", label: "Kernrollen im Netzwerk" },
+  { value: "18+", label: "Varianten pro Kampagnen-Setup" },
 ];
 
 export const problemCards = [
   {
-    title: "Zu viele Ideen, aber keine klare Priorität",
+    title: "Das Briefing ist da, das passende Setup fehlt",
     description:
-      "Zwischen UGC, Trends, Hooks und AI-Tools fehlt oft die Reihenfolge. Zynapse übersetzt Kreativ-Druck in eine Kampagnenlogik, die testbar bleibt.",
+      "Die Brand kennt Ziel, Produkt und Kanal. Was oft fehlt, ist die richtige Kombination aus Strategie, Prompting, Produktion und Review.",
   },
   {
-    title: "Zu viele Schleifen zwischen Team, Freigabe und Produktion",
+    title: "Zu viele Schleifen zwischen Brand, Spezialist:innen und Freigaben",
     description:
-      "Wenn Briefing, Feedback und Ausspielung nicht sauber getrennt sind, wird jede Iteration teuer. Zynapse macht den nächsten Schritt und die erwarteten Deliverables sichtbar.",
+      "Wenn Rollen, Feedback und Zuständigkeiten nicht geklärt sind, verliert jede Kampagne Tempo, noch bevor die erste Variante sichtbar wird.",
   },
   {
-    title: "Zu viel Druck auf einzelne Hero-Kreative",
+    title: "Jede Runde startet organisatorisch wieder bei null",
     description:
-      "Statt auf ein einzelnes Video zu hoffen, entstehen systematisch Varianten für unterschiedliche Hooks, Angles, Formate und Platzierungen.",
+      "Statt auf einem funktionierenden Setup aufzubauen, werden People, Prozesse und Deliverables für jede neue Anfrage neu sortiert.",
   },
 ];
 
@@ -43,75 +43,75 @@ export const processSteps = [
     title: "Brand-Anfrage",
     owner: "Brand / Team",
     description:
-      "Das Team gibt Produkt, Ziel, Stil, Budget und Freigaben vor. Daraus entsteht ein Briefing, mit dem alle Beteiligten sauber arbeiten können.",
+      "Die Brand gibt Ziel, Produkt, Kanal, Budget und Guardrails vor. Daraus entsteht ein Briefing, mit dem das Setup sauber arbeiten kann.",
   },
   {
-    title: "Kampagnenplanung",
-    owner: "Creative Lead",
+    title: "Kuratiertes Matching",
+    owner: "Zynapse",
     description:
-      "Angles, Hooks, CTA-Logik und Testprioritäten werden so aufgebaut, dass sie im Performance-Alltag wirklich tragen.",
+      "Zynapse stellt die passenden Spezialist:innen für Strategie, Prompting, Produktion und Review zusammen.",
   },
   {
-    title: "Briefing-Paket",
-    owner: "Creative Lead + System",
+    title: "Kampagnen-Setup",
+    owner: "Setup",
     description:
-      "Aus der Kampagnenlogik entsteht ein Briefing-Paket mit Messaging, Formatregeln und klaren Freigabegrenzen.",
+      "Hooks, Botschaften, Formatlogik, Freigabepunkte und Produktionsplan werden in einen belastbaren Ablauf übersetzt.",
   },
   {
-    title: "Videogenerierung",
-    owner: "Studio",
+    title: "Produktion & Review",
+    owner: "Netzwerk",
     description:
-      "Aus jedem Angle entstehen mehrere Cuts, Längen und Platzierungsvarianten, ohne dass das Team neue Produktionsschleifen öffnen muss.",
+      "Das kuratierte Setup produziert Varianten, stimmt Modellmix und Ausführung ab und führt die Brand durch einen klaren Review-Prozess.",
   },
   {
-    title: "Review und Export",
-    owner: "Team",
+    title: "Handover",
+    owner: "Brand / Media",
     description:
-      "Das Team prüft Freigaben zentral. Erst danach gehen Varianten in Media Buying, Publishing oder die nächste Iteration.",
+      "Am Ende stehen kampagnenfähige Assets, Versionen und Kontext für Paid Social, Content oder die nächste Iteration.",
   },
 ];
 
 export const brandBenefits = [
-  "Planbare Produktion mit klaren Meilensteinen",
-  "Mehr testbare Kreativvarianten pro Briefing",
-  "Weniger Abstimmungsschleifen zwischen Team, Kreativen und Studio",
-  "Freigaben und Feedback bleiben bis zum Export nachvollziehbar",
+  "Passendes Spezialist:innen-Setup statt eigener Rollenpuzzles",
+  "Ein Kampagnenfluss von Briefing bis Handover",
+  "Mehr Varianten ohne klassischen Agentur-Overhead",
+  "Klare Reviews, Freigaben und Verantwortlichkeiten",
 ];
 
 export const creativeBenefits = [
-  "Du verkaufst Kreativstrategie statt Produktionschaos",
-  "Klare Briefings statt endloser Abstimmungsschleifen",
-  "Skalierbarer Output über mehrere AI-Rollen hinweg",
-  "Planbare Erlöse pro Kunde, Sprint oder Kampagne",
+  "Teil eines kuratierten Netzwerks statt Kaltakquise",
+  "Rollen, in denen Strategie, Prompting und Produktion zusammenpassen",
+  "Klare Briefings und planbare Übergaben pro Anfrage",
+  "Brand-Anfragen mit echtem Kampagnenbedarf statt losem Creator-Sourcing",
 ];
 
 export const trustSignals = [
   {
     title: "Rechte & Nutzung",
     description:
-      "Jede Produktion ist so gedacht, dass Nutzungslogik, Asset-Grenzen und spätere Vertragserweiterungen sauber anschlussfähig bleiben.",
+      "Jedes Setup ist so gedacht, dass Nutzungslogik, Asset-Grenzen und spätere Vertragserweiterungen sauber anschlussfähig bleiben.",
   },
   {
-    title: "Markensicherheit",
+    title: "Brand Safety",
     description:
-      "Freigaben bleiben im Team. Hooks, Claims und CTA-Räume werden vor Export sichtbar und nachvollziehbar geprüft.",
+      "Hooks, Claims, Bilderwelten und Freigaben bleiben prüfbar. Vor dem Export ist sichtbar, was freigegeben wurde und was nicht.",
   },
   {
-    title: "Freigabeprozess",
+    title: "Review & Freigaben",
     description:
-      "Keine Variante geht blind live. Das Studio liefert eine klare Review-Spur, bevor Assets in Ads oder Social ausgesteuert werden.",
+      "Keine Variante geht blind live. Zynapse hält Review-Schritte, Zuständigkeiten und Entscheidungen nachvollziehbar zusammen.",
   },
   {
-    title: "DSGVO-ready Setup",
+    title: "Datenschutz & Prozesse",
     description:
-      "Die v1 ist auf geringe Datenerhebung, nachvollziehbare Prozesse und eine EU-kompatible Weiterentwicklung ausgelegt.",
+      "Die v1 ist auf geringe Datenerhebung, klare Verantwortlichkeiten und nachvollziehbare Übergaben ausgelegt.",
   },
 ];
 
 export const studioPrinciples = [
-  "Kampagnenlogik vor Video-Output",
-  "Jede Anfrage produziert Varianten statt Einzelassets",
-  "Kreative steuern Performance-Richtung, Studio skaliert die Ausführung",
+  "Brands bringen Ziel und Briefing, Zynapse kuratiert das passende Setup",
+  "Jede Anfrage führt zu einem Kampagnen-Setup statt zu losen Einzelassets",
+  "Spezialist:innen und Brand arbeiten in einem gemeinsamen Review- und Handover-Fluss",
 ];
 
 export const footerGroups = [
