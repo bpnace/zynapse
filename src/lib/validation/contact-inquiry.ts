@@ -1,22 +1,22 @@
 import { z } from "zod";
 
 export const contactInquirySchema = z.object({
-  name: z.string().trim().min(2, "Bitte einen Namen angeben."),
+  name: z.string().trim().min(2, "Gib bitte deinen Namen an."),
   email: z
     .string()
     .trim()
-    .email("Bitte eine gültige E-Mail-Adresse angeben."),
-  company: z.string().trim().min(2, "Bitte den Team- oder Firmennamen angeben."),
-  teamContext: z.string().trim().min(2, "Bitte kurz den Kontext einordnen."),
-  topic: z.string().trim().min(2, "Bitte ein Anliegen auswählen."),
+    .email("Gib bitte eine gültige E-Mail-Adresse an."),
+  company: z.string().trim().min(2, "Gib bitte deinen Team- oder Firmennamen an."),
+  teamContext: z.string().trim().min(2, "Ordne bitte kurz ein, worum es geht."),
+  topic: z.string().trim().min(2, "Wähle bitte ein Anliegen aus."),
   message: z
     .string()
     .trim()
-    .min(20, "Bitte das Anliegen kurz einordnen.")
-    .max(2000, "Bitte auf maximal 2000 Zeichen kürzen."),
+    .min(20, "Schreib bitte kurz, worum es geht.")
+    .max(2000, "Kürze deine Nachricht bitte auf maximal 2000 Zeichen."),
   datenschutzAccepted: z
     .boolean()
-    .refine((value) => value, "Bitte der Datenschutzerklärung zustimmen."),
+    .refine((value) => value, "Bitte bestätige die Datenschutzerklärung."),
   startedAt: z.number().int().positive(),
   website: z.string().trim(),
 });

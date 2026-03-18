@@ -16,13 +16,13 @@ const planByName = new Map(pricingPlans.map((plan) => [plan.name, plan]));
 const planById = new Map(pricingPlans.map((plan) => [plan.id, plan]));
 
 const topicOptions = [
-  { value: "Allgemeine Anfrage", label: "Allgemeine Anfrage" },
+  { value: "Allgemeine Frage", label: "Allgemeine Frage" },
   ...pricingPlans.map((plan) => ({
     value: plan.name,
     label: `${plan.name} anfragen`,
   })),
-  { value: "Partnernetzwerk", label: "Partnernetzwerk" },
-  { value: "Operative Frage", label: "Operative Frage" },
+  { value: "Partner:in werden", label: "Partner:in werden" },
+  { value: "Operatives Thema", label: "Operatives Thema" },
 ];
 
 function resolvePlanFromQuery(
@@ -53,7 +53,7 @@ export function ContactIntakeForm() {
   } = useForm<ContactInquiryInput>({
     resolver: zodResolver(contactInquirySchema),
     defaultValues: createContactInquiryDefaults({
-      topic: "Allgemeine Anfrage",
+      topic: "Allgemeine Frage",
     }),
   });
 
@@ -143,7 +143,7 @@ export function ContactIntakeForm() {
 
         if (!response.ok) {
           const payload = (await response.json()) as { error?: string };
-          throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
+          throw new Error(payload.error ?? "Deine Nachricht konnte gerade nicht gesendet werden.");
         }
 
         setIsSuccess(true);
@@ -151,7 +151,7 @@ export function ContactIntakeForm() {
         setSubmitError(
           error instanceof Error
             ? error.message
-            : "Die Kontakt-Anfrage konnte nicht gesendet werden.",
+            : "Deine Nachricht konnte gerade nicht gesendet werden.",
         );
       } finally {
         setIsPending(false);
@@ -162,13 +162,13 @@ export function ContactIntakeForm() {
   if (isSuccess) {
     return (
       <div className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-7 sm:p-8">
-        <span className="eyebrow">Kontakt gesendet</span>
+        <span className="eyebrow">Nachricht gesendet</span>
         <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-          Die Anfrage ist eingegangen.
+          Danke, wir haben deine Nachricht.
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]">
-          Wir haben die Vorauswahl und dein Anliegen übernommen. Wir melden uns
-          innerhalb von 24 Stunden mit den nächsten Schritten.
+          Wir haben alles übernommen und melden uns in der Regel innerhalb von
+          24 Stunden mit einem konkreten nächsten Schritt bei dir.
         </p>
       </div>
     );
@@ -184,17 +184,17 @@ export function ContactIntakeForm() {
         <div className="space-y-5">
           <span className="eyebrow">Kontaktformular</span>
           <h2 className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-            Weniger Felder. Mehr Kontext, wenn du schon aus den Preisen kommst.
+            Erzähl uns kurz, worum es geht.
           </h2>
           <p className="text-base leading-7 text-[color:var(--copy-body)]">
-            Wenn du ein Paket auswählst, übernimmt das Formular bereits die
-            passende Einordnung. Du musst nur noch die teamrelevanten Details
-            ergänzen.
+            Wenn du schon aus den Preisen kommst, ist das passende Paket hier
+            bereits vorausgewählt. Wenn nicht, ist das auch okay. Ein paar
+            Stichpunkte reichen völlig.
           </p>
 
           <div className="section-surface-warm rounded-[var(--radius-card)] border border-[rgba(191,106,83,0.16)] p-5">
             <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-              {activePlan ? "Vorausgewähltes Paket" : "Ohne Paket starten"}
+              {activePlan ? "Schon vorausgewählt" : "Du kannst auch ohne Paket starten"}
             </p>
             {activePlan ? (
               <>
@@ -217,8 +217,8 @@ export function ContactIntakeForm() {
               </>
             ) : (
               <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-                Nutze das Formular für allgemeine Fragen zu Preisen, Abläufen,
-                Partnerschaften oder operativen Themen.
+                Schreib einfach kurz, wobei du Unterstützung suchst oder welche
+                Frage du mit uns klären möchtest.
               </p>
             )}
           </div>
@@ -247,7 +247,7 @@ export function ContactIntakeForm() {
             <Field label="Team / Firma" error={errors.company?.message}>
               <TextInput {...register("company")} placeholder="Beispiel GmbH" />
             </Field>
-            <Field label="Anliegen" error={errors.topic?.message}>
+            <Field label="Worum geht's?" error={errors.topic?.message}>
               <SelectInput
                 {...topicField}
                 onChange={(event) => {
@@ -267,22 +267,22 @@ export function ContactIntakeForm() {
           <Field
             label="Teamkontext"
             error={errors.teamContext?.message}
-            hint="Ein kurzer Satz reicht: Teamgröße, Anzahl Brands oder aktueller Bedarf."
+            hint="Ein kurzer Satz reicht: Teamgröße, Anzahl Brands oder was gerade ansteht."
           >
             <TextInput
               {...register("teamContext")}
-              placeholder="z. B. Growth-Team mit 1 Brand und laufendem Paid-Social-Testing"
+              placeholder="z. B. kleines Brand-Team mit Produktlaunch und Bedarf an laufenden Creatives"
             />
           </Field>
 
           <Field
             label="Nachricht"
             error={errors.message?.message}
-            hint="Das Feld ist bei Paket-CTAs bereits vorbefüllt und kann direkt angepasst werden."
+            hint="Wenn du über ein Paket kommst, ist hier schon ein Entwurf drin. Du kannst ihn direkt anpassen."
           >
             <TextareaInput
               {...register("message")}
-              placeholder="Worum geht es konkret, welches Budget ist geplant ist und was soll als erstes geklärt werden."
+              placeholder="Worum geht es gerade, was willst du erreichen und was sollen wir zuerst mit dir klären?"
             />
           </Field>
 
@@ -323,7 +323,7 @@ export function ContactIntakeForm() {
               className: "w-full disabled:cursor-wait disabled:opacity-70",
             })}
           >
-            {isPending ? "Sende Anfrage..." : "Kontakt-Anfrage senden"}
+            {isPending ? "Nachricht wird gesendet..." : "Nachricht senden"}
           </button>
         </form>
       </div>

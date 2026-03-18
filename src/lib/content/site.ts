@@ -140,16 +140,16 @@ export const contactChannels = [
   {
     label: "Vertrieb",
     value: "hello@zynapse.de",
-    copy: "Brand-Anfragen, Paketberatung und Erstgespräche",
+    copy: "Wenn du über eine Brand-Anfrage, Pakete oder den richtigen Einstieg sprechen willst.",
   },
   {
     label: "Netzwerk für Kreative",
     value: "network@zynapse.de",
-    copy: "Bewerbungen, Qualifizierung, Partneranfragen",
+    copy: "Wenn du dich als Kreative:r, Spezialist:in oder Partner:in bei uns melden möchtest.",
   },
   {
     label: "Betrieb",
     value: "ops@zynapse.de",
-    copy: "Rechte, Datenschutz, Prozessfragen",
+    copy: "Wenn du Fragen zu Rechten, Datenschutz oder Abläufen hast.",
   },
 ];

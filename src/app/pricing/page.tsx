@@ -4,9 +4,9 @@ import { buildMetadata } from "@/lib/seo";
 import { pricingPlans } from "@/lib/content/pricing";
 
 export const metadata = buildMetadata({
-  title: "Preise | Zynapse",
+  title: "Preise – Starter, Growth, Enterprise | Zynapse",
   description:
-    "Drei Einstiegspunkte für Brand-, Growth- und Agentur-Teams plus Beispiel-Referenzen auf derselben Seite.",
+    "Brands-first Pricing für kuratierte AI-Kampagnensysteme: Starter für den Pilot, Growth für den laufenden Rhythmus und Enterprise für komplexere Brand-Setups.",
   path: "/pricing",
 });
 
@@ -16,32 +16,32 @@ function buildContactHref(planId: string) {
 
 const serviceComparisons = [
   {
-    label: "Agentur",
+    label: "Einzelproduktion",
     zynapse:
-      "Sprint-basierter Ablauf mit festen Rollen, klaren Entscheidungsrechten und einer Kampagnenlogik vor der Produktion. Angles, Hooks und CTA-Routen stehen zuerst, dann wird produziert.",
+      "Nicht nur ein Asset-Paket, sondern ein kuratiertes Setup mit Briefing-Logik, zentralem Review und klarer Anschlussfähigkeit an die nächste Kampagnenrunde.",
     traditional:
-      "Projektbasierte Übergaben mit wechselnden Ansprechpartnern. Wenn Prioritäten kippen, starten Abstimmung und Rework oft neu und verlangsamen den nächsten Testzyklus.",
+      "Ein einzelner Sprint oder ein einzelnes Video löst den Moment. Beim nächsten Briefing beginnt Planung, Abstimmung und Produktionslogik oft wieder von vorn.",
   },
   {
-    label: "Creator-Marktplatz",
+    label: "Offener Creator-Marktplatz",
     zynapse:
-      "Creator-Output folgt einer zentralen Testlogik: Hypothese, Hook, CTA-Variante, Formatplan und Freigabepfad sind vorab definiert und über alle Assets konsistent.",
+      "Zynapse kuratiert nicht nur einzelne Talente, sondern ein zusammenhängendes Kampagnensystem mit konsistentem Output, klaren Übergaben und laufender Priorisierung.",
     traditional:
-      "Der Schwerpunkt liegt auf Sourcing und Einzeloutput. Ohne gemeinsamen Produktionsrahmen streuen Messaging, Qualität und Vergleichbarkeit zwischen Varianten.",
+      "Der Schwerpunkt liegt auf Sourcing. Ohne übergeordnetes Setup streuen Qualität, Messaging und Learnings zwischen einzelnen Creator-Lieferungen.",
   },
   {
     label: "Inhouse-Aufbau",
     zynapse:
-      "Sofort produktionsfähig ohne zusätzlichen Teamaufbau. Der Workflow für Briefing, Review, Versionierung und Export steht ab Tag eins und skaliert mit eurem Kampagnenbedarf.",
+      "Brands bekommen schneller das passende Setup, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
     traditional:
-      "Volle Kontrolle, aber hoher Setup-Aufwand: Hiring, Onboarding, Tooling und Prozessdesign kosten Zeit. SHRM-Benchmarking weist Time-to-fill und Recruiting-Kapazität weiterhin als operative Engpässe aus.",
+      "Volle Kontrolle, aber hoher Vorlauf. Bevor das erste System sauber läuft, müssen Rollen besetzt, Prozesse definiert und Produktionsstandards erst aufgebaut werden.",
   },
   {
-    label: "Freelancer-Setups",
+    label: "Freelancer-Stack",
     zynapse:
-      "Ein Produktionssystem mit einheitlichem Qualitätsrahmen, zentraler Review-Logik und klaren Übergaben. Ergebnisse kommen versioniert und kampagnenbereit zurück.",
+      "Ein zentral kuratiertes Setup hält Verantwortlichkeiten, Freigaben und Varianten in einem Fluss. Das senkt Reibung zwischen Briefing, Review und Export.",
     traditional:
-      "Mehrere Gewerke bedeuten mehrere Prozesse: unterschiedliche Arbeitsweisen, verstreutes Feedback und fehlende Standards für Freigabe, Versionierung und Export.",
+      "Mehrere Freelancer bedeuten oft mehrere Arbeitsweisen, verstreutes Feedback und wenig Kontinuität zwischen zwei Kampagnen- oder Review-Schleifen.",
   },
 ];
 
@@ -57,16 +57,18 @@ export default function PricingPage() {
             className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
             data-animate-heading
           >
-            Drei Pakete. Vom ersten Test bis zur{" "}
-            <span className="title-accent">laufenden Kreativproduktion</span>.
+            Drei Setups für Brands. Vom ersten Test zum laufenden{" "}
+            <span className="title-accent">AI-Kampagnensystem</span>.
           </h1>
           <p
             className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
             data-animate-copy
           >
-            Jedes Paket ist auf einen klaren Einstieg gebaut: ein schneller
-            Pilotstart, laufendes Kreativ-Testing oder ein Multi-Brand-Setup
-            mit mehreren Stakeholdern.
+            Zynapse kuratiert das passende Spezialist:innen-Setup für die
+            Phase, in der eure Brand gerade steht: erster Pilot, laufender
+            Kampagnenrhythmus oder komplexeres Setup. Ihr bringt Briefing und
+            Ziel mit, wir orchestrieren daraus einen leanen Produktionsfluss
+            mit kampagnenfähigem Output.
           </p>
         </div>
       </section>
@@ -121,7 +123,7 @@ export default function PricingPage() {
                     {plan.name}
                   </h2>
                   <p
-                    className={`mt-6 text-center font-display text-5xl leading-none font-semibold tracking-[-0.08em] ${
+                    className={`mt-6 text-center font-display text-3xl leading-none font-semibold tracking-[-0.08em] ${
                       plan.featured ? "text-[var(--copy-strong)]" : "text-[var(--copy-strong)]"
                     }`}
                   >
@@ -207,23 +209,23 @@ export default function PricingPage() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <span className="eyebrow" data-animate-heading>
-                Vergleich im Detail
+                Vergleich
               </span>
               <h2
                 className="mt-3 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[2.4rem]"
                 data-animate-heading
               >
-                Welches Setup skaliert{" "}
-                <span className="title-accent">Kreativ-Testing wirklich</span>?
+                Welches Modell hält{" "}
+                <span className="title-accent">Kampagnen wirklich in Bewegung</span>?
               </h2>
             </div>
             <p
               className="max-w-xl text-sm leading-6 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Wir vergleichen nicht den Preis pro Asset, sondern die Hebel im
-              Alltag: Entscheidungswege, Iterationsgeschwindigkeit und wie
-              zuverlässig aus Ideen ein wiederholbarer Kampagnen-Output wird.
+              Nicht jede Alternative löst dasselbe Problem. Entscheidend ist,
+              wie gut ein Setup Briefing, kuratierte Orchestrierung und
+              laufende Kampagnenkontinuität zusammenhält.
             </p>
           </div>
 
@@ -375,20 +377,21 @@ export default function PricingPage() {
                 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
                 data-animate-heading
               >
-                <span data-animate-word>Bereit</span>,{" "}
-                <span className="title-accent">loszulegen</span>?
+                <span data-animate-word>Bereit</span> für das passende{" "}
+                <span className="title-accent">Setup</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Ob als Brand oder Kreative:r – der Einstieg braucht nur wenige
-                Minuten. Kein Sales-Call, kein langes Setup.
+                Wenn ihr eure aktuelle Phase schon kennt, startet direkt mit
+                einer Anfrage. Wenn nicht, klären wir gemeinsam, ob Starter,
+                Growth oder Enterprise gerade zu eurem Bedarf passt.
               </p>
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/request" size="lg">
-                Brand-Anfrage
+                Passendes Paket anfragen
               </ButtonLink>
             </div>
           </div>

@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json(
       {
-        error: "Ungültige Kontakt-Anfrage.",
+        error: "Deine Anfrage war nicht vollständig.",
         details: parsed.error.flatten(),
       },
       { status: 400 },
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     console.error("[zynapse:contact-intake]", error);
 
     return NextResponse.json(
-      { error: "Die Kontakt-Anfrage konnte aktuell nicht übergeben werden." },
+      { error: "Deine Nachricht konnte gerade nicht übermittelt werden. Versuch es bitte noch einmal." },
       { status: 500 },
     );
   }

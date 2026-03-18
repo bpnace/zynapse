@@ -9,7 +9,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Kontakt | Zynapse",
   description:
-    "Direkte Kontaktwege für Vertrieb, Netzwerk für Kreative und operative Fragen.",
+    "Schreib uns direkt bei Fragen zu Brands, Preisen oder operativen Themen. Du landest ohne Umwege beim richtigen Kontakt.",
   path: "/contact",
 });
 
@@ -20,36 +20,34 @@ export default function ContactPage() {
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <span className="eyebrow" data-animate-heading>
-          Kontakt
-        </span>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-start">
           <div className="space-y-6">
             <h1
               className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
               data-animate-heading
             >
-              Klare Kontaktwege,{" "}
-              <span className="title-accent">schnelle Antworten</span>.
+              Schreib uns. Wir melden uns{" "}
+              <span className="title-accent">schnell zurück</span>.
             </h1>
             <p
               className="max-w-4xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Ob Brand-Anfrage, Paketfrage oder operatives Thema: Du landest
-              direkt beim richtigen Kanal. Kein Routing-Chaos, keine unnötigen
-              Schleifen.
+              Egal ob du eine Brand-Anfrage hast, wissen willst, welches Paket
+              gerade passt, oder ein operatives Thema klären möchtest: Deine
+              Nachricht landet direkt beim richtigen Kontakt. Du musst nichts
+              perfekt vorbereiten, ein paar klare Sätze reichen.
             </p>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/contact#kontaktformular" size="lg">
-                Zum Kontaktformular
+                Nachricht schicken
               </ButtonLink>
               <ButtonLink href="/pricing" variant="secondary" size="lg">
-                Pläne & Preise
+                Preise ansehen
               </ButtonLink>
             </div>
           </div>
-          <div className="flex lg:absolute lg:top-30 lg:right-12 lg:z-10">
+          <div className="flex lg:absolute lg:top-15 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[20rem] lg:w-[23rem]">
               <Image
                 src="/brand/peep-sitting-2.png"
@@ -93,7 +91,7 @@ function ContactFormFallback() {
     <div className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8">
       <span className="eyebrow">Kontaktformular</span>
       <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-        Formular wird geladen...
+        Formular lädt gerade. Dauert nur einen Moment.
       </p>
     </div>
   );
