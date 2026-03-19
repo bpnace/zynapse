@@ -5,6 +5,7 @@ export const metadata = buildMetadata({
   description:
     "Datenschutzhinweise für Zynapse, Codariq, Formulare, Hosting und Analytics.",
   path: "/legal/privacy",
+  indexable: false,
 });
 
 function LegalSection({

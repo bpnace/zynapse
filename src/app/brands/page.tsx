@@ -1,16 +1,24 @@
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PageMotion } from "@/components/animation/page-motion";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLdScript } from "@/components/seo/json-ld";
 import { brandBenefits } from "@/lib/content/site";
+import {
+  buildBreadcrumbs,
+  buildMetadata,
+  buildPageJsonLd,
+  buildServiceJsonLd,
+} from "@/lib/seo";
 import Image from "next/image";
 
-export const metadata = buildMetadata({
+const pageSeo = {
   title: "Für Brands – Videoproduktion für Performance-Teams | Zynapse",
   description:
     "Skalierbare Videoproduktion für Brand- und Growth-Teams. Vom Briefing zum testbaren Kampagnen-Pack in 72 Stunden – mit klarer Freigabelogik und strukturierter Zusammenarbeit.",
   path: "/brands",
-});
+} as const;
+
+export const metadata = buildMetadata(pageSeo);
 
 const painPoints = [
   {
@@ -58,8 +66,22 @@ const results = [
 ];
 
 export default function BrandsPage() {
+  const brandsJsonLd = buildPageJsonLd({
+    ...pageSeo,
+    breadcrumbs: buildBreadcrumbs("Für Brands", pageSeo.path),
+    primaryEntity: buildServiceJsonLd({
+      path: pageSeo.path,
+      name: "AI-Kampagnen-Setups für Brands",
+      description: pageSeo.description,
+      serviceType: "Kuratiertes AI-Kampagnensystem für Brands",
+      audience: "Brand-, Growth- und Performance-Teams",
+    }),
+  });
+
   return (
-    <PageMotion>
+    <>
+      <JsonLdScript data={brandsJsonLd} />
+      <PageMotion>
       {/* ── Hero ── */}
       <section
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
@@ -289,6 +311,7 @@ export default function BrandsPage() {
           </div>
         </div>
       </section>
-    </PageMotion>
+      </PageMotion>
+    </>
   );
 }

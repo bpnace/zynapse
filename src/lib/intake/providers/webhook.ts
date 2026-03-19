@@ -15,11 +15,21 @@ export async function dispatchIntakeSubmission<TPayload>(
     };
   }
 
+  const user = process.env.N8N_BASIC_USER;
+  const pass = process.env.N8N_BASIC_PASS;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (user && pass) {
+    const auth = Buffer.from(`${user}:${pass}`).toString("base64");
+    headers.Authorization = `Basic ${auth}`;
+  }
+
   const response = await fetch(env.intakeWebhookUrl, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(envelope),
     cache: "no-store",
   });

@@ -1,14 +1,22 @@
 import { ButtonLink } from "@/components/ui/button";
 import { PageMotion } from "@/components/animation/page-motion";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLdScript } from "@/components/seo/json-ld";
 import { pricingPlans } from "@/lib/content/pricing";
+import {
+  buildBreadcrumbs,
+  buildMetadata,
+  buildPageJsonLd,
+  buildServiceJsonLd,
+} from "@/lib/seo";
 
-export const metadata = buildMetadata({
+const pageSeo = {
   title: "Preise – Starter, Growth, Enterprise | Zynapse",
   description:
     "Brands-first Pricing für kuratierte AI-Kampagnensysteme: Starter für den Pilot, Growth für den laufenden Rhythmus und Enterprise für komplexere Brand-Setups.",
   path: "/pricing",
-});
+} as const;
+
+export const metadata = buildMetadata(pageSeo);
 
 function buildContactHref(planId: string) {
   return `/contact?tier=${encodeURIComponent(planId)}#kontaktformular`;
@@ -46,8 +54,22 @@ const serviceComparisons = [
 ];
 
 export default function PricingPage() {
+  const pricingJsonLd = buildPageJsonLd({
+    ...pageSeo,
+    breadcrumbs: buildBreadcrumbs("Preise", pageSeo.path),
+    primaryEntity: buildServiceJsonLd({
+      path: pageSeo.path,
+      name: "Pricing für kuratierte AI-Kampagnensysteme",
+      description: pageSeo.description,
+      serviceType: "AI-Kampagnen-Setups und Pricing für Brands",
+      audience: "Brands und Teams mit laufendem Kampagnenbedarf",
+    }),
+  });
+
   return (
-    <PageMotion>
+    <>
+      <JsonLdScript data={pricingJsonLd} />
+      <PageMotion>
       <section
         className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-10 sm:px-8 lg:px-10"
         data-reveal-section
@@ -397,6 +419,7 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
-    </PageMotion>
+      </PageMotion>
+    </>
   );
 }

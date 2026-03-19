@@ -4,6 +4,7 @@ export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
   description: "Platzhalter für den späteren Zugang zu internen Nutzer- und Kreativ-Workflows.",
   path: "/login",
+  indexable: false,
 });
 
 export default function LoginPage() {

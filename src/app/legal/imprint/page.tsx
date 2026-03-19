@@ -5,6 +5,7 @@ export const metadata = buildMetadata({
   description:
     "Anbieterkennzeichnung und rechtliche Informationen zu Zynapse und Codariq.",
   path: "/legal/imprint",
+  indexable: false,
 });
 
 function LegalSection({
