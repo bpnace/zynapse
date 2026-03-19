@@ -19,6 +19,9 @@ const WORD_REVEAL_START_DELAY = 0.15;
 const WORD_REVEAL_STAGGER = 0.15;
 const HERO_TITLE_REVEAL_DURATION = 1;
 const HERO_WORD_REVEAL_START_DELAY = 0.16;
+const CHAR_RAIN_DISTANCE = 100;
+const CHAR_RAIN_STAGGER = 0.05;
+const CHAR_RAIN_DURATION = 0.5;
 
 export function HomeMotion({ children }: HomeMotionProps) {
   const scope = useRef<HTMLDivElement>(null);
@@ -37,8 +40,6 @@ export function HomeMotion({ children }: HomeMotionProps) {
         return;
       }
 
-      const hero = container.querySelector<HTMLElement>("[data-hero]");
-      const heroImage = container.querySelector<HTMLElement>("[data-hero-image]");
       const heroIntro = container.querySelector<HTMLElement>("[data-hero-intro]");
       const sections = Array.from(
         container.querySelectorAll<HTMLElement>("[data-reveal-section]"),
@@ -75,25 +76,6 @@ export function HomeMotion({ children }: HomeMotionProps) {
         });
       };
 
-      if (hero && heroImage) {
-        gsap.fromTo(
-          heroImage,
-          {
-            yPercent: -3,
-          },
-          {
-            yPercent: 5,
-            ease: "none",
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          },
-        );
-      }
-
       if (heroIntro) {
         const heroHeading = heroIntro.querySelectorAll<HTMLElement>(
           "[data-animate-heading]",
@@ -102,6 +84,13 @@ export function HomeMotion({ children }: HomeMotionProps) {
           heroIntro.querySelectorAll<HTMLElement>("[data-animate-word]"),
         );
 
+        // Subtle scale entrance for the entire hero content block
+        gsap.set(heroIntro, {
+          autoAlpha: 0,
+          scale: 0.97,
+          willChange: "transform, opacity",
+        });
+
         const heroTimeline = gsap.timeline({
           defaults: {
             duration: HERO_TITLE_REVEAL_DURATION,
@@ -109,12 +98,27 @@ export function HomeMotion({ children }: HomeMotionProps) {
           },
         });
 
+        heroTimeline.to(
+          heroIntro,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 1.2,
+            ease: "power2.out",
+          },
+          0,
+        );
+
         if (heroHeading.length) {
-          heroTimeline.from(heroHeading, {
-            autoAlpha: 0,
-            y: 26,
-            stagger: 0.08,
-          });
+          heroTimeline.from(
+            heroHeading,
+            {
+              autoAlpha: 0,
+              y: 26,
+              stagger: 0.08,
+            },
+            0,
+          );
         }
 
         addWordAnimations(
@@ -122,7 +126,59 @@ export function HomeMotion({ children }: HomeMotionProps) {
           heroWords,
           heroHeading.length ? HERO_WORD_REVEAL_START_DELAY : 0,
         );
+
+        // ── Metric counter animation ──
+        const metricValues = Array.from(
+          heroIntro.querySelectorAll<HTMLElement>("[data-metric-value]"),
+        );
+
+        metricValues.forEach((valueEl, index) => {
+          const raw = valueEl.dataset.metricValue ?? "";
+          const numericMatch = raw.match(/(\d+)/);
+          if (!numericMatch) return;
+
+          const target = parseInt(numericMatch[1], 10);
+          const prefix = raw.slice(0, raw.indexOf(numericMatch[1]));
+          const suffix = raw.slice(
+            raw.indexOf(numericMatch[1]) + numericMatch[1].length,
+          );
+
+          const counter = { value: 0 };
+
+          heroTimeline.to(
+            counter,
+            {
+              value: target,
+              duration: 1.4,
+              ease: "power2.out",
+              snap: { value: 1 },
+              onUpdate() {
+                valueEl.textContent = `${prefix}${Math.round(counter.value)}${suffix}`;
+              },
+            },
+            0.5 + index * 0.1,
+          );
+        });
       }
+
+      // ── Ambient orb drift ──
+      const heroOrbs = Array.from(
+        container.querySelectorAll<HTMLElement>("[data-hero-orb]"),
+      );
+
+      heroOrbs.forEach((orb, index) => {
+        gsap.set(orb, { willChange: "transform" });
+
+        gsap.to(orb, {
+          x: `random(-30, 30)`,
+          y: `random(-20, 20)`,
+          duration: 7 + index * 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.5,
+        });
+      });
 
       const parallaxWindows = Array.from(
         container.querySelectorAll<HTMLElement>("[data-parallax-window]"),
@@ -151,6 +207,9 @@ export function HomeMotion({ children }: HomeMotionProps) {
         const items = section.querySelectorAll<HTMLElement>("[data-animate-item]");
         const words = Array.from(
           section.querySelectorAll<HTMLElement>("[data-animate-word]"),
+        );
+        const charLines = Array.from(
+          section.querySelectorAll<HTMLElement>("[data-animate-char-line]"),
         );
 
         const timeline = gsap.timeline({
@@ -201,6 +260,41 @@ export function HomeMotion({ children }: HomeMotionProps) {
             },
             heading.length || copy.length ? "-=0.32" : 0,
           );
+        }
+
+        if (charLines.length) {
+          charLines.forEach((line, lineIndex) => {
+            const chars = Array.from(
+              line.querySelectorAll<HTMLElement>("[data-animate-char]"),
+            );
+
+            if (!chars.length) {
+              return;
+            }
+
+            gsap.set(chars, {
+              autoAlpha: 0,
+              y: -CHAR_RAIN_DISTANCE,
+              willChange: "transform, opacity",
+            });
+
+            timeline.to(
+              chars,
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: CHAR_RAIN_DURATION,
+                ease: "power2.out",
+                stagger: {
+                  each: CHAR_RAIN_STAGGER,
+                  from: "random",
+                },
+              },
+              heading.length || copy.length || items.length
+                ? `-=${Math.max(0.18, 0.1 * (lineIndex + 1))}`
+                : 0,
+            );
+          });
         }
       });
     },

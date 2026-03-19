@@ -7,6 +7,31 @@ const cardAccentClasses = [
   "border-t-[3px] border-t-[rgba(249,197,106,0.3)]",
 ] as const;
 
+const matrixRainText =
+  "Nicht mehr Tools lösen das Problem. Sondern das passende Setup.";
+
+function MatrixRainText() {
+  return (
+    <p
+      className="text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] sm:text-lg"
+      data-animate-char-line
+      aria-label={matrixRainText}
+    >
+      <span aria-hidden="true">
+        {Array.from(matrixRainText).map((char, index) => (
+          <span
+            key={`${char}-${index}`}
+            data-animate-char
+            className="inline-block whitespace-pre will-change-transform"
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </span>
+    </p>
+  );
+}
+
 export function ProblemCards() {
   return (
     <section
@@ -42,7 +67,7 @@ export function ProblemCards() {
       <div
         className="px-6 py-4 text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] sm:text-lg"
       >
-        Nicht mehr Tools lösen das Problem. Sondern das passende Setup.
+        <MatrixRainText />
       </div>
     </section>
   );
