@@ -7,19 +7,23 @@ export function Hero() {
       data-hero
     >
       {/* ── Ambient gradient orbs ── */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        aria-hidden="true"
+        data-hero-orb-stage
+      >
         <div
-          className="absolute -top-16 right-[6%] h-[34rem] w-[34rem] rounded-full opacity-[0.32] blur-[60px]"
+          className="absolute -top-18 right-[4%] h-[34rem] w-[34rem] rounded-full opacity-[0.34] blur-[64px] will-change-transform"
           style={{ background: "radial-gradient(circle, var(--accent), transparent 65%)" }}
           data-hero-orb
         />
         <div
-          className="absolute top-[55%] -left-[4%] h-[38rem] w-[38rem] rounded-full opacity-[0.25] blur-[70px]"
+          className="absolute top-[48%] -left-[8%] h-[39rem] w-[39rem] rounded-full opacity-[0.28] blur-[72px] will-change-transform"
           style={{ background: "radial-gradient(circle, var(--gold), transparent 65%)" }}
           data-hero-orb
         />
         <div
-          className="absolute bottom-[8%] left-[42%] h-[30rem] w-[30rem] rounded-full opacity-[0.22] blur-[55px]"
+          className="absolute bottom-[4%] left-[38%] h-[31rem] w-[31rem] rounded-full opacity-[0.24] blur-[58px] will-change-transform"
           style={{ background: "radial-gradient(circle, var(--lavender), transparent 65%)" }}
           data-hero-orb
         />
@@ -27,11 +31,11 @@ export function Hero() {
 
       {/* ── Content ── */}
       <div
-        className="relative z-10 mx-auto flex min-h-[48rem] flex-col items-center justify-center px-6 pt-20 pb-16 text-center sm:px-8 sm:pt-48 sm:pb-20 lg:px-10 lg:pt-40 lg:pb-24"
+        className="relative z-10 mx-auto flex min-h-[48rem] flex-col items-center justify-center px-6 pt-20 pb-16 text-center sm:px-10 sm:pt-48 sm:pb-20 lg:px-14 lg:pt-40 lg:pb-24 xl:px-18"
         data-hero-intro
       >
         <h1
-          className="max-w-6xl font-display text-[3.4rem] leading-[0.88] font-semibold tracking-[-0.06em] text-balance sm:text-[4.8rem] lg:text-[6rem]"
+          className="max-w-6xl px-[0.05em] font-display text-[3.4rem] leading-[0.88] font-semibold tracking-[-0.06em] text-balance sm:px-[0.075em] sm:text-[4.8rem] lg:px-[0.1em] lg:text-[6rem]"
           data-animate-heading
         >
           Aus einer{" "}

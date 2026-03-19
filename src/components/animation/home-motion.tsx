@@ -167,16 +167,36 @@ export function HomeMotion({ children }: HomeMotionProps) {
       );
 
       heroOrbs.forEach((orb, index) => {
-        gsap.set(orb, { willChange: "transform" });
+        const travel = [
+          { x: 34, y: -22, scale: 1.08 },
+          { x: -28, y: 20, scale: 0.94 },
+          { x: 18, y: 26, scale: 1.04 },
+          { x: -16, y: -18, scale: 1 },
+        ];
 
-        gsap.to(orb, {
-          x: `random(-30, 30)`,
-          y: `random(-20, 20)`,
-          duration: 7 + index * 1.5,
+        const offset = index * 4;
+        const timeline = gsap.timeline({
           repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: index * 0.5,
+          defaults: {
+            ease: "sine.inOut",
+          },
+          delay: index * 0.35,
+        });
+
+        gsap.set(orb, {
+          x: 0,
+          y: 0,
+          scale: 1,
+          willChange: "transform",
+        });
+
+        travel.forEach((step, stepIndex) => {
+          timeline.to(orb, {
+            x: step.x - offset,
+            y: step.y + (index % 2 === 0 ? offset : -offset),
+            scale: step.scale,
+            duration: 5.4 + index * 0.7 + stepIndex * 0.2,
+          });
         });
       });
 
