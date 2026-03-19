@@ -35,35 +35,35 @@ export function FinalCta() {
 
   return (
     <section
-      className="mx-auto w-full max-w-6xl px-6 py-16 sm:px-8 lg:px-10"
+      className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
-      <div className="section-card overflow-hidden rounded-[2.2rem] p-7 sm:p-9">
+      <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 shadow-[0_24px_54px_rgba(31,36,48,0.1)] sm:p-9">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
           <div className="space-y-5">
             <span className="eyebrow" data-animate-heading>
-              Final CTA
+              Jetzt starten
             </span>
             <h2
-              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-5xl"
+              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Start mit einem kompakten Brief. Den Rest baut das System.
+              Der nächste <span data-animate-word>Schritt</span> ist ein{" "}
+              <span className="title-accent">kompaktes Brand-Briefing</span>.
             </h2>
             <p
-              className="max-w-xl text-base leading-7 text-[color:var(--copy-muted)] sm:text-lg sm:leading-8"
+              className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              Ein Satz, ein klarer CTA und nur die fünf wichtigsten Felder. Danach
-              übernimmt der vollständige Wizard mit Review, Kontaktangaben und
-              finaler Übergabe.
+              Wenige Angaben reichen, damit Zynapse das passende Setup einordnen
+              und die nächsten Spezialist:innen, Schritte und Deliverables
+              ableiten kann.
             </p>
           </div>
           <form
             onSubmit={handleSubmit}
-            className="grid gap-4 md:grid-cols-2"
-            data-animate-item
+            className="section-surface-paper grid gap-4 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.14)] p-5 md:grid-cols-2 md:p-6"
           >
             <label className="field-shell">
               <span className="field-label">Branche</span>
@@ -107,7 +107,7 @@ export function FinalCta() {
                     goal: event.target.value,
                   }))
                 }
-                placeholder="Awareness oder Conversion"
+                placeholder="z. B. erster Pilot, laufender Rhythmus, neue Kampagnenrichtung"
               />
             </label>
             <label className="field-shell">
@@ -122,11 +122,11 @@ export function FinalCta() {
                     channel: event.target.value,
                   }))
                 }
-                placeholder="TikTok, Reels, Shorts"
+                placeholder="TikTok, Reels, Paid Social"
               />
             </label>
             <label className="field-shell md:col-span-2">
-              <span className="field-label">Budget Range</span>
+              <span className="field-label">Budgetrahmen</span>
               <input
                 required
                 className="field-input"
@@ -137,14 +137,14 @@ export function FinalCta() {
                     budgetRange: event.target.value,
                   }))
                 }
-                placeholder="z. B. 3k bis 8k pro Monat"
+                placeholder="z. B. Starter, Growth oder individueller Rahmen"
               />
             </label>
             <button
               type="submit"
               className={`${buttonStyles({ size: "lg" })} md:col-span-2`}
             >
-              Kampagne anfragen
+              Brand-Anfrage starten
             </button>
           </form>
         </div>

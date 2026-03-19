@@ -15,6 +15,7 @@ const eslintConfig = defineConfig([
     "temp-app/**",
     "playwright-report/**",
     "test-results/**",
+    "coverage/**",
   ]),
 ]);
 

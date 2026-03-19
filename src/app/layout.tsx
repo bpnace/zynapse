@@ -3,10 +3,11 @@ import "./globals.css";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteAnalytics } from "@/components/layout/site-analytics";
+import { RouteScrollReset } from "@/components/layout/route-scroll-reset";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "From one brief to a finished video campaign",
+  title: "Kuratiertes AI-Kampagnensystem für Brands | Zynapse",
   description: siteConfig.description,
   path: "/",
 });
@@ -30,12 +31,13 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="de">
+    <html lang="de" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className="antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        <RouteScrollReset />
         <div className="relative">
           <SiteHeader />
           <main>{children}</main>

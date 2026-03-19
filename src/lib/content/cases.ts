@@ -2,39 +2,39 @@ import type { CaseStudyEntry } from "@/types/site";
 
 export const caseStudies: CaseStudyEntry[] = [
   {
-    slug: "nutri-spark",
-    brand: "Nutri Spark",
-    sector: "Wellness / D2C",
+    slug: "nova-bloom",
+    brand: "Nova Bloom",
+    sector: "Beauty / D2C Demo",
     summary:
-      "Aus einer neuen Produktlinie entstand in fünf Tagen ein Conversion-first Hook-Stack für TikTok und Reels.",
+      "Launch-Setup mit testbaren Hooks auf TikTok und Reels für ein neues Beauty-Produkt.",
     challenge:
-      "Das Team hatte genug Rohmaterial, aber keine klare Testing-Struktur und keinen konsistenten Output-Rhythmus.",
+      "Das Team brauchte für einen Produktlaunch eine klare Teststruktur, ohne dass interne Freigaben zum Flaschenhals werden.",
     outcome:
-      "Zynapse übersetzte den Brief in drei Messaging-Linien und lieferte daraus 18 testbare Varianten.",
-    metrics: ["18 Varianten", "3 Kernangles", "72h bis Review-ready"],
+      "Das Beispiel zeigt, wie aus einem Briefing drei Messaging-Linien, mehrere Hook-Routen und eine saubere Review-Spur entstehen können.",
+    metrics: ["72h Go-live", "18 Varianten", "3 Kernangles"],
   },
   {
-    slug: "north-atelier",
-    brand: "North Atelier",
-    sector: "Fashion",
+    slug: "ember-studio",
+    brand: "Ember Studio",
+    sector: "Fashion / Demo",
     summary:
-      "Eine visuell starke Marke brauchte mehr Performance-Creatives, ohne den Premium-Look zu verlieren.",
+      "Premium-Look trifft Performance: Varianten für Paid Social ohne generische Fließbandware.",
     challenge:
-      "Agentur-Output war ästhetisch hochwertig, aber zu langsam und zu schwer in laufende Tests zu übersetzen.",
+      "Die Marke wollte mehr Variationen für Paid Social, ohne den Look in generische Kreativ-Fließbandware zu verwandeln.",
     outcome:
-      "Der Manager führte die Messaging-Strategie, das Studio skalierte daraus neue Hooks, Cuts und Formate.",
-    metrics: ["4:5 + 9:16", "10 Hook Lines", "2 Freigabezyklen"],
+      "Das Beispiel zeigt, wie ein Creative Lead die Kampagnenlogik führen und das Studio daraus mehrere Cuts, Formate und Review-Schleifen ableiten kann.",
+    metrics: ["4:5 + 9:16", "12 Varianten", "2 Review-Zyklen"],
   },
   {
-    slug: "volt-grid",
-    brand: "Volt Grid",
-    sector: "B2B SaaS",
+    slug: "signal-loop",
+    brand: "Signal Loop",
+    sector: "B2B SaaS / Demo",
     summary:
-      "Ein erklärungsintensives Produkt wurde in kurze, verständliche Awareness- und Demo-Creatives übersetzt.",
+      "Komplexes B2B-Produkt in klare Demo- und Awareness-Kreativvarianten für Paid Social übersetzt.",
     challenge:
-      "Das Team brauchte schnelle Erklärformate für Paid Social, ohne jedes Asset einzeln zu konzipieren.",
+      "Das Team brauchte kurze Erklärformate für Paid Social, ohne jedes Asset jedes Mal neu aufzusetzen.",
     outcome:
-      "Aus einem technischen Brief entstand ein klares Kampagnen-Pack mit Segment- und CTA-Logik.",
-    metrics: ["6 Formate", "5 CTA Varianten", "1 gemeinsame Source of Truth"],
+      "Das Beispiel zeigt, wie aus einem komplexen Briefing ein Kampagnen-Pack mit Segment-, CTA- und Formatlogik entstehen kann.",
+    metrics: ["6 Formate", "5 CTA-Varianten", "1 Review-Runde"],
   },
 ];

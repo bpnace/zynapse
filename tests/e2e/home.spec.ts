@@ -5,17 +5,17 @@ test("landing page shows both primary audience paths", async ({ page }) => {
 
   await expect(
     page.getByRole("heading", {
-      name: /from one brief to a finished video campaign/i,
+      name: /kuratiertes kampagnen-setup/i,
     }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: /kampagne anfragen/i,
+      name: /brand-anfrage starten/i,
     }).first(),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: /als social media manager beitreten/i,
+      name: /als kreative bewerben/i,
     }),
   ).toBeVisible();
 });

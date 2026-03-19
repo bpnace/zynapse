@@ -13,7 +13,7 @@ export type BrandInquiry = {
   website: string;
 };
 
-export type ManagerApplication = {
+export type CreativeApplication = {
   name: string;
   email: string;
   portfolioUrl: string;
@@ -22,6 +22,18 @@ export type ManagerApplication = {
   availability: string;
   compensationNotes: string;
   location: string;
+  startedAt: number;
+  website: string;
+};
+
+export type ContactInquiry = {
+  name: string;
+  email: string;
+  company: string;
+  teamContext: string;
+  topic: string;
+  message: string;
+  datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
 };

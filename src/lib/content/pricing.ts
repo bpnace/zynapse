@@ -2,45 +2,69 @@ import type { PricingPlan } from "@/types/site";
 
 export const pricingPlans: PricingPlan[] = [
   {
-    name: "Starter Kampagne",
-    price: "2.400",
-    cadence: "pro Launch",
+    id: "starter",
+    name: "Starter",
+    price: "ab 2.499€",
+    cadence: "einmalig",
     description:
-      "Für erste Testläufe mit einer klaren Value Proposition und einem kompakten Channel-Fokus.",
-    audience: "Für Teams, die zügig einen ersten Creative-Test aufsetzen wollen.",
+      "Für Brands, die ein erstes AI-Kampagnen-Setup mit klarem Scope und leanem Start aufsetzen wollen.",
+    audience:
+      "Für Brands mit einem klaren Offer und dem Bedarf, schnell ins erste Testfenster zu kommen.",
+    highlights: ["Pilot-Setup", "kuratiertes Setup", "schneller Start"],
+    fit: "Ideal, wenn ihr ein neues Produkt, ein neues Messaging oder eine erste Kampagnenidee sauber testen wollt, ohne direkt einen laufenden Produktionsmodus aufzubauen.",
+    collaboration:
+      "Kompaktes Briefing, passende Setup-Empfehlung und ein klarer Review-Pfad bis zum ersten kampagnenfähigen Output.",
+    contactMessage:
+      "Hallo Zynapse,\n\nwir interessieren uns für euer Starter Paket. Wir möchten ein erstes AI-Kampagnen-Setup für ein klar umrissenes Offer aufsetzen und verstehen, welches Setup, Timing und welche Freigabelogik ihr dafür empfehlt.\n\nViele Grüße",
     deliverables: [
-      "1 Kampagnen-Pack mit 3 Angles",
+      "Kuratiertes Setup für 1 Pilot-Kampagne",
       "12 Video-Varianten in 2 Formaten",
-      "1 Review-Runde mit Brand-Freigabe",
-      "Export-ready Asset Delivery",
+      "1 zentrale Review-Runde",
+      "Exportfertige Assets für Paid Social",
     ],
   },
   {
+    id: "growth",
     name: "Growth",
-    price: "5.900",
+    price: "ab 5.999€",
     cadence: "pro Monat",
     description:
-      "Der laufende Produktionsmodus für Teams mit regelmäßigen Kampagnen und wachsendem Testing-Need.",
-    audience: "Für Brands mit wiederkehrendem Paid-Social oder Creator-Output.",
+      "Der laufende Modus für Brands, die AI-Kampagnen systematisch weiterführen und nicht jedes Mal neu aufsetzen wollen.",
+    audience:
+      "Für Brands mit laufendem Kampagnenbedarf und dem Wunsch nach einem verlässlichen Kreativ-Rhythmus.",
     featured: true,
+    highlights: ["laufender Rhythmus", "priorisierte Iteration", "sichtbare Learnings"],
+    fit: "Ideal, wenn aus einzelnen Tests ein monatlicher Kampagnenfluss werden soll und ihr dafür ein verlässliches Setup statt neuer Ad-hoc-Besetzungen braucht.",
+    collaboration:
+      "Wiederkehrende Planung, kuratierte Setup-Anpassung je Sprint und klare Übergaben zwischen Review, Iteration und Export.",
+    contactMessage:
+      "Hallo Zynapse,\n\nwir interessieren uns für das Growth Paket. Wir suchen einen laufenden Modus für wiederkehrende AI-Kampagnen und möchten verstehen, wie ihr Planung, Iteration und das passende Setup über mehrere Sprints organisiert.\n\nViele Grüße",
     deliverables: [
-      "Monatlicher Kampagnen-Stack für mehrere Messaging-Routen",
+      "Laufendes Kampagnen-Setup für mehrere Messaging-Routen",
       "24 bis 36 Video-Varianten",
-      "Manager-led Testing Roadmap",
-      "Priorisierte Iterations-Slots",
+      "Priorisierte Review- und Iterations-Slots",
+      "Monatliche Learnings für den nächsten Sprint",
     ],
   },
   {
-    name: "Pro",
-    price: "Custom",
-    cadence: "Multi-Brand / Team",
+    id: "pro",
+    name: "Enterprise",
+    price: "Individuell",
+    cadence: "skalierendes Setup",
     description:
-      "Für Inhouse-Teams oder Agenturgruppen mit mehreren Marken, Stakeholdern und parallelen Ausspielungen.",
-    audience: "Für größere Teams mit Freigabeprozessen und mehreren Brand Streams.",
+      "Für größere Brand-Setups, die mehrere Kampagnenstränge dauerhaft in einem System koordinieren müssen.",
+    audience:
+      "Für größere Brand-Setups mit mehreren Workstreams, Märkten oder Freigabepfaden.",
+    highlights: ["mehrere Workstreams", "skalierbare Freigaben", "zentral koordiniert"],
+    fit: "Ideal, wenn mehrere Brands, Märkte oder interne Stakeholder parallel laufen und Zynapse das Setup dauerhaft koordinieren soll.",
+    collaboration:
+      "Gemeinsame Planungsrituale, skalierbare Freigaben und ein zentrales System für Priorisierung, Review und Export.",
+    contactMessage:
+      "Hallo Zynapse,\n\nwir interessieren uns für euer Enterprise Paket. Wir planen ein komplexeres Setup mit mehreren Brands, Märkten oder parallelen Workstreams und möchten besprechen, wie ihr Struktur, Freigaben und die laufende Orchestrierung dafür aufsetzt.\n\nViele Grüße",
     deliverables: [
-      "Mehrere Brand Workstreams",
-      "Gemeinsame Planning-Rituale",
-      "Team-basierte Review-Lane",
+      "Mehrere Kampagnen-Workstreams",
+      "Skalierbare Review- und Freigabelogik",
+      "Zentrale Priorisierung über mehrere Setups",
       "Flexible Export- und Rechte-Logik",
     ],
   },

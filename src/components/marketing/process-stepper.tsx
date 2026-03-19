@@ -1,37 +1,52 @@
 import { SectionHeading } from "@/components/ui/section-heading";
 import { processSteps } from "@/lib/content/site";
 
+const stepAccentClasses = [
+  "border-t-[3px] border-t-[rgba(224,94,67,0.28)]",
+  "border-t-[3px] border-t-[rgba(56,67,84,0.22)]",
+  "border-t-[3px] border-t-[rgba(249,197,106,0.3)]",
+  "border-t-[3px] border-t-[rgba(156,244,215,0.28)]",
+  "border-t-[3px] border-t-[rgba(185,178,255,0.28)]",
+] as const;
+
 export function ProcessStepper() {
   return (
     <section
-      className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+      className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="So funktioniert es"
-        title="Ein horizontaler Produktionsprozess mit klarer Delegationslogik."
-        copy="Brands liefern Kontext und Freigaben. Manager liefern Kampagnenlogik, Hooks und Struktur. Das System liefert Skalierung, Varianten und Formate."
+        eyebrow="So arbeitet Zynapse"
+        title={
+          <>
+            Ein Ablauf, der <span data-animate-word>Anfrage,</span> Matching und{" "}
+            <span className="title-accent">Kampagnenproduktion verbindet</span>.
+          </>
+        }
+        copy="Die Brand liefert Ziel, Kontext und Guardrails. Zynapse kuratiert das passende Spezialist:innen-Setup und führt daraus Produktion, Review und Handover in einem klaren Kampagnenfluss."
       />
       <div className="grid gap-4 lg:grid-cols-5">
         {processSteps.map((step, index) => (
           <article
             key={step.title}
-            className="section-card rounded-[1.6rem] p-5"
-            data-animate-item
+            className={`section-card section-surface-contrast flex flex-col rounded-[var(--radius-card)] p-5 ${stepAccentClasses[index % stepAccentClasses.length]}`}
           >
-            <div className="flex items-center justify-between">
-              <span className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--accent)]">
+            {/* Row 1: Step number + owner badge — fixed height */}
+            <div className="flex h-10 items-center justify-between gap-2">
+              <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
                 0{index + 1}
               </span>
-              <span className="rounded-full border border-[color:var(--line)] px-3 py-1 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-muted)]">
+              <span className="max-w-[5.5rem] rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 text-end font-mono text-[10px] leading-tight tracking-[0.14em] uppercase text-[var(--copy-soft)]">
                 {step.owner}
               </span>
             </div>
-            <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">
+            {/* Row 2: Title — fixed height so descriptions align */}
+            <h3 className="mt-4 flex h-[3.4rem] items-start font-display text-[1.25rem] leading-[1.15] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
               {step.title}
             </h3>
-            <p className="mt-3 text-sm leading-7 text-[color:var(--copy-muted)]">
+            {/* Row 3: Description */}
+            <p className="mt-2 text-[0.975rem] leading-[1.65] text-[color:var(--copy-body)]">
               {step.description}
             </p>
           </article>

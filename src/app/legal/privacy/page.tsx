@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       </h1>
       <div className="section-card rounded-[2rem] p-8 text-[color:var(--copy-muted)]">
         <p>
-          Zynapse v1 erhebt nur die Daten, die für Brand-Intake und Manager-Qualifizierung
+          Zynapse v1 erhebt nur die Daten, die für Brand-Intake und Kreative-Qualifizierung
           notwendig sind. Vor dem Launch müssen Datenempfänger, Hosting-Orte,
           Speicherdauer und Rechtsgrundlagen final ergänzt und juristisch geprüft
           werden.

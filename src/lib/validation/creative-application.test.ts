@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { managerApplicationSchema } from "@/lib/validation/manager-application";
+import { creativeApplicationSchema } from "@/lib/validation/creative-application";
 
-describe("managerApplicationSchema", () => {
-  it("accepts a valid manager application", () => {
-    const result = managerApplicationSchema.safeParse({
+describe("creativeApplicationSchema", () => {
+  it("accepts a valid creative application", () => {
+    const result = creativeApplicationSchema.safeParse({
       name: "Alex Growth",
       email: "alex@example.com",
       portfolioUrl: "https://example.com/portfolio",
@@ -21,7 +21,7 @@ describe("managerApplicationSchema", () => {
   });
 
   it("requires at least one focus channel", () => {
-    const result = managerApplicationSchema.safeParse({
+    const result = creativeApplicationSchema.safeParse({
       name: "Alex Growth",
       email: "alex@example.com",
       portfolioUrl: "https://example.com/portfolio",

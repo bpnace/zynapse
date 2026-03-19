@@ -5,13 +5,13 @@ import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { buttonStyles } from "@/components/ui/button";
 import {
-  MANAGER_APPLICATION_STORAGE_KEY,
-  createManagerApplicationDefaults,
+  CREATIVE_APPLICATION_STORAGE_KEY,
+  createCreativeApplicationDefaults,
 } from "@/lib/forms/storage";
 import {
-  managerApplicationSchema,
-  type ManagerApplicationInput,
-} from "@/lib/validation/manager-application";
+  creativeApplicationSchema,
+  type CreativeApplicationInput,
+} from "@/lib/validation/creative-application";
 import {
   CheckboxPill,
   Field,
@@ -19,9 +19,16 @@ import {
   TextInput,
 } from "@/components/forms/form-primitives";
 
-const focusChannelOptions = ["TikTok", "Instagram Reels", "YouTube Shorts", "Meta Ads", "UGC Concepts"];
+const focusChannelOptions = [
+  "Prompt Engineering",
+  "Creative Direction",
+  "Prompt Design",
+  "AI Production",
+  "AI Engineering",
+  "AI Strategy",
+];
 
-export function ManagerApplicationForm() {
+export function CreativeApplicationForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -34,22 +41,22 @@ export function ManagerApplicationForm() {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<ManagerApplicationInput>({
-    resolver: zodResolver(managerApplicationSchema),
-    defaultValues: createManagerApplicationDefaults(),
+  } = useForm<CreativeApplicationInput>({
+    resolver: zodResolver(creativeApplicationSchema),
+    defaultValues: createCreativeApplicationDefaults(),
   });
 
   const selectedChannels = watch("focusChannels");
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(MANAGER_APPLICATION_STORAGE_KEY);
+    const saved = window.localStorage.getItem(CREATIVE_APPLICATION_STORAGE_KEY);
 
     if (saved) {
       try {
-        const parsed = JSON.parse(saved) as Partial<ManagerApplicationInput>;
-        reset(createManagerApplicationDefaults(parsed));
+        const parsed = JSON.parse(saved) as Partial<CreativeApplicationInput>;
+        reset(createCreativeApplicationDefaults(parsed));
       } catch {
-        window.localStorage.removeItem(MANAGER_APPLICATION_STORAGE_KEY);
+        window.localStorage.removeItem(CREATIVE_APPLICATION_STORAGE_KEY);
       }
     }
   }, [reset]);
@@ -57,9 +64,9 @@ export function ManagerApplicationForm() {
   useEffect(() => {
     const subscription = watch((value) => {
       window.localStorage.setItem(
-        MANAGER_APPLICATION_STORAGE_KEY,
+        CREATIVE_APPLICATION_STORAGE_KEY,
         JSON.stringify(
-          createManagerApplicationDefaults(value as Partial<ManagerApplicationInput>),
+          createCreativeApplicationDefaults(value as Partial<CreativeApplicationInput>),
         ),
       );
     });
@@ -82,13 +89,13 @@ export function ManagerApplicationForm() {
     });
   }
 
-  async function onSubmit(values: ManagerApplicationInput) {
+  async function onSubmit(values: CreativeApplicationInput) {
     setSubmitError("");
     setIsPending(true);
 
     startTransition(async () => {
       try {
-        const response = await fetch("/api/intake/manager", {
+        const response = await fetch("/api/intake/creative", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -98,10 +105,10 @@ export function ManagerApplicationForm() {
 
         if (!response.ok) {
           const payload = (await response.json()) as { error?: string };
-          throw new Error(payload.error ?? "Submission failed.");
+          throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
         }
 
-        window.localStorage.removeItem(MANAGER_APPLICATION_STORAGE_KEY);
+        window.localStorage.removeItem(CREATIVE_APPLICATION_STORAGE_KEY);
         setIsSuccess(true);
       } catch (error) {
         setSubmitError(
@@ -118,13 +125,14 @@ export function ManagerApplicationForm() {
   if (isSuccess) {
     return (
       <div className="section-card rounded-[2rem] p-8">
-        <span className="eyebrow">Manager Track</span>
+        <span className="eyebrow">Track für Kreative</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Bewerbung eingereicht.
+          Deine Bewerbung ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
-          Der Qualifizierungsflow ist abgeschlossen. Sobald ein Webhook konfiguriert
-          ist, läuft die Übergabe automatisch in den ausgewählten Ops-Kanal.
+          Wir prüfen jetzt deine Angaben, Cases und Fokuskanäle. Bis die Übergabe
+          live geschaltet ist, läuft die Bewerbung intern noch als strukturierter
+          Testeintrag.
         </p>
       </div>
     );
@@ -134,13 +142,13 @@ export function ManagerApplicationForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="section-card rounded-[2rem] p-6 sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.32fr)_minmax(0,0.68fr)]">
         <div className="space-y-5">
-          <span className="eyebrow">Manager Application</span>
+          <span className="eyebrow">Bewerbung für Kreative</span>
           <h2 className="font-display text-4xl font-semibold tracking-[-0.05em]">
-            Qualifizierung statt generischer Lead-Form.
+            Wir prüfen Passung. Nicht nur Kontaktdaten.
           </h2>
           <p className="text-[color:var(--copy-muted)]">
-            Die Form sammelt genau die Informationen, die für einen passgenauen
-            Einsatz im Zynapse-Modell relevant sind.
+            Uns interessieren die Informationen, die für starke Kampagnenarbeit
+            wirklich zählen: Cases, Kanäle, Verfügbarkeit und strategische Tiefe.
           </p>
         </div>
         <div className="space-y-8">
@@ -150,7 +158,7 @@ export function ManagerApplicationForm() {
             <Field label="Name" error={errors.name?.message}>
               <TextInput {...register("name")} placeholder="Dein Name" />
             </Field>
-            <Field label="Email" error={errors.email?.message}>
+            <Field label="E-Mail" error={errors.email?.message}>
               <TextInput {...register("email")} placeholder="name@example.com" />
             </Field>
           </div>
@@ -163,7 +171,7 @@ export function ManagerApplicationForm() {
             </Field>
           </div>
           <Field
-            label="Fokuskanäle"
+            label="Fokusbereiche"
             error={errors.focusChannels?.message}
             hint="Mehrfachauswahl möglich"
           >
@@ -183,17 +191,13 @@ export function ManagerApplicationForm() {
             <Field label="Verfügbarkeit" error={errors.availability?.message}>
               <TextInput
                 {...register("availability")}
-                placeholder="z. B. 2 neue Brands / Monat"
+                placeholder="z. B. 2 neue Kunden oder 1 Retainer pro Monat"
               />
             </Field>
-            <Field
-              label="Preis / Vergütung"
-              error={errors.compensationNotes?.message}
-              hint="Optional"
-            >
+            <Field label="Preis / Vergütung" error={errors.compensationNotes?.message}>
               <TextInput
                 {...register("compensationNotes")}
-                placeholder="Retainer, Revenue Share oder Projektbasis"
+                placeholder="Optional: z. B. Retainer, Projektbasis oder Revenue Share"
               />
             </Field>
           </div>
@@ -203,7 +207,7 @@ export function ManagerApplicationForm() {
           >
             <TextareaInput
               {...register("caseSummary")}
-              placeholder="Welche Art von Kampagnen, Brands oder Growth-Situationen hast du bereits geführt?"
+              placeholder="Welche Kreativ-Projekte, AI-Workflows oder Kampagnen hast du bereits geführt und was war dein konkreter Beitrag?"
             />
           </Field>
           {submitError ? (

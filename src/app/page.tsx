@@ -1,7 +1,6 @@
 import { CampaignPackPreview } from "@/components/marketing/campaign-pack-preview";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { Hero } from "@/components/marketing/hero";
-import { PricingTeaser } from "@/components/marketing/pricing-teaser";
 import { ProblemCards } from "@/components/marketing/problem-cards";
 import { ProcessStepper } from "@/components/marketing/process-stepper";
 import { SplitBenefits } from "@/components/marketing/split-benefits";
@@ -19,7 +18,6 @@ export default function HomePage() {
       <VideoOutputGrid />
       <SplitBenefits />
       <TrustSection />
-      <PricingTeaser />
       <FinalCta />
     </HomeMotion>
   );
