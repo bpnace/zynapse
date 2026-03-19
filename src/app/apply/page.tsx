@@ -6,6 +6,7 @@ export const metadata = buildMetadata({
   description:
     "Qualifizierungsflow für Kreative mit AI-Fokus, Cases, Rollenprofil und echter Kampagnenerfahrung.",
   path: "/apply",
+  indexable: false,
 });
 
 export default function ApplyPage() {

@@ -6,6 +6,7 @@ export const metadata = buildMetadata({
   description:
     "Geführte Brand-Anfrage mit klaren Schritten von Ausgangslage bis Übergabe.",
   path: "/request",
+  indexable: false,
 });
 
 export default function RequestPage() {

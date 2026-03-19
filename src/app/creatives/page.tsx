@@ -1,16 +1,19 @@
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PageMotion } from "@/components/animation/page-motion";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLdScript } from "@/components/seo/json-ld";
 import { creativeBenefits } from "@/lib/content/site";
+import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 import Image from "next/image";
 
-export const metadata = buildMetadata({
+const pageSeo = {
   title: "Für Kreative – AI-Netzwerk für Kampagnen | Zynapse",
   description:
     "Zynapse für Kreative: Prompt Engineering, Creative Direction, Prompt Design, AI Production, AI Engineering und AI Strategy in einem skalierbaren Kampagnenfluss.",
   path: "/creatives",
-});
+} as const;
+
+export const metadata = buildMetadata(pageSeo);
 
 const painPoints = [
   {
@@ -104,8 +107,16 @@ const results = [
 ];
 
 export default function CreativesPage() {
+  const creativesJsonLd = buildPageJsonLd({
+    ...pageSeo,
+    pageType: "CollectionPage",
+    breadcrumbs: buildBreadcrumbs("Für Kreative", pageSeo.path),
+  });
+
   return (
-    <PageMotion>
+    <>
+      <JsonLdScript data={creativesJsonLd} />
+      <PageMotion>
       <section
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
@@ -414,6 +425,7 @@ export default function CreativesPage() {
           </div>
         </div>
       </section>
-    </PageMotion>
+      </PageMotion>
+    </>
   );
 }

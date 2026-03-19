@@ -1,24 +1,10 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl } from "@/lib/seo";
-
-const routes = [
-  "",
-  "/brands",
-  "/creatives",
-  "/about",
-  "/pricing",
-  "/contact",
-  "/request",
-  "/apply",
-  "/legal/imprint",
-  "/legal/privacy",
-];
+import { absoluteUrl, indexableSitemapEntries } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  return routes.map((route) => ({
-    url: absoluteUrl(route || "/"),
-    lastModified,
+  return indexableSitemapEntries.map((route) => ({
+    url: absoluteUrl(route.path),
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 }

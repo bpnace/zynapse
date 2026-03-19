@@ -1,21 +1,32 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import { PageMotion } from "@/components/animation/page-motion";
+import { JsonLdScript } from "@/components/seo/json-ld";
 import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
 import { ButtonLink } from "@/components/ui/button";
 import { contactChannels } from "@/lib/content/site";
-import { buildMetadata } from "@/lib/seo";
+import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 
-export const metadata = buildMetadata({
+const pageSeo = {
   title: "Kontakt | Zynapse",
   description:
     "Schreib uns direkt bei Fragen zu Brands, Preisen oder operativen Themen. Du landest ohne Umwege beim richtigen Kontakt.",
   path: "/contact",
-});
+} as const;
+
+export const metadata = buildMetadata(pageSeo);
 
 export default function ContactPage() {
+  const contactJsonLd = buildPageJsonLd({
+    ...pageSeo,
+    pageType: "ContactPage",
+    breadcrumbs: buildBreadcrumbs("Kontakt", pageSeo.path),
+  });
+
   return (
-    <PageMotion>
+    <>
+      <JsonLdScript data={contactJsonLd} />
+      <PageMotion>
       <section
         className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
         data-reveal-section
@@ -81,8 +92,8 @@ export default function ContactPage() {
           </article>
         ))}
       </section>
-    </PageMotion>
-
+      </PageMotion>
+    </>
   );
 }
 

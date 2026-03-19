@@ -5,6 +5,8 @@ export function getEnv() {
   return {
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.eu",
     analyticsId: process.env.NEXT_PUBLIC_ANALYTICS_ID ?? "",
+    googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
+    bingSiteVerification: process.env.BING_SITE_VERIFICATION ?? "",
     intakeWebhookUrl:
       process.env.INTAKE_WEBHOOK_URL ?? DEFAULT_INTAKE_WEBHOOK_URL,
     notifyEmail: process.env.NOTIFY_EMAIL ?? "ops@zynapse.eu",

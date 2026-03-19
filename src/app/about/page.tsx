@@ -1,14 +1,17 @@
 import { PageMotion } from "@/components/animation/page-motion";
+import { JsonLdScript } from "@/components/seo/json-ld";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { buildMetadata } from "@/lib/seo";
+import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 
-export const metadata = buildMetadata({
+const pageSeo = {
   title: "Studio – Kuratiertes AI-Campaign-System für Brands und Kreative | Zynapse",
   description:
     "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in markenfähige Kampagnen-Setups, Video-Varianten und klare Produktionsabläufe.",
   path: "/about",
-});
+} as const;
+
+export const metadata = buildMetadata(pageSeo);
 
 const heroSignals = [
   {
@@ -281,8 +284,16 @@ function RoleCardIcon({ icon }: { icon: SpecialistIcon }) {
 }
 
 export default function AboutPage() {
+  const aboutJsonLd = buildPageJsonLd({
+    ...pageSeo,
+    pageType: "AboutPage",
+    breadcrumbs: buildBreadcrumbs("Studio", pageSeo.path),
+  });
+
   return (
-    <PageMotion>
+    <>
+      <JsonLdScript data={aboutJsonLd} />
+      <PageMotion>
       <section
         className="mx-auto w-full max-w-7xl px-6 pt-15 pb-10 sm:px-8 lg:px-10 lg:pt-18 lg:pb-12"
         data-reveal-section
@@ -507,6 +518,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-    </PageMotion>
+      </PageMotion>
+    </>
   );
 }

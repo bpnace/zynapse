@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
+    host: new URL(siteConfig.url).host,
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }
