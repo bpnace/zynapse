@@ -22,6 +22,10 @@ const HERO_WORD_REVEAL_START_DELAY = 0.16;
 const CHAR_RAIN_DISTANCE = 100;
 const CHAR_RAIN_STAGGER = 0.05;
 const CHAR_RAIN_DURATION = 0.5;
+const ORB_MIN_SPEED = 86;
+const ORB_MAX_SPEED = 148;
+const ORB_BOUNCE_VARIATION = 34;
+const ORB_DRIFT_STRENGTH = 22;
 
 export function HomeMotion({ children }: HomeMotionProps) {
   const scope = useRef<HTMLDivElement>(null);
@@ -39,6 +43,8 @@ export function HomeMotion({ children }: HomeMotionProps) {
       ) {
         return;
       }
+
+      const cleanups: Array<() => void> = [];
 
       const heroIntro = container.querySelector<HTMLElement>("[data-hero-intro]");
       const sections = Array.from(
@@ -162,43 +168,157 @@ export function HomeMotion({ children }: HomeMotionProps) {
       }
 
       // ── Ambient orb drift ──
+      const heroOrbStage = container.querySelector<HTMLElement>("[data-hero-orb-stage]");
       const heroOrbs = Array.from(
         container.querySelectorAll<HTMLElement>("[data-hero-orb]"),
       );
 
-      heroOrbs.forEach((orb, index) => {
-        const travel = [
-          { x: 34, y: -22, scale: 1.08 },
-          { x: -28, y: 20, scale: 0.94 },
-          { x: 18, y: 26, scale: 1.04 },
-          { x: -16, y: -18, scale: 1 },
-        ];
+      if (heroOrbStage && heroOrbs.length) {
+        type OrbState = {
+          x: number;
+          y: number;
+          vx: number;
+          vy: number;
+          driftSeed: number;
+          orb: HTMLElement;
+        };
 
-        const offset = index * 4;
-        const timeline = gsap.timeline({
-          repeat: -1,
-          defaults: {
-            ease: "sine.inOut",
-          },
-          delay: index * 0.35,
-        });
+        const orbScaleTweens: gsap.core.Tween[] = [];
+        const orbStates: OrbState[] = heroOrbs.map((orb, index) => {
+          const angle = gsap.utils.random(0, Math.PI * 2);
+          const speed = gsap.utils.random(ORB_MIN_SPEED, ORB_MAX_SPEED);
 
-        gsap.set(orb, {
-          x: 0,
-          y: 0,
-          scale: 1,
-          willChange: "transform",
-        });
-
-        travel.forEach((step, stepIndex) => {
-          timeline.to(orb, {
-            x: step.x - offset,
-            y: step.y + (index % 2 === 0 ? offset : -offset),
-            scale: step.scale,
-            duration: 5.4 + index * 0.7 + stepIndex * 0.2,
+          gsap.set(orb, {
+            x: 0,
+            y: 0,
+            scale: 1,
+            willChange: "transform",
           });
+
+          orbScaleTweens.push(
+            gsap.to(orb, {
+              scale: gsap.utils.random(0.95, 1.08),
+              duration: gsap.utils.random(2.3, 3.4),
+              ease: "sine.inOut",
+              repeat: -1,
+              yoyo: true,
+              delay: index * 0.18,
+            }),
+          );
+
+          return {
+            x: 0,
+            y: 0,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            driftSeed: gsap.utils.random(0, Math.PI * 2),
+            orb,
+          };
         });
-      });
+
+        const normalizeVelocity = (
+          state: OrbState,
+          targetSpeed = Math.hypot(state.vx, state.vy) || ORB_MIN_SPEED,
+        ) => {
+          const currentSpeed = Math.hypot(state.vx, state.vy) || 1;
+          const multiplier = targetSpeed / currentSpeed;
+
+          state.vx *= multiplier;
+          state.vy *= multiplier;
+
+          if (Math.abs(state.vx) < 18) {
+            state.vx = 18 * (state.vx >= 0 ? 1 : -1);
+          }
+
+          if (Math.abs(state.vy) < 18) {
+            state.vy = 18 * (state.vy >= 0 ? 1 : -1);
+          }
+        };
+
+        const updateHeroOrbs = (time: number, deltaTime: number) => {
+          const delta = Math.min(deltaTime / 1000, 0.05);
+
+          orbStates.forEach((state, index) => {
+            state.vx +=
+              Math.cos(time * 0.9 + state.driftSeed + index) *
+              ORB_DRIFT_STRENGTH *
+              delta;
+            state.vy +=
+              Math.sin(time * 1.15 + state.driftSeed - index) *
+              ORB_DRIFT_STRENGTH *
+              delta;
+
+            normalizeVelocity(
+              state,
+              gsap.utils.clamp(
+                ORB_MIN_SPEED,
+                ORB_MAX_SPEED,
+                Math.hypot(state.vx, state.vy),
+              ),
+            );
+
+            let nextX = state.x + state.vx * delta;
+            let nextY = state.y + state.vy * delta;
+
+            const availableLeft = Math.max(0, state.orb.offsetLeft);
+            const availableRight = Math.max(
+              0,
+              heroOrbStage.clientWidth -
+                state.orb.offsetWidth -
+                state.orb.offsetLeft,
+            );
+            const availableTop = Math.max(0, state.orb.offsetTop);
+            const availableBottom = Math.max(
+              0,
+              heroOrbStage.clientHeight -
+                state.orb.offsetHeight -
+                state.orb.offsetTop,
+            );
+            const horizontalRange = 180 + index * 56;
+            const verticalRange = 140 + index * 42;
+            const minX = -Math.min(availableLeft, horizontalRange);
+            const maxX = Math.min(availableRight, horizontalRange * 1.18);
+            const minY = -Math.min(availableTop, verticalRange);
+            const maxY = Math.min(availableBottom, verticalRange * 1.12);
+
+            if (nextX <= minX || nextX >= maxX) {
+              nextX = gsap.utils.clamp(minX, maxX, nextX);
+              state.vx *= -1;
+              state.vy += gsap.utils.random(
+                -ORB_BOUNCE_VARIATION,
+                ORB_BOUNCE_VARIATION,
+              );
+              normalizeVelocity(
+                state,
+                gsap.utils.random(ORB_MIN_SPEED, ORB_MAX_SPEED),
+              );
+            }
+
+            if (nextY <= minY || nextY >= maxY) {
+              nextY = gsap.utils.clamp(minY, maxY, nextY);
+              state.vy *= -1;
+              state.vx += gsap.utils.random(
+                -ORB_BOUNCE_VARIATION,
+                ORB_BOUNCE_VARIATION,
+              );
+              normalizeVelocity(
+                state,
+                gsap.utils.random(ORB_MIN_SPEED, ORB_MAX_SPEED),
+              );
+            }
+
+            state.x = nextX;
+            state.y = nextY;
+            gsap.set(state.orb, { x: state.x, y: state.y });
+          });
+        };
+
+        gsap.ticker.add(updateHeroOrbs);
+        cleanups.push(() => {
+          gsap.ticker.remove(updateHeroOrbs);
+          orbScaleTweens.forEach((tween) => tween.kill());
+        });
+      }
 
       const parallaxWindows = Array.from(
         container.querySelectorAll<HTMLElement>("[data-parallax-window]"),
@@ -317,6 +437,10 @@ export function HomeMotion({ children }: HomeMotionProps) {
           });
         }
       });
+
+      return () => {
+        cleanups.forEach((cleanup) => cleanup());
+      };
     },
     { scope },
   );
