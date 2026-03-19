@@ -15,10 +15,15 @@ export function FinalCta() {
     goal: initialFields.goal,
     channel: initialFields.channel,
     budgetRange: initialFields.budgetRange,
+    website: initialFields.website,
   });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (values.website.trim().length > 0) {
+      return;
+    }
 
     window.localStorage.setItem(
       BRAND_INQUIRY_STORAGE_KEY,
@@ -138,6 +143,20 @@ export function FinalCta() {
                   }))
                 }
                 placeholder="z. B. Starter, Growth oder individueller Rahmen"
+              />
+            </label>
+            <label className="hidden" aria-hidden="true">
+              <span>Website</span>
+              <input
+                tabIndex={-1}
+                autoComplete="off"
+                value={values.website}
+                onChange={(event) =>
+                  setValues((current) => ({
+                    ...current,
+                    website: event.target.value,
+                  }))
+                }
               />
             </label>
             <button

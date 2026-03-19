@@ -80,8 +80,8 @@ export const brandBenefits = [
 
 export const creativeBenefits = [
   "Teil eines kuratierten Netzwerks statt Kaltakquise",
-  "Rollen, in denen Strategie, Prompting und Produktion zusammenpassen",
-  "Klare Briefings und planbare Übergaben pro Anfrage",
+  "Anfragen, in denen deine Spezialisierung Teil eines klaren Setups wird",
+  "Klare Briefings, Reviews und planbare Übergaben pro Anfrage",
   "Brand-Anfragen mit echtem Kampagnenbedarf statt losem Creator-Sourcing",
 ];
 

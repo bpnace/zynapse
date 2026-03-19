@@ -44,5 +44,6 @@ export type VideoVariantPreview = {
   hookTitle: string;
   format: string;
   length: string;
-  objective: "Awareness" | "Conversion" | "Retention";
+  objective: string;
+  deliveryLabel: string;
 };

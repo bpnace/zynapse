@@ -106,7 +106,7 @@ export function SplitBenefits() {
             <span data-animate-word>Koordinationschaos</span>
           </>
         }
-        copy="Ihr kauft hier keinen Tool-Zugang und kein loses Creator-Sourcing, sondern einen koordinierten Weg vom Briefing zum kampagnenfähigen Output."
+        copy="Ihr kauft hier keinen Tool-Zugang und kein loses Creator-Sourcing, sondern ein kuratiertes Kampagnen-Setup vom Briefing bis zum markenfähigen Output."
         benefits={brandBenefits}
         href="/brands"
         cta="Mehr für Brands"
@@ -122,7 +122,7 @@ export function SplitBenefits() {
             eines offenen <span data-animate-word>Marktplatzes</span>
           </>
         }
-        copy="Wenn Strategie, Prompting, Production oder AI Engineering gefragt sind, verbindet Zynapse dich mit Brand-Anfragen, in denen deine Rolle wirklich gebraucht wird."
+        copy="Zynapse verbindet dich mit Brand-Anfragen, in denen deine Spezialisierung Teil eines echten Kampagnen-Setups wird, mit klarem Briefing, klaren Übergaben und sichtbarer Relevanz für das Ergebnis."
         benefits={creativeBenefits}
         href="/creatives"
         cta="Mehr für Kreative"
