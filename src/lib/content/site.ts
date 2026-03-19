@@ -80,8 +80,8 @@ export const brandBenefits = [
 
 export const creativeBenefits = [
   "Teil eines kuratierten Netzwerks statt Kaltakquise",
-  "Rollen, in denen Strategie, Prompting und Produktion zusammenpassen",
-  "Klare Briefings und planbare Übergaben pro Anfrage",
+  "Anfragen, in denen deine Spezialisierung Teil eines klaren Setups wird",
+  "Klare Briefings, Reviews und planbare Übergaben pro Anfrage",
   "Brand-Anfragen mit echtem Kampagnenbedarf statt losem Creator-Sourcing",
 ];
 
@@ -139,17 +139,17 @@ export const footerGroups = [
 export const contactChannels = [
   {
     label: "Vertrieb",
-    value: "hello@zynapse.de",
+    value: "hello@zynapse.eu",
     copy: "Wenn du über eine Brand-Anfrage, Pakete oder den richtigen Einstieg sprechen willst.",
   },
   {
     label: "Netzwerk für Kreative",
-    value: "network@zynapse.de",
+    value: "network@zynapse.eu",
     copy: "Wenn du dich als Kreative:r, Spezialist:in oder Partner:in bei uns melden möchtest.",
   },
   {
     label: "Betrieb",
-    value: "ops@zynapse.de",
+    value: "ops@zynapse.eu",
     copy: "Wenn du Fragen zu Rechten, Datenschutz oder Abläufen hast.",
   },
 ];

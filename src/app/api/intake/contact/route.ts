@@ -3,6 +3,10 @@ import { ensureHumanSubmission } from "@/lib/intake/guards";
 import { submitContactInquiry } from "@/lib/intake/submit-contact";
 import { contactInquirySchema } from "@/lib/validation/contact-inquiry";
 
+function resolveRequestOrigin(request: Request) {
+  return request.headers.get("origin") ?? new URL(request.url).origin;
+}
+
 export async function POST(request: Request) {
   const payload = await request.json();
   const parsed = contactInquirySchema.safeParse(payload);
@@ -27,7 +31,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await submitContactInquiry(parsed.data);
+    const result = await submitContactInquiry(
+      parsed.data,
+      resolveRequestOrigin(request),
+    );
 
     return NextResponse.json({ ok: true, mode: result.mode });
   } catch (error) {

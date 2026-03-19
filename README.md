@@ -43,6 +43,12 @@ Open `http://localhost:3000`.
 
 Copy `.env.example` to `.env.local` and set the values you actually need.
 
+Example:
+
+```bash
+cp .env.example .env.local
+```
+
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_ANALYTICS_ID`
 - `INTAKE_WEBHOOK_URL`

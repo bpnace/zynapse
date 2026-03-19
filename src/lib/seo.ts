@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.example";
+const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.eu";
 
 export const siteConfig = {
   name: "Zynapse",

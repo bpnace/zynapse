@@ -1,5 +1,4 @@
 export function SectionHeading({
-  eyebrow,
   title,
   copy,
   align = "left",
