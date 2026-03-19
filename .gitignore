@@ -10,7 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 /docs
-/public
+/public/*
+!/public/brand/
+!/public/brand/**
 
 # testing
 /coverage
