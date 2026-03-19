@@ -26,7 +26,7 @@ export default function RootLayout({
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "hello@zynapse.de",
+      email: "hello@zynapse.eu",
     },
   };
 

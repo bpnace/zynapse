@@ -55,9 +55,9 @@ export default function PrivacyPage() {
           Deutschland
         </p>
         <p>
-          E-Mail: hello@zynapse.de
+          E-Mail: hello@zynapse.eu
           <br />
-          Weitere Kontaktadressen: network@zynapse.de und ops@zynapse.de
+          Weitere Kontaktadressen: network@zynapse.eu und ops@zynapse.eu
         </p>
         <p>
           Zynapse ist ein Angebot von Codariq. Ein Datenschutzbeauftragter ist
@@ -310,7 +310,7 @@ export default function PrivacyPage() {
           <li>Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft</li>
         </ul>
         <p>
-          Zur Ausübung deiner Rechte genügt eine Nachricht an hello@zynapse.de.
+          Zur Ausübung deiner Rechte genügt eine Nachricht an hello@zynapse.eu.
         </p>
       </LegalSection>
 

@@ -54,11 +54,11 @@ export default function ImprintPage() {
 
       <LegalSection title="Kontakt">
         <p>
-          E-Mail allgemein: hello@zynapse.de
+          E-Mail allgemein: hello@zynapse.eu
           <br />
-          Netzwerk für Kreative: network@zynapse.de
+          Netzwerk für Kreative: network@zynapse.eu
           <br />
-          Operative Themen: ops@zynapse.de
+          Operative Themen: ops@zynapse.eu
         </p>
       </LegalSection>
 
