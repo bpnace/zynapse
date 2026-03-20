@@ -16,11 +16,11 @@ function LegalSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="section-card rounded-[1.7rem] p-6 sm:p-8">
-      <h2 className="font-display text-3xl leading-[0.95] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+    <section className="space-y-4 border-t border-[color:var(--line)] pt-6 sm:pt-7">
+      <h2 className="font-display text-2xl leading-[1] font-semibold tracking-[-0.045em] text-[var(--copy-strong)] sm:text-[2rem]">
         {title}
       </h2>
-      <div className="mt-5 space-y-4 text-base leading-7 text-[color:var(--copy-body)]">
+      <div className="max-w-3xl space-y-4 text-base leading-7 text-[color:var(--copy-body)]">
         {children}
       </div>
     </section>
@@ -29,7 +29,7 @@ function LegalSection({
 
 export default function PrivacyPage() {
   return (
-    <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 pt-15 pb-16 sm:px-8">
+    <section className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">
       <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
         Datenschutzhinweise für Zynapse
       </h1>

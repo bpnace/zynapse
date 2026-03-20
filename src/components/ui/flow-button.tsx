@@ -48,7 +48,7 @@ export function FlowButtonContent({
 
       <span
         className={cn(
-          "pointer-events-none absolute top-1/2 left-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-all duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:h-[220px] group-hover:w-[220px] group-hover:opacity-100 group-focus-visible:h-[220px] group-focus-visible:w-[220px] group-focus-visible:opacity-100",
+          "pointer-events-none absolute top-1/2 left-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-all duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:h-[24rem] group-hover:w-[24rem] group-hover:opacity-100 group-focus-visible:h-[24rem] group-focus-visible:w-[24rem] group-focus-visible:opacity-100",
           fillClassName,
         )}
       />

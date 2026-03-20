@@ -2,6 +2,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { FlickeringGrid } from "@/components/ui/flickering-grid-hero";
 
 export function Hero() {
+  const heroCtaClassName = "w-full justify-center sm:w-[16rem]";
   const gridMask =
     "radial-gradient(circle at 50% 42%, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.9) 34%, rgba(0,0,0,0.46) 60%, transparent 82%)";
 
@@ -78,10 +79,19 @@ export function Hero() {
             className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:flex-col lg:items-start lg:justify-self-end"
             data-animate-item
           >
-            <ButtonLink href="/request" size="lg">
-              Anfrage starten
+            <ButtonLink
+              href="/request"
+              size="lg"
+              className={heroCtaClassName}
+            >
+              Als Brand starten
             </ButtonLink>
-            <ButtonLink href="/apply" variant="secondary" size="lg">
+            <ButtonLink
+              href="/apply"
+              variant="secondary"
+              size="lg"
+              className={heroCtaClassName}
+            >
               Als Kreative bewerben
             </ButtonLink>
           </div>
