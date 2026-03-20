@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { primaryCta, siteNav } from "@/lib/content/site";
-import { buttonStyles } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/layout/wordmark";
 
@@ -43,9 +43,13 @@ export function SiteHeader() {
           <Link href="/login" className="hidden rounded-full px-4 py-2 text-sm text-[color:var(--copy-muted)] hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)] sm:inline-flex">
             Anmelden
           </Link>
-          <Link href={primaryCta.href} className={buttonStyles({ size: "md" })}>
+          <ButtonLink
+            href={primaryCta.href}
+            size="md"
+            hidePrimaryArrows
+          >
             {primaryCta.label}
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     </header>

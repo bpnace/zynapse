@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BRAND_INQUIRY_STORAGE_KEY, createBrandInquiryDefaults } from "@/lib/forms/storage";
-import { buttonStyles } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 const initialFields = createBrandInquiryDefaults();
 
@@ -159,12 +159,13 @@ export function FinalCta() {
                 }
               />
             </label>
-            <button
+            <Button
               type="submit"
-              className={`${buttonStyles({ size: "lg" })} md:col-span-2`}
+              size="lg"
+              className="justify-self-start md:col-span-2"
             >
-              Brand-Anfrage starten
-            </button>
+              Anfrage starten
+            </Button>
           </form>
         </div>
       </div>

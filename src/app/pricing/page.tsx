@@ -2,12 +2,14 @@ import { ButtonLink } from "@/components/ui/button";
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { pricingPlans } from "@/lib/content/pricing";
+import { cn } from "@/lib/utils";
 import {
   buildBreadcrumbs,
   buildMetadata,
   buildPageJsonLd,
   buildServiceJsonLd,
 } from "@/lib/seo";
+import Link from "next/link";
 
 const pageSeo = {
   title: "Preise – Starter, Growth, Enterprise | Zynapse",
@@ -21,6 +23,15 @@ export const metadata = buildMetadata(pageSeo);
 function buildContactHref(planId: string) {
   return `/contact?tier=${encodeURIComponent(planId)}#kontaktformular`;
 }
+
+const pricingTileButtonBaseClassName =
+  "inline-flex min-h-12 w-full items-center justify-center gap-2 px-6 py-3.5 text-base font-semibold tracking-[-0.02em] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]";
+
+const pricingTileFeaturedButtonClassName =
+  "rounded-[var(--radius-panel)] border border-[rgba(255,255,255,0.18)] bg-[linear-gradient(135deg,var(--accent-strong),#f07a57)] text-white shadow-[0_18px_38px_rgba(224,94,67,0.26)] hover:bg-[linear-gradient(135deg,#cf543c,#eb7854)] focus-visible:ring-[rgba(224,94,67,0.25)]";
+
+const pricingTileDefaultButtonClassName =
+  "rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.24)] bg-white text-[var(--copy-strong)] shadow-[0_10px_22px_rgba(31,36,48,0.05)] hover:border-[rgba(56,67,84,0.3)] hover:bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(250,246,240,0.98))] focus-visible:ring-[rgba(56,67,84,0.12)]";
 
 const serviceComparisons = [
   {
@@ -204,15 +215,18 @@ export default function PricingPage() {
                   <div className="mt-6 flex-1" />
 
                   <div className="space-y-3 text-center">
-                    <ButtonLink
+                    <Link
                       href={buildContactHref(plan.id)}
-                      size="lg"
-                      variant={plan.featured ? "primary" : "secondary"}
-                      className={plan.featured ? "w-full" : "w-full border-[rgba(56,67,84,0.24)] bg-white"}
+                      className={cn(
+                        pricingTileButtonBaseClassName,
+                        plan.featured
+                          ? pricingTileFeaturedButtonClassName
+                          : pricingTileDefaultButtonClassName,
+                      )}
                       data-animate-item
                     >
                       {plan.name} anfragen
-                    </ButtonLink>
+                    </Link>
                     <p
                       className={`text-center text-xs leading-5 ${
                         plan.featured ? "text-[color:var(--copy-muted)]" : "text-[color:var(--copy-muted)]"
@@ -413,7 +427,7 @@ export default function PricingPage() {
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/request" size="lg">
-                Passendes Paket anfragen
+                Paket anfragen
               </ButtonLink>
             </div>
           </div>

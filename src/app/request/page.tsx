@@ -16,7 +16,7 @@ export default function RequestPage() {
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] sm:text-6xl">
           Eine Brand-Anfrage, die das Wesentliche sauber einsammelt.
         </h1>
-        <p className="max-w-3xl text-lg leading-8 text-[color:var(--copy-muted)]">
+        <p className="max-w-4xl text-lg leading-8 text-[color:var(--copy-muted)]">
           Der Anfrage-Flow reduziert den Einstieg auf die Entscheidungen, die für ein
           erstes Kampagnen-Setup wirklich zählen. Danach kann der weitere Prozess
           sauber in Planung und Produktion übergehen.

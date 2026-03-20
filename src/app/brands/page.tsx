@@ -106,7 +106,7 @@ export default function BrandsPage() {
             </p>
             <div className="flex flex-wrap gap-3" data-animate-copy>
               <ButtonLink href="/request" size="lg">
-                Brand-Anfrage starten
+                Anfrage starten
               </ButtonLink>
               <ButtonLink href="/pricing" variant="secondary" size="lg">
                 Pläne & Preise
@@ -306,7 +306,7 @@ export default function BrandsPage() {
               </p>
             </div>
             <ButtonLink href="/request" size="lg" data-animate-item>
-              Brand-Anfrage starten
+              Anfrage starten
             </ButtonLink>
           </div>
         </div>
