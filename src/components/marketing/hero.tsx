@@ -47,11 +47,11 @@ export function Hero() {
       </div>
 
       <div
-        className="relative z-10 mx-auto flex min-h-[48rem] flex-col items-center justify-center px-6 pt-20 pb-26 text-center sm:px-10 sm:pt-48 sm:pb-20 lg:px-14 lg:pt-40 lg:pb-24 xl:px-18"
+        className="relative z-10 mx-auto flex min-h-[48rem] flex-col items-center justify-center px-6 pb-16 text-center sm:px-10 sm:pt-48 sm:pb-20 lg:px-14 lg:pt-40 lg:pb-24 xl:px-18"
         data-hero-intro
       >
         <h1
-          className="font-display text-[clamp(3.15rem,9vw,5.85rem)] leading-[0.88] font-semibold tracking-[-0.055em] pt-20 text-balance sm:px-[0.1em] sm:pr-[0.16em] lg:px-[0.12em]"
+          className="font-display text-[clamp(3.15rem,9vw,5.85rem)] leading-[0.88] font-semibold tracking-[-0.055em] pt-15 text-balance sm:px-[0.1em] sm:pr-[0.16em] lg:px-[0.12em]"
           data-animate-heading
         >
           Wie aus einer{" "}
