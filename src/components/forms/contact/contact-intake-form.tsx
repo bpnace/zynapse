@@ -5,7 +5,7 @@ import { startTransition, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { buttonStyles } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { pricingPlans } from "@/lib/content/pricing";
 import { createContactInquiryDefaults } from "@/lib/forms/storage";
 import { contactInquirySchema, type ContactInquiryInput } from "@/lib/validation/contact-inquiry";
@@ -315,16 +315,14 @@ export function ContactIntakeForm() {
             </p>
           ) : null}
 
-          <button
+          <Button
             type="submit"
             disabled={isPending}
-            className={buttonStyles({
-              size: "lg",
-              className: "w-full disabled:cursor-wait disabled:opacity-70",
-            })}
+            size="lg"
+            className="w-full disabled:cursor-wait"
           >
             {isPending ? "Nachricht wird gesendet..." : "Nachricht senden"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

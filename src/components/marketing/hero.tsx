@@ -79,7 +79,7 @@ export function Hero() {
             data-animate-item
           >
             <ButtonLink href="/request" size="lg">
-              Brand-Anfrage starten
+              Anfrage starten
             </ButtonLink>
             <ButtonLink href="/apply" variant="secondary" size="lg">
               Als Kreative bewerben

@@ -488,9 +488,6 @@ export default function AboutPage() {
         <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
-              <span className="eyebrow" data-animate-heading>
-                Nächster Schritt
-              </span>
               <h2
                 className="max-w-3xl font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
                 data-animate-heading
@@ -507,7 +504,7 @@ export default function AboutPage() {
                 Produktionsfit.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3" data-animate-item>
+            <div className="flex flex-wrap gap-3">
               <ButtonLink href="/request" size="lg">
                 Brand-Anfrage
               </ButtonLink>

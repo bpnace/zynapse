@@ -143,7 +143,7 @@ export default function CreativesPage() {
             </p>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/apply" size="lg">
-                Bewerbung für Kreative starten
+                Jetzt bewerben
               </ButtonLink>
               <ButtonLink href="/pricing" variant="secondary" size="lg">
                 Pläne & Preise

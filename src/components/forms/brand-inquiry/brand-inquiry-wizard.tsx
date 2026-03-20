@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ButtonLink, buttonStyles } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import {
   BRAND_INQUIRY_STORAGE_KEY,
   createBrandInquiryDefaults,
@@ -327,39 +327,29 @@ export function BrandInquiryWizard() {
         ) : null}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex gap-3">
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               onClick={goToPreviousStep}
               disabled={stepIndex === 0}
-              className={buttonStyles({
-                variant: "ghost",
-                className:
-                  "border border-[color:var(--line)] disabled:cursor-not-allowed disabled:opacity-50",
-              })}
+              className="border border-[color:var(--line)] disabled:opacity-50"
             >
               Zurück
-            </button>
+            </Button>
             {stepIndex < steps.length - 1 ? (
-              <button
-                type="button"
-                onClick={goToNextStep}
-                className={buttonStyles({ variant: "secondary" })}
-              >
+              <Button variant="secondary" onClick={goToNextStep}>
                 Weiter
-              </button>
+              </Button>
             ) : null}
           </div>
           {stepIndex === steps.length - 1 ? (
-            <button
+            <Button
               type="submit"
               disabled={isPending}
-              className={buttonStyles({
-                size: "lg",
-                className: "disabled:cursor-wait disabled:opacity-70",
-              })}
+              size="lg"
+              className="disabled:cursor-wait"
             >
               {isPending ? "Sende Anfrage..." : "Brand-Anfrage absenden"}
-            </button>
+            </Button>
           ) : null}
         </div>
       </form>

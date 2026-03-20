@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { buttonStyles } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   CREATIVE_APPLICATION_STORAGE_KEY,
   createCreativeApplicationDefaults,
@@ -215,16 +215,14 @@ export function CreativeApplicationForm() {
               {submitError}
             </p>
           ) : null}
-          <button
+          <Button
             type="submit"
             disabled={isPending}
-            className={buttonStyles({
-              size: "lg",
-              className: "w-full disabled:cursor-wait disabled:opacity-70",
-            })}
+            size="lg"
+            className="w-full disabled:cursor-wait"
           >
             {isPending ? "Sende Bewerbung..." : "Bewerbung absenden"}
-          </button>
+          </Button>
         </div>
       </div>
     </form>

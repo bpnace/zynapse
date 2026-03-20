@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="space-y-4">
           <Wordmark className="inline-flex items-center" />
           <h2 className="font-display text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
-            Vom Briefing zum kuratierten Kampagnen-Setup, das schneller einsatzbereit ist.
+            Von der einfachen Idee zum kuratierten Kampagnen-Setup, das sofort einsatzbereit ist.
           </h2>
           <p className="max-w-md text-[color:var(--copy-muted)]">
             Zynapse verbindet Brands mit passenden AI-Spezialist:innen und
