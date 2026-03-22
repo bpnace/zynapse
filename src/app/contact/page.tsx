@@ -58,7 +58,7 @@ export default function ContactPage() {
               </ButtonLink>
             </div>
           </div>
-          <div className="flex lg:absolute lg:top-15 lg:right-12 lg:z-10">
+          <div className="hidden lg:flex lg:absolute lg:top-15 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[20rem] lg:w-[23rem]">
               <Image
                 src="/brand/peep-sitting-2.png"

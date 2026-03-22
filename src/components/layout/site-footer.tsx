@@ -4,7 +4,7 @@ import { Wordmark } from "@/components/layout/wordmark";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(255,248,240,0.78),rgba(255,255,255,0.92))]">
+    <footer className="border-t border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(255,248,240,0.78),rgba(255,255,255,0.92))]">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.45fr)_repeat(3,minmax(0,0.18fr))] lg:px-10">
         <div className="space-y-4">
           <Wordmark className="inline-flex items-center" />

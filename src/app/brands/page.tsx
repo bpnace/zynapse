@@ -104,7 +104,7 @@ export default function BrandsPage() {
               übersetzt das in testbare Kampagnen-Packs mit 18+ Varianten pro
               Briefing – strukturiert, planbar und ohne Abstimmungsschleifen.
             </p>
-            <div className="flex flex-wrap gap-3" data-animate-copy>
+            <div className="flex flex-wrap justify-center gap-3 sm:justify-start" data-animate-copy>
               <ButtonLink href="/request" size="lg">
                 Anfrage starten
               </ButtonLink>
@@ -113,7 +113,7 @@ export default function BrandsPage() {
               </ButtonLink>
             </div>
           </div>
-          <div className="flex lg:absolute lg:top-20 lg:right-12 lg:z-10">
+          <div className="hidden lg:flex lg:absolute lg:top-20 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[38rem] lg:w-[22rem]">
               <Image
                 src="/brand/peep-standing-16.png"
@@ -290,7 +290,7 @@ export default function BrandsPage() {
         data-reveal-section
       >
         <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
-          <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
               <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl" data-animate-heading>
                 <span data-animate-word>Bereit</span> für eine erste{" "}
