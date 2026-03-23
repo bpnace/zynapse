@@ -13,18 +13,25 @@ const matrixRainText =
 function MatrixRainText() {
   return (
     <p
-      className="text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] sm:text-lg"
+      className="text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] text-balance sm:text-lg"
       data-animate-char-line
       aria-label={matrixRainText}
     >
       <span aria-hidden="true">
-        {Array.from(matrixRainText).map((char, index) => (
-          <span
-            key={`${char}-${index}`}
-            data-animate-char
-            className="inline-block whitespace-pre will-change-transform"
-          >
-            {char === " " ? "\u00A0" : char}
+        {matrixRainText.split(" ").map((word, wordIndex, arr) => (
+          <span key={wordIndex}>
+            <span className="inline-block whitespace-nowrap">
+              {Array.from(word).map((char, charIndex) => (
+                <span
+                  key={`${char}-${charIndex}`}
+                  data-animate-char
+                  className="inline-block will-change-transform"
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+            {wordIndex < arr.length - 1 && " "}
           </span>
         ))}
       </span>
@@ -55,7 +62,7 @@ export function ProblemCards() {
             key={card.title}
             className={`section-card section-surface-paper rounded-[var(--radius-card)] p-6 lg:p-7 ${cardAccentClasses[index % cardAccentClasses.length]}`}
           >
-            <h3 className="mt-4 font-display text-[1.75rem] leading-[0.95] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+            <h3 className="mt-4 font-display text-[1.75rem] leading-[0.95] font-semibold tracking-[-0.05em] text-balance text-[var(--copy-strong)]">
               {card.title}
             </h3>
             <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">

@@ -43,11 +43,11 @@ function BenefitColumn({
   const benefitItemClass = isWarm
     ? "rounded-[0.55rem] border border-[rgba(224,94,67,0.16)] bg-[rgba(255,240,232,0.55)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]"
     : "rounded-[0.55rem] border border-[rgba(185,178,255,0.22)] bg-[rgba(240,238,255,0.45)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]";
-  const ctaRowAlignment = ctaInnerAlign === "right" ? "justify-end" : "justify-start";
+  const ctaRowAlignment = ctaInnerAlign === "right" ? "sm:justify-end" : "sm:justify-start";
 
   return (
     <article
-      className={`section-card group relative flex h-full overflow-hidden rounded-[var(--radius-card)] p-7 transition-[box-shadow] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] ${surfaceClass} ${borderAccent}`}
+      className={`section-card group relative flex h-full overflow-hidden rounded-[var(--radius-card)] p-5 transition-[box-shadow] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-7 ${surfaceClass} ${borderAccent}`}
     >
       {/* Decorative corner glyph */}
       <span
@@ -69,21 +69,21 @@ function BenefitColumn({
           {title}
         </p>
         <h3
-          className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
+          className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em] text-balance text-[var(--copy-strong)] sm:text-4xl"
           data-animate-heading
         >
           {headline}
         </h3>
         <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">{copy}</p>
-        <ul className="mt-8 space-y-4">
+        <ul className="mt-5 space-y-3 sm:mt-8 sm:space-y-4">
           {benefits.map((benefit) => (
             <li key={benefit} className={benefitItemClass}>
               {benefit}
             </li>
           ))}
         </ul>
-        <div className={`mt-auto flex w-full pt-8 ${ctaRowAlignment}`}>
-          <ButtonLink href={href} variant="primary" size="lg">
+        <div className={`mt-auto flex w-full justify-center pt-6 sm:pt-8 ${ctaRowAlignment}`}>
+          <ButtonLink href={href} variant="primary" size="lg" className="w-full justify-center sm:w-auto">
             {cta}
           </ButtonLink>
         </div>

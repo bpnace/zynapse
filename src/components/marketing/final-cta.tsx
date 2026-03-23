@@ -51,7 +51,7 @@ export function FinalCta() {
               Jetzt starten
             </span>
             <h2
-              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
+              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
               Der nächste <span data-animate-word>Schritt</span> ist ein{" "}

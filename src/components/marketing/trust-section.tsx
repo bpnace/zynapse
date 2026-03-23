@@ -25,7 +25,7 @@ export function TrustSection() {
             key={signal.title}
             className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
           >
-            <h3 className="font-display text-[1.7rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+            <h3 className="font-display text-[1.7rem] leading-[0.96] font-semibold tracking-[-0.04em] text-balance text-[var(--copy-strong)]">
               {signal.title}
             </h3>
             <p className="mt-4 text-base leading-7 text-[color:var(--copy-body)]">

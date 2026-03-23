@@ -141,7 +141,7 @@ export default function CreativesPage() {
               von Prompt Engineering bis AI Strategy. Du führst die Kreativ-Logik,
               das Studio skaliert die Ausführung.
             </p>
-            <div className="flex flex-wrap gap-3" data-animate-item>
+            <div className="flex flex-wrap justify-center gap-3 sm:justify-start" data-animate-item>
               <ButtonLink href="/apply" size="lg">
                 Jetzt bewerben
               </ButtonLink>
@@ -150,7 +150,7 @@ export default function CreativesPage() {
               </ButtonLink>
             </div>
           </div>
-          <div className="flex lg:absolute lg:top-20 lg:right-12 lg:z-10">
+          <div className="hidden lg:flex lg:absolute lg:top-20 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[38rem] lg:w-[22rem]">
               <Image
                 src="/brand/peep-standing-9.png"
@@ -402,7 +402,7 @@ export default function CreativesPage() {
         data-reveal-section
       >
         <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
-          <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
               <h2
                 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"

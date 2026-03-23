@@ -71,7 +71,7 @@ export function VideoOutputGrid() {
           return (
             <article
               key={variant.id}
-              className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]}`}
+              className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]} ${index >= 3 ? "hidden md:block" : ""}`}
               data-animate-item
             >
               <div
@@ -134,7 +134,7 @@ export function VideoOutputGrid() {
                     {variant.angle}
                   </span>
                 </div>
-                <h3 className="mt-3 font-display text-[1.55rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                <h3 className="mt-3 font-display text-[1.55rem] leading-[0.96] font-semibold tracking-[-0.04em] text-balance text-[var(--copy-strong)]">
                   {variant.hookTitle}
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-1.5">
