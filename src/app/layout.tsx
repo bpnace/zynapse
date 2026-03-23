@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { BackToTopButton } from "@/components/layout/back-to-top-button";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -19,6 +20,13 @@ export default function RootLayout({
 
   return (
     <html lang="de" suppressHydrationWarning data-scroll-behavior="smooth">
+      <head>
+        <Script
+          src="https://cloud.ccm19.de/app.js?apiKey=507d502de0eb3f51b6e05274ca2398f5e01f425482111733&domain=69c1143c6b7facd13b028a22"
+          strategy="beforeInteractive"
+          referrerPolicy="origin"
+        />
+      </head>
       <body className="antialiased">
         <JsonLdScript data={siteJsonLd} />
         <RouteScrollReset />
