@@ -1,26 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { GET } from "@/app/sitemap.xml/route";
 import { absoluteUrl, indexableSitemapEntries } from "@/lib/seo";
-import { buildSitemapXml } from "@/lib/sitemap";
+import sitemap from "@/app/sitemap";
 
-describe("sitemap route", () => {
-  it("serves a minimal XML sitemap for the canonical marketing URLs", async () => {
-    const response = await GET();
-    const xml = await response.text();
+describe("sitemap", () => {
+  it("returns all indexable marketing URLs with metadata", () => {
+    const entries = sitemap();
 
-    expect(response.status).toBe(200);
-    expect(response.headers.get("content-type")).toBe(
-      "application/xml; charset=utf-8",
-    );
-    expect(response.headers.get("cache-control")).toBe(
-      "public, max-age=0, s-maxage=86400",
-    );
-    expect(xml).toBe(buildSitemapXml());
-    expect(xml).not.toContain("<changefreq>");
-    expect(xml).not.toContain("<priority>");
+    expect(entries).toHaveLength(indexableSitemapEntries.length);
 
     for (const route of indexableSitemapEntries) {
-      expect(xml).toContain(`<loc>${absoluteUrl(route.path)}</loc>`);
+      const entry = entries.find((e) => e.url === absoluteUrl(route.path));
+      expect(entry).toBeDefined();
+      expect(entry!.changeFrequency).toBe(route.changeFrequency);
+      expect(entry!.priority).toBe(route.priority);
+      expect(entry!.lastModified).toBeInstanceOf(Date);
     }
   });
 });
