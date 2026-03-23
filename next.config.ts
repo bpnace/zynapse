@@ -1,6 +1,27 @@
 import type { NextConfig } from "next";
 
+const cspDirectives = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://cloud.ccm19.de https://www.googletagmanager.com https://www.google-analytics.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https:",
+  "font-src 'self'",
+  "connect-src 'self' https://cloud.ccm19.de https://www.google-analytics.com https://automation.codariq.de",
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self' https://automation.codariq.de",
+];
+
 const securityHeaders = [
+  {
+    key: "Content-Security-Policy-Report-Only",
+    value: cspDirectives.join("; "),
+  },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
   {
     key: "X-Content-Type-Options",
     value: "nosniff",
@@ -21,6 +42,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   async headers() {
     return [
       {
