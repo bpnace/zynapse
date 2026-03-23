@@ -1,0 +1,23 @@
+services:
+  zynapse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zynapse
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    expose:
+      - "3000"
+    networks:
+      - proxy-net
+
+networks:
+  proxy-net:
+    external: true
+
+    
