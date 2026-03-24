@@ -10,7 +10,7 @@ export const siteConfig = {
     "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in lean koordinierte Kampagnen-Setups, markenfähige Varianten und klare Handover.",
   url: env.siteUrl,
   language: "de",
-  languageTag: "de-DE",
+  languageTag: "de",
   locale: "de_DE",
   contactEmail: "hello@zynapse.eu",
   logoPath: "/android-chrome-512x512.png",
@@ -54,39 +54,16 @@ type ServiceJsonLdInput = {
   description: string;
   serviceType: string;
   audience?: string;
+  offers?: ReturnType<typeof buildOfferJsonLd>;
 };
 
 export const indexableSitemapEntries = [
-  {
-    path: "/",
-    changeFrequency: "weekly",
-    priority: 1,
-  },
-  {
-    path: "/brands",
-    changeFrequency: "weekly",
-    priority: 0.9,
-  },
-  {
-    path: "/creatives",
-    changeFrequency: "weekly",
-    priority: 0.85,
-  },
-  {
-    path: "/about",
-    changeFrequency: "monthly",
-    priority: 0.7,
-  },
-  {
-    path: "/pricing",
-    changeFrequency: "weekly",
-    priority: 0.8,
-  },
-  {
-    path: "/contact",
-    changeFrequency: "monthly",
-    priority: 0.7,
-  },
+  { path: "/", lastModified: "2025-01-01" },
+  { path: "/brands", lastModified: "2025-01-01" },
+  { path: "/creatives", lastModified: "2025-01-01" },
+  { path: "/about", lastModified: "2025-01-01" },
+  { path: "/pricing", lastModified: "2025-01-01" },
+  { path: "/contact", lastModified: "2025-01-01" },
 ] as const;
 
 function buildVerification(): Metadata["verification"] | undefined {
@@ -304,6 +281,7 @@ export function buildServiceJsonLd({
   description,
   serviceType,
   audience,
+  offers,
 }: ServiceJsonLdInput) {
   return {
     "@type": "Service",
@@ -314,7 +292,7 @@ export function buildServiceJsonLd({
     provider: {
       "@id": absoluteUrl("/#organization"),
     },
-    areaServed: "Deutschland",
+    areaServed: { "@type": "Country", name: "Germany" },
     availableLanguage: [siteConfig.languageTag],
     ...(audience
       ? {
@@ -324,7 +302,34 @@ export function buildServiceJsonLd({
           },
         }
       : {}),
+    ...(offers ? { offers } : {}),
   };
+}
+
+type OfferInput = {
+  name: string;
+  description: string;
+  minPrice?: number;
+  priceCurrency?: string;
+  priceNote?: string;
+};
+
+export function buildOfferJsonLd(offers: OfferInput[]) {
+  return offers.map((offer) => ({
+    "@type": "Offer",
+    name: offer.name,
+    description: offer.description,
+    ...(offer.minPrice != null
+      ? {
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            minPrice: offer.minPrice,
+            priceCurrency: offer.priceCurrency ?? "EUR",
+          },
+        }
+      : {}),
+    ...(offer.priceNote ? { disambiguatingDescription: offer.priceNote } : {}),
+  }));
 }
 
 export function buildBreadcrumbs(currentPageName: string, currentPath: string) {

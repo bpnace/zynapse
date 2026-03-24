@@ -3,9 +3,9 @@
 :root {
   --background: #f0f0f0;
   --foreground: #1f2430;
-  --font-body: "Avenir Next", "Segoe UI", sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-  --font-mono: "SFMono-Regular", "SF Mono", "Menlo", monospace;
+  --font-body: "Avenir Next", "Gill Sans", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-mono: "SFMono-Regular", "SF Mono", Menlo, "Cascadia Code", Consolas, monospace;
   --radius-panel: 1.5rem;
   --radius-card: 0.9rem;
   --radius-subcard: 0.7rem;

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import {
   buildBreadcrumbs,
   buildMetadata,
+  buildOfferJsonLd,
   buildPageJsonLd,
   buildServiceJsonLd,
 } from "@/lib/seo";
@@ -74,6 +75,27 @@ export default function PricingPage() {
       description: pageSeo.description,
       serviceType: "AI-Kampagnen-Setups und Pricing für Brands",
       audience: "Brands und Teams mit laufendem Kampagnenbedarf",
+      offers: buildOfferJsonLd([
+        {
+          name: "Starter",
+          description: pricingPlans[0].description,
+          minPrice: 2499,
+          priceCurrency: "EUR",
+          priceNote: "einmalig",
+        },
+        {
+          name: "Growth",
+          description: pricingPlans[1].description,
+          minPrice: 5999,
+          priceCurrency: "EUR",
+          priceNote: "pro Monat",
+        },
+        {
+          name: "Enterprise",
+          description: pricingPlans[2].description,
+          priceNote: "Individuell",
+        },
+      ]),
     }),
   });
 
