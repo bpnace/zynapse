@@ -3,15 +3,7 @@ const DEFAULT_INTAKE_WEBHOOK_URL =
 
 export function getEnv() {
   return {
-    siteUrl:
-      process.env.NEXT_PUBLIC_SITE_URL ??
-      (process.env.NODE_ENV === "production"
-        ? (() => {
-            throw new Error(
-              "NEXT_PUBLIC_SITE_URL is required in production — set it in .env"
-            );
-          })()
-        : "http://localhost:3000"),
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.eu",
     analyticsId: process.env.NEXT_PUBLIC_ANALYTICS_ID ?? "",
     googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
     bingSiteVerification: process.env.BING_SITE_VERIFICATION ?? "",
