@@ -58,12 +58,12 @@ type ServiceJsonLdInput = {
 };
 
 export const indexableSitemapEntries = [
-  { path: "/", lastModified: "2025-01-01" },
-  { path: "/brands", lastModified: "2025-01-01" },
-  { path: "/creatives", lastModified: "2025-01-01" },
-  { path: "/about", lastModified: "2025-01-01" },
-  { path: "/pricing", lastModified: "2025-01-01" },
-  { path: "/contact", lastModified: "2025-01-01" },
+  { path: "/", pageFile: "src/app/page.tsx" },
+  { path: "/brands", pageFile: "src/app/brands/page.tsx" },
+  { path: "/creatives", pageFile: "src/app/creatives/page.tsx" },
+  { path: "/about", pageFile: "src/app/about/page.tsx" },
+  { path: "/pricing", pageFile: "src/app/pricing/page.tsx" },
+  { path: "/contact", pageFile: "src/app/contact/page.tsx" },
 ] as const;
 
 function buildVerification(): Metadata["verification"] | undefined {
