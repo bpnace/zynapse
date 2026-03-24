@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { creativeBenefits } from "@/lib/content/site";
-import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
+import { buildBreadcrumbs, buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
 import Image from "next/image";
 
 const pageSeo = {
@@ -111,6 +111,13 @@ export default function CreativesPage() {
     ...pageSeo,
     pageType: "CollectionPage",
     breadcrumbs: buildBreadcrumbs("Für Kreative", pageSeo.path),
+    primaryEntity: buildServiceJsonLd({
+      path: pageSeo.path,
+      name: "AI-Netzwerk für Kreative",
+      description: pageSeo.description,
+      serviceType: "AI-Kampagnen-Setups für Kreative",
+      audience: "Kreative und AI-Spezialist:innen",
+    }),
   });
 
   return (
