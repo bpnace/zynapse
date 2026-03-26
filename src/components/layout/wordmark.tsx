@@ -1,21 +1,29 @@
 "use client";
 
 import type { MouseEvent } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Outfit } from "next/font/google";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: "900",
-});
+import { cn } from "@/lib/utils";
 
 export function Wordmark({
   href = "/",
   className = "",
+  src = "/logo/Wortmarke1.png",
+  alt = "Zynapse",
+  width = 1208,
+  height = 305,
+  imageClassName = "",
+  priority = false,
 }: {
   href?: string;
   className?: string;
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  imageClassName?: string;
+  priority?: boolean;
 }) {
   const pathname = usePathname();
 
@@ -41,15 +49,17 @@ export function Wordmark({
     <Link
       href={href}
       aria-label="Zynapse Startseite"
-      className={className}
+      className={cn("inline-flex items-center", className)}
       onClick={handleClick}
     >
-      <span
-        className={`${outfit.className} inline-block pr-[0.04em] text-[1.85rem] leading-none font-black tracking-[-0.04em] lowercase text-[var(--foreground)]`}
-      >
-        zynaps
-        <span className="title-accent">e</span>
-      </span>
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        className={cn("h-auto w-[9.75rem]", imageClassName)}
+        priority={priority}
+      />
     </Link>
   );
 }

@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-import appIcon from "@/app/apple-touch-icon.png";
 import { primaryCta, siteNav } from "@/lib/content/site";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -46,23 +44,18 @@ export function SiteHeader() {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <Wordmark className="hidden items-center md:inline-flex" />
+          <Wordmark
+            className="hidden md:inline-flex"
+            imageClassName="w-[9.5rem] sm:w-[10.25rem]"
+            priority
+          />
 
-          {/* Center: app icon (mobile) / nav links (desktop) */}
-          <Link
-            href="/"
-            aria-label="Zynapse Startseite"
+          {/* Center: wordmark (mobile) / nav links (desktop) */}
+          <Wordmark
             className="absolute left-1/2 -translate-x-1/2 md:hidden"
-          >
-            <Image
-              src={appIcon}
-              alt="Zynapse"
-              width={36}
-              height={36}
-              className="rounded-lg"
-              priority
-            />
-          </Link>
+            imageClassName="w-[7.75rem]"
+            priority
+          />
           <nav className="hidden items-center gap-1 md:flex">
             {siteNav.map((item) => {
               const active = pathname === item.href;
