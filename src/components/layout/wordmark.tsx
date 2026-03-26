@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 export function Wordmark({
   href = "/",
   className = "",
-  src = "/logo/Wortmarke1.png",
+  src = "/logo/LogoVector1.png",
   alt = "Zynapse",
   width = 1208,
   height = 305,
