@@ -4,11 +4,40 @@ import {
   buildBreadcrumbs,
   buildMetadata,
   buildPageJsonLd,
+  buildSiteMetadata,
   buildServiceJsonLd,
   siteConfig,
 } from "@/lib/seo";
 
 describe("buildMetadata", () => {
+  it("includes the configured favicon and apple touch icon set", () => {
+    const metadata = buildSiteMetadata();
+
+    expect(metadata.icons).toMatchObject({
+      icon: expect.arrayContaining([
+        expect.objectContaining({ url: "/favicon.ico", sizes: "any" }),
+        expect.objectContaining({
+          url: "/favicon-16x16.png",
+          sizes: "16x16",
+          type: "image/png",
+        }),
+        expect.objectContaining({
+          url: "/favicon-32x32.png",
+          sizes: "32x32",
+          type: "image/png",
+        }),
+      ]),
+      apple: expect.arrayContaining([
+        expect.objectContaining({
+          url: "/apple-touch-icon.png",
+          sizes: "180x180",
+          type: "image/png",
+        }),
+      ]),
+      shortcut: ["/favicon.ico"],
+    });
+  });
+
   it("builds indexable metadata with canonical, locale, and preview directives", () => {
     const metadata = buildMetadata({
       title: "Startseite | Zynapse",
