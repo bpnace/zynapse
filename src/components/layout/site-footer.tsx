@@ -8,13 +8,13 @@ export function SiteFooter() {
     <footer className="border-t border-white/10 bg-[#1d1d1d] text-[color:var(--surface-paper)]">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.45fr)_repeat(3,minmax(0,0.18fr))] lg:px-10">
         <div className="space-y-4">
-          <div className="mx-auto grid w-fit grid-cols-[auto_1fr] items-center gap-4">
+          <div className="grid w-fit grid-cols-[auto_1fr] items-center gap-4">
             <Image
               src="/logo/LogoSimple.png"
               alt="Zynapse Signet"
               width={2000}
               height={2000}
-              className="h-11 w-auto shrink-0 sm:h-12"
+              className="h-15 w-auto shrink-0 sm:h-15"
             />
             <Wordmark
               src="/logo/Wortmarke2.png"
