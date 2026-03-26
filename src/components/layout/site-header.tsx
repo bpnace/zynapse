@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import appIcon from "@/app/apple-touch-icon.png";
@@ -35,7 +35,7 @@ export function SiteHeader() {
             "max-md:-translate-y-full max-md:opacity-0 max-md:pointer-events-none",
         )}
       >
-        <div className="relative mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[color:var(--line)] bg-[rgba(255,255,255,0.82)] px-4 py-3 shadow-[0_18px_40px_rgba(31,36,48,0.08)] backdrop-blur-2xl sm:px-6">
+        <div className="relative mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[color:var(--line)] bg-[rgba(255,255,255,0.82)] px-4 py-3 shadow-[0_18px_40px_rgba(31,36,48,0.08)] backdrop-blur-2xl sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr] md:justify-normal">
           {/* Left: burger (mobile) / wordmark (desktop) */}
           <button
             onClick={() => setMenuOpen(true)}
@@ -46,7 +46,11 @@ export function SiteHeader() {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <Wordmark className="hidden items-center md:inline-flex" />
+          <Wordmark
+            className="hidden md:inline-flex md:justify-self-start"
+            imageClassName="w-[9rem] sm:w-[9rem]"
+            priority
+          />
 
           {/* Center: app icon (mobile) / nav links (desktop) */}
           <Link
@@ -57,13 +61,13 @@ export function SiteHeader() {
             <Image
               src={appIcon}
               alt="Zynapse"
-              width={36}
-              height={36}
-              className="rounded-lg"
+              width={180}
+              height={180}
+              className="h-9 w-9 rounded-lg"
               priority
             />
           </Link>
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center justify-center gap-1 md:flex">
             {siteNav.map((item) => {
               const active = pathname === item.href;
 
@@ -90,7 +94,7 @@ export function SiteHeader() {
           </nav>
 
           {/* Right: login (desktop) + CTA */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:justify-self-end">
             <Link href="/login" className="hidden rounded-full px-4 py-2 text-sm text-[color:var(--copy-muted)] hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)] md:inline-flex">
               Anmelden
             </Link>

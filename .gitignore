@@ -13,6 +13,13 @@
 /public/*
 !/public/brand/
 !/public/brand/**
+!/public/logo/
+/public/logo/*
+!/public/logo/Wortmarke1.png
+!/public/logo/Wortmarke2.png
+!/public/logo/VectorBright1.png
+!/public/logo/LogoVector1.png
+!/public/logo/LogoSimple.png
 !/public/videos/
 !/public/videos/**
 
