@@ -93,14 +93,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         <div className="soft-divider" />
 
-        {/* Anmelden */}
+        {/* Registrieren */}
         <div className="px-5 py-4">
           <Link
             href="/login"
             onClick={onClose}
             className="block rounded-[var(--radius-chip)] px-4 py-3 text-base text-[color:var(--copy-muted)] transition-colors duration-200 hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)]"
           >
-            Anmelden
+            Registrieren
           </Link>
         </div>
       </nav>

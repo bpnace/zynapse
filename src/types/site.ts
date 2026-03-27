@@ -40,6 +40,7 @@ export type CampaignAngle = {
 
 export type VideoVariantPreview = {
   id: string;
+  src: string;
   angle: string;
   hookTitle: string;
   format: string;

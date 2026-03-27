@@ -96,7 +96,7 @@ export function SiteHeader() {
           {/* Right: login (desktop) + CTA */}
           <div className="flex items-center gap-2 md:justify-self-end">
             <Link href="/login" className="hidden rounded-full px-4 py-2 text-sm text-[color:var(--copy-muted)] hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)] md:inline-flex">
-              Anmelden
+              Registrieren
             </Link>
             <ButtonLink
               href={primaryCta.href}
