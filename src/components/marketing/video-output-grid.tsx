@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { videoVariants } from "@/lib/mock-data/studio";
-import { cn } from "@/lib/utils";
 
 const outputAccentClasses = [
   "border-t-[3px] border-t-[rgba(224,94,67,0.24)]",
@@ -25,15 +24,6 @@ const frameGradients: Record<string, string> = {
     "linear-gradient(135deg, rgba(56,67,84,0.10) 0%, rgba(160,174,192,0.18) 52%, rgba(249,197,106,0.08) 100%)",
   "Food & Detail":
     "linear-gradient(135deg, rgba(56,67,84,0.06) 0%, rgba(156,244,215,0.12) 60%, rgba(185,178,255,0.10) 100%)",
-};
-
-const previewFrameClasses: Record<string, string> = {
-  "21:9": "aspect-[21/9] w-[92%] max-w-[19rem]",
-  "16:9": "aspect-[16/9] w-[88%] max-w-[18rem]",
-  "1:1": "aspect-square h-[84%]",
-  "4:5": "aspect-[4/5] h-[84%]",
-  "3:4": "aspect-[3/4] h-[84%]",
-  "9:16": "aspect-[9/16] h-[84%]",
 };
 
 function formatDuration(s: string): string {
@@ -85,46 +75,37 @@ export function VideoOutputGrid() {
                     frameGradients[variant.angle] ?? frameGradients["Industrie & Reveal"],
                 }}
               >
-                <div
-                  className={cn(
-                    "relative overflow-hidden rounded-[1.2rem] border border-white/35 bg-white/18 shadow-[0_16px_40px_rgba(31,36,48,0.16)]",
-                    previewFrameClasses[variant.format] ?? previewFrameClasses["16:9"],
-                  )}
-                >
-                  {showVideo ? (
-                    <video
-                      src={variant.src}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      className="absolute inset-0 h-full w-full object-cover"
-                      onError={() =>
-                        setVideoLoadFailed((state) => ({ ...state, [variant.id]: true }))
-                      }
-                    />
-                  ) : null}
-
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-[0.05]"
-                    aria-hidden="true"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(rgba(56,67,84,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,67,84,1) 1px, transparent 1px)",
-                      backgroundSize: "24px 24px",
-                    }}
+                {showVideo ? (
+                  <video
+                    src={variant.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={() =>
+                      setVideoLoadFailed((state) => ({ ...state, [variant.id]: true }))
+                    }
                   />
+                ) : null}
 
-                  <div className="relative flex h-full w-full items-center justify-center">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/50 shadow-[0_4px_16px_rgba(31,36,48,0.08)] backdrop-blur-sm">
-                      <span
-                        className="ml-0.5 block h-0 w-0 border-y-[7px] border-l-[11px] border-y-transparent border-l-[var(--copy-strong)]"
-                        style={{ opacity: 0.55 }}
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-[0.04]"
+                  aria-hidden="true"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(56,67,84,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,67,84,1) 1px, transparent 1px)",
+                    backgroundSize: "28px 28px",
+                  }}
+                />
+
+                <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/50 shadow-[0_4px_16px_rgba(31,36,48,0.08)] backdrop-blur-sm">
+                  <span
+                    className="ml-0.5 block h-0 w-0 border-y-[7px] border-l-[11px] border-y-transparent border-l-[var(--copy-strong)]"
+                    style={{ opacity: 0.55 }}
+                    aria-hidden="true"
+                  />
                 </div>
 
                 {/* Format badge — top right */}
