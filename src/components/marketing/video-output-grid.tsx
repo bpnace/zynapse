@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { videoVariants } from "@/lib/mock-data/studio";
+import { cn } from "@/lib/utils";
 
 const outputAccentClasses = [
   "border-t-[3px] border-t-[rgba(224,94,67,0.24)]",
@@ -12,16 +13,27 @@ const outputAccentClasses = [
 ] as const;
 
 const frameGradients: Record<string, string> = {
-  Produktlaunch:
-    "linear-gradient(135deg, rgba(224,94,67,0.10) 0%, rgba(249,197,106,0.16) 60%, rgba(224,94,67,0.06) 100%)",
-  Produktverständnis:
-    "linear-gradient(135deg, rgba(56,67,84,0.08) 0%, rgba(185,178,255,0.14) 60%, rgba(56,67,84,0.05) 100%)",
-  "Angebot & Entscheidung":
-    "linear-gradient(135deg, rgba(156,244,215,0.12) 0%, rgba(249,197,106,0.10) 60%, rgba(156,244,215,0.06) 100%)",
-  "Nächste Ausspielung":
-    "linear-gradient(135deg, rgba(185,178,255,0.14) 0%, rgba(156,244,215,0.1) 60%, rgba(56,67,84,0.05) 100%)",
-  "Handover & Skalierung":
+  "Natur & Architektur":
+    "linear-gradient(135deg, rgba(115,150,111,0.14) 0%, rgba(214,230,188,0.20) 58%, rgba(115,150,111,0.08) 100%)",
+  "Luxus & Spannung":
+    "linear-gradient(135deg, rgba(24,28,32,0.14) 0%, rgba(249,197,106,0.16) 52%, rgba(24,28,32,0.08) 100%)",
+  "Editorial & Bewegung":
+    "linear-gradient(135deg, rgba(222,228,236,0.22) 0%, rgba(255,255,255,0.32) 48%, rgba(210,217,227,0.18) 100%)",
+  "Retail & Surrealität":
+    "linear-gradient(135deg, rgba(182,214,158,0.18) 0%, rgba(249,197,106,0.16) 56%, rgba(196,233,217,0.12) 100%)",
+  "Industrie & Reveal":
+    "linear-gradient(135deg, rgba(56,67,84,0.10) 0%, rgba(160,174,192,0.18) 52%, rgba(249,197,106,0.08) 100%)",
+  "Food & Detail":
     "linear-gradient(135deg, rgba(56,67,84,0.06) 0%, rgba(156,244,215,0.12) 60%, rgba(185,178,255,0.10) 100%)",
+};
+
+const previewFrameClasses: Record<string, string> = {
+  "21:9": "aspect-[21/9] w-[92%] max-w-[19rem]",
+  "16:9": "aspect-[16/9] w-[88%] max-w-[18rem]",
+  "1:1": "aspect-square h-[84%]",
+  "4:5": "aspect-[4/5] h-[84%]",
+  "3:4": "aspect-[3/4] h-[84%]",
+  "9:16": "aspect-[9/16] h-[84%]",
 };
 
 function formatDuration(s: string): string {
@@ -31,15 +43,7 @@ function formatDuration(s: string): string {
   return `${min}:${sec.toString().padStart(2, "0")}`;
 }
 
-const displayVariants = videoVariants.slice(0, 6);
-const previewVideoSources = [
-  "/videos/video22.mp4",
-  "/videos/m2-res_640p.mp4",
-  "/videos/m2-res_712p.mp4",
-  "/videos/m2-res_716p.mp4",
-  "/videos/m2-res_85422p.mp4",
-  "/videos/m2-res_854p.mp4",
-] as const;
+const displayVariants = videoVariants;
 
 export function VideoOutputGrid() {
   const [videoLoadFailed, setVideoLoadFailed] = useState<Record<string, boolean>>(
@@ -56,64 +60,71 @@ export function VideoOutputGrid() {
         eyebrow="Sichtbarer Kampagnen-Output"
         title={
           <>
-            Keine Demo-Assets. Sondern{" "}
-            <span className="title-accent">markenfähige Varianten</span> für{" "}
+            Nicht eine Stilrichtung. Sondern{" "}
+            <span className="title-accent">sechs sehr unterschiedliche Bildwelten</span>{" "}
+            für{" "}
             <span data-animate-word>echte Kampagnenarbeit.</span>
           </>
         }
-        copy="Die sechs Beispiele zeigen, wie ein kuratiertes Kampagnen-Setup sichtbar wird: mit klaren Einstiegen, Produktverständnis, Angebotslogik und Varianten, die Brands direkt reviewen, freigeben und in die nächste Ausspielung weiterführen können."
+        copy="Die aktuelle Auswahl zeigt nicht nur unterschiedliche Bildwelten, sondern auch unterschiedliche Ausspielungen: von 6-Sekunden-Bumpern über Square- und Feed-Cuts bis zu vertikalen Story-Formaten. Genau so sehen Richtungen aus, die Brands direkt reviewen, schärfen und kanalgenau weiterführen können."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {displayVariants.map((variant, index) => {
-          const videoSrc = previewVideoSources[index];
-          const showVideo = Boolean(videoSrc) && !videoLoadFailed[variant.id];
+          const showVideo = !videoLoadFailed[variant.id];
 
           return (
             <article
               key={variant.id}
-              className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]} ${index >= 3 ? "hidden md:block" : ""}`}
+              className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]}`}
               data-animate-item
             >
               <div
                 className="relative flex h-[11rem] items-center justify-center overflow-hidden"
                 style={{
                   background:
-                    frameGradients[variant.angle] ?? frameGradients["Handover & Skalierung"],
+                    frameGradients[variant.angle] ?? frameGradients["Industrie & Reveal"],
                 }}
               >
-                {showVideo ? (
-                  <video
-                    src={videoSrc}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={() =>
-                      setVideoLoadFailed((state) => ({ ...state, [variant.id]: true }))
-                    }
-                  />
-                ) : null}
-
-                {/* Subtle grid pattern overlay */}
                 <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.04]"
-                  aria-hidden="true"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(56,67,84,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,67,84,1) 1px, transparent 1px)",
-                    backgroundSize: "28px 28px",
-                  }}
-                />
+                  className={cn(
+                    "relative overflow-hidden rounded-[1.2rem] border border-white/35 bg-white/18 shadow-[0_16px_40px_rgba(31,36,48,0.16)]",
+                    previewFrameClasses[variant.format] ?? previewFrameClasses["16:9"],
+                  )}
+                >
+                  {showVideo ? (
+                    <video
+                      src={variant.src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 h-full w-full object-cover"
+                      onError={() =>
+                        setVideoLoadFailed((state) => ({ ...state, [variant.id]: true }))
+                      }
+                    />
+                  ) : null}
 
-                {/* Play button */}
-                <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/50 shadow-[0_4px_16px_rgba(31,36,48,0.08)] backdrop-blur-sm">
-                  <span
-                    className="ml-0.5 block h-0 w-0 border-y-[7px] border-l-[11px] border-y-transparent border-l-[var(--copy-strong)]"
-                    style={{ opacity: 0.55 }}
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-[0.05]"
                     aria-hidden="true"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(rgba(56,67,84,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,67,84,1) 1px, transparent 1px)",
+                      backgroundSize: "24px 24px",
+                    }}
                   />
+
+                  <div className="relative flex h-full w-full items-center justify-center">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/50 shadow-[0_4px_16px_rgba(31,36,48,0.08)] backdrop-blur-sm">
+                      <span
+                        className="ml-0.5 block h-0 w-0 border-y-[7px] border-l-[11px] border-y-transparent border-l-[var(--copy-strong)]"
+                        style={{ opacity: 0.55 }}
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Format badge — top right */}
