@@ -10,32 +10,15 @@ import {
 } from "@/lib/seo";
 
 describe("buildMetadata", () => {
-  it("includes the configured favicon and apple touch icon set", () => {
+  it("includes the site-wide metadata defaults", () => {
     const metadata = buildSiteMetadata();
 
-    expect(metadata.icons).toMatchObject({
-      icon: expect.arrayContaining([
-        expect.objectContaining({ url: "/favicon.ico", sizes: "any" }),
-        expect.objectContaining({
-          url: "/favicon-16x16.png",
-          sizes: "16x16",
-          type: "image/png",
-        }),
-        expect.objectContaining({
-          url: "/favicon-32x32.png",
-          sizes: "32x32",
-          type: "image/png",
-        }),
-      ]),
-      apple: expect.arrayContaining([
-        expect.objectContaining({
-          url: "/apple-touch-icon.png",
-          sizes: "180x180",
-          type: "image/png",
-        }),
-      ]),
-      shortcut: ["/favicon.ico"],
-    });
+    expect(metadata.metadataBase?.toString()).toBe(absoluteUrl("/"));
+    expect(metadata.applicationName).toBe(siteConfig.name);
+    expect(metadata.referrer).toBe("strict-origin-when-cross-origin");
+    expect(metadata.creator).toBe(siteConfig.creator);
+    expect(metadata.publisher).toBe(siteConfig.publisher);
+    expect(metadata.icons).toBeUndefined();
   });
 
   it("builds indexable metadata with canonical, locale, and preview directives", () => {
