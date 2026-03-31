@@ -3,6 +3,8 @@ import { FlickeringGrid } from "@/components/ui/flickering-grid-hero";
 
 export function Hero() {
   const heroCtaClassName = "w-full justify-center sm:w-[16rem]";
+  const heroBrandCtaClassName =
+    "w-full justify-center border border-[rgba(62, 62, 62, 0.67)] bg-[var(--copy-strong)] text-white shadow-[0_10px_22px_rgba(31,36,48,0.05)] hover:border-[rgba(98, 100, 103, 0.59)] hover:text-[var(--copy-strong)] focus-visible:border-[rgba(56,67,84,0.2)] focus-visible:text-[var(--copy-strong)] sm:w-[16rem]";
   const gridMask =
     "radial-gradient(circle at 50% 42%, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.9) 34%, rgba(0,0,0,0.46) 60%, transparent 82%)";
 
@@ -82,7 +84,8 @@ export function Hero() {
             <ButtonLink
               href="/request"
               size="lg"
-              className={heroCtaClassName}
+              className={heroBrandCtaClassName}
+              primaryFillClassName="bg-white"
             >
               Als Brand starten
             </ButtonLink>

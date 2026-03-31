@@ -9,7 +9,6 @@ export function usePastHero() {
     const hero = document.querySelector<HTMLElement>("[data-hero]");
 
     if (!hero) {
-      setIsPastHero(true);
       return;
     }
 

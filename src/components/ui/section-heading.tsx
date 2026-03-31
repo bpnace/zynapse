@@ -28,13 +28,13 @@ export function SectionHeading({
   return (
     <div className={`max-w-5xl space-y-4 ${alignment}`}>
       <h2
-        className="font-display text-4xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-[3.2rem]"
+        className="font-display text-3xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-[3.2rem]"
         data-animate-heading
       >
         {titleContent}
       </h2>
       <p
-        className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
+        className="max-w-5xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
         data-animate-copy
       >
         {copy}

@@ -50,7 +50,7 @@ export function ProblemCards() {
         title={
           <>
             Nicht das Briefing ist das <span data-animate-word>Problem</span>.
-            Meist fehlt das <span className="title-accent">passende Setup</span>{" "}
+            Es ist das <span className="title-accent">passende Setup</span>{" "}
             dazwischen.
           </>
         }

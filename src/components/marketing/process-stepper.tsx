@@ -20,8 +20,8 @@ export function ProcessStepper() {
         eyebrow="So arbeitet Zynapse"
         title={
           <>
-            Ein Ablauf, der <span data-animate-word>Anfrage,</span> Matching und{" "}
-            <span className="title-accent">Kampagnenproduktion verbindet</span>.
+            Ein Ablauf der <span data-animate-word>Anfrage,</span> Matching und{" "}
+            <span className="title-accent">Produktion verbindet</span>.
           </>
         }
         copy="Die Brand liefert Ziel, Kontext und Guardrails. Zynapse kuratiert das passende Spezialist:innen-Setup und führt daraus Produktion, Review und Handover in einem klaren Kampagnenfluss."

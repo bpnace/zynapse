@@ -51,9 +51,9 @@ export function VideoOutputGrid() {
         title={
           <>
             Nicht eine Stilrichtung. Sondern{" "}
-            <span className="title-accent">sechs sehr unterschiedliche Bildwelten</span>{" "}
+            <span className="title-accent">unendlich viele verschiedene Bildwelten</span>{" "}
             für{" "}
-            <span data-animate-word>echte Kampagnenarbeit.</span>
+            <span data-animate-word>komplexe Kampagnen.</span>
           </>
         }
         copy="Die aktuelle Auswahl zeigt nicht nur unterschiedliche Bildwelten, sondern auch unterschiedliche Ausspielungen: von 6-Sekunden-Bumpern über Square- und Feed-Cuts bis zu vertikalen Story-Formaten. Genau so sehen Richtungen aus, die Brands direkt reviewen, schärfen und kanalgenau weiterführen können."
