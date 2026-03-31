@@ -101,6 +101,8 @@ export function SiteHeader() {
               onClick={closeMenu}
               size="md"
               hidePrimaryArrows
+              className="border-[rgba(224,94,67,0.28)] text-[var(--accent-strong)] font-bold shadow-[0_18px_30px_rgba(224,94,67,0.14)]"
+              primaryFillClassName="bg-[linear-gradient(135deg,var(--accent-strong),#f0a84d)]"
             >
               {primaryCta.label}
             </ButtonLink>

@@ -31,7 +31,7 @@ export function FlowButtonContent({
       {showArrows ? (
         <ArrowRight
           aria-hidden="true"
-          className="pointer-events-none absolute left-[-25%] z-[9] h-4 w-4 stroke-current transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/button:left-4 group-focus-visible/button:left-4 group-hover/button:stroke-white group-focus-visible/button:stroke-white"
+          className="pointer-events-none absolute left-[-25%] z-[9] h-4 w-4 stroke-current transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/button:left-4 group-focus-visible/button:left-4"
         />
       ) : null}
 
@@ -56,7 +56,7 @@ export function FlowButtonContent({
       {showArrows ? (
         <ArrowRight
           aria-hidden="true"
-          className="pointer-events-none absolute right-4 z-[9] h-4 w-4 stroke-current transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/button:right-[-25%] group-focus-visible/button:right-[-25%] group-hover/button:stroke-white group-focus-visible/button:stroke-white"
+          className="pointer-events-none absolute right-4 z-[9] h-4 w-4 stroke-current transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/button:right-[-25%] group-focus-visible/button:right-[-25%]"
         />
       ) : null}
     </>
