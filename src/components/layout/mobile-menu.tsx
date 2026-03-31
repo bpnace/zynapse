@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
@@ -15,6 +15,7 @@ type MobileMenuProps = {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
+  const previousPathnameRef = useRef(pathname);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -32,6 +33,18 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (previousPathnameRef.current === pathname) {
+      return;
+    }
+
+    previousPathnameRef.current = pathname;
+
+    if (isOpen) {
+      onClose();
+    }
+  }, [isOpen, onClose, pathname]);
 
   return (
     <>
@@ -57,7 +70,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
-          <Wordmark />
+          <Wordmark onNavigate={onClose} />
           <button
             onClick={onClose}
             aria-label="Menü schließen"

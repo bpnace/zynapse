@@ -15,6 +15,7 @@ export function Wordmark({
   height = 305,
   imageClassName = "",
   priority = false,
+  onNavigate,
 }: {
   href?: string;
   className?: string;
@@ -24,10 +25,17 @@ export function Wordmark({
   height?: number;
   imageClassName?: string;
   priority?: boolean;
+  onNavigate?: (event: MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const pathname = usePathname();
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+    onNavigate?.(event);
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
     if (pathname !== href) {
       return;
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,13 +17,10 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const { isPastHero } = usePastHero();
+  const closeMenu = () => setMenuOpen(false);
 
   const isHomePage = pathname === "/";
   const mobileVisible = menuOpen || !isHomePage || isPastHero;
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
 
   return (
     <>
@@ -56,6 +53,7 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="Zynapse Startseite"
+            onClick={closeMenu}
             className="absolute left-1/2 -translate-x-1/2 md:hidden"
           >
             <Image
@@ -100,6 +98,7 @@ export function SiteHeader() {
             </Link>
             <ButtonLink
               href={primaryCta.href}
+              onClick={closeMenu}
               size="md"
               hidePrimaryArrows
             >
@@ -109,7 +108,7 @@ export function SiteHeader() {
         </div>
       </header>
 
-      <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileMenu isOpen={menuOpen} onClose={closeMenu} />
     </>
   );
 }

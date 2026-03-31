@@ -21,16 +21,6 @@ export type PricingPlan = {
   deliverables: string[];
 };
 
-export type CaseStudyEntry = {
-  slug: string;
-  brand: string;
-  sector: string;
-  summary: string;
-  challenge: string;
-  outcome: string;
-  metrics: string[];
-};
-
 export type CampaignAngle = {
   title: string;
   angle: string;
