@@ -1,0 +1,26 @@
+# Ralph Context Snapshot
+
+- task statement: Implement Phase 2 seeded workspace for the brand workspace demo on top of the Phase 1 foundation.
+- desired outcome: After invite-only login, a user lands in a believable seeded workspace with persisted organization bootstrap, seeded campaign, stages, assets, and sample review threads.
+- known facts/evidence:
+  - Phase 1 groundwork for Supabase SSR auth, Drizzle schema, protected `/workspace`, and tenant membership exists.
+  - Current workspace page is a placeholder dashboard without seed bootstrap or review thread data.
+  - Roadmap requires one seeded demo campaign per invited organization, 6 to 12 output assets, 2 to 3 sample comment threads, at least one approved asset, at least one changes-requested asset, and a clear next action.
+  - Buyer workflows, handover flow, and pilot request flow are explicitly out of scope for this task.
+- constraints:
+  - Keep `pnpm`.
+  - No new libraries beyond the already approved stack.
+  - Keep invite-only assumptions.
+  - Do not implement buyer workflow forms, handover, or pilot request.
+- unknowns/open questions:
+  - Whether demo asset files themselves need immediate storage-backed existence or whether persisted metadata with believable paths is sufficient for Phase 2.
+  - Whether the repo’s existing untracked `app-shell.tsx` is related to current work; ignore unless needed.
+- likely codebase touchpoints:
+  - `src/lib/db/schema/*`
+  - `src/lib/workspace/seeds/*`
+  - `src/lib/workspace/queries/*`
+  - `src/lib/auth/guards.ts`
+  - `src/app/(workspace)/workspace/*`
+  - `src/components/workspace/dashboard/*`
+  - `src/lib/content/pricing.ts`
+  - `drizzle/*`

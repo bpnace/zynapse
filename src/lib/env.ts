@@ -1,10 +1,24 @@
 const DEFAULT_INTAKE_WEBHOOK_URL =
   "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05";
 
+function readRequiredEnv(name: string) {
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(`${name} is required.`);
+  }
+
+  return value;
+}
+
 export function getEnv() {
   return {
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.eu",
     analyticsId: process.env.NEXT_PUBLIC_ANALYTICS_ID ?? "",
+    supabaseUrl:
+      process.env.NEXT_PUBLIC_SUPABASE_URL ??
+      "https://fqvxcyttyardsqugowjl.supabase.co",
+    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
     googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
     bingSiteVerification: process.env.BING_SITE_VERIFICATION ?? "",
     waitlistWebhookUrl:
@@ -13,8 +27,33 @@ export function getEnv() {
       DEFAULT_INTAKE_WEBHOOK_URL,
     intakeWebhookUrl:
       process.env.INTAKE_WEBHOOK_URL ?? DEFAULT_INTAKE_WEBHOOK_URL,
+    pilotRequestWebhookUrl:
+      process.env.PILOT_REQUEST_WEBHOOK_URL ??
+      process.env.INTAKE_WEBHOOK_URL ??
+      DEFAULT_INTAKE_WEBHOOK_URL,
     notifyEmail: process.env.NOTIFY_EMAIL ?? "ops@zynapse.eu",
     turnstileSiteKey: process.env.TURNSTILE_SITE_KEY ?? "",
     turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY ?? "",
+    brandInputsBucket: process.env.SUPABASE_BRAND_INPUTS_BUCKET ?? "",
+    demoAssetsBucket: process.env.SUPABASE_DEMO_ASSETS_BUCKET ?? "",
   };
+}
+
+export function getServerEnv() {
+  return {
+    ...getEnv(),
+    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "",
+    databaseUrl: process.env.DATABASE_URL ?? "",
+  };
+}
+
+export function getRequiredSupabaseEnv() {
+  return {
+    url: readRequiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
+    anonKey: readRequiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+  };
+}
+
+export function getRequiredDatabaseUrl() {
+  return readRequiredEnv("DATABASE_URL");
 }

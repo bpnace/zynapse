@@ -1,28 +1,55 @@
 import { buildMetadata } from "@/lib/seo";
 import { LoginWaitlistForm } from "@/components/forms/waitlist/login-waitlist-form";
+import { WorkspaceLoginForm } from "@/components/workspace/login/workspace-login-form";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
-  description: "Trag dich für frühen Zugang zur operativen Plattform von Zynapse ein.",
+  description: "Invite-only Login für den Brand Workspace von Zynapse mit Fallback zur Waitlist.",
   path: "/login",
   indexable: false,
 });
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const params = (await searchParams) ?? {};
+  const next =
+    typeof params.next === "string" && params.next.length > 0
+      ? params.next
+      : "/workspace";
+
   return (
-    <section className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 pt-32 pb-16 text-center sm:px-8">
-      <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
-        Sichere dir frühen Zugang zu Zynapse.
-      </h1>
-      <p className="px-0 text-base text-[color:var(--copy-body)] sm:px-8 sm:text-[1.0625rem]">
-        Hinter dem Login entsteht der operative Bereich von Zynapse: mit
-        zentralen Dashboards, laufenden Workspaces, klaren Projektzugängen und
-        allen Funktionen, die Zusammenarbeit zwischen Brand und Creative
-        strukturierter machen. Trag dich jetzt ein und wir informieren dich
-        direkt, sobald die ersten Zugänge freigeschaltet werden.
-      </p>
-      <div className="mx-auto w-full max-w-xl">
-        <LoginWaitlistForm />
+    <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-32 pb-16 sm:px-8">
+      <div className="max-w-3xl space-y-4">
+        <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
+          Zugang zum Brand Workspace von Zynapse.
+        </h1>
+        <p className="text-base text-[color:var(--copy-body)] sm:text-[1.0625rem]">
+          Der Workspace ist aktuell invite-only. Eingeladene Brand-Teams erhalten
+          per Magic Link Zugang zu ihrem geschützten Bereich. Wenn du noch keinen
+          Zugang hast, kannst du dich darunter weiter für frühen Zugang vormerken.
+        </p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+        <WorkspaceLoginForm next={next} />
+        <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-[rgba(247,244,238,0.72)] p-6">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--copy-muted)]">
+            Kein Invite?
+          </p>
+          <h2 className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+            Trag dich weiter für frühen Zugang ein.
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
+            Bis der invite-only Zugriff breiter freigeschaltet wird, bleibt die
+            Waitlist der richtige Weg für neue Teams ohne direkten Zugangslink.
+          </p>
+          <div className="mt-5">
+            <LoginWaitlistForm />
+          </div>
+        </div>
       </div>
     </section>
   );
