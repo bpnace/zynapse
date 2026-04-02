@@ -1,5 +1,0 @@
-{
-  "last_turn_at": "2026-04-02T13:57:45.495Z",
-  "turn_count": 25,
-  "last_agent_output": "The Supabase MCP auth was reconnected. I re-ran `codex mcp login supabase`, completed the browser OA"
-}
