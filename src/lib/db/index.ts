@@ -20,9 +20,12 @@ const globalForDb = globalThis as typeof globalThis & {
   __zynapseDb?: ReturnType<typeof createDbClient>["db"];
 };
 
-export function getDb() {
+function ensureDbClient() {
   if (globalForDb.__zynapseDb) {
-    return globalForDb.__zynapseDb;
+    return {
+      sql: globalForDb.__zynapseSql!,
+      db: globalForDb.__zynapseDb,
+    };
   }
 
   const databaseUrl = getRequiredDatabaseUrl();
@@ -35,5 +38,13 @@ export function getDb() {
   globalForDb.__zynapseSql = sql;
   globalForDb.__zynapseDb = db;
 
-  return db;
+  return { sql, db };
+}
+
+export function getDb() {
+  return ensureDbClient().db;
+}
+
+export function getSql() {
+  return ensureDbClient().sql;
 }

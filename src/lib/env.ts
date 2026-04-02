@@ -54,6 +54,24 @@ export function getRequiredSupabaseEnv() {
   };
 }
 
+export function getOptionalSupabaseEnv() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !anonKey) {
+    return null;
+  }
+
+  return {
+    url,
+    anonKey,
+  };
+}
+
+export function isDevPasswordLoginEnabled() {
+  return process.env.NODE_ENV !== "production";
+}
+
 export function getRequiredDatabaseUrl() {
   return readRequiredEnv("DATABASE_URL");
 }

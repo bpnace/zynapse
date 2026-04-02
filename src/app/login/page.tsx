@@ -1,6 +1,7 @@
 import { buildMetadata } from "@/lib/seo";
 import { LoginWaitlistForm } from "@/components/forms/waitlist/login-waitlist-form";
 import { WorkspaceLoginForm } from "@/components/workspace/login/workspace-login-form";
+import { isDevPasswordLoginEnabled } from "@/lib/env";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
@@ -15,22 +16,29 @@ type LoginPageProps = {
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = (await searchParams) ?? {};
+  const showPasswordLogin = isDevPasswordLoginEnabled();
   const next =
     typeof params.next === "string" && params.next.length > 0
       ? params.next
       : "/workspace";
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-32 pb-16 sm:px-8">
-      <div className="max-w-3xl space-y-4">
+    <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">
+      <div className="max-w-5xl space-y-4">
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
           Zugang zum Brand Workspace von Zynapse.
         </h1>
         <p className="text-base text-[color:var(--copy-body)] sm:text-[1.0625rem]">
           Der Workspace ist aktuell invite-only. Eingeladene Brand-Teams erhalten
-          per Magic Link Zugang zu ihrem geschützten Bereich. Wenn du noch keinen
-          Zugang hast, kannst du dich darunter weiter für frühen Zugang vormerken.
+          einen Login-Code per E-Mail fuer ihren geschuetzten Bereich. Wenn du
+          noch keinen Zugang hast, kannst du dich darunter weiter fuer fruehen
+          Zugang vormerken.
         </p>
+        {showPasswordLogin ? (
+          <p className="text-sm text-[var(--copy-muted)]">
+            In dieser Umgebung ist zusaetzlich ein Passwort-Login fuer Test-Accounts verfuegbar.
+          </p>
+        ) : null}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
