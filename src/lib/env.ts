@@ -1,6 +1,3 @@
-const DEFAULT_INTAKE_WEBHOOK_URL =
-  "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05";
-
 function readRequiredEnv(name: string) {
   const value = process.env[name];
 
@@ -24,13 +21,12 @@ export function getEnv() {
     waitlistWebhookUrl:
       process.env.WAITLIST_WEBHOOK_URL ??
       process.env.INTAKE_WEBHOOK_URL ??
-      DEFAULT_INTAKE_WEBHOOK_URL,
-    intakeWebhookUrl:
-      process.env.INTAKE_WEBHOOK_URL ?? DEFAULT_INTAKE_WEBHOOK_URL,
+      "",
+    intakeWebhookUrl: process.env.INTAKE_WEBHOOK_URL ?? "",
     pilotRequestWebhookUrl:
       process.env.PILOT_REQUEST_WEBHOOK_URL ??
       process.env.INTAKE_WEBHOOK_URL ??
-      DEFAULT_INTAKE_WEBHOOK_URL,
+      "",
     notifyEmail: process.env.NOTIFY_EMAIL ?? "ops@zynapse.eu",
     turnstileSiteKey: process.env.TURNSTILE_SITE_KEY ?? "",
     turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY ?? "",

@@ -1,3 +1,5 @@
+import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+
 type StageTrackerProps = {
   stages: {
     key: string;
@@ -8,28 +10,26 @@ type StageTrackerProps = {
 
 export function StageTracker({ stages, currentStage }: StageTrackerProps) {
   return (
-    <section className="rounded-[1.7rem] border border-[color:var(--line)] bg-white/70 p-6">
-      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--copy-muted)]">
-        Aktueller Status
-      </p>
-      <p className="mt-3 text-base text-[var(--copy-body)]">
-        {currentStage
-          ? `Die aktuelle Kampagne steht auf ${currentStage}.`
-          : "Noch keine Kampagnenstufen vorhanden. Die Seed-Daten folgen im nächsten Schritt."}
-      </p>
+    <section className="workspace-panel px-5 py-5">
+      <div className="space-y-2">
+        <p className="workspace-section-label">Stage progress</p>
+        <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
+          {currentStage
+            ? `The seeded campaign is currently in ${currentStage.replaceAll("_", " ")}.`
+            : "No campaign stages are visible yet."}
+        </p>
+      </div>
       {stages.length > 0 ? (
-        <div className="mt-5 grid gap-3">
+        <div className="mt-5 workspace-split-list">
           {stages.map((stage) => (
             <div
               key={stage.key}
-              className="flex items-center justify-between rounded-[1rem] border border-[color:var(--line)] bg-white p-3"
+              className="flex items-center justify-between gap-3 py-3"
             >
-              <span className="text-sm font-medium text-[var(--copy-strong)]">
-                {stage.key}
+              <span className="text-sm font-medium text-[var(--workspace-copy-strong)]">
+                {stage.key.replaceAll("_", " ")}
               </span>
-              <span className="text-[11px] uppercase tracking-[0.14em] text-[var(--copy-muted)]">
-                {stage.status}
-              </span>
+              <StatusPill value={stage.status} />
             </div>
           ))}
         </div>

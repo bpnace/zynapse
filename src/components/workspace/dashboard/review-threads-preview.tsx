@@ -1,3 +1,6 @@
+import { MessageSquareText } from "lucide-react";
+import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+
 type ReviewThreadPreviewItem = {
   threadId: string;
   assetTitle: string;
@@ -17,43 +20,44 @@ export function ReviewThreadsPreview({
   threads,
 }: ReviewThreadsPreviewProps) {
   return (
-    <section className="rounded-[1.7rem] border border-[color:var(--line)] bg-white/70 p-6">
+    <section id="review-queue" className="workspace-panel px-5 py-5">
       <div className="space-y-2">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--copy-muted)]">
-          Review preview
-        </p>
-        <h2 className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-          What your team would review here
+        <p className="workspace-section-label">Review queue</p>
+        <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+          Open stakeholder threads
         </h2>
       </div>
 
       {threads.length === 0 ? (
-        <p className="mt-4 text-sm leading-6 text-[var(--copy-body)]">
-          Noch keine Review-Spuren vorhanden.
+        <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
+          No review threads are visible yet.
         </p>
       ) : (
-        <div className="mt-5 grid gap-4">
+        <div className="mt-5 workspace-split-list">
           {threads.map((thread) => {
             const latestComment = thread.comments[0];
 
             return (
               <article
                 key={thread.threadId}
-                className="rounded-[1.3rem] border border-[color:var(--line)] bg-white p-4"
+                className="py-4"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <p className="text-sm font-medium text-[var(--copy-strong)]">
-                    {thread.assetTitle}
-                  </p>
-                  <span className="text-[11px] uppercase tracking-[0.14em] text-[var(--copy-muted)]">
-                    {thread.createdBy}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <MessageSquareText className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
+                        {thread.assetTitle}
+                      </p>
+                      <p className="mt-1 text-sm text-[var(--workspace-copy-muted)]">
+                        Started by {thread.createdBy.replaceAll("_", " ")}
+                      </p>
+                    </div>
+                  </div>
+                  <StatusPill value={latestComment?.commentType ?? "comment"} />
                 </div>
-                <p className="mt-3 text-sm leading-6 text-[var(--copy-body)]">
+                <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
                   {latestComment?.body}
-                </p>
-                <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-[var(--copy-muted)]">
-                  {latestComment?.commentType}
                 </p>
               </article>
             );

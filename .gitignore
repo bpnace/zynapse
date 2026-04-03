@@ -38,7 +38,19 @@
 # misc
 .DS_Store
 *.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.db
+*.sqlite
+*.sqlite3
 .claude
+.direnv/
+.envrc
 
 # debug
 *.log

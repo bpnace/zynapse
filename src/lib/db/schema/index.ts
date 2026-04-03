@@ -3,6 +3,7 @@ export * from "@/lib/db/schema/organizations";
 export * from "@/lib/db/schema/invites";
 export * from "@/lib/db/schema/memberships";
 export * from "@/lib/db/schema/brand-profiles";
+export * from "@/lib/db/schema/briefs";
 export * from "@/lib/db/schema/campaigns";
 export * from "@/lib/db/schema/campaign-stages";
 export * from "@/lib/db/schema/assets";

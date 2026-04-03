@@ -36,6 +36,8 @@ export const assetReviewStatusEnum = pgEnum("asset_review_status", [
   "rejected",
 ]);
 
+export const briefStatusEnum = pgEnum("brief_status", ["draft", "submitted"]);
+
 export function createdAtColumn() {
   return timestamp("created_at", { withTimezone: true }).defaultNow().notNull();
 }

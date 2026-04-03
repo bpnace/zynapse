@@ -5,6 +5,7 @@ import { createBrowserSupabaseClient } from "@/lib/auth/client";
 
 const pushMock = vi.fn();
 const refreshMock = vi.fn();
+const businessEmailLabel = /Gesch[aä]ftliche E-Mail/i;
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -59,7 +60,7 @@ describe("WorkspaceLoginForm", () => {
 
     expect(screen.getByRole("button", { name: "Code per E-Mail" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Mit Passwort" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Geschaeftliche E-Mail")).toBeInTheDocument();
+    expect(screen.getByLabelText(businessEmailLabel)).toBeInTheDocument();
     expect(screen.queryByLabelText("Passwort")).not.toBeInTheDocument();
   });
 
@@ -85,7 +86,7 @@ describe("WorkspaceLoginForm", () => {
 
     render(<WorkspaceLoginForm />);
 
-    fireEvent.change(screen.getByLabelText("Geschaeftliche E-Mail"), {
+    fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Anmelden" }));
@@ -118,7 +119,7 @@ describe("WorkspaceLoginForm", () => {
     render(<WorkspaceLoginForm next="/workspace?view=home" />);
 
     fireEvent.click(screen.getByRole("button", { name: "Mit Passwort" }));
-    fireEvent.change(screen.getByLabelText("Geschaeftliche E-Mail"), {
+    fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
     fireEvent.change(screen.getByLabelText("Passwort"), {
@@ -150,7 +151,7 @@ describe("WorkspaceLoginForm", () => {
 
     render(<WorkspaceLoginForm />);
 
-    fireEvent.change(screen.getByLabelText("Geschaeftliche E-Mail"), {
+    fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
     fireEvent.submit(screen.getByRole("button", { name: "Anmelden" }).closest("form")!);
@@ -189,7 +190,7 @@ describe("WorkspaceLoginForm", () => {
     render(<WorkspaceLoginForm />);
 
     fireEvent.click(screen.getByRole("button", { name: "Mit Passwort" }));
-    fireEvent.change(screen.getByLabelText("Geschaeftliche E-Mail"), {
+    fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
     fireEvent.change(screen.getByLabelText("Passwort"), {
@@ -208,7 +209,7 @@ describe("WorkspaceLoginForm", () => {
 
     render(<WorkspaceLoginForm />);
 
-    fireEvent.change(screen.getByLabelText("Geschaeftliche E-Mail"), {
+    fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
 
