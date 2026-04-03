@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { Field, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 import { saveBriefDraft } from "@/lib/workspace/actions/save-brief-draft";
 import { submitBrief } from "@/lib/workspace/actions/submit-brief";
+import {
+  formatWorkspaceDate,
+  formatWorkspaceLabel,
+} from "@/lib/workspace/formatting";
 import type {
   WorkspaceBriefField,
   WorkspaceBriefInput,
@@ -32,31 +36,23 @@ type StepDefinition = {
 const steps: StepDefinition[] = [
   {
     key: "brief-core",
-    label: "Objective and offer",
-    description: "Capture what the campaign needs to do and what product or offer it is built around.",
+    label: "Ziel und Angebot",
+    description: "Haltet fest, was diese Kampagne erreichen soll und welches Angebot im Mittelpunkt steht.",
     fields: ["title", "objective", "offer"],
   },
   {
     key: "audience-and-channels",
-    label: "Audience and channels",
-    description: "Document who this brief targets, how it should be distributed, and what angles matter most.",
+    label: "Zielgruppe und Kanäle",
+    description: "Beschreibt, wen das Briefing anspricht, wo es laufen soll und welche Angles führen müssen.",
     fields: ["audience", "channels", "hooks", "creativeReferences"],
   },
   {
     key: "timing-and-approvals",
-    label: "Budget, timing, and approval",
-    description: "Close the brief with operational context for budget, timing, and sign-off expectations.",
+    label: "Budget, Timing und Freigabe",
+    description: "Schließt das Briefing mit Budget, Timing und Freigabekontext ab, damit das Team sicher arbeiten kann.",
     fields: ["budgetRange", "timeline", "approvalNotes"],
   },
 ];
-
-function formatDate(value: Date) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(value);
-}
 
 export function BriefFlow({
   initialValues,
@@ -77,7 +73,7 @@ export function BriefFlow({
 
   const step = steps[stepIndex];
   const stepTitle = useMemo(
-    () => `Step ${stepIndex + 1} of ${steps.length}`,
+    () => `Schritt ${stepIndex + 1} von ${steps.length}`,
     [stepIndex],
   );
 
@@ -162,22 +158,21 @@ export function BriefFlow({
     <div className="grid gap-4">
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="space-y-3">
-          <p className="workspace-section-label">Briefs</p>
+          <p className="workspace-section-label">Briefings</p>
           <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            {currentStatus === "submitted" ? "Submitted brief" : "Create a real brief"}
+            {currentStatus === "submitted" ? "Eingereichtes Briefing" : "Briefing erstellen"}
           </h1>
           <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            This flow turns the seeded workspace into a real buyer workflow by
-            capturing campaign intent, channel priorities, and approval context in a
-            workspace-scoped brief.
+            Haltet Ziel, Kanalprioritäten und Freigabekontext an einem Ort fest,
+            damit das Team mit einem echten Briefing statt mit Annahmen arbeitet.
           </p>
         </div>
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{stepTitle}</span>
-            <span>{currentBriefId ? "Draft persisted" : "New brief"}</span>
-            <span>{currentStatus === "submitted" ? "Read only" : "Editable"}</span>
+            <span>{currentBriefId ? "Entwurf gespeichert" : "Neues Briefing"}</span>
+            <span>{currentStatus === "submitted" ? "Nur lesen" : "Bearbeitbar"}</span>
           </div>
         </div>
       </section>
@@ -185,7 +180,7 @@ export function BriefFlow({
       <div className="grid gap-4 xl:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)]">
         <section className="workspace-panel px-5 py-5">
           <div className="space-y-3">
-            <p className="workspace-section-label">Flow</p>
+            <p className="workspace-section-label">Ablauf</p>
             <div className="workspace-split-list">
               {steps.map((item, index) => (
                 <button
@@ -208,7 +203,7 @@ export function BriefFlow({
           </div>
 
           <div className="mt-6 border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Recent briefs</p>
+            <p className="workspace-section-label">Letzte Briefings</p>
             {recentBriefs.length > 0 ? (
               <div className="mt-3 workspace-split-list">
                 {recentBriefs.map((brief) => (
@@ -221,15 +216,15 @@ export function BriefFlow({
                       {brief.title}
                     </p>
                     <div className="mt-1 workspace-meta-row">
-                      <span>{brief.status}</span>
-                      <span>{formatDate(brief.startedAt)}</span>
+                      <span>{formatWorkspaceLabel(brief.status)}</span>
+                      <span>{formatWorkspaceDate(brief.startedAt)}</span>
                     </div>
                   </a>
                 ))}
               </div>
             ) : (
               <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                No saved briefs exist yet for this workspace.
+                Für diesen Workspace wurde noch kein Briefing gespeichert.
               </p>
             )}
           </div>
@@ -248,88 +243,88 @@ export function BriefFlow({
 
           <div className="mt-5 grid gap-5">
             {step.fields.includes("title") ? (
-              <Field label="Brief title" error={fieldErrors.title}>
+              <Field label="Titel des Briefings" error={fieldErrors.title}>
                 <TextInput
                   value={values.title}
                   onChange={(event) => updateValue("title", event.target.value)}
-                  placeholder="Q2 serum launch brief"
+                  placeholder="Q2 Briefing für Serum-Launch"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("objective") ? (
-              <Field label="Objective" error={fieldErrors.objective}>
+              <Field label="Ziel" error={fieldErrors.objective}>
                 <TextareaInput
                   value={values.objective}
                   onChange={(event) => updateValue("objective", event.target.value)}
-                  placeholder="What should this brief help the team achieve?"
+                  placeholder="Was soll das Team mit diesem Briefing erreichen?"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("offer") ? (
-              <Field label="Offer or product" error={fieldErrors.offer}>
+              <Field label="Angebot oder Produkt" error={fieldErrors.offer}>
                 <TextareaInput
                   value={values.offer}
                   onChange={(event) => updateValue("offer", event.target.value)}
-                  placeholder="What product or offer is the brief built around?"
+                  placeholder="Welches Produkt oder Angebot steht im Mittelpunkt?"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("audience") ? (
-              <Field label="Audience" error={fieldErrors.audience}>
+              <Field label="Zielgruppe" error={fieldErrors.audience}>
                 <TextareaInput
                   value={values.audience}
                   onChange={(event) => updateValue("audience", event.target.value)}
-                  placeholder="Who should the campaign resonate with?"
+                  placeholder="Bei wem soll die Kampagne Anklang finden?"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("channels") ? (
-              <Field label="Channel mix" error={fieldErrors.channels}>
+              <Field label="Kanal-Mix" error={fieldErrors.channels}>
                 <TextareaInput
                   value={values.channels}
                   onChange={(event) => updateValue("channels", event.target.value)}
-                  placeholder="Which channels matter most for this brief?"
+                  placeholder="Welche Kanäle sind für dieses Briefing am wichtigsten?"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("hooks") ? (
-              <Field label="Hooks or messaging priorities" error={fieldErrors.hooks}>
+              <Field label="Hooks oder Messaging-Prioritäten" error={fieldErrors.hooks}>
                 <TextareaInput
                   value={values.hooks}
                   onChange={(event) => updateValue("hooks", event.target.value)}
-                  placeholder="Which angles, hooks, or proof moments should lead?"
+                  placeholder="Welche Angles, Hooks oder Proof-Momente sollen führen?"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("creativeReferences") ? (
-              <Field label="Creative references" error={fieldErrors.creativeReferences}>
+              <Field label="Creative-Referenzen" error={fieldErrors.creativeReferences}>
                 <TextareaInput
                   value={values.creativeReferences}
                   onChange={(event) => updateValue("creativeReferences", event.target.value)}
-                  placeholder="Reference assets, examples, or current winners."
+                  placeholder="Relevante Assets, Beispiele oder aktuelle Gewinner ergänzen."
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("budgetRange") ? (
-              <Field label="Budget range" error={fieldErrors.budgetRange}>
+              <Field label="Budgetrahmen" error={fieldErrors.budgetRange}>
                 <TextInput
                   value={values.budgetRange}
                   onChange={(event) => updateValue("budgetRange", event.target.value)}
-                  placeholder="EUR 15k-25k"
+                  placeholder="15.000–25.000 EUR"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
@@ -340,18 +335,18 @@ export function BriefFlow({
                 <TextInput
                   value={values.timeline}
                   onChange={(event) => updateValue("timeline", event.target.value)}
-                  placeholder="Launch within four weeks"
+                  placeholder="Launch innerhalb von vier Wochen"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("approvalNotes") ? (
-              <Field label="Approval expectations" error={fieldErrors.approvalNotes}>
+              <Field label="Freigabe-Erwartungen" error={fieldErrors.approvalNotes}>
                 <TextareaInput
                   value={values.approvalNotes}
                   onChange={(event) => updateValue("approvalNotes", event.target.value)}
-                  placeholder="Who signs off and what should the team expect?"
+                  placeholder="Wer gibt frei, und was muss das Team vor der Freigabe beachten?"
                   disabled={currentStatus === "submitted"}
                 />
               </Field>
@@ -371,7 +366,7 @@ export function BriefFlow({
               disabled={isSaving || currentStatus === "submitted"}
               onClick={() => handleSave(false)}
             >
-              {isSaving ? "Saving..." : "Save draft"}
+              {isSaving ? "Speichert..." : "Entwurf speichern"}
             </button>
             <button
               type="button"
@@ -379,7 +374,7 @@ export function BriefFlow({
               disabled={isSaving || currentStatus === "submitted"}
               onClick={() => handleSave(true)}
             >
-              Save and continue
+              Speichern und weiter
             </button>
             <button
               type="button"
@@ -387,7 +382,7 @@ export function BriefFlow({
               disabled={isSaving || currentStatus === "submitted"}
               onClick={handleSubmit}
             >
-              {currentStatus === "submitted" ? "Submitted" : "Submit brief"}
+              {currentStatus === "submitted" ? "Eingereicht" : "Briefing einreichen"}
             </button>
           </div>
         </section>

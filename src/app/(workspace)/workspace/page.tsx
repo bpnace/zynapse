@@ -27,7 +27,7 @@ export default async function WorkspacePage() {
         campaignId={dashboard.latestCampaign?.id ?? null}
         campaignName={dashboard.latestCampaign?.name ?? null}
         currentStage={dashboard.latestCampaign?.currentStage ?? null}
-        openReviewCount={dashboard.reviewThreads.length}
+        openReviewCount={dashboard.reviewThreadCount}
         approvedAssetCount={approvedAssetCount}
       />
       <DashboardOverview
@@ -82,10 +82,10 @@ export default async function WorkspacePage() {
           <NextActionCard
             campaignId={dashboard.latestCampaign?.id ?? null}
             briefHref="/workspace/briefs/new"
-            title={dashboard.template?.nextAction.title ?? "Workspace ready"}
+            title={dashboard.template?.nextAction.title ?? "Workspace bereit"}
             body={
               dashboard.template?.nextAction.body ??
-              "The workspace is ready for the next review pass."
+              "Der Workspace ist bereit für den nächsten Review-Durchgang."
             }
           />
         </div>

@@ -22,15 +22,14 @@ export function OverviewTopBar({
     <section className="workspace-topbar px-4 py-4 sm:px-5">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="space-y-3">
-          <p className="workspace-section-label">Overview</p>
+          <p className="workspace-section-label">Übersicht</p>
           <div className="space-y-1">
             <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
               {organizationName}
             </h1>
             <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-              The current workspace is set up to show one realistic campaign, the
-              review path around it, and the commercial next step without sales-led
-              narration.
+              Zeigt, wo die Kampagne steht, welche Entscheidungen noch offen sind
+              und ob das Team bereit für einen bezahlten Piloten ist.
             </p>
           </div>
         </div>
@@ -41,38 +40,36 @@ export function OverviewTopBar({
             className="workspace-button workspace-button-primary"
           >
             <FolderKanban className="h-4 w-4" />
-            Focus campaign
+            Kampagne öffnen
           </a>
           <a
             href={campaignId ? `/workspace/campaigns/${campaignId}/review` : "#review-queue"}
             className="workspace-button workspace-button-secondary"
           >
             <MessageSquareText className="h-4 w-4" />
-            Review queue
+            Review öffnen
           </a>
-          <button
-            type="button"
-            className="workspace-button workspace-button-disabled sm:col-span-2"
-            disabled
-            title="Pilot request flow lands in a later redesign slice."
+          <a
+            href={campaignId ? `/workspace/pilot-request?campaignId=${campaignId}` : "/workspace/pilot-request"}
+            className="workspace-button workspace-button-secondary sm:col-span-2"
           >
-            Request paid pilot
+            Bezahlten Piloten anfragen
             <ArrowRight className="h-4 w-4" />
-          </button>
+          </a>
         </div>
       </div>
 
       <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
         <div className="workspace-meta-row">
-          <span>Seeded workspace ready</span>
+          <span>Workspace vorbereitet</span>
           {campaignName ? (
             <span className="inline-flex items-center gap-2">
               <FolderKanban className="h-3.5 w-3.5" />
               {campaignName}
             </span>
           ) : null}
-          <span>{openReviewCount} open review {openReviewCount === 1 ? "thread" : "threads"}</span>
-          <span>{approvedAssetCount} approved {approvedAssetCount === 1 ? "asset" : "assets"}</span>
+          <span>{openReviewCount} offene Review-{openReviewCount === 1 ? "Diskussion" : "Diskussionen"}</span>
+          <span>{approvedAssetCount} freigegebene {approvedAssetCount === 1 ? "Asset" : "Assets"}</span>
         </div>
         {campaignName ? (
           <div className="mt-3">

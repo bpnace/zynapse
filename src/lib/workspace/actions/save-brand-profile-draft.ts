@@ -47,7 +47,7 @@ export async function saveBrandProfileDraft(
     if (hasBlockingError) {
       return {
         success: false,
-        message: "Please complete the required fields before saving this step.",
+        message: "Bitte fülle die Pflichtfelder aus, bevor du diesen Schritt speicherst.",
         fieldErrors,
       };
     }
@@ -90,7 +90,7 @@ export async function saveBrandProfileDraft(
 
   return {
     success: true,
-    message: "Draft saved.",
+    message: "Entwurf gespeichert.",
     completion: getBrandProfileCompletion(values),
   };
 }

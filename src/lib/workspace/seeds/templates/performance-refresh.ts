@@ -24,14 +24,14 @@ export const performanceRefreshTemplate: SeedTemplate = {
     claimGuardrails: "Keep before/after implications subtle and avoid absolute statements.",
   },
   preparedBlocks: {
-    prepared: "The workspace already groups the refresh by angle, version, and approval status so your team sees where the next test window opens.",
-    review: "Review here is about deciding which refreshed angle is worth pushing back into spend, not restarting the campaign from zero.",
-    output: "The seeded deliverables simulate the kind of controlled creative refresh Zynapse would package for a monthly rhythm.",
-    nextStep: "The clearest next move is promoting the best approved variants into the next sprint scope.",
+    prepared: "Der Workspace gruppiert den Refresh bereits nach Angle, Version und Freigabestatus, damit euer Team sofort sieht, wo das nächste Testfenster aufgeht.",
+    review: "Im Review geht es hier darum zu entscheiden, welcher überarbeitete Angle wieder Budget verdient und nicht darum, die Kampagne neu zu starten.",
+    output: "Die Seed-Deliverables simulieren die Art kontrollierter Creative-Refreshes, die Zynapse für einen monatlichen Rhythmus paketieren würde.",
+    nextStep: "Der klarste nächste Schritt ist, die besten freigegebenen Varianten in den nächsten Sprint zu übernehmen.",
   },
   nextAction: {
-    title: "Decide which approved refresh variants deserve the next spend window",
-    body: "The current workspace suggests a Growth-style rhythm because multiple iterations are already clustered around one proven offer.",
+    title: "Entscheiden, welche freigegebenen Refresh-Varianten das nächste Spend-Fenster bekommen",
+    body: "Der aktuelle Workspace deutet auf einen Growth-Rhythmus hin, weil mehrere Iterationen bereits rund um ein bewährtes Angebot gebündelt sind.",
   },
   assets: [
     {

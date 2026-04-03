@@ -32,20 +32,20 @@ type StepDefinition = {
 const steps: StepDefinition[] = [
   {
     key: "brand-basics",
-    label: "Brand basics",
-    description: "Capture the website and product context that should personalize the workspace.",
+    label: "Brand-Grundlagen",
+    description: "Erfasst Website und Angebotskontext, damit sich der Workspace von Anfang an konkret anfühlt.",
     fields: ["website", "offerSummary"],
   },
   {
     key: "audience-and-tone",
-    label: "Audience and tone",
-    description: "Clarify who this campaign is for, where it should run, and how the brand should sound.",
+    label: "Zielgruppe und Tonalität",
+    description: "Beschreibt, für wen die Arbeit gedacht ist, wo sie laufen soll und wie die Brand klingen muss.",
     fields: ["targetAudience", "primaryChannels", "brandTone"],
   },
   {
     key: "review-and-guardrails",
-    label: "Review and guardrails",
-    description: "Document who reviews the work and the constraints the delivery flow must respect.",
+    label: "Review und Guardrails",
+    description: "Haltet fest, wer reviewt und welche Leitplanken das Team einhalten muss.",
     fields: ["reviewNotes", "claimGuardrails"],
   },
 ];
@@ -66,7 +66,7 @@ export function OnboardingFlow({
 
   const step = steps[stepIndex];
   const stepTitle = useMemo(
-    () => `Step ${stepIndex + 1} of ${steps.length}`,
+    () => `Schritt ${stepIndex + 1} von ${steps.length}`,
     [stepIndex],
   );
 
@@ -104,12 +104,12 @@ export function OnboardingFlow({
 
       if (isFinal || result.completion.isComplete) {
         setIsComplete(true);
-        setStatusMessage("Setup saved. The workspace now has enough brand context to feel tailored.");
+        setStatusMessage("Setup gespeichert. Der Workspace hat jetzt genug Brand-Kontext, um sich spezifisch für euer Team anzufühlen.");
         return;
       }
 
       setStepIndex((current) => Math.min(current + 1, steps.length - 1));
-      setStatusMessage("Draft saved. Continue with the next setup step.");
+      setStatusMessage("Entwurf gespeichert. Weiter mit dem nächsten Setup-Schritt.");
     });
   }
 
@@ -117,21 +117,21 @@ export function OnboardingFlow({
     return (
       <div className="grid gap-4">
         <section className="workspace-topbar px-4 py-4 sm:px-5">
-          <p className="workspace-section-label">Setup complete</p>
+          <p className="workspace-section-label">Setup abgeschlossen</p>
           <h1 className="mt-3 text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            {organizationName} is ready for the seeded workflow
+            {organizationName} ist bereit für den Workspace
           </h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            The brand profile is now populated enough for the seeded campaign,
-            review room, and handover surfaces to feel contextual instead of generic.
+            Das Brand-Profil gibt Kampagne, Review und Übergabe jetzt genug Kontext,
+            damit sie sich spezifisch statt generisch anfühlen.
           </p>
         </section>
 
         <section className="workspace-panel px-5 py-5">
-          <p className="workspace-section-label">Completion state</p>
+          <p className="workspace-section-label">Status</p>
           <div className="mt-4 workspace-meta-row">
-            <span>{completion.completed} of {completion.total} fields completed</span>
-            <span>{completion.percent}% complete</span>
+            <span>{completion.completed} von {completion.total} Feldern ausgefüllt</span>
+            <span>{completion.percent}% abgeschlossen</span>
           </div>
           <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
             {statusMessage}
@@ -142,7 +142,7 @@ export function OnboardingFlow({
               className="workspace-button workspace-button-primary"
               onClick={() => router.push("/workspace")}
             >
-              Return to workspace overview
+              Zurück zur Übersicht
             </button>
             <button
               type="button"
@@ -152,7 +152,7 @@ export function OnboardingFlow({
                 setStepIndex(0);
               }}
             >
-              Review setup again
+              Setup prüfen
             </button>
           </div>
         </section>
@@ -166,19 +166,19 @@ export function OnboardingFlow({
         <div className="space-y-3">
           <p className="workspace-section-label">Setup</p>
           <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            Brand profile setup
+            Brand-Setup
           </h1>
           <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            This short setup flow personalizes the seeded workspace without changing
-            the core seeded campaign logic.
+            Ergänzt den Brand-Kontext, den der Workspace braucht, damit Kampagne,
+            Review und Übergabe sich von Beginn an spezifisch für euer Team anfühlen.
           </p>
         </div>
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{stepTitle}</span>
-            <span>{completion.completed} of {completion.total} fields completed</span>
-            <span>{completion.percent}% complete</span>
+            <span>{completion.completed} von {completion.total} Feldern ausgefüllt</span>
+            <span>{completion.percent}% abgeschlossen</span>
           </div>
         </div>
       </section>
@@ -186,7 +186,7 @@ export function OnboardingFlow({
       <div className="grid gap-4 xl:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)]">
         <section className="workspace-panel px-5 py-5">
           <div className="space-y-3">
-            <p className="workspace-section-label">Progress</p>
+            <p className="workspace-section-label">Fortschritt</p>
             <div className="workspace-split-list">
               {steps.map((item, index) => (
                 <button
@@ -223,8 +223,8 @@ export function OnboardingFlow({
           <div className="mt-5 grid gap-5">
             {step.fields.includes("website") ? (
               <Field
-                label="Company website"
-                hint={`The organization name stays anchored to ${organizationName}.`}
+                label="Unternehmens-Website"
+                hint={`Der Organisationsname bleibt an ${organizationName} verankert.`}
                 error={fieldErrors.website}
               >
                 <TextInput
@@ -236,65 +236,65 @@ export function OnboardingFlow({
             ) : null}
 
             {step.fields.includes("offerSummary") ? (
-              <Field label="Product or offer" error={fieldErrors.offerSummary}>
+              <Field label="Produkt oder Angebot" error={fieldErrors.offerSummary}>
                 <TextareaInput
                   value={values.offerSummary}
                   onChange={(event) => updateValue("offerSummary", event.target.value)}
-                  placeholder="What the brand is selling and why it matters."
+                  placeholder="Was die Brand verkauft und warum es relevant ist."
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("targetAudience") ? (
-              <Field label="Target audience" error={fieldErrors.targetAudience}>
+              <Field label="Zielgruppe" error={fieldErrors.targetAudience}>
                 <TextareaInput
                   value={values.targetAudience}
                   onChange={(event) => updateValue("targetAudience", event.target.value)}
-                  placeholder="Who the campaign should resonate with."
+                  placeholder="Bei wem die Kampagne Anklang finden soll."
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("primaryChannels") ? (
-              <Field label="Primary channels" error={fieldErrors.primaryChannels}>
+              <Field label="Primäre Kanäle" error={fieldErrors.primaryChannels}>
                 <TextareaInput
                   value={values.primaryChannels}
                   onChange={(event) => updateValue("primaryChannels", event.target.value)}
-                  placeholder="Which channels matter most for this workspace."
+                  placeholder="Welche Kanäle für diesen Workspace am wichtigsten sind."
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("brandTone") ? (
-              <Field label="Brand tone" error={fieldErrors.brandTone}>
+              <Field label="Brand-Tonalität" error={fieldErrors.brandTone}>
                 <TextareaInput
                   value={values.brandTone}
                   onChange={(event) => updateValue("brandTone", event.target.value)}
-                  placeholder="How the work should sound and feel."
+                  placeholder="Wie sich die Arbeit anhören und anfühlen soll."
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("reviewNotes") ? (
               <Field
-                label="Review stakeholders and notes"
-                hint="This field currently captures who reviews the work and any review-specific context."
+                label="Reviewer und Hinweise"
+                hint="Hier notiert ihr, wer reviewt und worauf diese Personen achten."
                 error={fieldErrors.reviewNotes}
               >
                 <TextareaInput
                   value={values.reviewNotes}
                   onChange={(event) => updateValue("reviewNotes", event.target.value)}
-                  placeholder="Who needs to review the work, and what context should guide approval?"
+                  placeholder="Wer reviewt die Arbeit, und welcher Kontext ist für die Freigabe wichtig?"
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("claimGuardrails") ? (
-              <Field label="Legal or claim guardrails" error={fieldErrors.claimGuardrails}>
+              <Field label="Rechtliche oder Claim-Guardrails" error={fieldErrors.claimGuardrails}>
                 <TextareaInput
                   value={values.claimGuardrails}
                   onChange={(event) => updateValue("claimGuardrails", event.target.value)}
-                  placeholder="What the workflow must avoid promising or implying."
+                  placeholder="Welche Aussagen der Workflow nicht versprechen oder andeuten darf."
                 />
               </Field>
             ) : null}
@@ -313,7 +313,7 @@ export function OnboardingFlow({
               disabled={isSaving}
               onClick={() => saveCurrentStep(false)}
             >
-              {isSaving ? "Saving..." : "Save draft"}
+              {isSaving ? "Speichert..." : "Entwurf speichern"}
             </button>
             <button
               type="button"
@@ -321,7 +321,7 @@ export function OnboardingFlow({
               disabled={isSaving}
               onClick={() => saveCurrentStep(stepIndex === steps.length - 1)}
             >
-              {stepIndex === steps.length - 1 ? "Finish setup" : "Save and continue"}
+              {stepIndex === steps.length - 1 ? "Setup abschließen" : "Speichern und weiter"}
             </button>
           </div>
         </section>

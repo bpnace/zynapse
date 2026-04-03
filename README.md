@@ -41,13 +41,7 @@ Open `http://localhost:3000`.
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and set the values you actually need.
-
-Example:
-
-```bash
-cp .env.example .env.local
-```
+Create `.env.local` and set only the values you actually need.
 
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_ANALYTICS_ID`

@@ -56,14 +56,14 @@ export function ReviewMutationPanel({
     <div className="space-y-4">
       <div>
         <label className="workspace-section-label" htmlFor="review-note">
-          Review note
+          Review-Notiz hinzufügen
         </label>
         <textarea
           id="review-note"
           value={note}
           onChange={(event) => setNote(event.target.value)}
           disabled={!canReview || isPending}
-          placeholder="Leave a comment, approval note, or change request context."
+          placeholder="Feedback, Freigabekontext oder einen klaren Änderungswunsch ergänzen."
           className="field-input mt-3 min-h-32 resize-y"
         />
       </div>
@@ -75,7 +75,7 @@ export function ReviewMutationPanel({
           disabled={!canReview || isPending}
           onClick={() => runMutation("comment")}
         >
-          Add comment
+          Notiz speichern
         </button>
         <button
           type="button"
@@ -83,7 +83,7 @@ export function ReviewMutationPanel({
           disabled={!canReview || isPending}
           onClick={() => runMutation("approved")}
         >
-          Approve asset
+          Asset freigeben
         </button>
         <button
           type="button"
@@ -91,14 +91,14 @@ export function ReviewMutationPanel({
           disabled={!canReview || isPending}
           onClick={() => runMutation("changes_requested")}
         >
-          Request changes
+          Änderung anfordern
         </button>
       </div>
 
       <p className="text-xs leading-5 text-[var(--workspace-copy-muted)]">
         {canReview
-          ? "Comments and decisions persist immediately and update the asset and campaign review state."
-          : "This workspace role can view review history but cannot submit review actions."}
+          ? "Notizen und Entscheidungen werden sofort gespeichert und aktualisieren den Review-Status für Asset und Kampagne."
+          : "Diese Rolle kann die Historie sehen, aber keine Entscheidungen absenden."}
       </p>
 
       {message ? (

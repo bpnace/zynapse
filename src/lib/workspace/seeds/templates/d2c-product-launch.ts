@@ -24,14 +24,14 @@ export const d2cProductLaunchTemplate: SeedTemplate = {
     claimGuardrails: "No medical or cure claims. Avoid promising visible results in under 24 hours.",
   },
   preparedBlocks: {
-    prepared: "One launch campaign, six launch-ready variants, and a review path already staged for your team.",
-    review: "Your team can compare hook angles, proof moments, and CTA framing without needing a live sales walkthrough.",
-    output: "The seeded output mirrors what Zynapse would hand over after the first review cycle: ready-to-export paid social variants.",
-    nextStep: "If this launch logic fits, the next step is tightening approvals and finalizing the starter pilot scope.",
+    prepared: "Eine Launch-Kampagne, sechs launchbereite Varianten und ein bereits vorbereiteter Review-Pfad für euer Team.",
+    review: "Euer Team kann Hook-Angles, Proof-Momente und CTA-Setups vergleichen, ohne dass dafür ein Sales-Walkthrough nötig ist.",
+    output: "Der Seed-Output spiegelt wider, was Zynapse nach dem ersten Review-Zyklus übergeben würde: exportbereite Paid-Social-Varianten.",
+    nextStep: "Wenn diese Launch-Logik passt, ist der nächste Schritt, die Freigaben zu schärfen und den Starter-Pilot sauber einzugrenzen.",
   },
   nextAction: {
-    title: "Review the strongest proof-led launch angle",
-    body: "Two variants already look close to approval. The remaining open thread is mainly about claim precision and CTA tightness.",
+    title: "Stärksten proof-getriebenen Launch-Angle reviewen",
+    body: "Zwei Varianten wirken bereits fast freigabereif. Die verbleibende offene Diskussion dreht sich vor allem um Claim-Präzision und CTA-Schärfe.",
   },
   assets: [
     {

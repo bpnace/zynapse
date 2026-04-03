@@ -115,6 +115,7 @@ export async function getDashboardView(organizationId: string) {
     latestCampaign,
     stageItems,
     latestAssets,
+    reviewThreadCount: reviewThreadsById.size,
     reviewThreads: Array.from(reviewThreadsById.values()).slice(0, 3),
     template,
   };

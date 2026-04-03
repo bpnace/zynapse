@@ -1,5 +1,6 @@
 import { FileImage, FileVideo } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import { formatWorkspaceAssetType } from "@/lib/workspace/formatting";
 
 type AssetGridItem = {
   id: string;
@@ -19,18 +20,17 @@ export function AssetGrid({ assets }: AssetGridProps) {
     <section className="workspace-panel px-5 py-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="workspace-section-label">Latest deliverables</p>
+          <p className="workspace-section-label">Neueste Deliverables</p>
           <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-            Reviewable outputs
+            Review-bereite Assets
           </h2>
         </div>
-        <p className="text-sm text-[var(--workspace-copy-muted)]">{assets.length} items</p>
+        <p className="text-sm text-[var(--workspace-copy-muted)]">{assets.length} {assets.length === 1 ? "Eintrag" : "Einträge"}</p>
       </div>
 
       {assets.length === 0 ? (
         <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
-          No outputs are visible yet. Seeded deliverables will populate this module
-          once campaign assets are available.
+          Es sind noch keine Deliverables reviewbereit.
         </p>
       ) : (
         <div className="mt-5 workspace-split-list">
@@ -50,7 +50,7 @@ export function AssetGrid({ assets }: AssetGridProps) {
                     {asset.title}
                   </p>
                   <p className="mt-1 text-sm text-[var(--workspace-copy-muted)]">
-                    {asset.assetType}
+                    {formatWorkspaceAssetType(asset.assetType)}
                     {asset.format ? ` · ${asset.format}` : ""}
                     {asset.versionLabel ? ` · ${asset.versionLabel}` : ""}
                   </p>

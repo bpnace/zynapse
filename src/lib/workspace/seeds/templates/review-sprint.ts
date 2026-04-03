@@ -24,14 +24,14 @@ export const reviewSprintTemplate: SeedTemplate = {
     claimGuardrails: "Avoid overclaiming competitive superiority. Keep positioning language comparative but grounded.",
   },
   preparedBlocks: {
-    prepared: "The workspace is already structured around one clear review sprint so multiple stakeholders can react without reopening the brief each time.",
-    review: "Each open thread is tied to a specific asset and context note, making it easy to understand what still blocks approval.",
-    output: "The seeded output shows what Zynapse would actually hand to a team that needs alignment, not just raw creative volume.",
-    nextStep: "The next step is consolidating the open review notes into one approval-ready route instead of prolonging the sprint.",
+    prepared: "Der Workspace ist bereits um einen klaren Review-Sprint strukturiert, damit mehrere Stakeholder reagieren können, ohne das Briefing jedes Mal neu zu öffnen.",
+    review: "Jede offene Diskussion ist an ein konkretes Asset und einen Kontext-Hinweis gebunden, sodass schnell klar wird, was die Freigabe noch blockiert.",
+    output: "Der Seed-Output zeigt, was Zynapse einem Team mit Abstimmungsbedarf tatsächlich übergeben würde und nicht nur rohe Creative-Masse.",
+    nextStep: "Der nächste Schritt ist, die offenen Review-Hinweise in eine freigabereife Route zu verdichten, statt den Sprint weiter in die Länge zu ziehen.",
   },
   nextAction: {
-    title: "Consolidate open review notes into one approval-ready route",
-    body: "The workspace already shows where stakeholder feedback overlaps and where a final approval decision is still blocked.",
+    title: "Offene Review-Hinweise in eine freigabereife Route verdichten",
+    body: "Der Workspace zeigt bereits, wo sich Stakeholder-Feedback überschneidet und wo die finale Freigabe noch blockiert ist.",
   },
   assets: [
     {

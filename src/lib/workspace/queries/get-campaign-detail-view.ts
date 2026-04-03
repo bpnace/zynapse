@@ -35,35 +35,35 @@ function extractAngleLabel(title: string) {
 function buildPackageRecommendation(packageTier: string, nextStepCopy: string | null) {
   if (packageTier === "growth") {
     return {
-      heading: "Growth-style package fit",
+      heading: "Passender Fit für das Growth-Paket",
       body:
         nextStepCopy ??
-        "This seeded campaign already suggests an ongoing cadence, so the stronger recommendation is continuity rather than a one-off sprint.",
+        "Diese Seed-Kampagne deutet bereits auf einen laufenden Rhythmus hin. Die stärkere Empfehlung ist deshalb Kontinuität statt eines einmaligen Sprints.",
     };
   }
 
   return {
-    heading: "Starter pilot fit",
+    heading: "Passender Fit für den Starter-Piloten",
     body:
       nextStepCopy ??
-      "The current campaign is structured as a focused proof of process, which aligns with a paid Starter pilot before broader rollout.",
+      "Die aktuelle Kampagne ist als fokussierter Prozessbeweis strukturiert und passt damit gut zu einem bezahlten Starter-Piloten vor einem breiteren Rollout.",
   };
 }
 
 function buildReviewDeadlineContext(currentStage: string, changeRequestedCount: number) {
   if (currentStage === "in_review") {
     return {
-      label: "Current review cycle",
+      label: "Aktueller Review-Zyklus",
       detail:
         changeRequestedCount > 0
-          ? "No explicit deadline is seeded. The current review cycle stays open until the requested changes are resolved."
-          : "No explicit deadline is seeded. The current review cycle stays open until final reviewer decisions land.",
+          ? "Es ist keine feste Deadline hinterlegt. Der aktuelle Review-Zyklus bleibt offen, bis die angeforderten Änderungen erledigt sind."
+          : "Es ist keine feste Deadline hinterlegt. Der aktuelle Review-Zyklus bleibt offen, bis die finalen Reviewer-Entscheidungen vorliegen.",
     };
   }
 
   return {
-    label: "Review timing",
-    detail: "The seeded workspace does not define a hard deadline for this stage yet.",
+    label: "Review-Timing",
+    detail: "Der Seed-Workspace definiert für diesen Status noch keine harte Deadline.",
   };
 }
 

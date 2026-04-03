@@ -12,25 +12,25 @@ type GetHandoverViewParams = {
 
 function groupAssetLabel(assetType: string) {
   if (assetType.includes("video")) {
-    return "Video deliverables";
+    return "Video-Deliverables";
   }
 
-  return "Static deliverables";
+  return "Statische Deliverables";
 }
 
 function buildUsageSummary(currentStage: string) {
   if (currentStage === "approved" || currentStage === "handover_ready") {
     return {
-      heading: "Approved for handover",
+      heading: "Für die Übergabe freigegeben",
       body:
-        "These approved assets represent what the buyer would receive at the end of the current seeded workflow. Rights and usage are framed as delivery notes in this slice, not as legal automation.",
+        "Diese freigegebenen Assets stehen für das, was der Buyer am Ende des aktuellen Seed-Workflows erhalten würde. Rechte und Nutzung werden in diesem Schritt als Lieferhinweise dargestellt, nicht als juristische Automatisierung.",
     };
   }
 
   return {
-    heading: "Delivery notes in progress",
+    heading: "Lieferhinweise in Arbeit",
     body:
-      "The handover surface is ready to show approved outputs, but the seeded campaign still depends on final review completion before this would represent a finished delivery package.",
+      "Die Übergabeansicht ist bereit, freigegebene Outputs zu zeigen. Die Seed-Kampagne hängt aber noch vom finalen Review ab, bevor daraus ein abgeschlossenes Deliverable-Paket wird.",
   };
 }
 

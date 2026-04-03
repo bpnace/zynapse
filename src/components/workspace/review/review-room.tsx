@@ -2,6 +2,13 @@ import Link from "next/link";
 import { ArrowRight, FileImage, FileVideo } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
 import { ReviewMutationPanel } from "@/components/workspace/review/review-mutation-panel";
+import {
+  formatWorkspaceAssetType,
+  formatWorkspaceDate,
+  formatWorkspaceLabel,
+  formatWorkspaceRole,
+  formatWorkspaceTime,
+} from "@/lib/workspace/formatting";
 
 type ReviewRoomProps = {
   campaign: {
@@ -47,25 +54,6 @@ type ReviewRoomProps = {
   canReview: boolean;
 };
 
-function formatDate(value: Date) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(value);
-}
-
-function formatTime(value: Date) {
-  return new Intl.DateTimeFormat("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(value);
-}
-
-function formatRole(value: string) {
-  return value.replaceAll("_", " ");
-}
-
 export function ReviewRoom({
   campaign,
   assets,
@@ -77,14 +65,14 @@ export function ReviewRoom({
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="space-y-3">
-            <p className="workspace-section-label">Review room</p>
+            <p className="workspace-section-label">Review</p>
             <div className="space-y-1">
               <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Review is structured around one selected asset, its open threads,
-                and the approval decision that moves the seeded campaign forward.
+                Prüft ein Asset nach dem anderen, haltet Entscheidungen sichtbar
+                und bringt die Kampagne voran, ohne Kontext zu verlieren.
               </p>
             </div>
           </div>
@@ -94,13 +82,13 @@ export function ReviewRoom({
               href={`/workspace/campaigns/${campaign.id}`}
               className="workspace-button workspace-button-secondary"
             >
-              Back to campaign
+              Zurück zur Kampagne
             </Link>
             <Link
               href={`/workspace/campaigns/${campaign.id}/handover`}
               className="workspace-button workspace-button-secondary"
             >
-              View handover center
+              Übergabe öffnen
             </Link>
           </div>
         </div>
@@ -108,8 +96,8 @@ export function ReviewRoom({
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{campaign.packageTier}</span>
-            <span>{assets.length} reviewable {assets.length === 1 ? "asset" : "assets"}</span>
-            <span>{assets.filter((asset) => asset.reviewStatus === "changes_requested").length} with open changes</span>
+            <span>{assets.length} reviewbare {assets.length === 1 ? "Asset" : "Assets"}</span>
+            <span>{assets.filter((asset) => asset.reviewStatus === "changes_requested").length} mit offenen Änderungen</span>
           </div>
           <div className="mt-3">
             <StatusPill value={campaign.currentStage} tone="accent" />
@@ -123,10 +111,10 @@ export function ReviewRoom({
             <div>
               <p className="workspace-section-label">Assets</p>
               <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Review queue
+                Assets aktuell im Review
               </h2>
             </div>
-            <p className="text-sm text-[var(--workspace-copy-muted)]">{assets.length} items</p>
+            <p className="text-sm text-[var(--workspace-copy-muted)]">{assets.length} {assets.length === 1 ? "Eintrag" : "Einträge"}</p>
           </div>
 
           <div className="mt-5 workspace-split-list">
@@ -145,7 +133,7 @@ export function ReviewRoom({
                         {asset.title}
                       </p>
                       <div className="mt-1 workspace-meta-row">
-                        <span>{asset.assetType}</span>
+                        <span>{formatWorkspaceAssetType(asset.assetType)}</span>
                         {asset.format ? <span>{asset.format}</span> : null}
                         {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
                       </div>
@@ -153,11 +141,11 @@ export function ReviewRoom({
                     <StatusPill value={asset.reviewStatus} />
                   </div>
                   <div className="mt-3 flex items-center justify-between gap-3 text-sm text-[var(--workspace-copy-muted)]">
-                    <span>{asset.threadCount} {asset.threadCount === 1 ? "thread" : "threads"}</span>
+                    <span>{asset.threadCount} {asset.threadCount === 1 ? "Diskussion" : "Diskussionen"}</span>
                     {asset.latestCommentType ? (
-                      <span className="truncate">{asset.latestCommentType.replaceAll("_", " ")}</span>
+                      <span className="truncate">{formatWorkspaceLabel(asset.latestCommentType)}</span>
                     ) : (
-                      <span>No comments yet</span>
+                      <span>Noch kein Feedback</span>
                     )}
                   </div>
                 </Link>
@@ -171,17 +159,17 @@ export function ReviewRoom({
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-3">
-                  <p className="workspace-section-label">Selected asset</p>
+                  <p className="workspace-section-label">Ausgewähltes Asset</p>
                   <StatusPill value={selectedAsset.reviewStatus} />
                 </div>
                 <h2 className="text-[1.65rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                   {selectedAsset.title}
                 </h2>
                 <div className="workspace-meta-row">
-                  <span>{selectedAsset.assetType}</span>
+                  <span>{formatWorkspaceAssetType(selectedAsset.assetType)}</span>
                   {selectedAsset.format ? <span>{selectedAsset.format}</span> : null}
                   {selectedAsset.versionLabel ? <span>{selectedAsset.versionLabel}</span> : null}
-                  <span>Added {formatDate(selectedAsset.createdAt)}</span>
+                  <span>Hinzugefügt am {formatWorkspaceDate(selectedAsset.createdAt)}</span>
                 </div>
               </div>
 
@@ -195,7 +183,7 @@ export function ReviewRoom({
                         <FileImage className="h-4 w-4" />
                       )}
                       <span className="text-sm font-medium">
-                        Preview surface
+                        Vorschau des ausgewählten Assets
                       </span>
                     </div>
                     <div className="space-y-3">
@@ -203,9 +191,8 @@ export function ReviewRoom({
                         {selectedAsset.title}
                       </p>
                       <p className="max-w-xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                        This slice keeps the review room grounded in the real seeded
-                        asset data while using a neutral preview frame instead of a
-                        decorative media card.
+                        Behaltet das Asset im Blick, während ihr rechts Kommentare
+                        und Entscheidungen bearbeitet.
                       </p>
                     </div>
                   </div>
@@ -221,15 +208,15 @@ export function ReviewRoom({
                 href={`/workspace/campaigns/${campaign.id}/handover`}
                 className="workspace-button workspace-button-secondary"
               >
-                Review delivery surface
+                Übergabe prüfen
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           ) : (
             <div className="space-y-3">
-              <p className="workspace-section-label">Selected asset</p>
+              <p className="workspace-section-label">Ausgewähltes Asset</p>
               <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
-                No reviewable asset is available for this campaign yet.
+                Aktuell ist noch kein Asset für das Review verfügbar.
               </p>
             </div>
           )}
@@ -237,9 +224,9 @@ export function ReviewRoom({
 
         <section className="workspace-panel px-5 py-5">
           <div className="space-y-2">
-            <p className="workspace-section-label">Comments</p>
+            <p className="workspace-section-label">Kommentare</p>
             <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-              Threaded review history
+              Review-Verlauf
             </h2>
           </div>
 
@@ -250,12 +237,12 @@ export function ReviewRoom({
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
-                        Thread started by {formatRole(thread.createdBy)}
+                        Erstellt von {formatWorkspaceRole(thread.createdBy)}
                       </p>
                       <div className="workspace-meta-row">
                         {thread.anchor?.timecode ? <span>{thread.anchor.timecode}</span> : null}
                         {thread.anchor?.focus ? <span>{thread.anchor.focus}</span> : null}
-                        {thread.resolvedAt ? <span>Resolved</span> : <span>Open</span>}
+                        {thread.resolvedAt ? <span>Geschlossen</span> : <span>Offen</span>}
                       </div>
                     </div>
                     <StatusPill value={thread.resolvedAt ? "approved" : "in_review"} />
@@ -267,11 +254,11 @@ export function ReviewRoom({
                         <div className="flex flex-wrap items-center justify-between gap-3">
                           <div className="space-y-1">
                             <p className="text-sm font-medium text-[var(--workspace-copy-strong)]">
-                              {formatRole(comment.authorId)}
+                              {formatWorkspaceRole(comment.authorId)}
                             </p>
                             <div className="workspace-meta-row">
-                              <span>{formatDate(comment.createdAt)}</span>
-                              <span>{formatTime(comment.createdAt)}</span>
+                              <span>{formatWorkspaceDate(comment.createdAt)}</span>
+                              <span>{formatWorkspaceTime(comment.createdAt)}</span>
                             </div>
                           </div>
                           <StatusPill value={comment.commentType} />
@@ -288,14 +275,14 @@ export function ReviewRoom({
           ) : (
             <div className="mt-5 space-y-3">
               <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
-                No persisted threads are available for the selected asset.
+                Für das ausgewählte Asset wurde noch kein Feedback erfasst.
               </p>
             </div>
           )}
 
           <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
             <Link href="/workspace" className="workspace-button workspace-button-secondary">
-              Return to workspace overview
+              Zurück zur Übersicht
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

@@ -31,7 +31,7 @@ export async function submitBrief(
   if (!capability.canCreateBriefs) {
     return {
       success: false,
-      message: "Only workspace admins can submit briefs.",
+      message: "Nur Workspace-Admins können ein Briefing einreichen.",
     };
   }
 
@@ -40,7 +40,7 @@ export async function submitBrief(
   if (!parsed.success) {
     return {
       success: false,
-      message: "Complete the full brief before submitting it.",
+      message: "Bitte vervollständige das Briefing, bevor du es einreichst.",
     };
   }
 
@@ -57,14 +57,14 @@ export async function submitBrief(
     if (!existing || existing.organizationId !== bootstrap.organization.id) {
       return {
         success: false,
-        message: "This brief is not available in the current workspace.",
+        message: "Dieses Briefing ist im aktuellen Workspace nicht verfügbar.",
       };
     }
 
     if (existing.status === "submitted") {
       return {
         success: false,
-        message: "This brief has already been submitted.",
+        message: "Dieses Briefing wurde bereits eingereicht.",
       };
     }
 
@@ -91,7 +91,7 @@ export async function submitBrief(
 
     return {
       success: true,
-      message: "Brief submitted.",
+      message: "Briefing eingereicht. Das Team kann jetzt mit diesem schreibgeschützten Input arbeiten.",
       briefId,
       status: "submitted",
     };
@@ -122,7 +122,7 @@ export async function submitBrief(
 
   return {
     success: true,
-    message: "Brief submitted.",
+    message: "Briefing eingereicht. Das Team kann jetzt mit diesem schreibgeschützten Input arbeiten.",
     briefId: created.id,
     status: "submitted",
   };

@@ -38,6 +38,16 @@ export const assetReviewStatusEnum = pgEnum("asset_review_status", [
 
 export const briefStatusEnum = pgEnum("brief_status", ["draft", "submitted"]);
 
+export const pilotRequestStatusEnum = pgEnum("pilot_request_status", [
+  "submitted",
+  "failed",
+]);
+
+export const pilotRequestHandoffModeEnum = pgEnum("pilot_request_handoff_mode", [
+  "webhook",
+  "log",
+]);
+
 export function createdAtColumn() {
   return timestamp("created_at", { withTimezone: true }).defaultNow().notNull();
 }

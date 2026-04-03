@@ -37,7 +37,7 @@ export async function saveBriefDraft(
   if (!capability.canCreateBriefs) {
     return {
       success: false,
-      message: "Only workspace admins can create or edit briefs.",
+      message: "Nur Workspace-Admins können Briefings erstellen oder bearbeiten.",
     };
   }
 
@@ -62,7 +62,7 @@ export async function saveBriefDraft(
     if (hasBlockingError) {
       return {
         success: false,
-        message: "Please complete the required fields before saving this step.",
+        message: "Bitte fülle die Pflichtfelder aus, bevor du diesen Schritt speicherst.",
         fieldErrors,
       };
     }
@@ -82,14 +82,14 @@ export async function saveBriefDraft(
     if (!existing || existing.organizationId !== bootstrap.organization.id) {
       return {
         success: false,
-        message: "This brief is not available in the current workspace.",
+        message: "Dieses Briefing ist im aktuellen Workspace nicht verfügbar.",
       };
     }
 
     if (existing.status === "submitted") {
       return {
         success: false,
-        message: "Submitted briefs are read only.",
+        message: "Eingereichte Briefings sind schreibgeschützt.",
       };
     }
 
@@ -114,7 +114,7 @@ export async function saveBriefDraft(
 
     return {
       success: true,
-      message: "Draft saved.",
+      message: "Entwurf gespeichert.",
       briefId,
       status: "draft",
     };
@@ -143,7 +143,7 @@ export async function saveBriefDraft(
 
   return {
     success: true,
-    message: "Draft saved.",
+    message: "Entwurf gespeichert.",
     briefId: created.id,
     status: "draft",
   };

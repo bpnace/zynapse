@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, FileImage, FileVideo, FolderOutput } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import {
+  formatWorkspaceAssetType,
+  formatWorkspaceLabel,
+} from "@/lib/workspace/formatting";
 
 type HandoverCenterProps = {
   campaign: {
@@ -44,10 +48,6 @@ type HandoverCenterProps = {
   nextStep: string | null;
 };
 
-function formatStageLabel(value: string) {
-  return value.replaceAll("_", " ");
-}
-
 export function HandoverCenter({
   campaign,
   stageItems,
@@ -62,15 +62,14 @@ export function HandoverCenter({
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="space-y-3">
-            <p className="workspace-section-label">Handover center</p>
+            <p className="workspace-section-label">Übergabe</p>
             <div className="space-y-1">
               <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                This is the final delivery surface for the seeded campaign: approved
-                outputs, delivery metadata, rights context, and the next commercial
-                step once the review cycle is complete.
+                Diese Ansicht bündelt freigegebene Assets, Übergabedetails und den
+                nächsten kommerziellen Schritt, sobald die Arbeit bereit ist.
               </p>
             </div>
           </div>
@@ -80,24 +79,22 @@ export function HandoverCenter({
               href={`/workspace/campaigns/${campaign.id}`}
               className="workspace-button workspace-button-secondary"
             >
-              Back to campaign
+              Zurück zur Kampagne
             </Link>
-            <button
-              type="button"
-              className="workspace-button workspace-button-disabled"
-              disabled
-              title="Pilot request flow lands in a later workflow slice."
+            <Link
+              href={`/workspace/pilot-request?campaignId=${campaign.id}`}
+              className="workspace-button workspace-button-secondary"
             >
-              Request paid pilot
-            </button>
+              Bezahlten Piloten anfragen
+            </Link>
           </div>
         </div>
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{campaign.packageTier}</span>
-            <span>{approvedAssets.length} approved assets</span>
-            <span>{groupedAssets.length} delivery groups</span>
+            <span>{approvedAssets.length} freigegebene Assets</span>
+            <span>{groupedAssets.length} Übergabegruppen</span>
           </div>
           <div className="mt-3">
             <StatusPill value={campaign.currentStage} tone="accent" />
@@ -109,9 +106,9 @@ export function HandoverCenter({
         <div className="grid gap-4">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Approved outputs</p>
+              <p className="workspace-section-label">Freigegebene Outputs</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                What the buyer would receive now
+                Freigegebene Assets für die Übergabe
               </h2>
             </div>
 
@@ -136,7 +133,7 @@ export function HandoverCenter({
                                 </p>
                               </div>
                               <div className="mt-2 workspace-meta-row">
-                                <span>{asset.assetType}</span>
+                                <span>{formatWorkspaceAssetType(asset.assetType)}</span>
                                 {asset.format ? <span>{asset.format}</span> : null}
                                 {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
                               </div>
@@ -152,13 +149,13 @@ export function HandoverCenter({
             ) : (
               <div className="mt-5 space-y-3">
                 <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
-                  No approved assets are available for handover yet.
+                  Noch keine freigegebenen Assets sind bereit für die Übergabe.
                 </p>
                 <Link
                   href={`/workspace/campaigns/${campaign.id}/review`}
                   className="workspace-button workspace-button-secondary"
                 >
-                  Return to review room
+                  Zurück ins Review
                 </Link>
               </div>
             )}
@@ -166,9 +163,9 @@ export function HandoverCenter({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Mock delivery metadata</p>
+              <p className="workspace-section-label">Liefer-Metadaten</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Delivery package references
+                Liefer-Referenzen
               </h2>
             </div>
 
@@ -183,27 +180,27 @@ export function HandoverCenter({
                   </div>
                   <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <div>
-                      <p className="workspace-section-label">Storage path</p>
+                      <p className="workspace-section-label">Speicherpfad</p>
                       <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
-                        {asset.storagePath ?? "No storage path available"}
+                        {asset.storagePath ?? "Kein Speicherpfad vorhanden"}
                       </p>
                     </div>
                     <div>
-                      <p className="workspace-section-label">Thumbnail path</p>
+                      <p className="workspace-section-label">Thumbnail-Pfad</p>
                       <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
-                        {asset.thumbnailPath ?? "No thumbnail path available"}
+                        {asset.thumbnailPath ?? "Kein Thumbnail-Pfad vorhanden"}
                       </p>
                     </div>
                     <div>
                       <p className="workspace-section-label">Version</p>
                       <p className="mt-2 text-sm text-[var(--workspace-copy-body)]">
-                        {asset.versionLabel ?? "No version label"}
+                        {asset.versionLabel ?? "Keine Versionsangabe"}
                       </p>
                     </div>
                     <div>
-                      <p className="workspace-section-label">Source</p>
+                      <p className="workspace-section-label">Quelle</p>
                       <p className="mt-2 text-sm text-[var(--workspace-copy-body)]">
-                        {asset.source ?? "No source metadata"}
+                        {asset.source ?? "Keine Quellen-Metadaten"}
                       </p>
                     </div>
                   </div>
@@ -211,8 +208,8 @@ export function HandoverCenter({
               ))}
             </div>
             <p className="mt-5 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-              This slice exposes delivery references and package metadata only. It
-              intentionally does not pretend a live download pipeline already exists.
+              Die Liefer-Referenzen sind hier verfügbar. Eine Live-Download-Automatisierung
+              ist in diesem Workspace bewusst nicht enthalten.
             </p>
           </section>
         </div>
@@ -220,9 +217,9 @@ export function HandoverCenter({
         <div className="grid gap-4 xl:sticky xl:top-5 xl:self-start">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Usage and rights summary</p>
+              <p className="workspace-section-label">Nutzungs- und Rechteübersicht</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Delivery context
+                Nutzung und Rechte
               </h2>
             </div>
             <p className="mt-4 text-base font-semibold text-[var(--workspace-copy-strong)]">
@@ -233,20 +230,20 @@ export function HandoverCenter({
             </p>
 
             <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
-              <p className="workspace-section-label">Campaign notes</p>
+              <p className="workspace-section-label">Kampagnenhinweise</p>
               <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
                 {campaignNotes ??
-                  "No additional campaign delivery notes are seeded for this handover yet."}
+                  "Für diese Übergabe liegen noch keine zusätzlichen Lieferhinweise vor."}
               </p>
             </div>
 
             <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
-              <p className="workspace-section-label">Workflow status</p>
+              <p className="workspace-section-label">Workflow-Status</p>
               <div className="mt-3 workspace-split-list">
                 {stageItems.map((stage) => (
                   <div key={stage.stageKey} className="flex items-center justify-between gap-3 py-3">
                     <span className="text-sm text-[var(--workspace-copy-body)]">
-                      {formatStageLabel(stage.stageKey)}
+                      {formatWorkspaceLabel(stage.stageKey)}
                     </span>
                     <StatusPill value={stage.status} />
                   </div>
@@ -257,14 +254,14 @@ export function HandoverCenter({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Next step</p>
+              <p className="workspace-section-label">Nächster Schritt</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                What happens after handover
+                Nächster Schritt
               </h2>
             </div>
             <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
               {nextStep ??
-                "The next workflow slice will turn this delivery package into the paid pilot request flow."}
+                "Nutzt diese Übergabeansicht, um zu entscheiden, ob die Kampagne bereit für einen bezahlten Piloten ist."}
             </p>
 
             <div className="mt-5 grid gap-3">
@@ -272,21 +269,19 @@ export function HandoverCenter({
                 href={`/workspace/campaigns/${campaign.id}/review`}
                 className="workspace-button workspace-button-secondary"
               >
-                Back to review room
+                Zurück ins Review
               </Link>
-              <button
-                type="button"
-                className="workspace-button workspace-button-disabled"
-                disabled
-                title="Pilot request flow lands in a later workflow slice."
+              <Link
+                href={`/workspace/pilot-request?campaignId=${campaign.id}`}
+                className="workspace-button workspace-button-primary"
               >
-                Request paid pilot
+                Bezahlten Piloten anfragen
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
             <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-              Pilot request stays visible as the commercial next step, but it remains
-              read-only until that routed flow is implemented.
+              Wenn das Deliverable-Paket stimmig ist, schickt die Pilot-Anfrage ab,
+              um in den nächsten kommerziellen Schritt zu gehen.
             </p>
           </section>
         </div>

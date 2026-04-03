@@ -1,5 +1,6 @@
 import { MessageSquareText } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import { formatWorkspaceRole } from "@/lib/workspace/formatting";
 
 type ReviewThreadPreviewItem = {
   threadId: string;
@@ -22,15 +23,16 @@ export function ReviewThreadsPreview({
   return (
     <section id="review-queue" className="workspace-panel px-5 py-5">
       <div className="space-y-2">
-        <p className="workspace-section-label">Review queue</p>
+        <p className="workspace-section-label">Review-Queue</p>
         <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-          Open stakeholder threads
+          Aktuelles Review-Feedback
         </h2>
       </div>
 
       {threads.length === 0 ? (
         <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
-          No review threads are visible yet.
+          Es wurde noch kein Review-Feedback erfasst. Sobald Kommentare eingehen,
+          erscheinen die neuesten Hinweise hier.
         </p>
       ) : (
         <div className="mt-5 workspace-split-list">
@@ -50,7 +52,7 @@ export function ReviewThreadsPreview({
                         {thread.assetTitle}
                       </p>
                       <p className="mt-1 text-sm text-[var(--workspace-copy-muted)]">
-                        Started by {thread.createdBy.replaceAll("_", " ")}
+                        Eröffnet von {formatWorkspaceRole(thread.createdBy)}
                       </p>
                     </div>
                   </div>

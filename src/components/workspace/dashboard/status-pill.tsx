@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { formatWorkspaceLabel } from "@/lib/workspace/formatting";
 
 type StatusPillProps = {
   value: string;
@@ -6,7 +7,7 @@ type StatusPillProps = {
 };
 
 function formatLabel(value: string) {
-  return value.replaceAll("_", " ");
+  return formatWorkspaceLabel(value);
 }
 
 export function StatusPill({

@@ -16,17 +16,20 @@ export const workspaceCapabilities = {
     canEditBrandProfile: true,
     canCreateBriefs: true,
     canReviewAssets: true,
+    canSubmitPilotRequest: true,
   },
   brand_reviewer: {
     canManageInvites: false,
     canEditBrandProfile: false,
     canCreateBriefs: false,
     canReviewAssets: true,
+    canSubmitPilotRequest: false,
   },
   zynapse_ops: {
     canManageInvites: true,
     canEditBrandProfile: true,
     canCreateBriefs: true,
     canReviewAssets: true,
+    canSubmitPilotRequest: true,
   },
 } as const;

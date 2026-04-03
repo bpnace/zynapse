@@ -26,24 +26,24 @@ export function DashboardOverview({
     {
       label: "Organisation",
       value: organizationName,
-      detail: primaryChannels ?? audience ?? "Invite-only buyer workspace",
+      detail: primaryChannels ?? audience ?? "Privater Brand-Workspace",
     },
     {
-      label: "Campaigns",
+      label: "Kampagnen",
       value: String(campaignCount),
-      detail: campaignCount === 1 ? "Active seeded campaign" : "Campaigns in workspace",
+      detail: campaignCount === 1 ? "1 aktive Kampagne im Workspace" : "Kampagnen aktuell im Workspace",
     },
     {
       label: "Assets",
       value: String(assetCount),
-      detail: assetCount === 1 ? "Reviewable output" : "Reviewable outputs",
+      detail: assetCount === 1 ? "1 Asset ist reviewbereit" : "Assets sind reviewbereit",
     },
     {
-      label: "Setup progress",
+      label: "Setup-Fortschritt",
       value: `${onboardingCompletion.percent}%`,
       detail: onboardingCompletion.isComplete
-        ? "Brand profile is complete enough for the workspace to feel tailored."
-        : `${onboardingCompletion.completed} of ${onboardingCompletion.total} profile fields completed.`,
+        ? "Der Brand-Kontext ist vollständig genug, damit sich der Workspace spezifisch anfühlt."
+        : `${onboardingCompletion.completed} von ${onboardingCompletion.total} Profilfeldern sind ausgefüllt.`,
     },
   ];
 
@@ -62,13 +62,13 @@ export function DashboardOverview({
             <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
               {item.detail}
             </p>
-            {item.label === "Setup progress" ? (
+            {item.label === "Setup-Fortschritt" ? (
               <div className="mt-3">
                 <Link
                   href="/workspace/onboarding"
                   className="workspace-button workspace-button-secondary"
                 >
-                  {onboardingCompletion.isComplete ? "Review setup" : "Continue setup"}
+                  {onboardingCompletion.isComplete ? "Setup prüfen" : "Setup fortsetzen"}
                 </Link>
               </div>
             ) : null}

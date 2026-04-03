@@ -9,3 +9,4 @@ export * from "@/lib/db/schema/campaign-stages";
 export * from "@/lib/db/schema/assets";
 export * from "@/lib/db/schema/review-threads";
 export * from "@/lib/db/schema/comments";
+export * from "@/lib/db/schema/pilot-requests";

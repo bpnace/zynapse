@@ -1,4 +1,5 @@
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import { formatWorkspaceLabel } from "@/lib/workspace/formatting";
 
 type StageTrackerProps = {
   stages: {
@@ -12,11 +13,11 @@ export function StageTracker({ stages, currentStage }: StageTrackerProps) {
   return (
     <section className="workspace-panel px-5 py-5">
       <div className="space-y-2">
-        <p className="workspace-section-label">Stage progress</p>
+        <p className="workspace-section-label">Fortschritt</p>
         <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
           {currentStage
-            ? `The seeded campaign is currently in ${currentStage.replaceAll("_", " ")}.`
-            : "No campaign stages are visible yet."}
+            ? `Die aktuelle Kampagne befindet sich in ${formatWorkspaceLabel(currentStage)}.`
+            : "Für diese Kampagne ist noch kein Statusverlauf verfügbar."}
         </p>
       </div>
       {stages.length > 0 ? (
@@ -27,7 +28,7 @@ export function StageTracker({ stages, currentStage }: StageTrackerProps) {
               className="flex items-center justify-between gap-3 py-3"
             >
               <span className="text-sm font-medium text-[var(--workspace-copy-strong)]">
-                {stage.key.replaceAll("_", " ")}
+                {formatWorkspaceLabel(stage.key)}
               </span>
               <StatusPill value={stage.status} />
             </div>

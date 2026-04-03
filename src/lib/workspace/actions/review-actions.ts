@@ -32,7 +32,7 @@ async function getReviewMutationContext(campaignId: string, assetId: string) {
 
   if (!capability.canReviewAssets) {
     return {
-      error: "You do not have access to review campaign assets.",
+      error: "Du hast keine Berechtigung, Kampagnen-Assets zu reviewen.",
     } as const;
   }
 
@@ -53,7 +53,7 @@ async function getReviewMutationContext(campaignId: string, assetId: string) {
 
   if (!asset || asset.organizationId !== bootstrap.organization.id) {
     return {
-      error: "This review target is not available in the current workspace.",
+      error: "Dieses Review-Ziel ist im aktuellen Workspace nicht verfügbar.",
     } as const;
   }
 
@@ -178,7 +178,7 @@ export async function addReviewComment(
   if (!parsed.success) {
     return {
       success: false,
-      message: "Enter a more specific review comment before submitting.",
+      message: "Bitte ergänze eine konkretere Review-Notiz, bevor du speicherst.",
     };
   }
 
@@ -208,7 +208,7 @@ export async function addReviewComment(
 
   return {
     success: true,
-    message: "Comment added.",
+    message: "Review-Notiz gespeichert.",
   };
 }
 
@@ -225,7 +225,7 @@ export async function applyReviewDecision(
   if (!parsed.success) {
     return {
       success: false,
-      message: "This review decision is not valid.",
+      message: "Diese Review-Entscheidung ist ungültig.",
     };
   }
 
@@ -244,8 +244,8 @@ export async function applyReviewDecision(
     parsed.data.note.trim().length > 0
       ? parsed.data.note
       : decision === "approved"
-        ? "Approved in the review room."
-        : "Changes requested in the review room.";
+        ? "Im Review freigegeben."
+        : "Im Review zur Überarbeitung markiert.";
 
   const thread = await getOrCreateThread(
     context.db,
@@ -302,7 +302,7 @@ export async function applyReviewDecision(
     success: true,
     message:
       decision === "approved"
-        ? "Asset approved."
-        : "Change request saved.",
+        ? "Asset freigegeben."
+        : "Änderungswunsch gespeichert.",
   };
 }

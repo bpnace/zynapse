@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import {
+  ArrowUpRight,
   ClipboardList,
   FolderKanban,
   LayoutGrid,
@@ -12,14 +13,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type WorkspaceShellProps = {
-  organizationName: string;
-  role: string;
-  website?: string | null;
-  activeCampaignId?: string | null;
-  children: React.ReactNode;
-};
+import { formatWorkspaceRole } from "@/lib/workspace/formatting";
 
 type PlannedNavigationItem = {
   label: string;
@@ -29,9 +23,13 @@ type PlannedNavigationItem = {
 
 const plannedNavigation: PlannedNavigationItem[] = [];
 
-function formatRole(role: string) {
-  return role.replaceAll("_", " ");
-}
+type WorkspaceShellProps = {
+  organizationName: string;
+  role: string;
+  website?: string | null;
+  activeCampaignId?: string | null;
+  children: React.ReactNode;
+};
 
 export function WorkspaceShell({
   organizationName,
@@ -42,21 +40,23 @@ export function WorkspaceShell({
 }: WorkspaceShellProps) {
   const pathname = usePathname();
   const mobileLocationLabel = pathname.includes("/review")
-    ? "Review room"
+    ? "Review"
     : pathname.includes("/handover")
-      ? "Handover center"
+      ? "Übergabe"
     : pathname.includes("/onboarding")
       ? "Setup"
     : pathname.includes("/briefs/")
-      ? "Briefs"
+      ? "Briefings"
+    : pathname.includes("/pilot-request")
+      ? "Pilot-Anfrage"
     : pathname.includes("/campaigns/")
-      ? "Campaign"
-      : "Overview active";
+      ? "Kampagne"
+      : "Übersicht";
   const navigation = [
     {
       href: "/workspace",
-      label: "Overview",
-      helper: "Current campaign and next actions",
+      label: "Übersicht",
+      helper: "Aktuelle Kampagne und nächste Schritte",
       icon: LayoutGrid,
       active: pathname === "/workspace",
     },
@@ -64,8 +64,8 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}`
         : undefined,
-      label: "Campaign",
-      helper: "Strategy, angles, deliverables",
+      label: "Kampagne",
+      helper: "Strategie, Angles und Assets",
       icon: FolderKanban,
       active:
         Boolean(activeCampaignId) &&
@@ -75,22 +75,22 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}/review`
         : undefined,
-      label: "Review Room",
-      helper: "Comments, approvals, change requests",
+      label: "Review",
+      helper: "Kommentare, Freigaben, Änderungswünsche",
       icon: ShieldCheck,
       active: pathname.includes("/review"),
     },
     {
       href: "/workspace/onboarding",
       label: "Setup",
-      helper: "Brand profile and stakeholders",
+      helper: "Brand-Profil und Stakeholder",
       icon: Settings2,
       active: pathname === "/workspace/onboarding",
     },
     {
       href: "/workspace/briefs/new",
-      label: "Briefs",
-      helper: "In-product intake and submissions",
+      label: "Briefings",
+      helper: "Intake und Freigabe im Produkt",
       icon: ClipboardList,
       active: pathname.includes("/briefs/"),
     },
@@ -98,10 +98,19 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}/handover`
         : undefined,
-      label: "Handover Center",
-      helper: "Approved outputs and delivery notes",
+      label: "Übergabe",
+      helper: "Freigegebene Assets und Liefernotizen",
       icon: Rocket,
       active: pathname.includes("/handover"),
+    },
+    {
+      href: activeCampaignId
+        ? `/workspace/pilot-request?campaignId=${activeCampaignId}`
+        : "/workspace/pilot-request",
+      label: "Pilot-Anfrage",
+      helper: "Kommerzielle Übergabe an Ops",
+      icon: ArrowUpRight,
+      active: pathname === "/workspace/pilot-request",
     },
   ];
 
@@ -124,8 +133,8 @@ export function WorkspaceShell({
               </div>
             </div>
             <div className="mt-4 workspace-meta-row text-[var(--workspace-sidebar-copy-muted)]">
-              <span>{formatRole(role)}</span>
-              <span>Invite-only buyer workspace</span>
+              <span>{formatWorkspaceRole(role)}</span>
+              <span>Privater Brand-Workspace</span>
             </div>
           </div>
 
@@ -174,37 +183,39 @@ export function WorkspaceShell({
             })}
           </nav>
 
-          <div className="mt-8 space-y-3">
-            <p className="workspace-section-label">Planned next</p>
-            <div className="space-y-2">
-              {plannedNavigation.map((item) => {
-                const Icon = item.icon;
+          {plannedNavigation.length > 0 ? (
+            <div className="mt-8 space-y-3">
+              <p className="workspace-section-label">Als Nächstes geplant</p>
+              <div className="space-y-2">
+                {plannedNavigation.map((item) => {
+                  const Icon = item.icon;
 
-                return (
-                  <div key={item.label} className="workspace-nav-item workspace-nav-item-muted">
-                    <span className="workspace-nav-icon workspace-nav-icon-muted">
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <span className="min-w-0 flex-1 space-y-0.5">
-                      <span className="block text-sm font-medium text-[var(--workspace-copy-strong)]">
-                        {item.label}
+                  return (
+                    <div key={item.label} className="workspace-nav-item workspace-nav-item-muted">
+                      <span className="workspace-nav-icon workspace-nav-icon-muted">
+                        <Icon className="h-4 w-4" />
                       </span>
-                      <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                        {item.helper}
+                      <span className="min-w-0 flex-1 space-y-0.5">
+                        <span className="block text-sm font-medium text-[var(--workspace-copy-strong)]">
+                          {item.label}
+                        </span>
+                        <span className="block text-xs text-[var(--workspace-copy-muted)]">
+                          {item.helper}
+                        </span>
                       </span>
-                    </span>
-                    <span className="workspace-coming-soon">Planned</span>
-                  </div>
-                );
-              })}
+                      <span className="workspace-coming-soon">Geplant</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div className="mt-auto border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Why this workspace exists</p>
+            <p className="workspace-section-label">Warum es diesen Workspace gibt</p>
             <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Show the campaign structure, review path, and handover quality before
-              asking the buyer to commit to a paid pilot.
+              Zeigt Kampagnenstruktur, Review-Pfad und Übergabequalität, bevor ein
+              Buyer sich auf einen bezahlten Piloten festlegt.
             </p>
           </div>
         </aside>
@@ -217,7 +228,7 @@ export function WorkspaceShell({
               </p>
               <div className="workspace-meta-row">
                 <span>{mobileLocationLabel}</span>
-                <span>{formatRole(role)}</span>
+                <span>{formatWorkspaceRole(role)}</span>
               </div>
             </div>
           </div>
