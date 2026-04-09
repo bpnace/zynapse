@@ -62,7 +62,7 @@ export function CheckboxPill({
       className={cn(
         "rounded-full border px-4 py-2 text-sm font-medium",
         checked
-          ? "border-transparent bg-[rgba(156,244,215,0.16)] text-[var(--mint)]"
+          ? "border-[rgba(224,94,67,0.28)] bg-[rgba(246,107,76,0.12)] text-[var(--accent-strong)]"
           : "border-[color:var(--line)] bg-white/[0.04] text-[var(--foreground)] hover:border-[color:var(--line-strong)]",
       )}
     >

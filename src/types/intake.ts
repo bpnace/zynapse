@@ -2,13 +2,14 @@ export type BrandInquiry = {
   industry: string;
   productUrl: string;
   goal: string;
-  channel: string;
+  channels: string[];
   budgetRange: string;
   timeline: string;
   notes: string;
   contactName: string;
   workEmail: string;
   company: string;
+  datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
 };
@@ -22,6 +23,7 @@ export type CreativeApplication = {
   availability: string;
   compensationNotes: string;
   location: string;
+  datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
 };
@@ -36,4 +38,30 @@ export type ContactInquiry = {
   datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
+};
+
+export type WaitlistWebhookSource =
+  | "waitlist_signup"
+  | "brand_inquiry"
+  | "creative_application";
+
+export type WaitlistWebhookEnvironment = "development" | "production";
+
+export type WaitlistWebhookContact = {
+  email: string;
+  name?: string;
+  company?: string;
+};
+
+export type WaitlistWebhookEnvelope<
+  TRaw extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  source: WaitlistWebhookSource;
+  env: WaitlistWebhookEnvironment;
+  timestamp: string;
+  userAgent: string;
+  origin: string;
+  siteUrl: string;
+  contact: WaitlistWebhookContact;
+  raw: TRaw;
 };

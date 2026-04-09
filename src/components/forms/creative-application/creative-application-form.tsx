@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -127,12 +128,11 @@ export function CreativeApplicationForm() {
       <div className="section-card rounded-[2rem] p-8">
         <span className="eyebrow">Track für Kreative</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Deine Bewerbung ist eingegangen.
+          Danke, deine Bewerbung ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
-          Wir prüfen jetzt deine Angaben, Cases und Fokuskanäle. Bis die Übergabe
-          live geschaltet ist, läuft die Bewerbung intern noch als strukturierter
-          Testeintrag.
+          Wir prüfen Profil, Cases und Fokusbereiche und melden uns, sobald wir
+          im Launch-Rollout passende nächste Schritte freigeben.
         </p>
       </div>
     );
@@ -210,6 +210,28 @@ export function CreativeApplicationForm() {
               placeholder="Welche Kreativ-Projekte, AI-Workflows oder Kampagnen hast du bereits geführt und was war dein konkreter Beitrag?"
             />
           </Field>
+          <label className="grid gap-2">
+            <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+              <input
+                type="checkbox"
+                {...register("datenschutzAccepted")}
+                className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+              />
+              <span>
+                Ich akzeptiere die{" "}
+                <Link
+                  href="/legal/privacy"
+                  className="underline decoration-[color:var(--accent-soft)] underline-offset-4 hover:text-[var(--copy-strong)]"
+                >
+                  Datenschutzerklärung
+                </Link>
+                .
+              </span>
+            </span>
+            {errors.datenschutzAccepted ? (
+              <span className="field-error">{errors.datenschutzAccepted.message}</span>
+            ) : null}
+          </label>
           {submitError ? (
             <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
               {submitError}

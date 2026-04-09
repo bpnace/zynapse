@@ -13,6 +13,7 @@ describe("creativeApplicationSchema", () => {
       availability: "2 brands per month",
       compensationNotes: "Monthly retainer",
       location: "Berlin / CET",
+      datenschutzAccepted: true,
       startedAt: Date.now(),
       website: "",
     });
@@ -31,6 +32,26 @@ describe("creativeApplicationSchema", () => {
       availability: "2 brands per month",
       compensationNotes: "",
       location: "Berlin / CET",
+      datenschutzAccepted: true,
+      startedAt: Date.now(),
+      website: "",
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("requires accepted privacy terms", () => {
+    const result = creativeApplicationSchema.safeParse({
+      name: "Alex Growth",
+      email: "alex@example.com",
+      portfolioUrl: "https://example.com/portfolio",
+      focusChannels: ["TikTok"],
+      caseSummary:
+        "Managed recurring paid social testing for three consumer brands with weekly creative iterations.",
+      availability: "2 brands per month",
+      compensationNotes: "",
+      location: "Berlin / CET",
+      datenschutzAccepted: false,
       startedAt: Date.now(),
       website: "",
     });

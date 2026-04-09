@@ -14,6 +14,9 @@ export const creativeApplicationSchema = z.object({
   availability: z.string().trim().min(2, "Bitte Verfügbarkeit angeben."),
   compensationNotes: z.string().trim().max(1200, "Bitte auf maximal 1200 Zeichen kürzen."),
   location: z.string().trim().min(2, "Bitte Standort oder Zeitzone angeben."),
+  datenschutzAccepted: z
+    .boolean()
+    .refine((value) => value, "Bitte bestätige die Datenschutzerklärung."),
   startedAt: z.number().int().positive(),
   website: z.string().trim(),
 });
