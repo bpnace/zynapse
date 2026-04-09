@@ -1,7 +1,5 @@
 import { buildMetadata } from "@/lib/seo";
 import { LoginWaitlistForm } from "@/components/forms/waitlist/login-waitlist-form";
-import { WorkspaceLoginForm } from "@/components/workspace/login/workspace-login-form";
-import { isDevPasswordLoginEnabled } from "@/lib/env";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
@@ -10,53 +8,34 @@ export const metadata = buildMetadata({
   indexable: false,
 });
 
-type LoginPageProps = {
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
-};
-
-export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const params = (await searchParams) ?? {};
-  const showPasswordLogin = isDevPasswordLoginEnabled();
-  const next =
-    typeof params.next === "string" && params.next.length > 0
-      ? params.next
-      : "/workspace";
-
+export default function LoginPage() {
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">
-      <div className="max-w-5xl space-y-4">
+    <section className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">
+      <div className="max-w-4xl space-y-4">
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
-          Zugang zum Brand Workspace von Zynapse.
+          Wir legen bald los!
         </h1>
         <p className="text-base text-[color:var(--copy-body)] sm:text-[1.0625rem]">
-          Der Workspace ist aktuell invite-only. Eingeladene Brand-Teams erhalten
-          einen Login-Code per E-Mail fuer ihren geschuetzten Bereich. Wenn du
-          noch keinen Zugang hast, kannst du dich darunter weiter fuer fruehen
-          Zugang vormerken.
+          Der Workspace wird aktuell schrittweise entwickelt und freigeschaltet. Trage dich mit
+          deiner geschäftlichen E-Mail ein, damit wir dich nach dem Launch oder
+          beim nächsten passenden Rollout direkt berücksichtigen können.
         </p>
-        {showPasswordLogin ? (
-          <p className="text-sm text-[var(--copy-muted)]">
-            In dieser Umgebung ist zusaetzlich ein Passwort-Login fuer Test-Accounts verfuegbar.
-          </p>
-        ) : null}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-        <WorkspaceLoginForm next={next} />
-        <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-[rgba(247,244,238,0.72)] p-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--copy-muted)]">
-            Kein Invite?
-          </p>
-          <h2 className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-            Trag dich weiter für frühen Zugang ein.
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-            Bis der invite-only Zugriff breiter freigeschaltet wird, bleibt die
-            Waitlist der richtige Weg für neue Teams ohne direkten Zugangslink.
-          </p>
-          <div className="mt-5">
-            <LoginWaitlistForm />
-          </div>
+      <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-white/75 p-6 sm:p-8">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--copy-muted)]">
+          Frühzugang
+        </p>
+        <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)] sm:text-4xl">
+          Trag dich für den bevorzugten Zugang ein.
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-[color:var(--copy-body)] sm:text-base">
+          Solange der Workspace noch nicht allgemein freigeschaltet ist, bleibt
+          die Waitlist der richtige Weg für neue Teams. Wir melden uns direkt,
+          sobald wir den nächsten Zugang oder ein passendes Setup freigeben.
+        </p>
+        <div className="mt-6 max-w-3xl">
+          <LoginWaitlistForm />
         </div>
       </div>
     </section>

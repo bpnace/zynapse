@@ -1,6 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
 import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -13,6 +15,7 @@ import {
   type BrandInquiryInput,
 } from "@/lib/validation/brand-inquiry";
 import {
+  CheckboxPill,
   Field,
   SelectInput,
   TextareaInput,
@@ -33,7 +36,7 @@ const steps = [
   {
     title: "Ziel & Kanal",
     copy: "Worauf soll die kreative Route zuerst optimieren und wo wird sie als Erstes ausgespielt?",
-    fields: ["goal", "channel"] as const,
+    fields: ["goal", "channels"] as const,
   },
   {
     title: "Budget & Timing",
@@ -59,6 +62,15 @@ const timelineOptions = [
   "Noch in Planung",
 ];
 
+const channelOptions = [
+  "TikTok",
+  "Instagram Reels",
+  "YouTube Shorts",
+  "Meta Ads",
+  "LinkedIn Video",
+  "Pinterest",
+];
+
 export function BrandInquiryWizard() {
   const [stepIndex, setStepIndex] = useState(0);
   const [submitError, setSubmitError] = useState("");
@@ -71,6 +83,7 @@ export function BrandInquiryWizard() {
     watch,
     reset,
     trigger,
+    setValue,
     getValues,
     formState: { errors },
   } = useForm<BrandInquiryInput>({
@@ -78,6 +91,8 @@ export function BrandInquiryWizard() {
     defaultValues: createBrandInquiryDefaults(),
     mode: "onChange",
   });
+
+  const selectedChannels = watch("channels");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(BRAND_INQUIRY_STORAGE_KEY);
@@ -116,6 +131,21 @@ export function BrandInquiryWizard() {
     setStepIndex((current) => Math.max(current - 1, 0));
   }
 
+  function toggleChannel(channel: string) {
+    const current = new Set(getValues("channels"));
+
+    if (current.has(channel)) {
+      current.delete(channel);
+    } else {
+      current.add(channel);
+    }
+
+    setValue("channels", Array.from(current), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }
+
   const currentStep = steps[stepIndex];
 
   function renderStep() {
@@ -147,11 +177,22 @@ export function BrandInquiryWizard() {
               placeholder="z. B. Conversion-Testing, Launch, Awareness"
             />
           </Field>
-          <Field label="Kanal" error={errors.channel?.message}>
-            <TextInput
-              {...register("channel")}
-              placeholder="TikTok, Reels, Shorts"
-            />
+          <Field
+            label="Kanäle"
+            error={errors.channels?.message}
+            hint="Mehrfachauswahl möglich"
+          >
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {channelOptions.map((option) => (
+                <CheckboxPill
+                  key={option}
+                  checked={selectedChannels.includes(option)}
+                  onClick={() => toggleChannel(option)}
+                >
+                  {option}
+                </CheckboxPill>
+              ))}
+            </div>
           </Field>
         </div>
       );
@@ -210,7 +251,7 @@ export function BrandInquiryWizard() {
             <TextInput {...register("company")} placeholder="Beispiel GmbH" />
           </Field>
         </div>
-        <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-black/20 p-5">
+        <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-black/5 p-5">
           <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
             Überprüfung
           </p>
@@ -219,7 +260,7 @@ export function BrandInquiryWizard() {
               ["Branche", getValues("industry")],
               ["Produktlink", getValues("productUrl")],
               ["Ziel", getValues("goal")],
-              ["Kanal", getValues("channel")],
+              ["Kanäle", getValues("channels").join(", ")],
               ["Budget", getValues("budgetRange")],
               ["Zeitplan", getValues("timeline")],
             ].map(([label, value]) => (
@@ -232,6 +273,28 @@ export function BrandInquiryWizard() {
             ))}
           </dl>
         </div>
+        <label className="grid gap-2">
+          <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+            <input
+              type="checkbox"
+              {...register("datenschutzAccepted")}
+              className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+            />
+            <span>
+              Ich akzeptiere die{" "}
+              <Link
+                href="/legal/privacy"
+                className="underline decoration-[color:var(--accent-soft)] underline-offset-4 hover:text-[var(--copy-strong)]"
+              >
+                Datenschutzerklärung
+              </Link>
+              .
+            </span>
+          </span>
+          {errors.datenschutzAccepted ? (
+            <span className="field-error">{errors.datenschutzAccepted.message}</span>
+          ) : null}
+        </label>
       </div>
     );
   }
@@ -271,21 +334,36 @@ export function BrandInquiryWizard() {
 
   if (isSuccess) {
     return (
-      <div className="section-card rounded-[2rem] p-8">
-        <span className="eyebrow">Anfrage erhalten</span>
-        <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Die Brand-Anfrage ist eingegangen.
-        </h2>
-        <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
-          Als Nächstes wird das Briefing eingeordnet und in die Kampagnenplanung
-          überführt. Bis die Übergabe live geschaltet ist, läuft die Anfrage intern
-          noch als strukturierter Testeintrag.
-        </p>
-        <div className="mt-8 flex gap-3">
-          <ButtonLink href="/" variant="secondary">
-            Zur Landing
-          </ButtonLink>
-          <ButtonLink href="/pricing#referenzen">Referenzen ansehen</ButtonLink>
+      <div className="section-card relative overflow-hidden rounded-[2rem] p-8 md:grid md:grid-cols-[minmax(0,0.74fr)_minmax(0,0.26fr)] md:items-end md:gap-8">
+        <div className="relative z-10">
+          <span className="eyebrow">Anfrage erhalten</span>
+          <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
+            Danke, deine Anfrage ist eingegangen.
+          </h2>
+          <p className="mt-4 max-w-3xl text-[color:var(--copy-muted)]">
+            Wir prüfen deine Angaben und priorisieren passende Setups im Rahmen
+            des Launch-Rollouts. Sobald wir den nächsten passenden Slot
+            freigeben, melden wir uns direkt bei dir.
+          </p>
+          <div className="mt-8 flex gap-3">
+            <ButtonLink href="/" variant="secondary">
+              Zur Landing
+            </ButtonLink>
+            <ButtonLink href="/pricing#referenzen">Referenzen ansehen</ButtonLink>
+          </div>
+        </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none relative hidden min-h-[11rem] md:block"
+        >
+          <div className="absolute inset-y-0 right-0 w-full bg-[radial-gradient(circle_at_center,rgba(225,103,69,0.1),transparent_70%)]" />
+          <Image
+            src="/logo/Wortmarke1.png"
+            alt=""
+            width={1208}
+            height={305}
+            className="absolute right-0 bottom-1 h-auto w-[14rem] opacity-[0.08] saturate-0"
+          />
         </div>
       </div>
     );

@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import { ensureHumanSubmission } from "@/lib/intake/guards";
 import { waitlistSignupSchema } from "@/lib/validation/waitlist-signup";
-import { submitWaitlistSignup } from "@/lib/waitlist/submit-waitlist";
+import {
+  buildWaitlistWebhookEnvelope,
+  submitWaitlistSignup,
+} from "@/lib/waitlist/submit-waitlist";
+
+function resolveRequestOrigin(request: Request) {
+  return request.headers.get("origin") ?? new URL(request.url).origin;
+}
 
 export async function POST(request: Request) {
   const payload = await request.json();
@@ -27,11 +34,20 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await submitWaitlistSignup({
-      email: parsed.data.email,
-      timestamp: new Date().toISOString(),
-      userAgent: request.headers.get("user-agent") ?? "",
-    });
+    const result = await submitWaitlistSignup(
+      buildWaitlistWebhookEnvelope({
+        source: "waitlist_signup",
+        userAgent: request.headers.get("user-agent") ?? "",
+        origin: resolveRequestOrigin(request),
+        contact: {
+          email: parsed.data.email,
+        },
+        raw: {
+          email: parsed.data.email,
+          startedAt: parsed.data.startedAt,
+        },
+      }),
+    );
 
     return NextResponse.json({ ok: true, mode: result.mode });
   } catch (error) {

@@ -1,14 +1,47 @@
 import { getEnv } from "@/lib/env";
 import type { IntakeResult } from "@/lib/intake/types";
+import type {
+  WaitlistWebhookContact,
+  WaitlistWebhookEnvelope,
+  WaitlistWebhookEnvironment,
+  WaitlistWebhookSource,
+} from "@/types/intake";
 
-type WaitlistWebhookPayload = {
-  email: string;
-  timestamp: string;
+function getWaitlistWebhookEnvironment(): WaitlistWebhookEnvironment {
+  return process.env.NODE_ENV === "production" ? "production" : "development";
+}
+
+export function buildWaitlistWebhookEnvelope<
+  TRaw extends Record<string, unknown>,
+>({
+  source,
+  userAgent,
+  origin,
+  contact,
+  raw,
+}: {
+  source: WaitlistWebhookSource;
   userAgent: string;
-};
+  origin: string;
+  contact: WaitlistWebhookContact;
+  raw: TRaw;
+}): WaitlistWebhookEnvelope<TRaw> {
+  const env = getEnv();
+
+  return {
+    source,
+    env: getWaitlistWebhookEnvironment(),
+    timestamp: new Date().toISOString(),
+    userAgent,
+    origin,
+    siteUrl: env.siteUrl,
+    contact,
+    raw,
+  };
+}
 
 export async function submitWaitlistSignup(
-  payload: WaitlistWebhookPayload,
+  payload: WaitlistWebhookEnvelope,
 ): Promise<IntakeResult> {
   const env = getEnv();
 

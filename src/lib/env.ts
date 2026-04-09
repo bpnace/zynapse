@@ -8,6 +8,22 @@ function readRequiredEnv(name: string) {
   return value;
 }
 
+function resolveWaitlistWebhookUrl() {
+  if (process.env.NODE_ENV === "production") {
+    return (
+      process.env.WAITLIST_WEBHOOK_URL_PROD ||
+      process.env.WAITLIST_WEBHOOK_URL ||
+      ""
+    );
+  }
+
+  return (
+    process.env.WAITLIST_WEBHOOK_URL_DEV ||
+    process.env.WAITLIST_WEBHOOK_URL ||
+    ""
+  );
+}
+
 export function getEnv() {
   return {
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.eu",
@@ -18,10 +34,7 @@ export function getEnv() {
     supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
     googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
     bingSiteVerification: process.env.BING_SITE_VERIFICATION ?? "",
-    waitlistWebhookUrl:
-      process.env.WAITLIST_WEBHOOK_URL ??
-      process.env.INTAKE_WEBHOOK_URL ??
-      "",
+    waitlistWebhookUrl: resolveWaitlistWebhookUrl(),
     intakeWebhookUrl: process.env.INTAKE_WEBHOOK_URL ?? "",
     pilotRequestWebhookUrl:
       process.env.PILOT_REQUEST_WEBHOOK_URL ??

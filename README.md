@@ -51,12 +51,14 @@ cp .env.example .env.local
 
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_ANALYTICS_ID`
+- `WAITLIST_WEBHOOK_URL_DEV`
+- `WAITLIST_WEBHOOK_URL_PROD`
 - `INTAKE_WEBHOOK_URL`
 - `NOTIFY_EMAIL`
 - `TURNSTILE_SITE_KEY`
 - `TURNSTILE_SECRET_KEY`
 
-If `INTAKE_WEBHOOK_URL` is not set, intake submissions are accepted and logged server-side as a safe fallback for local and preview verification.
+If the waitlist webhook vars are not set, waitlist-bound submissions are accepted and logged server-side as a safe fallback for local and preview verification.
 
 ## Commands
 

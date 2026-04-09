@@ -4,7 +4,9 @@ export const brandInquirySchema = z.object({
   industry: z.string().trim().min(2, "Bitte eine Branche angeben."),
   productUrl: z.string().trim().url("Bitte einen gültigen Produktlink angeben."),
   goal: z.string().trim().min(3, "Bitte ein Ziel angeben."),
-  channel: z.string().trim().min(2, "Bitte mindestens einen Kanal angeben."),
+  channels: z
+    .array(z.string().trim().min(2))
+    .min(1, "Bitte mindestens einen Kanal angeben."),
   budgetRange: z.string().trim().min(2, "Bitte eine Budget Range angeben."),
   timeline: z.string().trim().min(2, "Bitte eine Timeline angeben."),
   notes: z.string().trim().max(1500, "Bitte auf maximal 1500 Zeichen kürzen."),
@@ -14,6 +16,9 @@ export const brandInquirySchema = z.object({
     .trim()
     .email("Bitte eine gültige E-Mail-Adresse angeben."),
   company: z.string().trim().min(2, "Bitte den Firmennamen angeben."),
+  datenschutzAccepted: z
+    .boolean()
+    .refine((value) => value, "Bitte bestätige die Datenschutzerklärung."),
   startedAt: z.number().int().positive(),
   website: z.string().trim(),
 });

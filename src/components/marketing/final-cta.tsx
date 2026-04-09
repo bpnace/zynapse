@@ -13,7 +13,7 @@ export function FinalCta() {
     industry: initialFields.industry,
     productUrl: initialFields.productUrl,
     goal: initialFields.goal,
-    channel: initialFields.channel,
+    channels: initialFields.channels,
     budgetRange: initialFields.budgetRange,
     website: initialFields.website,
   });
@@ -116,15 +116,18 @@ export function FinalCta() {
               />
             </label>
             <label className="field-shell">
-              <span className="field-label">Kanal</span>
+              <span className="field-label">Kanäle</span>
               <input
                 required
                 className="field-input"
-                value={values.channel}
+                value={values.channels.join(", ")}
                 onChange={(event) =>
                   setValues((current) => ({
                     ...current,
-                    channel: event.target.value,
+                    channels: event.target.value
+                      .split(",")
+                      .map((value) => value.trim())
+                      .filter(Boolean),
                   }))
                 }
                 placeholder="TikTok, Reels, Paid Social"

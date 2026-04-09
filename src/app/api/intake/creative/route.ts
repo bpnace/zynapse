@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ensureHumanSubmission } from "@/lib/intake/guards";
+import { enforceIntakeRateLimit } from "@/lib/intake/rate-limit";
 import { submitCreativeApplication } from "@/lib/intake/submit-creative";
 import { creativeApplicationSchema } from "@/lib/validation/creative-application";
 
@@ -30,10 +31,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: guard.reason }, { status: 400 });
   }
 
+  const rateLimit = enforceIntakeRateLimit({
+    request,
+    flow: "creative",
+    email: parsed.data.email,
+  });
+
+  if (!rateLimit.ok) {
+    return NextResponse.json({ error: rateLimit.reason }, { status: 429 });
+  }
+
   try {
     const result = await submitCreativeApplication(
       parsed.data,
-      resolveRequestOrigin(request),
+      {
+        origin: resolveRequestOrigin(request),
+        userAgent: request.headers.get("user-agent") ?? "",
+      },
     );
 
     return NextResponse.json({ ok: true, mode: result.mode });
