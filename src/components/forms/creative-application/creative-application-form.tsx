@@ -127,12 +127,11 @@ export function CreativeApplicationForm() {
       <div className="section-card rounded-[2rem] p-8">
         <span className="eyebrow">Track für Kreative</span>
         <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-          Deine Bewerbung ist eingegangen.
+          Danke, deine Bewerbung ist eingegangen.
         </h2>
         <p className="mt-4 max-w-2xl text-[color:var(--copy-muted)]">
-          Wir prüfen jetzt deine Angaben, Cases und Fokuskanäle. Bis die Übergabe
-          live geschaltet ist, läuft die Bewerbung intern noch als strukturierter
-          Testeintrag.
+          Wir prüfen Profil, Cases und Fokusbereiche und melden uns, sobald wir
+          im Launch-Rollout passende nächste Schritte freigeben.
         </p>
       </div>
     );

@@ -33,7 +33,10 @@ export async function POST(request: Request) {
   try {
     const result = await submitBrandInquiry(
       parsed.data,
-      resolveRequestOrigin(request),
+      {
+        origin: resolveRequestOrigin(request),
+        userAgent: request.headers.get("user-agent") ?? "",
+      },
     );
 
     return NextResponse.json({ ok: true, mode: result.mode });
