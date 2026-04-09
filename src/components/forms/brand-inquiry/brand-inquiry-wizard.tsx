@@ -3,13 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
-import {
-  BRAND_INQUIRY_STORAGE_KEY,
-  createBrandInquiryDefaults,
-} from "@/lib/forms/storage";
+import { createBrandInquiryDefaults } from "@/lib/forms/storage";
 import {
   brandInquirySchema,
   type BrandInquiryInput,
@@ -81,7 +78,6 @@ export function BrandInquiryWizard() {
     register,
     handleSubmit,
     watch,
-    reset,
     trigger,
     setValue,
     getValues,
@@ -93,30 +89,7 @@ export function BrandInquiryWizard() {
   });
 
   const selectedChannels = watch("channels");
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem(BRAND_INQUIRY_STORAGE_KEY);
-
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved) as Partial<BrandInquiryInput>;
-        reset(createBrandInquiryDefaults(parsed));
-      } catch {
-        window.localStorage.removeItem(BRAND_INQUIRY_STORAGE_KEY);
-      }
-    }
-  }, [reset]);
-
-  useEffect(() => {
-    const subscription = watch((value) => {
-      window.localStorage.setItem(
-        BRAND_INQUIRY_STORAGE_KEY,
-        JSON.stringify(createBrandInquiryDefaults(value as Partial<BrandInquiryInput>)),
-      );
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  const isPrivacyAccepted = watch("datenschutzAccepted");
 
   async function goToNextStep() {
     const currentStep = steps[stepIndex];
@@ -318,7 +291,6 @@ export function BrandInquiryWizard() {
           throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
         }
 
-        window.localStorage.removeItem(BRAND_INQUIRY_STORAGE_KEY);
         setIsSuccess(true);
       } catch (error) {
         setSubmitError(
@@ -347,22 +319,22 @@ export function BrandInquiryWizard() {
           </p>
           <div className="mt-8 flex gap-3">
             <ButtonLink href="/" variant="secondary">
-              Zur Landing
+              Zur Startseite
             </ButtonLink>
-            <ButtonLink href="/pricing#referenzen">Referenzen ansehen</ButtonLink>
+            <ButtonLink href="/pricing#referenzen">Leistungen vergleichen</ButtonLink>
           </div>
         </div>
         <div
           aria-hidden="true"
           className="pointer-events-none relative hidden min-h-[11rem] md:block"
         >
-          <div className="absolute inset-y-0 right-0 w-full bg-[radial-gradient(circle_at_center,rgba(225,103,69,0.1),transparent_70%)]" />
+          <div className="absolute inset-y-0 right-0 w-full" />
           <Image
-            src="/logo/Wortmarke1.png"
+            src="/logo/LogoSimple.png"
             alt=""
-            width={1208}
-            height={305}
-            className="absolute right-0 bottom-1 h-auto w-[14rem] opacity-[0.08] saturate-0"
+            width={512}
+            height={512}
+            className="absolute -right-[8rem] -bottom-[8rem] w-[20rem] opacity-[0.08] saturate-0"
           />
         </div>
       </div>
@@ -422,9 +394,9 @@ export function BrandInquiryWizard() {
           {stepIndex === steps.length - 1 ? (
             <Button
               type="submit"
-              disabled={isPending}
+              disabled={isPending || !isPrivacyAccepted}
               size="lg"
-              className="disabled:cursor-wait"
+              className="disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
             >
               {isPending ? "Sende Anfrage..." : "Brand-Anfrage absenden"}
             </Button>

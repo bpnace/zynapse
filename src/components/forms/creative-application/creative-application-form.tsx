@@ -2,13 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import {
-  CREATIVE_APPLICATION_STORAGE_KEY,
-  createCreativeApplicationDefaults,
-} from "@/lib/forms/storage";
+import { createCreativeApplicationDefaults } from "@/lib/forms/storage";
 import {
   creativeApplicationSchema,
   type CreativeApplicationInput,
@@ -38,7 +35,6 @@ export function CreativeApplicationForm() {
     register,
     handleSubmit,
     watch,
-    reset,
     setValue,
     getValues,
     formState: { errors },
@@ -48,32 +44,7 @@ export function CreativeApplicationForm() {
   });
 
   const selectedChannels = watch("focusChannels");
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem(CREATIVE_APPLICATION_STORAGE_KEY);
-
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved) as Partial<CreativeApplicationInput>;
-        reset(createCreativeApplicationDefaults(parsed));
-      } catch {
-        window.localStorage.removeItem(CREATIVE_APPLICATION_STORAGE_KEY);
-      }
-    }
-  }, [reset]);
-
-  useEffect(() => {
-    const subscription = watch((value) => {
-      window.localStorage.setItem(
-        CREATIVE_APPLICATION_STORAGE_KEY,
-        JSON.stringify(
-          createCreativeApplicationDefaults(value as Partial<CreativeApplicationInput>),
-        ),
-      );
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  const isPrivacyAccepted = watch("datenschutzAccepted");
 
   function toggleChannel(channel: string) {
     const current = new Set(getValues("focusChannels"));
@@ -109,7 +80,6 @@ export function CreativeApplicationForm() {
           throw new Error(payload.error ?? "Übermittlung fehlgeschlagen.");
         }
 
-        window.localStorage.removeItem(CREATIVE_APPLICATION_STORAGE_KEY);
         setIsSuccess(true);
       } catch (error) {
         setSubmitError(
@@ -239,9 +209,9 @@ export function CreativeApplicationForm() {
           ) : null}
           <Button
             type="submit"
-            disabled={isPending}
+            disabled={isPending || !isPrivacyAccepted}
             size="lg"
-            className="w-full disabled:cursor-wait"
+            className="w-full disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
           >
             {isPending ? "Sende Bewerbung..." : "Bewerbung absenden"}
           </Button>
