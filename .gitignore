@@ -1,32 +1,15 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
+# Created by https://www.toptal.com/developers/gitignore/api/nextjs,test
+# Edit at https://www.toptal.com/developers/gitignore?templates=nextjs,test
 
+### NextJS ###
 # dependencies
 /node_modules
 /.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-/docs
-/public/*
-!/public/brand/
-!/public/brand/**
-!/public/logo/
-/public/logo/*
-!/public/logo/Wortmarke1.png
-!/public/logo/Wortmarke2.png
-!/public/logo/VectorBright1.png
-!/public/logo/LogoVector1.png
-!/public/logo/LogoSimple.png
-!/public/videos/
-!/public/videos/**
+.pnp.js
 
 # testing
 /coverage
-/playwright-report
-/test-results
 
 # next.js
 /.next/
@@ -34,40 +17,112 @@
 
 # production
 /build
+.claude
+.omx
+docs
+drizzle
 
 # misc
 .DS_Store
 *.pem
-*.key
-*.crt
-*.cer
-*.p12
-*.pfx
-*.jks
-*.keystore
-*.db
-*.sqlite
-*.sqlite3
-.claude
-.direnv/
-.envrc
 
 # debug
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# local env files
+.env*.local
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
+next-env.d.ts
 
-# local scaffolding
-/temp-app
-.omx
+### Test ###
+### Ignore all files that could be used to test your code and
+### you wouldn't want to push
+
+# Reference https://en.wikipedia.org/wiki/Metasyntactic_variable
+
+# Most common
+*foo
+*bar
+*fubar
+*foobar
+*baz
+
+# Less common
+*qux
+*quux
+*bongo
+*bazola
+*ztesch
+
+# UK, Australia
+*wibble
+*wobble
+*wubble
+*flob
+*blep
+*blah
+*boop
+*beep
+
+# Japanese
+*hoge
+*piyo
+*fuga
+*hogera
+*hogehoge
+
+# Portugal, Spain
+*fulano
+*sicrano
+*beltrano
+*mengano
+*perengano
+*zutano
+
+# France, Italy, the Netherlands
+*toto
+*titi
+*tata
+*tutu
+*pipppo
+*pluto
+*paperino
+*aap
+*noot
+*mies
+
+# Other names that would make sense
+*tests
+*testsdir
+*testsfile
+*testsfiles
+*test
+*testdir
+*testfile
+*testfiles
+*testing
+*testingdir
+*testingfile
+*testingfiles
+*temp
+*tempdir
+*tempfile
+*tempfiles
+*tmp
+*tmpdir
+*tmpfile
+*tmpfiles
+*lol
+
+# End of https://www.toptal.com/developers/gitignore/api/nextjs,test
+
+# Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
+

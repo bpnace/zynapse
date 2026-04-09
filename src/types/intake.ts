@@ -9,6 +9,7 @@ export type BrandInquiry = {
   contactName: string;
   workEmail: string;
   company: string;
+  datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
 };
@@ -22,6 +23,7 @@ export type CreativeApplication = {
   availability: string;
   compensationNotes: string;
   location: string;
+  datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
 };

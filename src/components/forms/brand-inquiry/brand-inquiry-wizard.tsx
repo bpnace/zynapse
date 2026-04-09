@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import Link from "next/link";
 import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -336,6 +337,28 @@ export function BrandInquiryWizard() {
         <input type="hidden" {...register("startedAt", { valueAsNumber: true })} />
         <input type="text" {...register("website")} className="hidden" tabIndex={-1} autoComplete="off" />
         {renderStep()}
+        <label className="grid gap-2">
+          <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+            <input
+              type="checkbox"
+              {...register("datenschutzAccepted")}
+              className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+            />
+            <span>
+              Ich akzeptiere die{" "}
+              <Link
+                href="/legal/privacy"
+                className="underline decoration-[color:var(--accent-soft)] underline-offset-4 hover:text-[var(--copy-strong)]"
+              >
+                Datenschutzerklärung
+              </Link>
+              .
+            </span>
+          </span>
+          {errors.datenschutzAccepted ? (
+            <span className="field-error">{errors.datenschutzAccepted.message}</span>
+          ) : null}
+        </label>
         {submitError ? (
           <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
             {submitError}

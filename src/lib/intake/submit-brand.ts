@@ -32,6 +32,7 @@ export async function submitBrandInquiry(
         contactName: payload.contactName,
         workEmail: payload.workEmail,
         company: payload.company,
+        datenschutzAccepted: payload.datenschutzAccepted,
         startedAt: payload.startedAt,
       },
     }),

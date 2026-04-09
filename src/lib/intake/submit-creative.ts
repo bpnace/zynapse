@@ -29,6 +29,7 @@ export async function submitCreativeApplication(
         availability: payload.availability,
         compensationNotes: payload.compensationNotes,
         location: payload.location,
+        datenschutzAccepted: payload.datenschutzAccepted,
         startedAt: payload.startedAt,
       },
     }),

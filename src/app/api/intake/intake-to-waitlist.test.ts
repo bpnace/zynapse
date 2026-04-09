@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST as postBrand } from "@/app/api/intake/brand/route";
 import { POST as postCreative } from "@/app/api/intake/creative/route";
+import { resetIntakeRateLimitStore } from "@/lib/intake/rate-limit";
 
 const FIXED_TIMESTAMP = "2026-04-09T12:34:56.000Z";
 const HUMAN_STARTED_AT = Date.parse(FIXED_TIMESTAMP) - 5_000;
@@ -20,6 +21,7 @@ describe("brand and creative intake waitlist routing", () => {
 
   afterEach(() => {
     vi.useRealTimers();
+    resetIntakeRateLimitStore();
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
     vi.clearAllMocks();
@@ -52,6 +54,7 @@ describe("brand and creative intake waitlist routing", () => {
           contactName: "Max Mustermann",
           workEmail: "team@brand.com",
           company: "Beispiel GmbH",
+          datenschutzAccepted: true,
           startedAt: HUMAN_STARTED_AT,
           website: "",
         }),
@@ -90,6 +93,7 @@ describe("brand and creative intake waitlist routing", () => {
         contactName: "Max Mustermann",
         workEmail: "team@brand.com",
         company: "Beispiel GmbH",
+        datenschutzAccepted: true,
         startedAt: HUMAN_STARTED_AT,
       },
     });
@@ -121,6 +125,7 @@ describe("brand and creative intake waitlist routing", () => {
           availability: "2 neue Kunden pro Monat",
           compensationNotes: "Retainer oder Projektbasis",
           location: "Berlin / CET",
+          datenschutzAccepted: true,
           startedAt: HUMAN_STARTED_AT,
           website: "",
         }),
@@ -157,8 +162,80 @@ describe("brand and creative intake waitlist routing", () => {
         availability: "2 neue Kunden pro Monat",
         compensationNotes: "Retainer oder Projektbasis",
         location: "Berlin / CET",
+        datenschutzAccepted: true,
         startedAt: HUMAN_STARTED_AT,
       },
+    });
+  });
+
+  it("rate limits repeated brand submissions with the same ip and email", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv(
+      "WAITLIST_WEBHOOK_URL_DEV",
+      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
+    );
+
+    for (let index = 0; index < 5; index += 1) {
+      const response = await postBrand(
+        new Request("http://localhost:3000/api/intake/brand", {
+          method: "POST",
+          headers: {
+            origin: "http://localhost:3000",
+            "x-forwarded-for": "203.0.113.1",
+            "user-agent": "vitest-brand",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            industry: "D2C Wellness",
+            productUrl: "https://example.com",
+            goal: "Conversion-Testing",
+            channel: "TikTok",
+            budgetRange: "3k bis 8k pro Monat",
+            timeline: "Diesen Monat",
+            notes: "Optionaler Kontext",
+            contactName: "Max Mustermann",
+            workEmail: "team@brand.com",
+            company: "Beispiel GmbH",
+            datenschutzAccepted: true,
+            startedAt: HUMAN_STARTED_AT,
+            website: "",
+          }),
+        }),
+      );
+
+      expect(response.status).toBe(200);
+    }
+
+    const blockedResponse = await postBrand(
+      new Request("http://localhost:3000/api/intake/brand", {
+        method: "POST",
+        headers: {
+          origin: "http://localhost:3000",
+          "x-forwarded-for": "203.0.113.1",
+          "user-agent": "vitest-brand",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          industry: "D2C Wellness",
+          productUrl: "https://example.com",
+          goal: "Conversion-Testing",
+          channel: "TikTok",
+          budgetRange: "3k bis 8k pro Monat",
+          timeline: "Diesen Monat",
+          notes: "Optionaler Kontext",
+          contactName: "Max Mustermann",
+          workEmail: "team@brand.com",
+          company: "Beispiel GmbH",
+          datenschutzAccepted: true,
+          startedAt: HUMAN_STARTED_AT,
+          website: "",
+        }),
+      }),
+    );
+
+    expect(blockedResponse.status).toBe(429);
+    await expect(blockedResponse.json()).resolves.toEqual({
+      error: "Zu viele Anfragen. Bitte versuche es in ein paar Minuten erneut.",
     });
   });
 });

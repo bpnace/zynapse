@@ -14,6 +14,7 @@ describe("brandInquirySchema", () => {
       contactName: "Mia Brand",
       workEmail: "mia@example.com",
       company: "Hydra Labs",
+      datenschutzAccepted: true,
       startedAt: Date.now(),
       website: "",
     });
@@ -33,6 +34,27 @@ describe("brandInquirySchema", () => {
       contactName: "Mia Brand",
       workEmail: "mia@example.com",
       company: "Hydra Labs",
+      datenschutzAccepted: true,
+      startedAt: Date.now(),
+      website: "",
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("requires accepted privacy terms", () => {
+    const result = brandInquirySchema.safeParse({
+      industry: "D2C Wellness",
+      productUrl: "https://example.com/product",
+      goal: "Paid social conversion",
+      channel: "TikTok",
+      budgetRange: "3k bis 8k",
+      timeline: "Sofort / diese Woche",
+      notes: "",
+      contactName: "Mia Brand",
+      workEmail: "mia@example.com",
+      company: "Hydra Labs",
+      datenschutzAccepted: false,
       startedAt: Date.now(),
       website: "",
     });
