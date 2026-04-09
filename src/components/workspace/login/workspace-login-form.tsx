@@ -32,7 +32,7 @@ function maskEmail(email: string) {
 
 function mapOtpError(error: unknown) {
   if (!(error instanceof Error)) {
-    return "Login ist aktuell nicht verfuegbar. Bitte spaeter erneut versuchen.";
+    return "Login ist aktuell nicht verfügbar. Bitte später erneut versuchen.";
   }
 
   const message = error.message.toLowerCase();
@@ -42,7 +42,7 @@ function mapOtpError(error: unknown) {
   }
 
   if (message.includes("invalid") && message.includes("otp")) {
-    return "Der Code ist ungueltig. Bitte pruefe ihn und versuche es erneut.";
+    return "Der Code ist ungültig. Bitte prüfe ihn und versuche es erneut.";
   }
 
   if (message.includes("expired") && message.includes("otp")) {
@@ -61,7 +61,7 @@ function mapOtpError(error: unknown) {
 
 function mapPasswordError(error: unknown) {
   if (!(error instanceof Error)) {
-    return "Login ist aktuell nicht verfuegbar. Bitte spaeter erneut versuchen.";
+    return "Login ist aktuell nicht verfügbar. Bitte später erneut versuchen.";
   }
 
   const message = error.message.toLowerCase();
@@ -74,7 +74,7 @@ function mapPasswordError(error: unknown) {
   }
 
   if (message.includes("email not confirmed")) {
-    return "Diese E-Mail-Adresse ist noch nicht bestaetigt.";
+    return "Diese E-Mail-Adresse ist noch nicht bestätigt.";
   }
 
   if (message.includes("too many requests")) {
@@ -145,7 +145,7 @@ export function WorkspaceLoginForm({
 
     if (!supabase) {
       throw new Error(
-        "Login ist aktuell nicht verfuegbar. Bitte spaeter erneut versuchen.",
+        "Login ist aktuell nicht verfügbar. Bitte später erneut versuchen.",
       );
     }
 
@@ -205,7 +205,7 @@ export function WorkspaceLoginForm({
 
       if (!supabase) {
         throw new Error(
-          "Login ist aktuell nicht verfügbar. Bitte spaeter erneut versuchen.",
+          "Login ist aktuell nicht verfügbar. Bitte später erneut versuchen.",
         );
       }
 
@@ -322,7 +322,7 @@ export function WorkspaceLoginForm({
           Invite-only Login
         </h2>
         <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-          Der Zugang zum Workspace ist nur fuer eingeladene Brand-Teams vorgesehen.
+          Der Zugang zum Workspace ist nur für eingeladene Brand-Teams vorgesehen.
         </p>
       </div>
 
@@ -448,7 +448,7 @@ export function WorkspaceLoginForm({
 
       {!isLoginConfigured ? (
         <p className="text-sm text-[var(--danger)]">
-          Login ist aktuell nicht verfuegbar. Die Supabase-Konfiguration fehlt.
+          Login ist aktuell nicht verfügbar. Die Supabase-Konfiguration fehlt.
         </p>
       ) : null}
 
@@ -486,7 +486,7 @@ export function WorkspaceLoginForm({
             className="justify-center disabled:cursor-wait"
             disabled={isOtpSubmitDisabled}
           >
-            {isPending ? "Code wird geprueft..." : "Code bestätigen"}
+            {isPending ? "Code wird geprüft..." : "Code bestätigen"}
           </Button>
 
           <Button
@@ -509,7 +509,7 @@ export function WorkspaceLoginForm({
             className="justify-center self-start px-0 text-sm"
             onClick={handleChangeEmail}
           >
-            E-Mail aendern
+            E-Mail ändern
           </Button>
         </div>
       )}

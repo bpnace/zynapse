@@ -133,7 +133,7 @@ export function LoginWaitlistForm() {
       ) : null}
 
       <p className="text-sm leading-6 text-[color:var(--copy-muted)]">
-        Kein Newsletter, kein Spam, nur eine Benarichtigung zum Start von Zynapse. Versprochen.
+        Kein Newsletter, kein Spam, nur eine Benarichtigung zum Start von Zynapse. <b>Versprochen</b>.
       </p>
     </div>
   );

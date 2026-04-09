@@ -216,7 +216,7 @@ describe("WorkspaceLoginForm", () => {
     expect(screen.getByRole("button", { name: "Anmelden" })).toBeDisabled();
     expect(
       screen.getByText(
-        "Login ist aktuell nicht verfuegbar. Die Supabase-Konfiguration fehlt.",
+        "Login ist aktuell nicht verfügbar. Die Supabase-Konfiguration fehlt.",
       ),
     ).toBeInTheDocument();
   });
