@@ -1,8 +1,10 @@
-import { asc, desc, eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { assets } from "@/lib/db/schema/assets";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { campaignStages } from "@/lib/db/schema/campaign-stages";
+import {
+  assertSupabaseResult,
+  mapAsset,
+  mapCampaign,
+  mapCampaignStage,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import { getSeedTemplate } from "@/lib/workspace/seeds/templates";
 
 type GetHandoverViewParams = {
@@ -38,30 +40,42 @@ export async function getHandoverView({
   organizationId,
   campaignId,
 }: GetHandoverViewParams) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const campaign = await db
-    .select()
-    .from(campaigns)
-    .where(eq(campaigns.id, campaignId))
+  const { data: campaignRow, error: campaignError } = await supabase
+    .from("campaigns")
+    .select("*")
+    .eq("id", campaignId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(campaignError, "Failed to load campaign");
+
+  const campaign = campaignRow ? mapCampaign(campaignRow) : null;
 
   if (!campaign || campaign.organizationId !== organizationId) {
     return null;
   }
 
   const [stageItems, campaignAssets] = await Promise.all([
-    db
-      .select()
-      .from(campaignStages)
-      .where(eq(campaignStages.campaignId, campaignId))
-      .orderBy(asc(campaignStages.stageOrder)),
-    db
-      .select()
-      .from(assets)
-      .where(eq(assets.campaignId, campaignId))
-      .orderBy(desc(assets.createdAt)),
+    supabase
+      .from("campaign_stages")
+      .select("*")
+      .eq("campaign_id", campaignId)
+      .order("stage_order", { ascending: true })
+      .then(({ data, error }) => {
+        assertSupabaseResult(error, "Failed to load campaign stages");
+        return (data ?? []).map(mapCampaignStage);
+      }),
+    supabase
+      .from("assets")
+      .select("*")
+      .eq("campaign_id", campaignId)
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        assertSupabaseResult(error, "Failed to load campaign assets");
+        return (data ?? []).map(mapAsset);
+      }),
   ]);
 
   const template = campaign.seededTemplateKey

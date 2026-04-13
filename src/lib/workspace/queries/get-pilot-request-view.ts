@@ -1,8 +1,10 @@
-import { desc, eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { organizations } from "@/lib/db/schema/organizations";
-import { pilotRequests } from "@/lib/db/schema/pilot-requests";
+import {
+  assertSupabaseResult,
+  mapCampaign,
+  mapOrganization,
+  mapPilotRequest,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 
 type GetPilotRequestViewParams = {
   organizationId: string;
@@ -13,24 +15,32 @@ export async function getPilotRequestView({
   organizationId,
   campaignId,
 }: GetPilotRequestViewParams) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const organization = await db
-    .select()
-    .from(organizations)
-    .where(eq(organizations.id, organizationId))
+  const { data: organizationRow, error: organizationError } = await supabase
+    .from("organizations")
+    .select("*")
+    .eq("id", organizationId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(organizationError, "Failed to load organization");
+
+  const organization = organizationRow ? mapOrganization(organizationRow) : null;
 
   if (!organization) {
     return null;
   }
 
-  const campaignsInOrg = await db
-    .select()
-    .from(campaigns)
-    .where(eq(campaigns.organizationId, organizationId))
-    .orderBy(desc(campaigns.createdAt));
+  const { data: campaignRows, error: campaignError } = await supabase
+    .from("campaigns")
+    .select("*")
+    .eq("organization_id", organizationId)
+    .order("created_at", { ascending: false });
+
+  assertSupabaseResult(campaignError, "Failed to load campaigns");
+
+  const campaignsInOrg = (campaignRows ?? []).map(mapCampaign);
 
   const selectedCampaign =
     campaignsInOrg.find((campaign) => campaign.id === campaignId) ??
@@ -38,13 +48,17 @@ export async function getPilotRequestView({
     null;
 
   const latestRequest = selectedCampaign
-    ? await db
-        .select()
-        .from(pilotRequests)
-        .where(eq(pilotRequests.campaignId, selectedCampaign.id))
-        .orderBy(desc(pilotRequests.submittedAt))
+    ? await supabase
+        .from("pilot_requests")
+        .select("*")
+        .eq("campaign_id", selectedCampaign.id)
+        .order("submitted_at", { ascending: false })
         .limit(1)
-        .then((rows) => rows[0] ?? null)
+        .maybeSingle()
+        .then(({ data, error }) => {
+          assertSupabaseResult(error, "Failed to load pilot requests");
+          return data ? mapPilotRequest(data) : null;
+        })
     : null;
 
   return {

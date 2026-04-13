@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { brandProfiles } from "@/lib/db/schema/brand-profiles";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
+import {
+  assertSupabaseResult,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import {
   workspaceOnboardingSchema,
   type WorkspaceOnboardingField,
@@ -53,37 +54,25 @@ export async function saveBrandProfileDraft(
     }
   }
 
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
   const safeData = parsed.success ? parsed.data : input;
   const values = {
     website: safeData.website,
-    offerSummary: safeData.offerSummary,
-    targetAudience: safeData.targetAudience,
-    primaryChannels: safeData.primaryChannels,
-    brandTone: safeData.brandTone,
-    reviewNotes: safeData.reviewNotes,
-    claimGuardrails: safeData.claimGuardrails,
-    updatedAt: new Date(),
+    offer_summary: safeData.offerSummary,
+    target_audience: safeData.targetAudience,
+    primary_channels: safeData.primaryChannels,
+    brand_tone: safeData.brandTone,
+    review_notes: safeData.reviewNotes,
+    claim_guardrails: safeData.claimGuardrails,
+    updated_at: new Date().toISOString(),
   };
 
-  const existingProfile = await db
-    .select()
-    .from(brandProfiles)
-    .where(eq(brandProfiles.organizationId, bootstrap.organization.id))
-    .limit(1)
-    .then((rows) => rows[0] ?? null);
+  const { error } = await supabase.from("brand_profiles").upsert({
+    organization_id: bootstrap.organization.id,
+    ...values,
+  });
 
-  if (existingProfile) {
-    await db
-      .update(brandProfiles)
-      .set(values)
-      .where(eq(brandProfiles.organizationId, bootstrap.organization.id));
-  } else {
-    await db.insert(brandProfiles).values({
-      organizationId: bootstrap.organization.id,
-      ...values,
-    });
-  }
+  assertSupabaseResult(error, "Failed to save brand profile draft");
 
   revalidatePath("/workspace");
   revalidatePath("/workspace/onboarding");

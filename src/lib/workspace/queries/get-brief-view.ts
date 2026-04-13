@@ -1,27 +1,37 @@
-import { desc, eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { briefs } from "@/lib/db/schema/briefs";
+import {
+  assertSupabaseResult,
+  mapBrief,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import { parseBriefReferences } from "@/lib/workspace/briefs/form-helpers";
 
 export async function getBriefsList(organizationId: string) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  return db
-    .select()
-    .from(briefs)
-    .where(eq(briefs.organizationId, organizationId))
-    .orderBy(desc(briefs.startedAt));
+  const { data, error } = await supabase
+    .from("briefs")
+    .select("*")
+    .eq("organization_id", organizationId)
+    .order("started_at", { ascending: false });
+
+  assertSupabaseResult(error, "Failed to load briefs");
+
+  return (data ?? []).map(mapBrief);
 }
 
 export async function getBriefView(organizationId: string, briefId: string) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const brief = await db
-    .select()
-    .from(briefs)
-    .where(eq(briefs.id, briefId))
+  const { data, error } = await supabase
+    .from("briefs")
+    .select("*")
+    .eq("id", briefId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(error, "Failed to load brief");
+
+  const brief = data ? mapBrief(data) : null;
 
   if (!brief || brief.organizationId !== organizationId) {
     return null;

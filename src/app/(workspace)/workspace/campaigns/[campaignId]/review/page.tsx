@@ -38,7 +38,11 @@ export default async function ReviewPage({
       campaign={reviewRoom.campaign}
       assets={reviewRoom.assets}
       selectedAsset={reviewRoom.selectedAsset}
-      canReview={workspaceCapabilities[bootstrap.membership.role].canReviewAssets}
+      canReview={
+        workspaceCapabilities[
+          bootstrap.membership.role as keyof typeof workspaceCapabilities
+        ].canReviewAssets
+      }
     />
   );
 }

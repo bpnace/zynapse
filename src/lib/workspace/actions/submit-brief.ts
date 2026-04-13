@@ -1,11 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { briefs } from "@/lib/db/schema/briefs";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
 import { workspaceCapabilities } from "@/lib/auth/roles";
+import {
+  assertSupabaseResult,
+  mapBrief,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import { serializeBriefReferences } from "@/lib/workspace/briefs/form-helpers";
 import { workspaceBriefSchema, type WorkspaceBriefInput } from "@/lib/validation/workspace-brief";
 
@@ -26,7 +28,10 @@ export async function submitBrief(
   briefId?: string | null,
 ): Promise<SubmitBriefResult> {
   const bootstrap = await requireWorkspaceAccess();
-  const capability = workspaceCapabilities[bootstrap.membership.role];
+  const capability =
+    workspaceCapabilities[
+      bootstrap.membership.role as keyof typeof workspaceCapabilities
+    ];
 
   if (!capability.canCreateBriefs) {
     return {
@@ -44,15 +49,19 @@ export async function submitBrief(
     };
   }
 
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
   if (briefId) {
-    const existing = await db
-      .select()
-      .from(briefs)
-      .where(eq(briefs.id, briefId))
+    const { data: existingRow, error: existingError } = await supabase
+      .from("briefs")
+      .select("*")
+      .eq("id", briefId)
       .limit(1)
-      .then((rows) => rows[0] ?? null);
+      .maybeSingle();
+
+    assertSupabaseResult(existingError, "Failed to load submitted brief");
+
+    const existing = existingRow ? mapBrief(existingRow) : null;
 
     if (!existing || existing.organizationId !== bootstrap.organization.id) {
       return {
@@ -68,22 +77,24 @@ export async function submitBrief(
       };
     }
 
-    await db
-      .update(briefs)
-      .set({
+    const { error: updateError } = await supabase
+      .from("briefs")
+      .update({
         title: parsed.data.title,
         objective: parsed.data.objective,
         offer: parsed.data.offer,
         audience: parsed.data.audience,
         channels: parsed.data.channels,
-        referencesJson: serializeBriefReferences(parsed.data),
-        budgetRange: parsed.data.budgetRange,
+        references_json: serializeBriefReferences(parsed.data),
+        budget_range: parsed.data.budgetRange,
         timeline: parsed.data.timeline,
-        approvalNotes: parsed.data.approvalNotes,
+        approval_notes: parsed.data.approvalNotes,
         status: "submitted",
-        submittedAt: new Date(),
+        submitted_at: new Date().toISOString(),
       })
-      .where(eq(briefs.id, briefId));
+      .eq("id", briefId);
+
+    assertSupabaseResult(updateError, "Failed to submit brief");
 
     revalidatePath("/workspace");
     revalidatePath("/workspace/briefs/new");
@@ -97,24 +108,33 @@ export async function submitBrief(
     };
   }
 
-  const [created] = await db
-    .insert(briefs)
-    .values({
-      organizationId: bootstrap.organization.id,
-      createdBy: bootstrap.membership.userId,
+  const { data: createdRow, error: createError } = await supabase
+    .from("briefs")
+    .insert({
+      organization_id: bootstrap.organization.id,
+      created_by: bootstrap.membership.userId,
       title: parsed.data.title,
       objective: parsed.data.objective,
       offer: parsed.data.offer,
       audience: parsed.data.audience,
       channels: parsed.data.channels,
-      referencesJson: serializeBriefReferences(parsed.data),
-      budgetRange: parsed.data.budgetRange,
+      references_json: serializeBriefReferences(parsed.data),
+      budget_range: parsed.data.budgetRange,
       timeline: parsed.data.timeline,
-      approvalNotes: parsed.data.approvalNotes,
+      approval_notes: parsed.data.approvalNotes,
       status: "submitted",
-      submittedAt: new Date(),
+      submitted_at: new Date().toISOString(),
     })
-    .returning();
+    .select("*")
+    .single();
+
+  assertSupabaseResult(createError, "Failed to create submitted brief");
+
+  if (!createdRow) {
+    throw new Error("Failed to create submitted brief: missing inserted row.");
+  }
+
+  const created = mapBrief(createdRow);
 
   revalidatePath("/workspace");
   revalidatePath("/workspace/briefs/new");

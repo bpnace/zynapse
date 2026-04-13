@@ -138,7 +138,7 @@ export const footerGroups = [
 
 export const contactChannels = [
   {
-    label: "Vertrieb",
+    label: "Allgemeine Anfragen",
     value: "hello@zynapse.eu",
     copy: "Wenn du über eine Brand-Anfrage, Pakete oder den richtigen Einstieg sprechen willst.",
   },

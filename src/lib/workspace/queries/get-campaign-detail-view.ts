@@ -1,9 +1,11 @@
-import { asc, count, desc, eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { assets } from "@/lib/db/schema/assets";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { campaignStages } from "@/lib/db/schema/campaign-stages";
-import { reviewThreads } from "@/lib/db/schema/review-threads";
+import {
+  assertSupabaseResult,
+  mapAsset,
+  mapCampaign,
+  mapCampaignStage,
+  mapReviewThread,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import { getSeedTemplate } from "@/lib/workspace/seeds/templates";
 
 type GetCampaignDetailViewParams = {
@@ -71,42 +73,61 @@ export async function getCampaignDetailView({
   organizationId,
   campaignId,
 }: GetCampaignDetailViewParams) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const campaign = await db
-    .select()
-    .from(campaigns)
-    .where(eq(campaigns.id, campaignId))
+  const { data: campaignRow, error: campaignError } = await supabase
+    .from("campaigns")
+    .select("*")
+    .eq("id", campaignId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(campaignError, "Failed to load campaign");
+
+  const campaign = campaignRow ? mapCampaign(campaignRow) : null;
 
   if (!campaign || campaign.organizationId !== organizationId) {
     return null;
   }
 
-  const [stageItems, campaignAssets, threadCounts] = await Promise.all([
-    db
-      .select()
-      .from(campaignStages)
-      .where(eq(campaignStages.campaignId, campaignId))
-      .orderBy(asc(campaignStages.stageOrder)),
-    db
-      .select()
-      .from(assets)
-      .where(eq(assets.campaignId, campaignId))
-      .orderBy(desc(assets.createdAt)),
-    db
-      .select({
-        assetId: reviewThreads.assetId,
-        total: count(reviewThreads.id),
-      })
-      .from(reviewThreads)
-      .innerJoin(assets, eq(reviewThreads.assetId, assets.id))
-      .where(eq(assets.campaignId, campaignId))
-      .groupBy(reviewThreads.assetId),
+  const [stageItems, campaignAssets, reviewThreadRows] = await Promise.all([
+    supabase
+      .from("campaign_stages")
+      .select("*")
+      .eq("campaign_id", campaignId)
+      .order("stage_order", { ascending: true })
+      .then(({ data, error }) => {
+        assertSupabaseResult(error, "Failed to load campaign stages");
+        return (data ?? []).map(mapCampaignStage);
+      }),
+    supabase
+      .from("assets")
+      .select("*")
+      .eq("campaign_id", campaignId)
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        assertSupabaseResult(error, "Failed to load campaign assets");
+        return (data ?? []).map(mapAsset);
+      }),
+    supabase
+      .from("review_threads")
+      .select("*")
+      .then(({ data, error }) => {
+        assertSupabaseResult(error, "Failed to load review threads");
+        return (data ?? []).map(mapReviewThread);
+      }),
   ]);
 
-  const threadCountMap = new Map(threadCounts.map((row) => [row.assetId, row.total]));
+  const campaignAssetIds = new Set(campaignAssets.map((asset) => asset.id));
+  const threadCountMap = new Map<string, number>();
+
+  for (const thread of reviewThreadRows) {
+    if (!campaignAssetIds.has(thread.assetId)) {
+      continue;
+    }
+
+    threadCountMap.set(thread.assetId, (threadCountMap.get(thread.assetId) ?? 0) + 1);
+  }
 
   const orderedAssets = [...campaignAssets].sort((left, right) => {
     const byStatus = getAssetPriority(left.reviewStatus) - getAssetPriority(right.reviewStatus);
@@ -146,7 +167,7 @@ export async function getCampaignDetailView({
   };
 
   const reviewReadiness = {
-    openThreads: threadCounts.reduce((sum, row) => sum + row.total, 0),
+    openThreads: Array.from(threadCountMap.values()).reduce((sum, total) => sum + total, 0),
     assetsReadyForApproval: deliverableSummary.approved,
     assetsNeedingChanges: deliverableSummary.changesRequested,
     assetsAwaitingDecision: deliverableSummary.pending,

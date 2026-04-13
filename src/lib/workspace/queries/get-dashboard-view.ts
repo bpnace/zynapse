@@ -1,65 +1,103 @@
-import { desc, eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { assets } from "@/lib/db/schema/assets";
-import { brandProfiles } from "@/lib/db/schema/brand-profiles";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { campaignStages } from "@/lib/db/schema/campaign-stages";
-import { comments } from "@/lib/db/schema/comments";
-import { reviewThreads } from "@/lib/db/schema/review-threads";
+import {
+  assertSupabaseResult,
+  mapAsset,
+  mapBrandProfile,
+  mapCampaign,
+  mapCampaignStage,
+  mapComment,
+  mapReviewThread,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import { getSeedTemplate } from "@/lib/workspace/seeds/templates";
 
 export async function getDashboardView(organizationId: string) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const organizationCampaigns = await db
-    .select()
-    .from(campaigns)
-    .where(eq(campaigns.organizationId, organizationId))
-    .orderBy(desc(campaigns.createdAt));
+  const { data: organizationCampaignRows, error: organizationCampaignError } = await supabase
+    .from("campaigns")
+    .select("*")
+    .eq("organization_id", organizationId)
+    .order("created_at", { ascending: false });
+
+  assertSupabaseResult(organizationCampaignError, "Failed to load campaigns");
+
+  const organizationCampaigns = (organizationCampaignRows ?? []).map(mapCampaign);
 
   const latestCampaign = organizationCampaigns[0] ?? null;
 
-  const profile = await db
-    .select()
-    .from(brandProfiles)
-    .where(eq(brandProfiles.organizationId, organizationId))
+  const { data: profileRow, error: profileError } = await supabase
+    .from("brand_profiles")
+    .select("*")
+    .eq("organization_id", organizationId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(profileError, "Failed to load brand profile");
+
+  const profile = profileRow ? mapBrandProfile(profileRow) : null;
 
   const stageItems = latestCampaign
-    ? await db
-        .select()
-        .from(campaignStages)
-        .where(eq(campaignStages.campaignId, latestCampaign.id))
-        .orderBy(campaignStages.stageOrder)
+    ? await supabase
+        .from("campaign_stages")
+        .select("*")
+        .eq("campaign_id", latestCampaign.id)
+        .order("stage_order", { ascending: true })
+        .then(({ data, error }) => {
+          assertSupabaseResult(error, "Failed to load campaign stages");
+          return (data ?? []).map(mapCampaignStage);
+        })
     : [];
 
   const latestAssets = latestCampaign
-    ? await db
-        .select()
-        .from(assets)
-        .where(eq(assets.campaignId, latestCampaign.id))
-        .orderBy(desc(assets.createdAt))
+    ? await supabase
+        .from("assets")
+        .select("*")
+        .eq("campaign_id", latestCampaign.id)
+        .order("created_at", { ascending: false })
+        .then(({ data, error }) => {
+          assertSupabaseResult(error, "Failed to load campaign assets");
+          return (data ?? []).map(mapAsset);
+        })
     : [];
 
-  const threadPreview = latestCampaign
-    ? await db
-        .select({
-          threadId: reviewThreads.id,
-          assetId: reviewThreads.assetId,
-          assetTitle: assets.title,
-          createdBy: reviewThreads.createdBy,
-          anchorJson: reviewThreads.anchorJson,
-          commentBody: comments.body,
-          commentType: comments.commentType,
-          commentCreatedAt: comments.createdAt,
+  const latestAssetIds = latestAssets.map((asset) => asset.id);
+
+  const threadPreview =
+    latestCampaign && latestAssetIds.length > 0
+      ? await Promise.all([
+          supabase
+            .from("review_threads")
+            .select("*")
+            .in("asset_id", latestAssetIds)
+            .then(({ data, error }) => {
+              assertSupabaseResult(error, "Failed to load review threads");
+              return (data ?? []).map(mapReviewThread);
+            }),
+          supabase
+            .from("comments")
+            .select("*")
+            .then(({ data, error }) => {
+              assertSupabaseResult(error, "Failed to load review comments");
+              return (data ?? []).map(mapComment);
+            }),
+        ]).then(([threads, commentRows]) => {
+          const assetTitleById = new Map(latestAssets.map((asset) => [asset.id, asset.title]));
+          return threads.flatMap((thread) =>
+            commentRows
+              .filter((comment) => comment.threadId === thread.id)
+              .map((comment) => ({
+                threadId: thread.id,
+                assetId: thread.assetId,
+                assetTitle: assetTitleById.get(thread.assetId) ?? "Asset",
+                createdBy: thread.createdBy,
+                anchorJson: thread.anchorJson,
+                commentBody: comment.body,
+                commentType: comment.commentType,
+                commentCreatedAt: comment.createdAt,
+              })),
+          );
         })
-        .from(reviewThreads)
-        .innerJoin(assets, eq(reviewThreads.assetId, assets.id))
-        .innerJoin(comments, eq(comments.threadId, reviewThreads.id))
-        .where(eq(assets.campaignId, latestCampaign.id))
-        .orderBy(desc(comments.createdAt))
-    : [];
+      : [];
 
   const reviewThreadsById = new Map<
     string,

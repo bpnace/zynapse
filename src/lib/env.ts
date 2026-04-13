@@ -8,6 +8,17 @@ function readRequiredEnv(name: string) {
   return value;
 }
 
+function resolveDatabaseUrl() {
+  return (
+    process.env.DATABASE_POOL_URL ||
+    process.env.POSTGRES_URL ||
+    process.env.POSTGRES_PRISMA_URL ||
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_URL_NON_POOLING ||
+    ""
+  );
+}
+
 function resolveWaitlistWebhookUrl() {
   if (process.env.NODE_ENV === "production") {
     return (
@@ -52,7 +63,7 @@ export function getServerEnv() {
   return {
     ...getEnv(),
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "",
-    databaseUrl: process.env.DATABASE_URL ?? "",
+    databaseUrl: resolveDatabaseUrl(),
   };
 }
 
@@ -82,5 +93,13 @@ export function isDevPasswordLoginEnabled() {
 }
 
 export function getRequiredDatabaseUrl() {
-  return readRequiredEnv("DATABASE_URL");
+  const databaseUrl = resolveDatabaseUrl();
+
+  if (!databaseUrl) {
+    throw new Error(
+      "DATABASE_URL or a pooled equivalent (DATABASE_POOL_URL / POSTGRES_URL / POSTGRES_PRISMA_URL) is required.",
+    );
+  }
+
+  return databaseUrl;
 }

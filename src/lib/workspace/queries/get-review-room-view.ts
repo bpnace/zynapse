@@ -1,9 +1,11 @@
-import { asc, desc, eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { assets } from "@/lib/db/schema/assets";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { comments } from "@/lib/db/schema/comments";
-import { reviewThreads } from "@/lib/db/schema/review-threads";
+import {
+  assertSupabaseResult,
+  mapAsset,
+  mapCampaign,
+  mapComment,
+  mapReviewThread,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 
 type GetReviewRoomViewParams = {
   organizationId: string;
@@ -52,24 +54,32 @@ export async function getReviewRoomView({
   campaignId,
   selectedAssetId,
 }: GetReviewRoomViewParams) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const campaign = await db
-    .select()
-    .from(campaigns)
-    .where(eq(campaigns.id, campaignId))
+  const { data: campaignRow, error: campaignError } = await supabase
+    .from("campaigns")
+    .select("*")
+    .eq("id", campaignId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(campaignError, "Failed to load campaign");
+
+  const campaign = campaignRow ? mapCampaign(campaignRow) : null;
 
   if (!campaign || campaign.organizationId !== organizationId) {
     return null;
   }
 
-  const campaignAssets = await db
-    .select()
-    .from(assets)
-    .where(eq(assets.campaignId, campaignId))
-    .orderBy(desc(assets.createdAt));
+  const { data: assetRows, error: assetError } = await supabase
+    .from("assets")
+    .select("*")
+    .eq("campaign_id", campaignId)
+    .order("created_at", { ascending: false });
+
+  assertSupabaseResult(assetError, "Failed to load campaign assets");
+
+  const campaignAssets = (assetRows ?? []).map(mapAsset);
 
   const orderedAssets = [...campaignAssets].sort((left, right) => {
     const byStatus = getAssetPriority(left.reviewStatus) - getAssetPriority(right.reviewStatus);
@@ -81,24 +91,27 @@ export async function getReviewRoomView({
     return right.createdAt.getTime() - left.createdAt.getTime();
   });
 
-  const threadRows = await db
-    .select({
-      threadId: reviewThreads.id,
-      assetId: reviewThreads.assetId,
-      createdBy: reviewThreads.createdBy,
-      anchorJson: reviewThreads.anchorJson,
-      resolvedAt: reviewThreads.resolvedAt,
-      commentId: comments.id,
-      authorId: comments.authorId,
-      body: comments.body,
-      commentType: comments.commentType,
-      createdAt: comments.createdAt,
-    })
-    .from(reviewThreads)
-    .innerJoin(comments, eq(comments.threadId, reviewThreads.id))
-    .innerJoin(assets, eq(reviewThreads.assetId, assets.id))
-    .where(eq(assets.campaignId, campaignId))
-    .orderBy(asc(reviewThreads.id), asc(comments.createdAt));
+  const assetIds = campaignAssets.map((asset) => asset.id);
+  const [threadRows, commentRows] =
+    assetIds.length > 0
+      ? await Promise.all([
+          supabase
+            .from("review_threads")
+            .select("*")
+            .in("asset_id", assetIds)
+            .then(({ data, error }) => {
+              assertSupabaseResult(error, "Failed to load review threads");
+              return (data ?? []).map(mapReviewThread);
+            }),
+          supabase
+            .from("comments")
+            .select("*")
+            .then(({ data, error }) => {
+              assertSupabaseResult(error, "Failed to load review comments");
+              return (data ?? []).map(mapComment);
+            }),
+        ])
+      : [[], []];
 
   const threadsByAsset = new Map<
     string,
@@ -119,31 +132,34 @@ export async function getReviewRoomView({
 
   for (const row of threadRows) {
     const assetThreads = threadsByAsset.get(row.assetId) ?? [];
-    const existingThread = assetThreads.find((thread) => thread.threadId === row.threadId);
+    const existingThread = assetThreads.find((thread) => thread.threadId === row.id);
+    const threadComments = commentRows
+      .filter((comment) => comment.threadId === row.id)
+      .sort((left, right) => left.createdAt.getTime() - right.createdAt.getTime());
 
     if (existingThread) {
-      existingThread.comments.push({
-        id: row.commentId,
-        authorId: row.authorId,
-        body: row.body,
-        commentType: row.commentType,
-        createdAt: row.createdAt,
-      });
+      existingThread.comments.push(
+        ...threadComments.map((comment) => ({
+          id: comment.id,
+          authorId: comment.authorId,
+          body: comment.body,
+          commentType: comment.commentType,
+          createdAt: comment.createdAt,
+        })),
+      );
     } else {
       assetThreads.push({
-        threadId: row.threadId,
+        threadId: row.id,
         createdBy: row.createdBy,
         resolvedAt: row.resolvedAt,
         anchor: parseAnchor(row.anchorJson),
-        comments: [
-          {
-            id: row.commentId,
-            authorId: row.authorId,
-            body: row.body,
-            commentType: row.commentType,
-            createdAt: row.createdAt,
-          },
-        ],
+        comments: threadComments.map((comment) => ({
+          id: comment.id,
+          authorId: comment.authorId,
+          body: comment.body,
+          commentType: comment.commentType,
+          createdAt: comment.createdAt,
+        })),
       });
     }
 

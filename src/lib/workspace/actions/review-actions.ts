@@ -1,15 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { and, eq, isNull, desc, inArray } from "drizzle-orm";
-import { getDb } from "@/lib/db";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
 import { workspaceCapabilities } from "@/lib/auth/roles";
-import { assets } from "@/lib/db/schema/assets";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { campaignStages } from "@/lib/db/schema/campaign-stages";
-import { comments } from "@/lib/db/schema/comments";
-import { reviewThreads } from "@/lib/db/schema/review-threads";
+import {
+  assertSupabaseResult,
+  mapAsset,
+  mapCampaign,
+  mapReviewThread,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import {
   workspaceCommentSchema,
   workspaceDecisionSchema,
@@ -28,7 +28,10 @@ type ReviewMutationResult =
 
 async function getReviewMutationContext(campaignId: string, assetId: string) {
   const bootstrap = await requireWorkspaceAccess();
-  const capability = workspaceCapabilities[bootstrap.membership.role];
+  const capability =
+    workspaceCapabilities[
+      bootstrap.membership.role as keyof typeof workspaceCapabilities
+    ];
 
   if (!capability.canReviewAssets) {
     return {
@@ -36,20 +39,28 @@ async function getReviewMutationContext(campaignId: string, assetId: string) {
     } as const;
   }
 
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const asset = await db
-    .select({
-      id: assets.id,
-      campaignId: assets.campaignId,
-      reviewStatus: assets.reviewStatus,
-      organizationId: campaigns.organizationId,
-    })
-    .from(assets)
-    .innerJoin(campaigns, eq(assets.campaignId, campaigns.id))
-    .where(and(eq(assets.id, assetId), eq(campaigns.id, campaignId)))
-    .limit(1)
-    .then((rows) => rows[0] ?? null);
+  const [{ data: campaignRow, error: campaignError }, { data: assetRow, error: assetError }] =
+    await Promise.all([
+      supabase.from("campaigns").select("*").eq("id", campaignId).limit(1).maybeSingle(),
+      supabase.from("assets").select("*").eq("id", assetId).limit(1).maybeSingle(),
+    ]);
+
+  assertSupabaseResult(campaignError, "Failed to load review campaign");
+  assertSupabaseResult(assetError, "Failed to load review asset");
+
+  const campaign = campaignRow ? mapCampaign(campaignRow) : null;
+  const assetData = assetRow ? mapAsset(assetRow) : null;
+  const asset =
+    campaign && assetData && assetData.campaignId === campaign.id
+      ? {
+          id: assetData.id,
+          campaignId: assetData.campaignId,
+          reviewStatus: assetData.reviewStatus,
+          organizationId: campaign.organizationId,
+        }
+      : null;
 
   if (!asset || asset.organizationId !== bootstrap.organization.id) {
     return {
@@ -58,105 +69,115 @@ async function getReviewMutationContext(campaignId: string, assetId: string) {
   }
 
   return {
-    db,
+    supabase,
     bootstrap,
     asset,
   } as const;
 }
 
 async function getOrCreateThread(
-  db: ReturnType<typeof getDb>,
+  supabase: ReturnType<typeof requireServiceRoleClient>,
   assetId: string,
   createdBy: string,
 ) {
-  const existingThread = await db
-    .select()
-    .from(reviewThreads)
-    .where(and(eq(reviewThreads.assetId, assetId), isNull(reviewThreads.resolvedAt)))
-    .orderBy(desc(reviewThreads.id))
-    .limit(1)
-    .then((rows) => rows[0] ?? null);
+  const { data: threadRows, error: existingThreadError } = await supabase
+    .from("review_threads")
+    .select("*")
+    .eq("asset_id", assetId)
+    .is("resolved_at", null)
+    .limit(1);
+
+  assertSupabaseResult(existingThreadError, "Failed to load review thread");
+
+  const existingThread = threadRows?.[0] ? mapReviewThread(threadRows[0]) : null;
 
   if (existingThread) {
     return existingThread;
   }
 
-  const [thread] = await db
-    .insert(reviewThreads)
-    .values({
-      assetId,
-      createdBy,
-      anchorJson: null,
+  const { data: threadRow, error: threadInsertError } = await supabase
+    .from("review_threads")
+    .insert({
+      asset_id: assetId,
+      created_by: createdBy,
+      anchor_json: null,
     })
-    .returning();
+    .select("*")
+    .single();
 
-  return thread;
+  assertSupabaseResult(threadInsertError, "Failed to create review thread");
+
+  if (!threadRow) {
+    throw new Error("Failed to create review thread: missing inserted row.");
+  }
+
+  return mapReviewThread(threadRow);
 }
 
 async function syncCampaignReviewState(
-  db: ReturnType<typeof getDb>,
+  supabase: ReturnType<typeof requireServiceRoleClient>,
   campaignId: string,
 ) {
-  const campaignAssets = await db
-    .select({
-      id: assets.id,
-      reviewStatus: assets.reviewStatus,
-    })
-    .from(assets)
-    .where(eq(assets.campaignId, campaignId));
+  const { data: campaignAssetRows, error: campaignAssetsError } = await supabase
+    .from("assets")
+    .select("*")
+    .eq("campaign_id", campaignId);
+
+  assertSupabaseResult(campaignAssetsError, "Failed to sync review state");
+
+  const campaignAssets = (campaignAssetRows ?? []).map(mapAsset);
 
   const derived = deriveCampaignReviewState(
     campaignAssets.map((asset) => asset.reviewStatus),
   );
 
-  await db
-    .update(campaigns)
-    .set({
-      currentStage: derived.currentStage,
+  const { error: campaignUpdateError } = await supabase
+    .from("campaigns")
+    .update({
+      current_stage: derived.currentStage,
     })
-    .where(eq(campaigns.id, campaignId));
+    .eq("id", campaignId);
 
-  await db
-    .update(campaignStages)
-    .set({
+  assertSupabaseResult(campaignUpdateError, "Failed to update campaign stage");
+
+  const { error: inReviewUpdateError } = await supabase
+    .from("campaign_stages")
+    .update({
       status: derived.inReviewStatus,
-      completedAt: derived.inReviewStatus === "completed" ? new Date() : null,
-      startedAt: derived.inReviewStatus === "in_progress" ? new Date() : null,
+      completed_at:
+        derived.inReviewStatus === "completed" ? new Date().toISOString() : null,
+      started_at:
+        derived.inReviewStatus === "in_progress" ? new Date().toISOString() : null,
     })
-    .where(
-      and(
-        eq(campaignStages.campaignId, campaignId),
-        eq(campaignStages.stageKey, "in_review"),
-      ),
-    );
+    .eq("campaign_id", campaignId)
+    .eq("stage_key", "in_review");
 
-  await db
-    .update(campaignStages)
-    .set({
+  assertSupabaseResult(inReviewUpdateError, "Failed to update in-review stage");
+
+  const { error: approvedUpdateError } = await supabase
+    .from("campaign_stages")
+    .update({
       status: derived.approvedStatus,
-      startedAt: derived.approvedStatus === "in_progress" ? new Date() : null,
-      completedAt: null,
+      started_at:
+        derived.approvedStatus === "in_progress" ? new Date().toISOString() : null,
+      completed_at: null,
     })
-    .where(
-      and(
-        eq(campaignStages.campaignId, campaignId),
-        eq(campaignStages.stageKey, "approved"),
-      ),
-    );
+    .eq("campaign_id", campaignId)
+    .eq("stage_key", "approved");
 
-  await db
-    .update(campaignStages)
-    .set({
+  assertSupabaseResult(approvedUpdateError, "Failed to update approved stage");
+
+  const { error: handoverUpdateError } = await supabase
+    .from("campaign_stages")
+    .update({
       status: derived.handoverReadyStatus,
-      startedAt: null,
-      completedAt: null,
+      started_at: null,
+      completed_at: null,
     })
-    .where(
-      and(
-        eq(campaignStages.campaignId, campaignId),
-        eq(campaignStages.stageKey, "handover_ready"),
-      ),
-    );
+    .eq("campaign_id", campaignId)
+    .eq("stage_key", "handover_ready");
+
+  assertSupabaseResult(handoverUpdateError, "Failed to update handover stage");
 }
 
 function revalidateReviewPaths(campaignId: string) {
@@ -192,17 +213,19 @@ export async function addReviewComment(
   }
 
   const thread = await getOrCreateThread(
-    context.db,
+    context.supabase,
     assetId,
     context.bootstrap.membership.role,
   );
 
-  await context.db.insert(comments).values({
-    threadId: thread.id,
-    authorId: context.bootstrap.membership.role,
+  const { error: commentInsertError } = await context.supabase.from("comments").insert({
+    thread_id: thread.id,
+    author_id: context.bootstrap.membership.role,
     body: parsed.data.body,
-    commentType: "comment",
+    comment_type: "comment",
   });
+
+  assertSupabaseResult(commentInsertError, "Failed to add review comment");
 
   revalidateReviewPaths(campaignId);
 
@@ -248,54 +271,61 @@ export async function applyReviewDecision(
         : "Im Review zur Überarbeitung markiert.";
 
   const thread = await getOrCreateThread(
-    context.db,
+    context.supabase,
     assetId,
     context.bootstrap.membership.role,
   );
 
-  await context.db.insert(comments).values({
-    threadId: thread.id,
-    authorId: context.bootstrap.membership.role,
+  const { error: commentInsertError } = await context.supabase.from("comments").insert({
+    thread_id: thread.id,
+    author_id: context.bootstrap.membership.role,
     body: commentBody,
-    commentType: decision === "approved" ? "approval_note" : "change_request",
+    comment_type: decision === "approved" ? "approval_note" : "change_request",
   });
 
-  await context.db
-    .update(assets)
-    .set({
-      reviewStatus,
-    })
-    .where(eq(assets.id, assetId));
+  assertSupabaseResult(commentInsertError, "Failed to save review decision");
 
-  const assetThreadIds = await context.db
-    .select({
-      id: reviewThreads.id,
+  const { error: assetUpdateError } = await context.supabase
+    .from("assets")
+    .update({
+      review_status: reviewStatus,
     })
-    .from(reviewThreads)
-    .where(eq(reviewThreads.assetId, assetId));
+    .eq("id", assetId);
+
+  assertSupabaseResult(assetUpdateError, "Failed to update asset review status");
+
+  const { data: assetThreadRows, error: assetThreadsError } = await context.supabase
+    .from("review_threads")
+    .select("*")
+    .eq("asset_id", assetId);
+
+  assertSupabaseResult(assetThreadsError, "Failed to load asset threads");
+
+  const assetThreadIds = (assetThreadRows ?? []).map((threadRow) => threadRow.id);
 
   if (decision === "approved") {
-    await context.db
-      .update(reviewThreads)
-      .set({
-        resolvedAt: new Date(),
-      })
-      .where(
-        inArray(
-          reviewThreads.id,
-          assetThreadIds.map((threadRow) => threadRow.id),
-        ),
-      );
+    if (assetThreadIds.length > 0) {
+      const { error: resolveThreadsError } = await context.supabase
+        .from("review_threads")
+        .update({
+          resolved_at: new Date().toISOString(),
+        })
+        .in("id", assetThreadIds);
+
+      assertSupabaseResult(resolveThreadsError, "Failed to resolve review threads");
+    }
   } else {
-    await context.db
-      .update(reviewThreads)
-      .set({
-        resolvedAt: null,
+    const { error: reopenThreadError } = await context.supabase
+      .from("review_threads")
+      .update({
+        resolved_at: null,
       })
-      .where(eq(reviewThreads.id, thread.id));
+      .eq("id", thread.id);
+
+    assertSupabaseResult(reopenThreadError, "Failed to reopen review thread");
   }
 
-  await syncCampaignReviewState(context.db, campaignId);
+  await syncCampaignReviewState(context.supabase, campaignId);
   revalidateReviewPaths(campaignId);
 
   return {

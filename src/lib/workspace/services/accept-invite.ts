@@ -1,18 +1,24 @@
-import { and, eq, gt, isNull } from "drizzle-orm";
 import type { User } from "@supabase/supabase-js";
-import { getDb } from "@/lib/db";
-import { invites } from "@/lib/db/schema/invites";
-import { memberships } from "@/lib/db/schema/memberships";
+import {
+  assertSupabaseResult,
+  mapInvite,
+  mapMembership,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 
 export async function ensureMembershipForCurrentUser(user: User) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const existingMembership = await db
-    .select()
-    .from(memberships)
-    .where(eq(memberships.userId, user.id))
+  const { data: existingMembershipRow, error: existingMembershipError } = await supabase
+    .from("memberships")
+    .select("*")
+    .eq("user_id", user.id)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(existingMembershipError, "Failed to load existing membership");
+
+  const existingMembership = existingMembershipRow ? mapMembership(existingMembershipRow) : null;
 
   if (existingMembership) {
     return existingMembership;
@@ -24,63 +30,86 @@ export async function ensureMembershipForCurrentUser(user: User) {
     return null;
   }
 
-  return db.transaction(async (tx) => {
-    const transactionMembership = await tx
-      .select()
-      .from(memberships)
-      .where(eq(memberships.userId, user.id))
+  const { data: transactionMembershipRow, error: transactionMembershipError } = await supabase
+    .from("memberships")
+    .select("*")
+    .eq("user_id", user.id)
+    .limit(1)
+    .maybeSingle();
+
+  assertSupabaseResult(
+    transactionMembershipError,
+    "Failed to re-check membership for current user",
+  );
+
+  const transactionMembership = transactionMembershipRow
+    ? mapMembership(transactionMembershipRow)
+    : null;
+
+  if (transactionMembership) {
+    return transactionMembership;
+  }
+
+  const { data: activeInviteRow, error: activeInviteError } = await supabase
+    .from("invites")
+    .select("*")
+    .ilike("email", email)
+    .is("accepted_at", null)
+    .gt("expires_at", new Date().toISOString())
+    .limit(1)
+    .maybeSingle();
+
+  assertSupabaseResult(activeInviteError, "Failed to load active invite");
+
+  const activeInvite = activeInviteRow ? mapInvite(activeInviteRow) : null;
+
+  if (!activeInvite) {
+    return null;
+  }
+
+  const { data: membershipRows, error: membershipInsertError } = await supabase
+    .from("memberships")
+    .upsert(
+      {
+        organization_id: activeInvite.organizationId,
+        user_id: user.id,
+        role: activeInvite.role,
+      },
+      {
+        onConflict: "user_id",
+      },
+    )
+    .select();
+
+  assertSupabaseResult(membershipInsertError, "Failed to upsert membership");
+
+  const membershipRow = membershipRows?.[0] ?? null;
+
+  if (!membershipRow) {
+    const { data: fallbackMembershipRow, error: fallbackMembershipError } = await supabase
+      .from("memberships")
+      .select("*")
+      .eq("user_id", user.id)
       .limit(1)
-      .then((rows) => rows[0] ?? null);
+      .maybeSingle();
 
-    if (transactionMembership) {
-      return transactionMembership;
-    }
+    assertSupabaseResult(fallbackMembershipError, "Failed to reload membership");
 
-    const activeInvite = await tx
-      .select()
-      .from(invites)
-      .where(
-        and(
-          eq(invites.email, email),
-          isNull(invites.acceptedAt),
-          gt(invites.expiresAt, new Date()),
-        ),
-      )
-      .limit(1)
-      .then((rows) => rows[0] ?? null);
-
-    if (!activeInvite) {
+    if (!fallbackMembershipRow) {
       return null;
     }
 
-    const [membership] = await tx
-      .insert(memberships)
-      .values({
-        organizationId: activeInvite.organizationId,
-        userId: user.id,
-        role: activeInvite.role,
-      })
-      .onConflictDoNothing({
-        target: memberships.userId,
-      })
-      .returning();
+    return mapMembership(fallbackMembershipRow);
+  }
 
-    if (!membership) {
-      return tx
-        .select()
-        .from(memberships)
-        .where(eq(memberships.userId, user.id))
-        .limit(1)
-        .then((rows) => rows[0] ?? null);
-    }
+  const { error: inviteUpdateError } = await supabase
+    .from("invites")
+    .update({
+      accepted_at: new Date().toISOString(),
+    })
+    .eq("id", activeInvite.id);
 
-    await tx
-      .update(invites)
-      .set({
-        acceptedAt: new Date(),
-      })
-      .where(eq(invites.id, activeInvite.id));
+  assertSupabaseResult(inviteUpdateError, "Failed to mark invite as accepted");
 
-    return membership;
-  });
+  return mapMembership(membershipRow);
 }

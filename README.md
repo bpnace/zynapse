@@ -54,6 +54,11 @@ Create `.env.local` and set only the values you actually need.
 
 If the waitlist webhook vars are not set, waitlist-bound submissions are accepted and logged server-side as a safe fallback for local and preview verification.
 
+For server-side workspace data access, configure either:
+
+- `DATABASE_URL`
+- or a pooled runtime URL such as `DATABASE_POOL_URL` / `POSTGRES_URL`
+
 ## Commands
 
 ```bash

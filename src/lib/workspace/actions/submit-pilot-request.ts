@@ -1,12 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
 import { workspaceCapabilities } from "@/lib/auth/roles";
-import { campaigns } from "@/lib/db/schema/campaigns";
-import { pilotRequests } from "@/lib/db/schema/pilot-requests";
+import {
+  assertSupabaseResult,
+  mapCampaign,
+  mapPilotRequest,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 import { getEnv } from "@/lib/env";
 import { dispatchPilotRequestSubmission } from "@/lib/workspace/pilot/dispatch-pilot-request";
 import {
@@ -35,7 +37,10 @@ export async function submitPilotRequest(
   input: WorkspacePilotRequestInput,
 ): Promise<SubmitPilotRequestResult> {
   const bootstrap = await requireWorkspaceAccess();
-  const capability = workspaceCapabilities[bootstrap.membership.role];
+  const capability =
+    workspaceCapabilities[
+      bootstrap.membership.role as keyof typeof workspaceCapabilities
+    ];
 
   if (!capability.canSubmitPilotRequest) {
     return {
@@ -53,14 +58,18 @@ export async function submitPilotRequest(
     };
   }
 
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const campaign = await db
-    .select()
-    .from(campaigns)
-    .where(eq(campaigns.id, campaignId))
+  const { data: campaignRow, error: campaignError } = await supabase
+    .from("campaigns")
+    .select("*")
+    .eq("id", campaignId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(campaignError, "Failed to load pilot request campaign");
+
+  const campaign = campaignRow ? mapCampaign(campaignRow) : null;
 
   if (!campaign || campaign.organizationId !== bootstrap.organization.id) {
     return {
@@ -70,20 +79,29 @@ export async function submitPilotRequest(
   }
 
   const env = getEnv();
-  const [request] = await db
-    .insert(pilotRequests)
-    .values({
-      organizationId: bootstrap.organization.id,
-      campaignId: campaign.id,
-      requestedBy: bootstrap.membership.userId,
-      desiredTier: parsed.data.desiredTier,
-      startWindow: parsed.data.startWindow,
-      internalStakeholders: parsed.data.internalStakeholders,
+  const { data: requestRow, error: requestError } = await supabase
+    .from("pilot_requests")
+    .insert({
+      organization_id: bootstrap.organization.id,
+      campaign_id: campaign.id,
+      requested_by: bootstrap.membership.userId,
+      desired_tier: parsed.data.desiredTier,
+      start_window: parsed.data.startWindow,
+      internal_stakeholders: parsed.data.internalStakeholders,
       message: parsed.data.message,
       status: "submitted",
-      handoffMode: env.pilotRequestWebhookUrl ? "webhook" : "log",
+      handoff_mode: env.pilotRequestWebhookUrl ? "webhook" : "log",
     })
-    .returning();
+    .select("*")
+    .single();
+
+  assertSupabaseResult(requestError, "Failed to create pilot request");
+
+  if (!requestRow) {
+    throw new Error("Failed to create pilot request: missing inserted row.");
+  }
+
+  const request = mapPilotRequest(requestRow);
 
   try {
     const dispatch = await dispatchPilotRequestSubmission({
@@ -105,13 +123,15 @@ export async function submitPilotRequest(
       },
     });
 
-    await db
-      .update(pilotRequests)
-      .set({
-        handoffMode: dispatch.mode,
+    const { error: successUpdateError } = await supabase
+      .from("pilot_requests")
+      .update({
+        handoff_mode: dispatch.mode,
         status: "submitted",
       })
-      .where(eq(pilotRequests.id, request.id));
+      .eq("id", request.id);
+
+    assertSupabaseResult(successUpdateError, "Failed to update pilot request status");
 
     revalidatePath("/workspace");
     revalidatePath("/workspace/pilot-request");
@@ -128,13 +148,15 @@ export async function submitPilotRequest(
           : "Pilot-Anfrage gespeichert. Für die Live-Übergabe an Ops fehlt noch eine dedizierte Webhook-Verbindung.",
     };
   } catch {
-    await db
-      .update(pilotRequests)
-      .set({
+    const { error: failureUpdateError } = await supabase
+      .from("pilot_requests")
+      .update({
         status: "failed",
-        handoffMode: "webhook",
+        handoff_mode: "webhook",
       })
-      .where(eq(pilotRequests.id, request.id));
+      .eq("id", request.id);
+
+    assertSupabaseResult(failureUpdateError, "Failed to mark pilot request as failed");
 
     revalidatePath("/workspace");
     revalidatePath("/workspace/pilot-request");

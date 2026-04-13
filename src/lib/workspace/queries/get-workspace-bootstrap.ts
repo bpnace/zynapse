@@ -1,40 +1,54 @@
-import { eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { brandProfiles } from "@/lib/db/schema/brand-profiles";
-import { memberships } from "@/lib/db/schema/memberships";
-import { organizations } from "@/lib/db/schema/organizations";
+import {
+  assertSupabaseResult,
+  mapBrandProfile,
+  mapMembership,
+  mapOrganization,
+  requireServiceRoleClient,
+} from "@/lib/workspace/data/service-role";
 
 export async function getWorkspaceBootstrap(userId: string) {
-  const db = getDb();
+  const supabase = requireServiceRoleClient();
 
-  const membership = await db
-    .select()
-    .from(memberships)
-    .where(eq(memberships.userId, userId))
+  const { data: membershipRow, error: membershipError } = await supabase
+    .from("memberships")
+    .select("*")
+    .eq("user_id", userId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(membershipError, "Failed to load workspace membership");
+
+  const membership = membershipRow ? mapMembership(membershipRow) : null;
 
   if (!membership) {
     return null;
   }
 
-  const organization = await db
-    .select()
-    .from(organizations)
-    .where(eq(organizations.id, membership.organizationId))
+  const { data: organizationRow, error: organizationError } = await supabase
+    .from("organizations")
+    .select("*")
+    .eq("id", membership.organizationId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(organizationError, "Failed to load workspace organization");
+
+  const organization = organizationRow ? mapOrganization(organizationRow) : null;
 
   if (!organization) {
     return null;
   }
 
-  const brandProfile = await db
-    .select()
-    .from(brandProfiles)
-    .where(eq(brandProfiles.organizationId, membership.organizationId))
+  const { data: brandProfileRow, error: brandProfileError } = await supabase
+    .from("brand_profiles")
+    .select("*")
+    .eq("organization_id", membership.organizationId)
     .limit(1)
-    .then((rows) => rows[0] ?? null);
+    .maybeSingle();
+
+  assertSupabaseResult(brandProfileError, "Failed to load brand profile");
+
+  const brandProfile = brandProfileRow ? mapBrandProfile(brandProfileRow) : null;
 
   return {
     membership,

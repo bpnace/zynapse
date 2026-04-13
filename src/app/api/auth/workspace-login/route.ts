@@ -1,9 +1,6 @@
-import { and, eq, gt, ilike, isNotNull, or } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getDb, getSql } from "@/lib/db";
-import { invites } from "@/lib/db/schema/invites";
-import { memberships } from "@/lib/db/schema/memberships";
+import { createServiceRoleSupabaseClient } from "@/lib/auth/admin";
 
 const workspaceLoginSchema = z.object({
   email: z.string().trim().email().transform((value) => value.toLowerCase()),
@@ -12,41 +9,21 @@ const workspaceLoginSchema = z.object({
 export async function POST(request: Request) {
   try {
     const payload = workspaceLoginSchema.parse(await request.json());
-    const db = getDb();
-    const sql = getSql();
+    const supabase = createServiceRoleSupabaseClient();
 
-    const existingUser = await sql<{ id: string }[]>`
-      select id
-      from auth.users
-      where lower(email) = lower(${payload.email})
-      limit 1
-    `.then((rows) => rows[0] ?? null);
+    if (!supabase) {
+      throw new Error("Supabase service role client is not configured.");
+    }
 
-    const existingMembership = existingUser
-      ? await db
-          .select({ id: memberships.id })
-          .from(memberships)
-          .where(eq(memberships.userId, existingUser.id))
-          .limit(1)
-          .then((rows) => rows[0] ?? null)
-      : null;
+    const { data, error } = await supabase.rpc("workspace_login_eligible", {
+      target_email: payload.email,
+    });
 
-    const invite = await db
-      .select({ id: invites.id })
-      .from(invites)
-      .where(
-        and(
-          ilike(invites.email, payload.email),
-          or(
-            isNotNull(invites.acceptedAt),
-            gt(invites.expiresAt, new Date()),
-          ),
-        ),
-      )
-      .limit(1)
-      .then((rows) => rows[0] ?? null);
+    if (error) {
+      throw error;
+    }
 
-    if (!invite && !existingMembership) {
+    if (!data) {
       return NextResponse.json(
         {
           error:

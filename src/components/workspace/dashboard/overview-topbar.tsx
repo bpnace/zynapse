@@ -27,7 +27,7 @@ export function OverviewTopBar({
             <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
               {organizationName}
             </h1>
-            <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
+            <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-body)]">
               Zeigt, wo die Kampagne steht, welche Entscheidungen noch offen sind
               und ob das Team bereit für einen bezahlten Piloten ist.
             </p>
