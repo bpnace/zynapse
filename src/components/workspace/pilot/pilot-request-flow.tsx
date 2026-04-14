@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { Field, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 import { submitPilotRequest } from "@/lib/workspace/actions/submit-pilot-request";
 import { formatWorkspaceDateTime, formatWorkspaceLabel } from "@/lib/workspace/formatting";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 import type { WorkspacePilotRequestInput } from "@/lib/validation/workspace-pilot-request";
 
 type PilotRequestFlowProps = {
   organizationName: string;
+  demo: WorkspaceDemoState;
   campaign: {
     id: string;
     name: string;
@@ -39,6 +41,7 @@ function buildDefaultPilotMessage(campaignName: string) {
 
 export function PilotRequestFlow({
   organizationName,
+  demo,
   campaign,
   campaigns,
   latestRequest,
@@ -100,6 +103,11 @@ export function PilotRequestFlow({
   }
 
   function handleSubmit() {
+    if (demo.isReadOnly) {
+      setStatusMessage(demo.mutationMessage);
+      return;
+    }
+
     if (!selectedCampaignId) {
       setStatusMessage("Bitte wählt zuerst die Kampagne aus, die in den Piloten überführt werden soll.");
       return;
@@ -145,6 +153,11 @@ export function PilotRequestFlow({
             {selectedCampaign ? <span>{selectedCampaign.name}</span> : null}
             {selectedCampaign ? <span>{selectedCampaign.packageTier}</span> : null}
           </div>
+          {demo.isDemoWorkspace ? (
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+              {demo.mutationMessage}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -163,7 +176,7 @@ export function PilotRequestFlow({
                 value={selectedCampaignId}
                 onChange={(event) => handleCampaignChange(event.target.value)}
                 className="field-input"
-                disabled={isPending}
+                disabled={isPending || demo.isReadOnly}
               >
                 {campaigns.length === 0 ? (
                   <option value="">Keine Kampagne verfügbar</option>
@@ -180,7 +193,7 @@ export function PilotRequestFlow({
               <TextInput
                 value={values.desiredTier}
                 onChange={(event) => updateValue("desiredTier", event.target.value)}
-                disabled={isPending}
+                disabled={isPending || demo.isReadOnly}
               />
             </Field>
 
@@ -189,7 +202,7 @@ export function PilotRequestFlow({
                 value={values.startWindow}
                 onChange={(event) => updateValue("startWindow", event.target.value)}
                 placeholder="Innerhalb der nächsten 30 Tage"
-                disabled={isPending}
+                disabled={isPending || demo.isReadOnly}
               />
             </Field>
 
@@ -198,7 +211,7 @@ export function PilotRequestFlow({
                 value={values.internalStakeholders}
                 onChange={(event) => updateValue("internalStakeholders", event.target.value)}
                 placeholder="Founder, Growth Lead, Brand Lead"
-                disabled={isPending}
+                disabled={isPending || demo.isReadOnly}
               />
             </Field>
 
@@ -207,7 +220,7 @@ export function PilotRequestFlow({
                 value={values.message}
                 onChange={(event) => updateValue("message", event.target.value)}
                 placeholder="Warum ist jetzt der richtige Moment für einen bezahlten Piloten?"
-                disabled={isPending}
+                disabled={isPending || demo.isReadOnly}
               />
             </Field>
           </div>
@@ -216,7 +229,7 @@ export function PilotRequestFlow({
             <button
               type="button"
               className="workspace-button workspace-button-primary"
-              disabled={isPending || !selectedCampaignId}
+              disabled={isPending || !selectedCampaignId || demo.isReadOnly}
               onClick={handleSubmit}
             >
               {isPending ? "Wird eingereicht..." : "Pilot-Anfrage einreichen"}

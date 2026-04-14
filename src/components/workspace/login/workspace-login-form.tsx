@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/forms/form-primitives";
 import { createBrowserSupabaseClient } from "@/lib/auth/client";
-import { isDevPasswordLoginEnabled } from "@/lib/env";
 
 type WorkspaceLoginFormProps = {
   next?: string;
+  availableMethods?: LoginMethod[];
+  initialMethod?: LoginMethod;
+  initialEmail?: string;
 };
 
 type LoginStep = "email-entry" | "otp-entry";
@@ -86,13 +88,15 @@ function mapPasswordError(error: unknown) {
 
 export function WorkspaceLoginForm({
   next = "/workspace",
+  availableMethods = ["otp"],
+  initialMethod = availableMethods[0] ?? "otp",
+  initialEmail = "",
 }: WorkspaceLoginFormProps) {
   const router = useRouter();
-  const showPasswordLogin = isDevPasswordLoginEnabled();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
   const [otpCode, setOtpCode] = useState("");
-  const [method, setMethod] = useState<LoginMethod>("otp");
+  const [method, setMethod] = useState<LoginMethod>(initialMethod);
   const [step, setStep] = useState<LoginStep>("email-entry");
   const [isPending, setIsPending] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -175,12 +179,18 @@ export function WorkspaceLoginForm({
 
   async function handleEmailSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const targetEmail = String(formData.get("workspace-email") ?? "")
+      .trim()
+      .toLowerCase();
+
     setSubmitError("");
     setHelperMessage("");
     setIsPending(true);
 
     try {
-      await requestOtp(normalizedEmail);
+      setEmail(targetEmail);
+      await requestOtp(targetEmail);
       setStep("otp-entry");
       setOtpCode("");
       setCooldownSecondsLeft(RESEND_COOLDOWN_SECONDS);
@@ -196,6 +206,11 @@ export function WorkspaceLoginForm({
 
   async function handleOtpSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const token = String(formData.get("workspace-otp") ?? "")
+      .replace(/\D/g, "")
+      .slice(0, 6);
+
     setSubmitError("");
     setHelperMessage("");
     setIsPending(true);
@@ -211,7 +226,7 @@ export function WorkspaceLoginForm({
 
       const { error } = await supabase.auth.verifyOtp({
         email: normalizedEmail,
-        token: otpCode.trim(),
+        token,
         type: "email",
       });
 
@@ -230,6 +245,12 @@ export function WorkspaceLoginForm({
 
   async function handlePasswordSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const targetEmail = String(formData.get("workspace-email") ?? "")
+      .trim()
+      .toLowerCase();
+    const targetPassword = String(formData.get("workspace-password") ?? "");
+
     setSubmitError("");
     setHelperMessage("");
     setIsPending(true);
@@ -243,11 +264,13 @@ export function WorkspaceLoginForm({
         );
       }
 
-      await ensureEligible(normalizedEmail);
+      setEmail(targetEmail);
+      setPassword(targetPassword);
+      await ensureEligible(targetEmail);
 
       const { error } = await supabase.auth.signInWithPassword({
-        email: normalizedEmail,
-        password,
+        email: targetEmail,
+        password: targetPassword,
       });
 
       if (error) {
@@ -298,12 +321,9 @@ export function WorkspaceLoginForm({
     setHelperMessage("");
   }
 
-  const isEmailSubmitDisabled =
-    isPending || !normalizedEmail || !isLoginConfigured;
-  const isOtpSubmitDisabled =
-    isPending || otpCode.trim().length !== 6 || !isLoginConfigured;
-  const isPasswordSubmitDisabled =
-    isPending || !normalizedEmail || !password || !isLoginConfigured;
+  const isEmailSubmitDisabled = isPending || !isLoginConfigured;
+  const isOtpSubmitDisabled = isPending || !isLoginConfigured;
+  const isPasswordSubmitDisabled = isPending || !isLoginConfigured;
   const isResendDisabled = isPending || cooldownSecondsLeft > 0;
 
   return (
@@ -326,30 +346,34 @@ export function WorkspaceLoginForm({
         </p>
       </div>
 
-      {showPasswordLogin ? (
+      {availableMethods.length > 1 ? (
         <div className="inline-flex rounded-full border border-[color:var(--line)] bg-white/80 p-1">
-          <button
-            type="button"
-            className={
-              method === "otp"
-                ? "rounded-full bg-[var(--foreground)] px-4 py-2 text-sm font-medium text-white"
-                : "rounded-full px-4 py-2 text-sm font-medium text-[var(--copy-body)]"
-            }
-            onClick={() => resetModeState("otp")}
-          >
-            Code per E-Mail
-          </button>
-          <button
-            type="button"
-            className={
-              method === "password"
-                ? "rounded-full bg-[var(--foreground)] px-4 py-2 text-sm font-medium text-white"
-                : "rounded-full px-4 py-2 text-sm font-medium text-[var(--copy-body)]"
-            }
-            onClick={() => resetModeState("password")}
-          >
-            Mit Passwort
-          </button>
+          {availableMethods.includes("otp") ? (
+            <button
+              type="button"
+              className={
+                method === "otp"
+                  ? "rounded-full bg-[var(--foreground)] px-4 py-2 text-sm font-medium text-white"
+                  : "rounded-full px-4 py-2 text-sm font-medium text-[var(--copy-body)]"
+              }
+              onClick={() => resetModeState("otp")}
+            >
+              Code per E-Mail
+            </button>
+          ) : null}
+          {availableMethods.includes("password") ? (
+            <button
+              type="button"
+              className={
+                method === "password"
+                  ? "rounded-full bg-[var(--foreground)] px-4 py-2 text-sm font-medium text-white"
+                  : "rounded-full px-4 py-2 text-sm font-medium text-[var(--copy-body)]"
+              }
+              onClick={() => resetModeState("password")}
+            >
+              Mit Passwort
+            </button>
+          ) : null}
         </div>
       ) : null}
 
@@ -364,6 +388,7 @@ export function WorkspaceLoginForm({
             </label>
             <TextInput
               id="workspace-email"
+              name="workspace-email"
               type="email"
               autoComplete="email"
               value={email}
@@ -382,6 +407,7 @@ export function WorkspaceLoginForm({
             </label>
             <TextInput
               id="workspace-password"
+              name="workspace-password"
               type="password"
               autoComplete="current-password"
               value={password}
@@ -401,6 +427,7 @@ export function WorkspaceLoginForm({
           </label>
           <TextInput
             id="workspace-email"
+            name="workspace-email"
             type="email"
             autoComplete="email"
             value={email}
@@ -430,6 +457,7 @@ export function WorkspaceLoginForm({
             </label>
             <TextInput
               id="workspace-otp"
+              name="workspace-otp"
               type="text"
               inputMode="numeric"
               autoComplete="one-time-code"

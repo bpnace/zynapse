@@ -314,6 +314,42 @@ type OfferInput = {
   priceNote?: string;
 };
 
+function secondsToIsoDuration(s: string): string {
+  const total = parseInt(s, 10);
+  const m = Math.floor(total / 60);
+  const sec = total % 60;
+  return m > 0 ? `PT${m}M${sec}S` : `PT${sec}S`;
+}
+
+type VideoObjectInput = {
+  id: string;
+  name: string;
+  description: string;
+  contentUrl: string;
+  uploadDate: string;
+  length: string;
+  pageUrl: string;
+};
+
+export function buildVideoObjectJsonLd(video: VideoObjectInput) {
+  return {
+    "@type": "VideoObject",
+    "@id": absoluteUrl(`/#video-${video.id}`),
+    name: video.name,
+    description: video.description,
+    contentUrl: absoluteUrl(video.contentUrl),
+    uploadDate: video.uploadDate,
+    duration: secondsToIsoDuration(video.length),
+    inLanguage: siteConfig.languageTag,
+    isPartOf: {
+      "@id": absoluteUrl(`${video.pageUrl}#webpage`),
+    },
+    publisher: {
+      "@id": absoluteUrl("/#organization"),
+    },
+  };
+}
+
 export function buildOfferJsonLd(offers: OfferInput[]) {
   return offers.map((offer) => ({
     "@type": "Offer",

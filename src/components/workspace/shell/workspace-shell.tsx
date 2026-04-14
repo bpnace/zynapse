@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatWorkspaceRole } from "@/lib/workspace/formatting";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 
 type PlannedNavigationItem = {
   label: string;
@@ -28,6 +29,7 @@ type WorkspaceShellProps = {
   role: string;
   website?: string | null;
   activeCampaignId?: string | null;
+  demo?: WorkspaceDemoState;
   children: React.ReactNode;
 };
 
@@ -36,6 +38,7 @@ export function WorkspaceShell({
   role,
   website,
   activeCampaignId,
+  demo,
   children,
 }: WorkspaceShellProps) {
   const pathname = usePathname();
@@ -133,10 +136,24 @@ export function WorkspaceShell({
               </div>
             </div>
             <div className="mt-4 workspace-meta-row text-[var(--workspace-sidebar-copy-muted)]">
-              <span>{formatWorkspaceRole(role)}</span>
-              <span>Privater Brand-Workspace</span>
+              <span>{demo?.isDemoWorkspace ? "Demo-Zugang" : formatWorkspaceRole(role)}</span>
+              <span>{demo?.isDemoWorkspace ? demo.shellBadge : "Privater Brand-Workspace"}</span>
             </div>
           </div>
+
+          {demo?.isDemoWorkspace ? (
+            <div className="mt-4 rounded-[1.35rem] border border-[rgba(255,255,255,0.14)] bg-[rgba(217,101,71,0.12)] px-4 py-4">
+              <p className="workspace-eyebrow text-[rgba(255,228,222,0.76)]">
+                {demo.shellBadge}
+              </p>
+              <p className="mt-2 text-sm font-semibold tracking-[-0.02em] text-[var(--workspace-sidebar-copy)]">
+                Schreibgeschützter Showcase
+              </p>
+              <p className="mt-2 text-sm leading-6 text-[var(--workspace-sidebar-copy-muted)]">
+                {demo.shellDescription}
+              </p>
+            </div>
+          ) : null}
 
           <nav className="mt-6 space-y-2" aria-label="Workspace navigation">
             {navigation.map((item) => {
@@ -228,7 +245,7 @@ export function WorkspaceShell({
               </p>
               <div className="workspace-meta-row">
                 <span>{mobileLocationLabel}</span>
-                <span>{formatWorkspaceRole(role)}</span>
+                <span>{demo?.isDemoWorkspace ? demo.shellBadge : formatWorkspaceRole(role)}</span>
               </div>
             </div>
           </div>

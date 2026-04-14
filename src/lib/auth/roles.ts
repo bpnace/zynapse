@@ -33,3 +33,22 @@ export const workspaceCapabilities = {
     canSubmitPilotRequest: true,
   },
 } as const;
+
+export function getWorkspaceCapabilities(
+  role: WorkspaceRole,
+  options?: { isReadOnly?: boolean },
+) {
+  const base = workspaceCapabilities[role];
+
+  if (!options?.isReadOnly) {
+    return base;
+  }
+
+  return {
+    ...base,
+    canEditBrandProfile: false,
+    canCreateBriefs: false,
+    canReviewAssets: false,
+    canSubmitPilotRequest: false,
+  } as const;
+}

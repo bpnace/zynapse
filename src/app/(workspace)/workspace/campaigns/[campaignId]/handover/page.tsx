@@ -31,6 +31,7 @@ export default async function HandoverPage({ params }: HandoverPageProps) {
       usageSummary={handover.usageSummary}
       campaignNotes={handover.campaignNotes}
       nextStep={handover.nextStep}
+      demo={bootstrap.demo}
     />
   );
 }

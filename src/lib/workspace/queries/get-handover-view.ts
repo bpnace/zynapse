@@ -5,6 +5,7 @@ import {
   mapCampaignStage,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import { decorateWorkspaceAssetMedia } from "@/lib/workspace/media";
 import { getSeedTemplate } from "@/lib/workspace/seeds/templates";
 
 type GetHandoverViewParams = {
@@ -74,7 +75,7 @@ export async function getHandoverView({
       .order("created_at", { ascending: false })
       .then(({ data, error }) => {
         assertSupabaseResult(error, "Failed to load campaign assets");
-        return (data ?? []).map(mapAsset);
+        return (data ?? []).map(mapAsset).map(decorateWorkspaceAssetMedia);
       }),
   ]);
 

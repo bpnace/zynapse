@@ -1,0 +1,137 @@
+{
+  "key": "d2c_product_launch",
+  "label": "D2C product launch",
+  "campaignName": "Daily Glow Serum Launch Sprint",
+  "campaignGoal": "Launch-ready paid social creative for a new hero serum.",
+  "packageTier": "starter",
+  "currentStage": "in_review",
+  "stageDefinitions": [
+    { "key": "brief_received", "status": "completed" },
+    { "key": "setup_planned", "status": "completed" },
+    { "key": "production_ready", "status": "completed" },
+    { "key": "in_review", "status": "in_progress" },
+    { "key": "approved", "status": "pending" },
+    { "key": "handover_ready", "status": "pending" }
+  ],
+  "brandProfile": {
+    "offerSummary": "A D2C skincare launch centered on glow, texture, and ingredient proof.",
+    "targetAudience": "Women 25-40 with an existing skincare routine and high creative fatigue.",
+    "primaryChannels": "Meta Reels, paid social landing videos, TikTok Spark Ads",
+    "brandTone": "Clean, premium, credible, but performance-aware",
+    "reviewNotes": "Keep product proof concrete, avoid broad beauty superlatives, and maintain fast mobile readability.",
+    "claimGuardrails": "No medical or cure claims. Avoid promising visible results in under 24 hours."
+  },
+  "preparedBlocks": {
+    "prepared": "Eine Launch-Kampagne, sechs launchbereite Varianten und ein bereits vorbereiteter Review-Pfad für euer Team.",
+    "review": "Euer Team kann Hook-Angles, Proof-Momente und CTA-Setups vergleichen, ohne dass dafür ein Sales-Walkthrough nötig ist.",
+    "output": "Der Seed-Output spiegelt wider, was Zynapse nach dem ersten Review-Zyklus übergeben würde: exportbereite Paid-Social-Varianten.",
+    "nextStep": "Wenn diese Launch-Logik passt, ist der nächste Schritt, die Freigaben zu schärfen und den Starter-Pilot sauber einzugrenzen."
+  },
+  "nextAction": {
+    "title": "Stärksten proof-getriebenen Launch-Angle reviewen",
+    "body": "Zwei Varianten wirken bereits fast freigabereif. Die verbleibende offene Diskussion dreht sich vor allem um Claim-Präzision und CTA-Schärfe."
+  },
+  "assets": [
+    {
+      "key": "launch-hook-proof",
+      "title": "Hook 01 · Ingredient-first proof cut",
+      "assetType": "short_video",
+      "format": "9:16",
+      "durationSeconds": 15,
+      "versionLabel": "v3",
+      "reviewStatus": "approved",
+      "source": "demo_public",
+      "storagePath": "/videos/33.mp4",
+      "thumbnailPath": "/hero/Cua0pUQRm.png"
+    },
+    {
+      "key": "launch-hook-texture",
+      "title": "Hook 02 · Texture reveal opener",
+      "assetType": "short_video",
+      "format": "4:5",
+      "durationSeconds": 10,
+      "versionLabel": "v2",
+      "reviewStatus": "changes_requested",
+      "source": "demo_public",
+      "storagePath": "/videos/44.mp4",
+      "thumbnailPath": "/hero/ntJkU5pPeS.png"
+    },
+    {
+      "key": "launch-hook-routine",
+      "title": "Hook 03 · AM routine integration",
+      "assetType": "short_video",
+      "format": "3:4",
+      "durationSeconds": 18,
+      "versionLabel": "v2",
+      "reviewStatus": "pending",
+      "source": "demo_public",
+      "storagePath": "/videos/66.mp4",
+      "thumbnailPath": "/hero/rs31hPKSM.png"
+    },
+    {
+      "key": "launch-static-ugc",
+      "title": "Static 01 · Founder quote card",
+      "assetType": "static",
+      "format": "4:5",
+      "versionLabel": "v1",
+      "reviewStatus": "approved",
+      "source": "demo_placeholder",
+      "storagePath": "/hero/1d6929d482b0fed45f834ecdf98be967c97a0f75e4e69b7519101a4dac6e79bb.png",
+      "thumbnailPath": "/hero/1d6929d482b0fed45f834ecdf98be967c97a0f75e4e69b7519101a4dac6e79bb.png"
+    },
+    {
+      "key": "launch-static-benefits",
+      "title": "Static 02 · Benefits stack",
+      "assetType": "static",
+      "format": "4:5",
+      "versionLabel": "v2",
+      "reviewStatus": "changes_requested",
+      "source": "demo_placeholder",
+      "storagePath": "/brand/peep-standing-16.png",
+      "thumbnailPath": "/brand/peep-standing-16.png"
+    },
+    {
+      "key": "launch-cutdown-reminder",
+      "title": "Cutdown · Retargeting reminder",
+      "assetType": "short_video",
+      "format": "1:1",
+      "durationSeconds": 12,
+      "versionLabel": "v1",
+      "reviewStatus": "pending",
+      "source": "demo_public",
+      "storagePath": "/videos/22.mp4",
+      "thumbnailPath": "/hero/2328ed8c1e9.png"
+    }
+  ],
+  "reviewThreads": [
+    {
+      "assetKey": "launch-hook-texture",
+      "createdBy": "brand_reviewer",
+      "anchorJson": "{\"timecode\":\"00:04\",\"focus\":\"opening claim\"}",
+      "comments": [
+        {
+          "authorId": "brand_reviewer",
+          "body": "The opening line is directionally right, but it still sounds too much like a promise. We should keep it closer to texture proof.",
+          "commentType": "change_request"
+        },
+        {
+          "authorId": "zynapse_ops",
+          "body": "Noted. We can reframe it around product feel and ingredient context without implying guaranteed outcome.",
+          "commentType": "comment"
+        }
+      ]
+    },
+    {
+      "assetKey": "launch-hook-proof",
+      "createdBy": "brand_admin",
+      "anchorJson": "{\"timecode\":\"00:11\",\"focus\":\"cta framing\"}",
+      "comments": [
+        {
+          "authorId": "brand_admin",
+          "body": "This one feels ready. The proof sequence lands and the CTA is clean enough for a first paid test.",
+          "commentType": "approval_note"
+        }
+      ]
+    }
+  ]
+}

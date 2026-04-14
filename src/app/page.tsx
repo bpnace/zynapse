@@ -8,7 +8,8 @@ import { SplitBenefits } from "@/components/marketing/split-benefits";
 import { TrustSection } from "@/components/marketing/trust-section";
 import { VideoOutputGrid } from "@/components/marketing/video-output-grid";
 import { HomeMotion } from "@/components/animation/home-motion";
-import { buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
+import { buildMetadata, buildPageJsonLd, buildServiceJsonLd, buildVideoObjectJsonLd } from "@/lib/seo";
+import { videoVariants } from "@/lib/mock-data/studio";
 
 const homePageSeo = {
   title: "Kuratiertes AI-Kampagnensystem für Brands | Zynapse",
@@ -20,7 +21,7 @@ const homePageSeo = {
 export const metadata = buildMetadata(homePageSeo);
 
 export default function HomePage() {
-  const homeJsonLd = buildPageJsonLd({
+  const baseJsonLd = buildPageJsonLd({
     ...homePageSeo,
     primaryEntity: buildServiceJsonLd({
       path: homePageSeo.path,
@@ -30,6 +31,23 @@ export default function HomePage() {
       audience: "Brands, Marketing- und Performance-Teams",
     }),
   });
+
+  const videoNodes = videoVariants.map((v) =>
+    buildVideoObjectJsonLd({
+      id: v.id,
+      name: v.hookTitle,
+      description: `${v.angle} – ${v.objective} (${v.deliveryLabel})`,
+      contentUrl: v.src,
+      uploadDate: "2025-01-01",
+      length: v.length,
+      pageUrl: "/",
+    }),
+  );
+
+  const homeJsonLd = {
+    ...baseJsonLd,
+    "@graph": [...baseJsonLd["@graph"], ...videoNodes],
+  };
 
   return (
     <>

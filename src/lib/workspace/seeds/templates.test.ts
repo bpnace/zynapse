@@ -32,4 +32,17 @@ describe("workspace seed templates", () => {
       expect(template.preparedBlocks.prepared.length).toBeGreaterThan(0);
     }
   });
+
+  it("uses explicit media-source contracts for the flagship demo template", () => {
+    const flagshipTemplate = getSeedTemplate("d2c_product_launch");
+
+    expect(
+      flagshipTemplate.assets.every((asset) =>
+        ["demo_public", "demo_placeholder"].includes(asset.source),
+      ),
+    ).toBe(true);
+    expect(
+      flagshipTemplate.assets.some((asset) => asset.source === "demo_public"),
+    ).toBe(true);
+  });
 });

@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, FileImage, FileVideo, FolderOutput } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import { WorkspaceAssetPreview } from "@/components/workspace/shared/workspace-asset-preview";
 import {
   formatWorkspaceAssetType,
   formatWorkspaceLabel,
 } from "@/lib/workspace/formatting";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 
 type HandoverCenterProps = {
   campaign: {
@@ -26,6 +28,8 @@ type HandoverCenterProps = {
     storagePath: string | null;
     thumbnailPath: string | null;
     source: string | null;
+    previewUrl: string | null;
+    posterUrl: string | null;
   }>;
   groupedAssets: Array<{
     label: string;
@@ -38,6 +42,8 @@ type HandoverCenterProps = {
       storagePath: string | null;
       thumbnailPath: string | null;
       source: string | null;
+      previewUrl: string | null;
+      posterUrl: string | null;
     }>;
   }>;
   usageSummary: {
@@ -46,6 +52,7 @@ type HandoverCenterProps = {
   };
   campaignNotes: string | null;
   nextStep: string | null;
+  demo: WorkspaceDemoState;
 };
 
 export function HandoverCenter({
@@ -56,6 +63,7 @@ export function HandoverCenter({
   usageSummary,
   campaignNotes,
   nextStep,
+  demo,
 }: HandoverCenterProps) {
   return (
     <div className="grid gap-4">
@@ -81,12 +89,18 @@ export function HandoverCenter({
             >
               Zurück zur Kampagne
             </Link>
-            <Link
-              href={`/workspace/pilot-request?campaignId=${campaign.id}`}
-              className="workspace-button workspace-button-secondary"
-            >
-              Bezahlten Piloten anfragen
-            </Link>
+            {demo.isReadOnly ? (
+              <div className="workspace-button workspace-button-secondary workspace-button-disabled">
+                Demo ist schreibgeschützt
+              </div>
+            ) : (
+              <Link
+                href={`/workspace/pilot-request?campaignId=${campaign.id}`}
+                className="workspace-button workspace-button-secondary"
+              >
+                Bezahlten Piloten anfragen
+              </Link>
+            )}
           </div>
         </div>
 
@@ -121,7 +135,23 @@ export function HandoverCenter({
                       {group.items.map((asset) => (
                         <article key={asset.id} className="py-4">
                           <div className="flex items-start justify-between gap-3">
-                            <div className="min-w-0">
+                            <div className="flex min-w-0 items-start gap-3">
+                              <div className="overflow-hidden rounded-[12px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.65)]">
+                                <WorkspaceAssetPreview
+                                  data-testid={`handover-asset-preview-${asset.id}`}
+                                  assetType={asset.assetType}
+                                  title={asset.title}
+                                  previewUrl={asset.previewUrl}
+                                  posterUrl={asset.posterUrl}
+                                  autoPlay={asset.assetType.includes("video")}
+                                  loop={asset.assetType.includes("video")}
+                                  muted={asset.assetType.includes("video")}
+                                  className="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)]"
+                                  mediaClassName="h-[4.75rem] w-[6rem] object-cover"
+                                  fallbackClassName="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)] px-2 text-center"
+                                />
+                              </div>
+                              <div className="min-w-0">
                               <div className="flex items-center gap-2">
                                 {asset.assetType.includes("video") ? (
                                   <FileVideo className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
@@ -137,6 +167,7 @@ export function HandoverCenter({
                                 {asset.format ? <span>{asset.format}</span> : null}
                                 {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
                               </div>
+                            </div>
                             </div>
                             <StatusPill value="approved" />
                           </div>
@@ -172,11 +203,33 @@ export function HandoverCenter({
             <div className="mt-5 workspace-split-list">
               {approvedAssets.map((asset) => (
                 <article key={asset.id} className="py-4">
-                  <div className="flex items-center gap-2">
-                    <FolderOutput className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
-                    <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
-                      {asset.title}
-                    </p>
+                  <div className="flex items-start gap-3">
+                    <div className="overflow-hidden rounded-[12px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.65)]">
+                      <WorkspaceAssetPreview
+                        assetType={asset.assetType}
+                        title={asset.title}
+                        previewUrl={asset.previewUrl}
+                        posterUrl={asset.posterUrl}
+                        autoPlay={asset.assetType.includes("video")}
+                        loop={asset.assetType.includes("video")}
+                        muted={asset.assetType.includes("video")}
+                        className="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)]"
+                        mediaClassName="h-[4.75rem] w-[6rem] object-cover"
+                        fallbackClassName="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)] px-2 text-center"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <FolderOutput className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
+                        <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
+                          {asset.title}
+                        </p>
+                      </div>
+                      <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
+                        Das Deliverable-Paket ist vorbereitet. Die Referenzen
+                        unten bleiben für Übergabe und späteren Austausch sichtbar.
+                      </p>
+                    </div>
                   </div>
                   <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <div>
@@ -271,17 +324,24 @@ export function HandoverCenter({
               >
                 Zurück ins Review
               </Link>
-              <Link
-                href={`/workspace/pilot-request?campaignId=${campaign.id}`}
-                className="workspace-button workspace-button-primary"
-              >
-                Bezahlten Piloten anfragen
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              {demo.isReadOnly ? (
+                <div className="workspace-button workspace-button-disabled">
+                  Pilot-Anfrage in der Demo deaktiviert
+                </div>
+              ) : (
+                <Link
+                  href={`/workspace/pilot-request?campaignId=${campaign.id}`}
+                  className="workspace-button workspace-button-primary"
+                >
+                  Bezahlten Piloten anfragen
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </div>
             <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-              Wenn das Deliverable-Paket stimmig ist, schickt die Pilot-Anfrage ab,
-              um in den nächsten kommerziellen Schritt zu gehen.
+              {demo.isReadOnly
+                ? demo.mutationMessage
+                : "Wenn das Deliverable-Paket stimmig ist, schickt die Pilot-Anfrage ab, um in den nächsten kommerziellen Schritt zu gehen."}
             </p>
           </section>
         </div>

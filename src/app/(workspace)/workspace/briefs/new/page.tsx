@@ -11,6 +11,7 @@ export default async function NewBriefPage() {
 
   return (
     <BriefFlow
+      demo={bootstrap.demo}
       initialValues={createEmptyBriefInput()}
       recentBriefs={recentBriefs.map((brief) => ({
         id: brief.id,

@@ -10,7 +10,7 @@ test("landing page shows both primary audience paths", async ({ page }) => {
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: /brand-anfrage starten/i,
+      name: /als brand starten/i,
     }).first(),
   ).toBeVisible();
   await expect(
@@ -25,5 +25,9 @@ test("request wizard blocks invalid submissions", async ({ page }) => {
 
   await page.getByRole("button", { name: /weiter/i }).click();
 
-  await expect(page.getByText(/bitte eine branche angeben/i)).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /schritt 1 von 6: ausgangslage/i,
+    }),
+  ).toBeVisible();
 });

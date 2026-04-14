@@ -28,10 +28,23 @@ const campaigns = [
   },
 ];
 
+const demo = {
+  canonicalEmail: "demo@zynapse.eu",
+  organizationSlug: "zynapse-closed-demo",
+  loginRoute: "/demo-login",
+  isEnabled: true,
+  isDemoWorkspace: false,
+  isReadOnly: false,
+  shellBadge: "Geschlossene Demo",
+  shellDescription: "Read-only demo workspace.",
+  mutationMessage: "Die Demo ist schreibgeschützt.",
+};
+
 function renderFlow() {
   return render(
     <PilotRequestFlow
       organizationName="Acme"
+      demo={demo}
       campaign={campaigns[0]}
       campaigns={campaigns}
       latestRequest={null}

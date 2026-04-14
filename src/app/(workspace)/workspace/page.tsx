@@ -57,16 +57,7 @@ export default async function WorkspacePage() {
             />
           ) : null}
           <div className="grid gap-4 2xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]">
-            <AssetGrid
-              assets={dashboard.latestAssets.map((asset) => ({
-                id: asset.id,
-                title: asset.title,
-                assetType: asset.assetType,
-                format: asset.format,
-                versionLabel: asset.versionLabel,
-                reviewStatus: asset.reviewStatus,
-              }))}
-            />
+            <AssetGrid assets={dashboard.latestAssets} />
             <ReviewThreadsPreview threads={dashboard.reviewThreads} />
           </div>
         </div>

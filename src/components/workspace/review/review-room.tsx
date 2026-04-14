@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, FileImage, FileVideo } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
 import { ReviewMutationPanel } from "@/components/workspace/review/review-mutation-panel";
+import { WorkspaceAssetPreview } from "@/components/workspace/shared/workspace-asset-preview";
 import {
   formatWorkspaceAssetType,
   formatWorkspaceDate,
@@ -9,6 +10,7 @@ import {
   formatWorkspaceRole,
   formatWorkspaceTime,
 } from "@/lib/workspace/formatting";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 
 type ReviewRoomProps = {
   campaign: {
@@ -26,6 +28,8 @@ type ReviewRoomProps = {
     reviewStatus: string;
     threadCount: number;
     latestCommentType: string | null;
+    previewUrl: string | null;
+    posterUrl: string | null;
   }>;
   selectedAsset: {
     id: string;
@@ -36,6 +40,8 @@ type ReviewRoomProps = {
     reviewStatus: string;
     storagePath: string | null;
     thumbnailPath: string | null;
+    previewUrl: string | null;
+    posterUrl: string | null;
     createdAt: Date;
     threads: Array<{
       threadId: string;
@@ -52,6 +58,7 @@ type ReviewRoomProps = {
     }>;
   } | null;
   canReview: boolean;
+  demo: WorkspaceDemoState;
 };
 
 export function ReviewRoom({
@@ -59,6 +66,7 @@ export function ReviewRoom({
   assets,
   selectedAsset,
   canReview,
+  demo,
 }: ReviewRoomProps) {
   return (
     <div className="grid gap-4">
@@ -98,10 +106,16 @@ export function ReviewRoom({
             <span>{campaign.packageTier}</span>
             <span>{assets.length} reviewbare {assets.length === 1 ? "Asset" : "Assets"}</span>
             <span>{assets.filter((asset) => asset.reviewStatus === "changes_requested").length} mit offenen Änderungen</span>
+            {demo.isDemoWorkspace ? <span>{demo.shellBadge}</span> : null}
           </div>
           <div className="mt-3">
             <StatusPill value={campaign.currentStage} tone="accent" />
           </div>
+          {demo.isDemoWorkspace ? (
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+              {demo.mutationMessage}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -174,28 +188,32 @@ export function ReviewRoom({
               </div>
 
               <div className="workspace-panel-muted px-4 py-4">
-                <div className="aspect-[16/10] rounded-[10px] border border-dashed border-[var(--workspace-line)] bg-[rgba(255,255,255,0.55)] px-5 py-5">
-                  <div className="flex h-full flex-col justify-between">
-                    <div className="flex items-center gap-2 text-[var(--workspace-copy-muted)]">
-                      {selectedAsset.assetType.includes("video") ? (
-                        <FileVideo className="h-4 w-4" />
-                      ) : (
-                        <FileImage className="h-4 w-4" />
-                      )}
-                      <span className="text-sm font-medium">
-                        Vorschau des ausgewählten Assets
-                      </span>
-                    </div>
-                    <div className="space-y-3">
-                      <p className="text-lg font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                        {selectedAsset.title}
-                      </p>
-                      <p className="max-w-xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                        Behaltet das Asset im Blick, während ihr rechts Kommentare
-                        und Entscheidungen bearbeitet.
-                      </p>
-                    </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-[var(--workspace-copy-muted)]">
+                    {selectedAsset.assetType.includes("video") ? (
+                      <FileVideo className="h-4 w-4" />
+                    ) : (
+                      <FileImage className="h-4 w-4" />
+                    )}
+                    <span className="text-sm font-medium">
+                      Vorschau des ausgewählten Assets
+                    </span>
                   </div>
+                  <WorkspaceAssetPreview
+                    data-testid="review-selected-asset-preview"
+                    assetType={selectedAsset.assetType}
+                    title={selectedAsset.title}
+                    previewUrl={selectedAsset.previewUrl}
+                    posterUrl={selectedAsset.posterUrl}
+                    controls={selectedAsset.assetType.includes("video")}
+                    className="flex aspect-[16/10] items-center justify-center rounded-[10px] border border-dashed border-[var(--workspace-line)] bg-[rgba(255,255,255,0.55)] px-5 py-5"
+                    mediaClassName="aspect-[16/10] w-full rounded-[10px] border border-[var(--workspace-line)] bg-black object-cover"
+                    fallbackClassName="flex aspect-[16/10] items-center justify-center rounded-[10px] border border-dashed border-[var(--workspace-line)] bg-[rgba(255,255,255,0.55)] px-5 py-5 text-center"
+                  />
+                  <p className="max-w-xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+                    Behaltet das Asset im Blick, während ihr rechts Kommentare
+                    und Entscheidungen bearbeitet.
+                  </p>
                 </div>
               </div>
 
@@ -203,6 +221,7 @@ export function ReviewRoom({
                 campaignId={campaign.id}
                 assetId={selectedAsset.id}
                 canReview={canReview}
+                demo={demo}
               />
               <Link
                 href={`/workspace/campaigns/${campaign.id}/handover`}

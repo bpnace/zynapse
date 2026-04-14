@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
-import { workspaceCapabilities } from "@/lib/auth/roles";
+import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import {
   assertSupabaseResult,
   mapCampaign,
@@ -37,15 +37,16 @@ export async function submitPilotRequest(
   input: WorkspacePilotRequestInput,
 ): Promise<SubmitPilotRequestResult> {
   const bootstrap = await requireWorkspaceAccess();
-  const capability =
-    workspaceCapabilities[
-      bootstrap.membership.role as keyof typeof workspaceCapabilities
-    ];
+  const capability = getWorkspaceCapabilities(bootstrap.membership.role, {
+    isReadOnly: bootstrap.demo.isReadOnly,
+  });
 
   if (!capability.canSubmitPilotRequest) {
     return {
       success: false,
-      message: "Nur Workspace-Admins können eine Pilot-Anfrage einreichen.",
+      message: bootstrap.demo.isDemoWorkspace
+        ? bootstrap.demo.mutationMessage
+        : "Nur Workspace-Admins können eine Pilot-Anfrage einreichen.",
     };
   }
 

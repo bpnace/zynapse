@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "test": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "demo:reset": "node scripts/reset-demo-workspace.mjs",
     "typecheck": "next typegen && tsc --noEmit --incremental false -p tsconfig.typecheck.json",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"

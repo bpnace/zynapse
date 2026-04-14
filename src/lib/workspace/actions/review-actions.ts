@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
-import { workspaceCapabilities } from "@/lib/auth/roles";
+import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import {
   assertSupabaseResult,
   mapAsset,
@@ -26,17 +26,36 @@ type ReviewMutationResult =
       message: string;
     };
 
-async function getReviewMutationContext(campaignId: string, assetId: string) {
+type ReviewMutationContext =
+  | {
+      error: string;
+    }
+  | {
+      supabase: ReturnType<typeof requireServiceRoleClient>;
+      bootstrap: Awaited<ReturnType<typeof requireWorkspaceAccess>>;
+      asset: {
+        id: string;
+        campaignId: string;
+        reviewStatus: string;
+        organizationId: string;
+      };
+    };
+
+async function getReviewMutationContext(
+  campaignId: string,
+  assetId: string,
+): Promise<ReviewMutationContext> {
   const bootstrap = await requireWorkspaceAccess();
-  const capability =
-    workspaceCapabilities[
-      bootstrap.membership.role as keyof typeof workspaceCapabilities
-    ];
+  const capability = getWorkspaceCapabilities(bootstrap.membership.role, {
+    isReadOnly: bootstrap.demo.isReadOnly,
+  });
 
   if (!capability.canReviewAssets) {
     return {
-      error: "Du hast keine Berechtigung, Kampagnen-Assets zu reviewen.",
-    } as const;
+      error: bootstrap.demo.isDemoWorkspace
+        ? bootstrap.demo.mutationMessage
+        : "Du hast keine Berechtigung, Kampagnen-Assets zu reviewen.",
+    };
   }
 
   const supabase = requireServiceRoleClient();
@@ -65,7 +84,7 @@ async function getReviewMutationContext(campaignId: string, assetId: string) {
   if (!asset || asset.organizationId !== bootstrap.organization.id) {
     return {
       error: "Dieses Review-Ziel ist im aktuellen Workspace nicht verfügbar.",
-    } as const;
+    };
   }
 
   return {
@@ -212,15 +231,17 @@ export async function addReviewComment(
     };
   }
 
+  const executionContext = context as Exclude<ReviewMutationContext, { error: string }>;
+
   const thread = await getOrCreateThread(
-    context.supabase,
+    executionContext.supabase,
     assetId,
-    context.bootstrap.membership.role,
+    executionContext.bootstrap.membership.role,
   );
 
-  const { error: commentInsertError } = await context.supabase.from("comments").insert({
+  const { error: commentInsertError } = await executionContext.supabase.from("comments").insert({
     thread_id: thread.id,
-    author_id: context.bootstrap.membership.role,
+    author_id: executionContext.bootstrap.membership.role,
     body: parsed.data.body,
     comment_type: "comment",
   });
@@ -261,6 +282,8 @@ export async function applyReviewDecision(
     };
   }
 
+  const executionContext = context as Exclude<ReviewMutationContext, { error: string }>;
+
   const decision = parsed.data.decision;
   const reviewStatus = decision;
   const commentBody =
@@ -271,21 +294,21 @@ export async function applyReviewDecision(
         : "Im Review zur Überarbeitung markiert.";
 
   const thread = await getOrCreateThread(
-    context.supabase,
+    executionContext.supabase,
     assetId,
-    context.bootstrap.membership.role,
+    executionContext.bootstrap.membership.role,
   );
 
-  const { error: commentInsertError } = await context.supabase.from("comments").insert({
+  const { error: commentInsertError } = await executionContext.supabase.from("comments").insert({
     thread_id: thread.id,
-    author_id: context.bootstrap.membership.role,
+    author_id: executionContext.bootstrap.membership.role,
     body: commentBody,
     comment_type: decision === "approved" ? "approval_note" : "change_request",
   });
 
   assertSupabaseResult(commentInsertError, "Failed to save review decision");
 
-  const { error: assetUpdateError } = await context.supabase
+  const { error: assetUpdateError } = await executionContext.supabase
     .from("assets")
     .update({
       review_status: reviewStatus,
@@ -294,18 +317,18 @@ export async function applyReviewDecision(
 
   assertSupabaseResult(assetUpdateError, "Failed to update asset review status");
 
-  const { data: assetThreadRows, error: assetThreadsError } = await context.supabase
+  const { data: assetThreadRows, error: assetThreadsError } = await executionContext.supabase
     .from("review_threads")
     .select("*")
     .eq("asset_id", assetId);
 
   assertSupabaseResult(assetThreadsError, "Failed to load asset threads");
 
-  const assetThreadIds = (assetThreadRows ?? []).map((threadRow) => threadRow.id);
+  const assetThreadIds = (assetThreadRows ?? []).map((threadRow: { id: string }) => threadRow.id);
 
   if (decision === "approved") {
     if (assetThreadIds.length > 0) {
-      const { error: resolveThreadsError } = await context.supabase
+      const { error: resolveThreadsError } = await executionContext.supabase
         .from("review_threads")
         .update({
           resolved_at: new Date().toISOString(),
@@ -315,7 +338,7 @@ export async function applyReviewDecision(
       assertSupabaseResult(resolveThreadsError, "Failed to resolve review threads");
     }
   } else {
-    const { error: reopenThreadError } = await context.supabase
+    const { error: reopenThreadError } = await executionContext.supabase
       .from("review_threads")
       .update({
         resolved_at: null,
@@ -325,7 +348,7 @@ export async function applyReviewDecision(
     assertSupabaseResult(reopenThreadError, "Failed to reopen review thread");
   }
 
-  await syncCampaignReviewState(context.supabase, campaignId);
+  await syncCampaignReviewState(executionContext.supabase, campaignId);
   revalidateReviewPaths(campaignId);
 
   return {

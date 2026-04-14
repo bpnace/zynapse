@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { ReviewRoom } from "@/components/workspace/review/review-room";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
-import { workspaceCapabilities } from "@/lib/auth/roles";
+import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import { getReviewRoomView } from "@/lib/workspace/queries/get-review-room-view";
 
 export const dynamic = "force-dynamic";
@@ -39,10 +39,11 @@ export default async function ReviewPage({
       assets={reviewRoom.assets}
       selectedAsset={reviewRoom.selectedAsset}
       canReview={
-        workspaceCapabilities[
-          bootstrap.membership.role as keyof typeof workspaceCapabilities
-        ].canReviewAssets
+        getWorkspaceCapabilities(bootstrap.membership.role, {
+          isReadOnly: bootstrap.demo.isReadOnly,
+        }).canReviewAssets
       }
+      demo={bootstrap.demo}
     />
   );
 }

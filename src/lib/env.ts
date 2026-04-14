@@ -88,10 +88,6 @@ export function getOptionalSupabaseEnv() {
   };
 }
 
-export function isDevPasswordLoginEnabled() {
-  return process.env.NODE_ENV !== "production";
-}
-
 export function getRequiredDatabaseUrl() {
   const databaseUrl = resolveDatabaseUrl();
 

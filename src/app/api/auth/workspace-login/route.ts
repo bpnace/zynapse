@@ -9,6 +9,7 @@ const workspaceLoginSchema = z.object({
 export async function POST(request: Request) {
   try {
     const payload = workspaceLoginSchema.parse(await request.json());
+
     const supabase = createServiceRoleSupabaseClient();
 
     if (!supabase) {

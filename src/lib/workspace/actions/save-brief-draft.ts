@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
-import { workspaceCapabilities } from "@/lib/auth/roles";
+import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import {
   assertSupabaseResult,
   mapBrief,
@@ -34,15 +34,16 @@ export async function saveBriefDraft(
   briefId?: string | null,
 ): Promise<SaveBriefResult> {
   const bootstrap = await requireWorkspaceAccess();
-  const capability =
-    workspaceCapabilities[
-      bootstrap.membership.role as keyof typeof workspaceCapabilities
-    ];
+  const capability = getWorkspaceCapabilities(bootstrap.membership.role, {
+    isReadOnly: bootstrap.demo.isReadOnly,
+  });
 
   if (!capability.canCreateBriefs) {
     return {
       success: false,
-      message: "Nur Workspace-Admins können Briefings erstellen oder bearbeiten.",
+      message: bootstrap.demo.isDemoWorkspace
+        ? bootstrap.demo.mutationMessage
+        : "Nur Workspace-Admins können Briefings erstellen oder bearbeiten.",
     };
   }
 

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
+import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import {
   assertSupabaseResult,
   requireServiceRoleClient,
@@ -30,6 +31,19 @@ export async function saveBrandProfileDraft(
   requiredFields: WorkspaceOnboardingField[],
 ): Promise<SaveBrandProfileResult> {
   const bootstrap = await requireWorkspaceAccess();
+  const capability = getWorkspaceCapabilities(bootstrap.membership.role, {
+    isReadOnly: bootstrap.demo.isReadOnly,
+  });
+
+  if (!capability.canEditBrandProfile) {
+    return {
+      success: false,
+      message: bootstrap.demo.isDemoWorkspace
+        ? bootstrap.demo.mutationMessage
+        : "Nur Workspace-Admins können das Brand-Profil bearbeiten.",
+    };
+  }
+
   const parsed = workspaceOnboardingSchema.safeParse(input);
 
   if (!parsed.success) {

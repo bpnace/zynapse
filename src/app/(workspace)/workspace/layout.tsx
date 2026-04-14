@@ -18,6 +18,7 @@ export default async function WorkspaceLayout({
       role={bootstrap.membership.role}
       website={bootstrap.brandProfile?.website ?? null}
       activeCampaignId={dashboard.latestCampaign?.id ?? null}
+      demo={bootstrap.demo}
     >
       {children}
     </WorkspaceShell>

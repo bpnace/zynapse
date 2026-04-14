@@ -52,27 +52,31 @@ describe("WorkspaceLoginForm", () => {
     cleanup();
   });
 
-  it("shows the dev-only switch and defaults to OTP mode in non-production", () => {
+  it("defaults to OTP mode without rendering a password switch", () => {
     const supabase = createSupabaseMock();
     vi.mocked(createBrowserSupabaseClient).mockReturnValue(supabase as never);
 
     render(<WorkspaceLoginForm />);
 
-    expect(screen.getByRole("button", { name: "Code per E-Mail" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Mit Passwort" })).toBeInTheDocument();
     expect(screen.getByLabelText(businessEmailLabel)).toBeInTheDocument();
     expect(screen.queryByLabelText("Passwort")).not.toBeInTheDocument();
   });
 
-  it("hides the password switch in production", () => {
-    vi.stubEnv("NODE_ENV", "production");
+  it("renders a dedicated password-only variant for the closed demo route", () => {
     const supabase = createSupabaseMock();
     vi.mocked(createBrowserSupabaseClient).mockReturnValue(supabase as never);
 
-    render(<WorkspaceLoginForm />);
+    render(
+      <WorkspaceLoginForm
+        availableMethods={["password"]}
+        initialMethod="password"
+        initialEmail="demo@zynapse.eu"
+      />,
+    );
 
-    expect(screen.queryByRole("button", { name: "Mit Passwort" })).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Anmelden" })).toBeInTheDocument();
+    expect(screen.getByLabelText(businessEmailLabel)).toHaveValue("demo@zynapse.eu");
+    expect(screen.getByLabelText("Passwort")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Mit Passwort anmelden" })).toBeInTheDocument();
   });
 
   it("sends an OTP for an eligible email and switches to code entry", async () => {
@@ -116,9 +120,13 @@ describe("WorkspaceLoginForm", () => {
       json: async () => ({ ok: true }),
     });
 
-    render(<WorkspaceLoginForm next="/workspace?view=home" />);
-
-    fireEvent.click(screen.getByRole("button", { name: "Mit Passwort" }));
+    render(
+      <WorkspaceLoginForm
+        next="/workspace?view=home"
+        availableMethods={["password"]}
+        initialMethod="password"
+      />,
+    );
     fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
@@ -187,9 +195,12 @@ describe("WorkspaceLoginForm", () => {
       json: async () => ({ ok: true }),
     });
 
-    render(<WorkspaceLoginForm />);
-
-    fireEvent.click(screen.getByRole("button", { name: "Mit Passwort" }));
+    render(
+      <WorkspaceLoginForm
+        availableMethods={["password"]}
+        initialMethod="password"
+      />,
+    );
     fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });

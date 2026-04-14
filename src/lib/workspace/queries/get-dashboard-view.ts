@@ -8,6 +8,7 @@ import {
   mapReviewThread,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import { decorateWorkspaceAssetMedia } from "@/lib/workspace/media";
 import { getSeedTemplate } from "@/lib/workspace/seeds/templates";
 
 export async function getDashboardView(organizationId: string) {
@@ -56,7 +57,7 @@ export async function getDashboardView(organizationId: string) {
         .order("created_at", { ascending: false })
         .then(({ data, error }) => {
           assertSupabaseResult(error, "Failed to load campaign assets");
-          return (data ?? []).map(mapAsset);
+          return (data ?? []).map(mapAsset).map(decorateWorkspaceAssetMedia);
         })
     : [];
 

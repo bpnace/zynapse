@@ -3,22 +3,91 @@ import {
   assertSupabaseResult,
   mapInvite,
   mapMembership,
+  mapOrganization,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import {
+  getDemoWorkspaceConfig,
+  isDemoWorkspaceEmail,
+} from "@/lib/workspace/demo";
 
 export async function ensureMembershipForCurrentUser(user: User) {
   const supabase = requireServiceRoleClient();
+  const demoConfig = getDemoWorkspaceConfig();
 
-  const { data: existingMembershipRow, error: existingMembershipError } = await supabase
+  const { data: existingMembershipRows, error: existingMembershipError } = await supabase
     .from("memberships")
     .select("*")
     .eq("user_id", user.id)
-    .limit(1)
-    .maybeSingle();
+    .order("accepted_at", { ascending: false });
 
   assertSupabaseResult(existingMembershipError, "Failed to load existing membership");
 
-  const existingMembership = existingMembershipRow ? mapMembership(existingMembershipRow) : null;
+  const existingMemberships = (existingMembershipRows ?? []).map(mapMembership);
+
+  if (
+    isDemoWorkspaceEmail(user.email) &&
+    demoConfig.isEnabled
+  ) {
+    const { data: demoOrganizationRow, error: demoOrganizationError } = await supabase
+      .from("organizations")
+      .select("*")
+      .eq("slug", demoConfig.organizationSlug)
+      .limit(1)
+      .maybeSingle();
+
+    assertSupabaseResult(
+      demoOrganizationError,
+      "Failed to load canonical demo workspace organization",
+    );
+
+    const demoOrganization = demoOrganizationRow
+      ? mapOrganization(demoOrganizationRow)
+      : null;
+
+    if (!demoOrganization) {
+      return null;
+    }
+
+    const existingDemoMembership =
+      existingMemberships.find(
+        (membership) => membership.organizationId === demoOrganization.id,
+      ) ?? null;
+
+    if (existingDemoMembership) {
+      return existingDemoMembership;
+    }
+
+    const { data: membershipRows, error: membershipInsertError } = await supabase
+      .from("memberships")
+      .upsert(
+        {
+          organization_id: demoOrganization.id,
+          user_id: user.id,
+          role: "brand_reviewer",
+          accepted_at: new Date().toISOString(),
+        },
+        {
+          onConflict: "user_id",
+        },
+      )
+      .select();
+
+    assertSupabaseResult(
+      membershipInsertError,
+      "Failed to provision canonical demo workspace membership",
+    );
+
+    const membershipRow = membershipRows?.[0] ?? null;
+
+    if (membershipRow) {
+      return mapMembership(membershipRow);
+    }
+
+    return null;
+  }
+
+  const existingMembership = existingMemberships[0] ?? null;
 
   if (existingMembership) {
     return existingMembership;

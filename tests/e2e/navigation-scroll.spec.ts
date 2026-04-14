@@ -33,12 +33,12 @@ test("homepage output preview renders six looping videos", async ({ page }) => {
   );
 
   const expectedSources = [
-    "/videos/video22.mp4",
-    "/videos/m2-res_640p.mp4",
-    "/videos/m2-res_712p.mp4",
-    "/videos/m2-res_716p.mp4",
-    "/videos/m2-res_85422p.mp4",
-    "/videos/m2-res_854p.mp4",
+    "/videos/11.mp4",
+    "/videos/22.mp4",
+    "/videos/33.mp4",
+    "/videos/44.mp4",
+    "/videos/55.mp4",
+    "/videos/66.mp4",
   ];
 
   expect(configs.map((config) => config.src)).toEqual(expectedSources);

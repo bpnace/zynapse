@@ -24,6 +24,7 @@ export default async function BriefPage({ params }: BriefPageProps) {
 
   return (
     <BriefFlow
+      demo={bootstrap.demo}
       briefId={briefView.brief.id}
       status={briefView.brief.status}
       initialValues={briefView.values}

@@ -6,17 +6,20 @@ import {
   addReviewComment,
   applyReviewDecision,
 } from "@/lib/workspace/actions/review-actions";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 
 type ReviewMutationPanelProps = {
   campaignId: string;
   assetId: string;
   canReview: boolean;
+  demo: WorkspaceDemoState;
 };
 
 export function ReviewMutationPanel({
   campaignId,
   assetId,
   canReview,
+  demo,
 }: ReviewMutationPanelProps) {
   const router = useRouter();
   const [note, setNote] = useState("");
@@ -96,7 +99,9 @@ export function ReviewMutationPanel({
       </div>
 
       <p className="text-xs leading-5 text-[var(--workspace-copy-muted)]">
-        {canReview
+        {demo.isDemoWorkspace
+          ? demo.mutationMessage
+          : canReview
           ? "Notizen und Entscheidungen werden sofort gespeichert und aktualisieren den Review-Status für Asset und Kampagne."
           : "Diese Rolle kann die Historie sehen, aber keine Entscheidungen absenden."}
       </p>

@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { LoginWaitlistForm } from "@/components/forms/waitlist/login-waitlist-form";
 import { WorkspaceLoginForm } from "@/components/workspace/login/workspace-login-form";
-import { isDevPasswordLoginEnabled } from "@/lib/env";
+import { getDemoWorkspaceConfig } from "@/lib/workspace/demo";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
@@ -16,7 +17,7 @@ type LoginPageProps = {
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = (await searchParams) ?? {};
-  const showPasswordLogin = isDevPasswordLoginEnabled();
+  const demoConfig = getDemoWorkspaceConfig();
   const next =
     typeof params.next === "string" && params.next.length > 0
       ? params.next
@@ -34,15 +35,19 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           noch keinen Zugang hast, kannst du dich  weiter für frühen
           Zugang vormerken.
         </p>
-        {showPasswordLogin ? (
+        {demoConfig.isEnabled ? (
           <p className="text-sm text-[var(--copy-muted)]">
-            In dieser Umgebung ist zusätzlich ein Passwort-Login für Test-Accounts verfügbar.
+            Für die geschlossene Produktdemo gibt es einen separaten Zugang unter{" "}
+            <Link className="font-medium underline" href={demoConfig.loginRoute}>
+              {demoConfig.loginRoute}
+            </Link>
+            .
           </p>
         ) : null}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-        <WorkspaceLoginForm next={next} />
+        <WorkspaceLoginForm next={next} availableMethods={["otp"]} />
         <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-[rgba(247,244,238,0.72)] p-6">
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
             Kein Invite? Trag dich für den frühen Zugang ein.

@@ -11,6 +11,7 @@ export default async function OnboardingPage() {
   return (
     <OnboardingFlow
       organizationName={bootstrap.organization.name}
+      demo={bootstrap.demo}
       initialValues={{
         website: profile?.website ?? "",
         offerSummary: profile?.offerSummary ?? "",

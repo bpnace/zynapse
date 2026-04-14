@@ -4,6 +4,7 @@ import { startTransition, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Field, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 import { saveBrandProfileDraft } from "@/lib/workspace/actions/save-brand-profile-draft";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 import type {
   WorkspaceOnboardingField,
   WorkspaceOnboardingInput,
@@ -11,6 +12,7 @@ import type {
 
 type OnboardingFlowProps = {
   organizationName: string;
+  demo: WorkspaceDemoState;
   initialValues: WorkspaceOnboardingInput;
   initialCompletion: {
     completed: number;
@@ -52,6 +54,7 @@ const steps: StepDefinition[] = [
 
 export function OnboardingFlow({
   organizationName,
+  demo,
   initialValues,
   initialCompletion,
 }: OnboardingFlowProps) {
@@ -82,6 +85,11 @@ export function OnboardingFlow({
   }
 
   function saveCurrentStep(isFinal: boolean) {
+    if (demo.isReadOnly) {
+      setStatusMessage(demo.mutationMessage);
+      return;
+    }
+
     setIsSaving(true);
     setStatusMessage("");
 
@@ -180,6 +188,11 @@ export function OnboardingFlow({
             <span>{completion.completed} von {completion.total} Feldern ausgefüllt</span>
             <span>{completion.percent}% abgeschlossen</span>
           </div>
+          {demo.isDemoWorkspace ? (
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+              {demo.mutationMessage}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -231,6 +244,7 @@ export function OnboardingFlow({
                   value={values.website}
                   onChange={(event) => updateValue("website", event.target.value)}
                   placeholder="https://brand.example"
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -241,6 +255,7 @@ export function OnboardingFlow({
                   value={values.offerSummary}
                   onChange={(event) => updateValue("offerSummary", event.target.value)}
                   placeholder="Was die Brand verkauft und warum es relevant ist."
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -251,6 +266,7 @@ export function OnboardingFlow({
                   value={values.targetAudience}
                   onChange={(event) => updateValue("targetAudience", event.target.value)}
                   placeholder="Bei wem die Kampagne Anklang finden soll."
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -261,6 +277,7 @@ export function OnboardingFlow({
                   value={values.primaryChannels}
                   onChange={(event) => updateValue("primaryChannels", event.target.value)}
                   placeholder="Welche Kanäle für diesen Workspace am wichtigsten sind."
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -271,6 +288,7 @@ export function OnboardingFlow({
                   value={values.brandTone}
                   onChange={(event) => updateValue("brandTone", event.target.value)}
                   placeholder="Wie sich die Arbeit anhören und anfühlen soll."
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -285,6 +303,7 @@ export function OnboardingFlow({
                   value={values.reviewNotes}
                   onChange={(event) => updateValue("reviewNotes", event.target.value)}
                   placeholder="Wer reviewt die Arbeit, und welcher Kontext ist für die Freigabe wichtig?"
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -295,6 +314,7 @@ export function OnboardingFlow({
                   value={values.claimGuardrails}
                   onChange={(event) => updateValue("claimGuardrails", event.target.value)}
                   placeholder="Welche Aussagen der Workflow nicht versprechen oder andeuten darf."
+                  disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -310,7 +330,7 @@ export function OnboardingFlow({
             <button
               type="button"
               className="workspace-button workspace-button-secondary"
-              disabled={isSaving}
+              disabled={isSaving || demo.isReadOnly}
               onClick={() => saveCurrentStep(false)}
             >
               {isSaving ? "Speichert..." : "Entwurf speichern"}
@@ -318,7 +338,7 @@ export function OnboardingFlow({
             <button
               type="button"
               className="workspace-button workspace-button-primary"
-              disabled={isSaving}
+              disabled={isSaving || demo.isReadOnly}
               onClick={() => saveCurrentStep(stepIndex === steps.length - 1)}
             >
               {stepIndex === steps.length - 1 ? "Setup abschließen" : "Speichern und weiter"}

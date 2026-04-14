@@ -9,12 +9,14 @@ import {
   formatWorkspaceDate,
   formatWorkspaceLabel,
 } from "@/lib/workspace/formatting";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 import type {
   WorkspaceBriefField,
   WorkspaceBriefInput,
 } from "@/lib/validation/workspace-brief";
 
 type BriefFlowProps = {
+  demo: WorkspaceDemoState;
   initialValues: WorkspaceBriefInput;
   briefId?: string | null;
   status?: "draft" | "submitted";
@@ -55,6 +57,7 @@ const steps: StepDefinition[] = [
 ];
 
 export function BriefFlow({
+  demo,
   initialValues,
   briefId,
   status = "draft",
@@ -78,7 +81,7 @@ export function BriefFlow({
   );
 
   function updateValue(field: WorkspaceBriefField, value: string) {
-    if (currentStatus === "submitted") {
+    if (currentStatus === "submitted" || demo.isReadOnly) {
       return;
     }
 
@@ -93,7 +96,7 @@ export function BriefFlow({
   }
 
   function handleSave(advance: boolean) {
-    if (currentStatus === "submitted") {
+    if (currentStatus === "submitted" || demo.isReadOnly) {
       return;
     }
 
@@ -129,7 +132,7 @@ export function BriefFlow({
   }
 
   function handleSubmit() {
-    if (currentStatus === "submitted") {
+    if (currentStatus === "submitted" || demo.isReadOnly) {
       return;
     }
 
@@ -172,8 +175,13 @@ export function BriefFlow({
           <div className="workspace-meta-row">
             <span>{stepTitle}</span>
             <span>{currentBriefId ? "Entwurf gespeichert" : "Neues Briefing"}</span>
-            <span>{currentStatus === "submitted" ? "Nur lesen" : "Bearbeitbar"}</span>
+            <span>{currentStatus === "submitted" || demo.isReadOnly ? "Nur lesen" : "Bearbeitbar"}</span>
           </div>
+          {demo.isDemoWorkspace ? (
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+              {demo.mutationMessage}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -248,7 +256,7 @@ export function BriefFlow({
                   value={values.title}
                   onChange={(event) => updateValue("title", event.target.value)}
                   placeholder="Q2 Briefing für Serum-Launch"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -259,7 +267,7 @@ export function BriefFlow({
                   value={values.objective}
                   onChange={(event) => updateValue("objective", event.target.value)}
                   placeholder="Was soll das Team mit diesem Briefing erreichen?"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -270,7 +278,7 @@ export function BriefFlow({
                   value={values.offer}
                   onChange={(event) => updateValue("offer", event.target.value)}
                   placeholder="Welches Produkt oder Angebot steht im Mittelpunkt?"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -281,7 +289,7 @@ export function BriefFlow({
                   value={values.audience}
                   onChange={(event) => updateValue("audience", event.target.value)}
                   placeholder="Bei wem soll die Kampagne Anklang finden?"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -292,7 +300,7 @@ export function BriefFlow({
                   value={values.channels}
                   onChange={(event) => updateValue("channels", event.target.value)}
                   placeholder="Welche Kanäle sind für dieses Briefing am wichtigsten?"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -303,7 +311,7 @@ export function BriefFlow({
                   value={values.hooks}
                   onChange={(event) => updateValue("hooks", event.target.value)}
                   placeholder="Welche Angles, Hooks oder Proof-Momente sollen führen?"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -314,7 +322,7 @@ export function BriefFlow({
                   value={values.creativeReferences}
                   onChange={(event) => updateValue("creativeReferences", event.target.value)}
                   placeholder="Relevante Assets, Beispiele oder aktuelle Gewinner ergänzen."
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -325,7 +333,7 @@ export function BriefFlow({
                   value={values.budgetRange}
                   onChange={(event) => updateValue("budgetRange", event.target.value)}
                   placeholder="15.000–25.000 EUR"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -336,7 +344,7 @@ export function BriefFlow({
                   value={values.timeline}
                   onChange={(event) => updateValue("timeline", event.target.value)}
                   placeholder="Launch innerhalb von vier Wochen"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -347,7 +355,7 @@ export function BriefFlow({
                   value={values.approvalNotes}
                   onChange={(event) => updateValue("approvalNotes", event.target.value)}
                   placeholder="Wer gibt frei, und was muss das Team vor der Freigabe beachten?"
-                  disabled={currentStatus === "submitted"}
+                  disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
@@ -363,7 +371,7 @@ export function BriefFlow({
             <button
               type="button"
               className="workspace-button workspace-button-secondary"
-              disabled={isSaving || currentStatus === "submitted"}
+              disabled={isSaving || currentStatus === "submitted" || demo.isReadOnly}
               onClick={() => handleSave(false)}
             >
               {isSaving ? "Speichert..." : "Entwurf speichern"}
@@ -371,7 +379,7 @@ export function BriefFlow({
             <button
               type="button"
               className="workspace-button workspace-button-secondary"
-              disabled={isSaving || currentStatus === "submitted"}
+              disabled={isSaving || currentStatus === "submitted" || demo.isReadOnly}
               onClick={() => handleSave(true)}
             >
               Speichern und weiter
@@ -379,7 +387,7 @@ export function BriefFlow({
             <button
               type="button"
               className="workspace-button workspace-button-primary"
-              disabled={isSaving || currentStatus === "submitted"}
+              disabled={isSaving || currentStatus === "submitted" || demo.isReadOnly}
               onClick={handleSubmit}
             >
               {currentStatus === "submitted" ? "Eingereicht" : "Briefing einreichen"}

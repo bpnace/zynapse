@@ -30,6 +30,7 @@ export default async function PilotRequestPage({
   return (
     <PilotRequestFlow
       organizationName={pilotRequestView.organization.name}
+      demo={bootstrap.demo}
       campaign={
         pilotRequestView.selectedCampaign
           ? {

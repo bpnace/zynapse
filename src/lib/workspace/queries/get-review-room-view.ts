@@ -6,6 +6,7 @@ import {
   mapReviewThread,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import { decorateWorkspaceAssetMedia } from "@/lib/workspace/media";
 
 type GetReviewRoomViewParams = {
   organizationId: string;
@@ -79,7 +80,9 @@ export async function getReviewRoomView({
 
   assertSupabaseResult(assetError, "Failed to load campaign assets");
 
-  const campaignAssets = (assetRows ?? []).map(mapAsset);
+  const campaignAssets = (assetRows ?? [])
+    .map(mapAsset)
+    .map(decorateWorkspaceAssetMedia);
 
   const orderedAssets = [...campaignAssets].sort((left, right) => {
     const byStatus = getAssetPriority(left.reviewStatus) - getAssetPriority(right.reviewStatus);

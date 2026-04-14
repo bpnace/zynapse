@@ -5,20 +5,63 @@ import {
   mapOrganization,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import {
+  getDemoWorkspaceConfig,
+  getWorkspaceDemoState,
+  isDemoWorkspaceEmail,
+} from "@/lib/workspace/demo";
 
-export async function getWorkspaceBootstrap(userId: string) {
+type WorkspaceBootstrapUser = {
+  id: string;
+  email?: string | null;
+};
+
+export async function getWorkspaceBootstrap(user: WorkspaceBootstrapUser) {
   const supabase = requireServiceRoleClient();
+  const demoConfig = getDemoWorkspaceConfig();
 
-  const { data: membershipRow, error: membershipError } = await supabase
+  const demoOrganization =
+    isDemoWorkspaceEmail(user.email) && demoConfig.isEnabled
+      ? await supabase
+          .from("organizations")
+          .select("*")
+          .eq("slug", demoConfig.organizationSlug)
+          .limit(1)
+          .maybeSingle()
+          .then(({ data, error }) => {
+            assertSupabaseResult(
+              error,
+              "Failed to load canonical demo workspace organization",
+            );
+            return data ? mapOrganization(data) : null;
+          })
+      : null;
+
+  const { data: membershipRows, error: membershipError } = await supabase
     .from("memberships")
     .select("*")
-    .eq("user_id", userId)
-    .limit(1)
-    .maybeSingle();
+    .eq("user_id", user.id);
 
   assertSupabaseResult(membershipError, "Failed to load workspace membership");
 
-  const membership = membershipRow ? mapMembership(membershipRow) : null;
+  const memberships = (membershipRows ?? []).map(mapMembership);
+  const isCanonicalDemoUser =
+    isDemoWorkspaceEmail(user.email) && demoConfig.isEnabled;
+
+  if (isCanonicalDemoUser && !demoOrganization) {
+    return null;
+  }
+
+  const demoMembership = isCanonicalDemoUser
+    ? memberships.find(
+        (membership) =>
+          membership.organizationId === demoOrganization?.id,
+      ) ?? null
+    : null;
+
+  const membership = isCanonicalDemoUser
+    ? demoMembership
+    : memberships[0] ?? null;
 
   if (!membership) {
     return null;
@@ -54,5 +97,9 @@ export async function getWorkspaceBootstrap(userId: string) {
     membership,
     organization,
     brandProfile,
+    demo: getWorkspaceDemoState({
+      userEmail: user.email,
+      organizationSlug: organization.slug,
+    }),
   };
 }

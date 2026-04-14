@@ -26,7 +26,10 @@ export const requireWorkspaceAccess = cache(async () => {
 
   await bootstrapWorkspaceForOrganization(membership.organizationId);
 
-  const bootstrap = await getWorkspaceBootstrap(user.id);
+  const bootstrap = await getWorkspaceBootstrap({
+    id: user.id,
+    email: user.email,
+  });
 
   if (!bootstrap) {
     redirect("/login?error=invite_required");
