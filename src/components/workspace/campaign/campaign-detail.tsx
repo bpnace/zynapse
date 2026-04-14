@@ -68,35 +68,35 @@ export function CampaignDetail({
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="space-y-3">
-            <p className="workspace-section-label">Kampagne</p>
+            <p className="workspace-section-label">Workstream</p>
             <div className="space-y-1">
               <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Diese Seite zeigt Kampagnenziel, führende Angles, aktuelle
-                Deliverables und ob das Review bereit für den nächsten Schritt ist.
+                Track the objective, active angles, delivery mix, and review state
+                for the current engagement without leaving the workstream.
               </p>
             </div>
           </div>
 
           <div className="grid gap-2 sm:grid-cols-2">
             <Link href="/workspace" className="workspace-button workspace-button-secondary">
-              Zurück zur Übersicht
+              Back to Today
             </Link>
             <div className="grid gap-2 sm:grid-cols-2 sm:col-span-2">
               <Link
                 href={`/workspace/campaigns/${campaign.id}/review`}
                 className="workspace-button workspace-button-primary"
               >
-                Review öffnen
+                Open review
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href={`/workspace/campaigns/${campaign.id}/handover`}
                 className="workspace-button workspace-button-secondary"
               >
-                Übergabe öffnen
+                Open delivery
               </Link>
             </div>
           </div>
@@ -105,9 +105,9 @@ export function CampaignDetail({
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{campaign.packageTier}</span>
-            <span>{deliverableSummary.total} Deliverables</span>
-            <span>{reviewReadiness.openThreads} Review-{reviewReadiness.openThreads === 1 ? "Diskussion" : "Diskussionen"}</span>
-            <span>{reviewReadiness.assetsNeedingChanges} mit offenen Änderungen</span>
+            <span>{deliverableSummary.total} deliverables</span>
+            <span>{reviewReadiness.openThreads} open review {reviewReadiness.openThreads === 1 ? "thread" : "threads"}</span>
+            <span>{reviewReadiness.assetsNeedingChanges} needing changes</span>
           </div>
           <div className="mt-3">
             <StatusPill value={campaign.currentStage} tone="accent" />
@@ -118,13 +118,13 @@ export function CampaignDetail({
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)]">
         <div className="grid gap-4">
           <section className="workspace-panel px-5 py-5">
-            <p className="workspace-section-label">Kampagnenziel</p>
+            <p className="workspace-section-label">Objective</p>
             <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
               {campaign.campaignGoal ?? "Für diese Kampagne ist noch kein Ziel hinterlegt."}
             </h2>
 
             <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
-              <p className="workspace-section-label">Paketempfehlung</p>
+              <p className="workspace-section-label">Working recommendation</p>
               <p className="mt-2 text-base font-semibold text-[var(--workspace-copy-strong)]">
                 {packageRecommendation.heading}
               </p>
@@ -136,9 +136,9 @@ export function CampaignDetail({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Priorisierte Angles</p>
+              <p className="workspace-section-label">Angles</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Führende Angles
+                Leading routes
               </h2>
             </div>
 
@@ -151,7 +151,7 @@ export function CampaignDetail({
                         {angle.label}
                       </p>
                       <p className="mt-1 text-sm text-[var(--workspace-copy-muted)]">
-                        Aktuell vertreten durch {angle.sourceTitle}
+                        Currently represented by {angle.sourceTitle}
                       </p>
                     </div>
                     <StatusPill value={angle.status} />
@@ -163,16 +163,16 @@ export function CampaignDetail({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Lieferübersicht</p>
+              <p className="workspace-section-label">Output mix</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Aktuelles Deliverable-Paket
+                Current delivery package
               </h2>
             </div>
 
             <div className="mt-5 grid gap-4 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
               <div className="grid gap-4">
                 <div className="workspace-panel-muted px-4 py-4">
-                  <p className="workspace-section-label">Anzahlen</p>
+                  <p className="workspace-section-label">Counts</p>
                   <div className="mt-3 workspace-split-list">
                     <div className="flex items-center justify-between py-3">
                       <span className="text-sm text-[var(--workspace-copy-body)]">Videos</span>
@@ -181,19 +181,19 @@ export function CampaignDetail({
                       </span>
                     </div>
                     <div className="flex items-center justify-between py-3">
-                      <span className="text-sm text-[var(--workspace-copy-body)]">Statische Motive</span>
+                      <span className="text-sm text-[var(--workspace-copy-body)]">Statics</span>
                       <span className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
                         {deliverableSummary.statics}
                       </span>
                     </div>
                     <div className="flex items-center justify-between py-3">
-                      <span className="text-sm text-[var(--workspace-copy-body)]">Freigegeben</span>
+                      <span className="text-sm text-[var(--workspace-copy-body)]">Approved</span>
                       <span className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
                         {deliverableSummary.approved}
                       </span>
                     </div>
                     <div className="flex items-center justify-between py-3">
-                      <span className="text-sm text-[var(--workspace-copy-body)]">Offen</span>
+                      <span className="text-sm text-[var(--workspace-copy-body)]">Open</span>
                       <span className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
                         {deliverableSummary.pending}
                       </span>

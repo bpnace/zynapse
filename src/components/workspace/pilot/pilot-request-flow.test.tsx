@@ -62,7 +62,7 @@ describe("PilotRequestFlow", () => {
   it("updates tier and message when the selected campaign changes and fields still use defaults", () => {
     renderFlow();
 
-    fireEvent.change(screen.getAllByLabelText("Kampagne")[0], {
+    fireEvent.change(screen.getAllByLabelText("Workstream")[0], {
       target: { value: "campaign-b" },
     });
 
@@ -78,14 +78,14 @@ describe("PilotRequestFlow", () => {
   it("preserves manual edits when the selected campaign changes", () => {
     renderFlow();
 
-    fireEvent.change(screen.getAllByLabelText("Empfohlenes Paket")[0], {
+    fireEvent.change(screen.getAllByLabelText("Proposed package")[0], {
       target: { value: "Custom Tier" },
     });
-    fireEvent.change(screen.getAllByLabelText("Kurze Notiz")[0], {
+    fireEvent.change(screen.getAllByLabelText("Commercial note")[0], {
       target: { value: "Bitte mit erweitertem Scope planen." },
     });
 
-    fireEvent.change(screen.getAllByLabelText("Kampagne")[0], {
+    fireEvent.change(screen.getAllByLabelText("Workstream")[0], {
       target: { value: "campaign-b" },
     });
 

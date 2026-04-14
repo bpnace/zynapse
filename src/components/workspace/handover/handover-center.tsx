@@ -55,6 +55,10 @@ type HandoverCenterProps = {
   demo: WorkspaceDemoState;
 };
 
+function hasOperationalStatus(value: string) {
+  return value === "approved" || value === "completed" || value === "in_progress";
+}
+
 export function HandoverCenter({
   campaign,
   stageItems,
@@ -65,41 +69,53 @@ export function HandoverCenter({
   nextStep,
   demo,
 }: HandoverCenterProps) {
+  const sourceCoverage = approvedAssets.filter((asset) => asset.source).length;
+  const storageCoverage = approvedAssets.filter((asset) => asset.storagePath).length;
+  const previewCoverage = approvedAssets.filter(
+    (asset) => asset.previewUrl || asset.posterUrl || asset.thumbnailPath,
+  ).length;
+  const completedStages = stageItems.filter((stage) => hasOperationalStatus(stage.status)).length;
+  const commercialReady =
+    !demo.isReadOnly &&
+    approvedAssets.length > 0 &&
+    (campaign.currentStage === "approved" || campaign.currentStage === "handover_ready");
+
   return (
     <div className="grid gap-4">
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="space-y-3">
-            <p className="workspace-section-label">Übergabe</p>
+            <p className="workspace-section-label">Übergabeprotokoll</p>
             <div className="space-y-1">
               <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Diese Ansicht bündelt freigegebene Assets, Übergabedetails und den
-                nächsten kommerziellen Schritt, sobald die Arbeit bereit ist.
+                Diese Ansicht dokumentiert, was freigegeben ist, wie die
+                Deliverables referenziert werden und ob der nächste
+                kommerzielle Schritt belastbar vorbereitet ist.
               </p>
             </div>
           </div>
 
           <div className="grid gap-2 sm:grid-cols-2">
             <Link
-              href={`/workspace/campaigns/${campaign.id}`}
+              href={`/workspace/campaigns/${campaign.id}/review`}
               className="workspace-button workspace-button-secondary"
             >
-              Zurück zur Kampagne
+              Zurück ins Review
             </Link>
-            {demo.isReadOnly ? (
-              <div className="workspace-button workspace-button-secondary workspace-button-disabled">
-                Demo ist schreibgeschützt
-              </div>
-            ) : (
+            {commercialReady ? (
               <Link
                 href={`/workspace/pilot-request?campaignId=${campaign.id}`}
-                className="workspace-button workspace-button-secondary"
+                className="workspace-button workspace-button-primary"
               >
-                Bezahlten Piloten anfragen
+                Kommerziellen Schritt öffnen
               </Link>
+            ) : (
+              <div className="workspace-button workspace-button-secondary workspace-button-disabled">
+                Kommerzieller Schritt noch gesperrt
+              </div>
             )}
           </div>
         </div>
@@ -110,33 +126,81 @@ export function HandoverCenter({
             <span>{approvedAssets.length} freigegebene Assets</span>
             <span>{groupedAssets.length} Übergabegruppen</span>
           </div>
-          <div className="mt-3">
-            <StatusPill value={campaign.currentStage} tone="accent" />
+          <div className="mt-4 grid gap-3 md:grid-cols-4">
+            <div className="border border-[var(--workspace-line)] px-3 py-3">
+              <p className="workspace-section-label">Freigabegrad</p>
+              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
+                {approvedAssets.length}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
+                Outputs mit bestätigter Freigabe
+              </p>
+            </div>
+            <div className="border border-[var(--workspace-line)] px-3 py-3">
+              <p className="workspace-section-label">Quellenlage</p>
+              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
+                {sourceCoverage}/{approvedAssets.length}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
+                Assets mit dokumentierter Herkunft
+              </p>
+            </div>
+            <div className="border border-[var(--workspace-line)] px-3 py-3">
+              <p className="workspace-section-label">Referenzen</p>
+              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
+                {storageCoverage}/{approvedAssets.length}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
+                Speicherpfade für Delivery hinterlegt
+              </p>
+            </div>
+            <div className="border border-[var(--workspace-line)] px-3 py-3">
+              <p className="workspace-section-label">Pilot-Bereitschaft</p>
+              <div className="mt-2">
+                <StatusPill
+                  value={commercialReady ? "approved" : "pending"}
+                  tone="accent"
+                />
+              </div>
+              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
+                Abgeleitet aus Freigaben und Kampagnenstatus
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.18fr)_minmax(320px,0.82fr)]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
         <div className="grid gap-4">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
               <p className="workspace-section-label">Freigegebene Outputs</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Freigegebene Assets für die Übergabe
+                Übergabepaket nach Kanal und Format
               </h2>
+              <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+                Jeder Eintrag bleibt als freigegebenes Deliverable mit Quelle,
+                Referenzen und Delivery-Hinweisen sichtbar.
+              </p>
             </div>
 
             {groupedAssets.length > 0 ? (
               <div className="mt-5 workspace-split-list">
                 {groupedAssets.map((group) => (
                   <section key={group.label} className="py-4">
-                    <p className="workspace-section-label">{group.label}</p>
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="workspace-section-label">{group.label}</p>
+                      <p className="text-sm text-[var(--workspace-copy-muted)]">
+                        {group.items.length}{" "}
+                        {group.items.length === 1 ? "Eintrag" : "Einträge"}
+                      </p>
+                    </div>
                     <div className="mt-3 workspace-split-list">
                       {group.items.map((asset) => (
                         <article key={asset.id} className="py-4">
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex min-w-0 items-start gap-3">
-                              <div className="overflow-hidden rounded-[12px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.65)]">
+                              <div className="overflow-hidden border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)]">
                                 <WorkspaceAssetPreview
                                   data-testid={`handover-asset-preview-${asset.id}`}
                                   assetType={asset.assetType}
@@ -146,30 +210,49 @@ export function HandoverCenter({
                                   autoPlay={asset.assetType.includes("video")}
                                   loop={asset.assetType.includes("video")}
                                   muted={asset.assetType.includes("video")}
-                                  className="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)]"
+                                  className="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.25)]"
                                   mediaClassName="h-[4.75rem] w-[6rem] object-cover"
-                                  fallbackClassName="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)] px-2 text-center"
+                                  fallbackClassName="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.25)] px-2 text-center"
                                 />
                               </div>
                               <div className="min-w-0">
-                              <div className="flex items-center gap-2">
-                                {asset.assetType.includes("video") ? (
-                                  <FileVideo className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
-                                ) : (
-                                  <FileImage className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
-                                )}
-                                <p className="truncate text-sm font-semibold text-[var(--workspace-copy-strong)]">
-                                  {asset.title}
+                                <div className="flex items-center gap-2">
+                                  {asset.assetType.includes("video") ? (
+                                    <FileVideo className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
+                                  ) : (
+                                    <FileImage className="h-4 w-4 text-[var(--workspace-copy-muted)]" />
+                                  )}
+                                  <p className="truncate text-sm font-semibold text-[var(--workspace-copy-strong)]">
+                                    {asset.title}
+                                  </p>
+                                </div>
+                                <div className="mt-2 workspace-meta-row">
+                                  <span>{formatWorkspaceAssetType(asset.assetType)}</span>
+                                  {asset.format ? <span>{asset.format}</span> : null}
+                                  {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
+                                </div>
+                                <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
+                                  Freigabe liegt vor. Dieses Deliverable bleibt
+                                  für Handover, Rückfragen und kommerzielle
+                                  Anschlussarbeit referenzierbar.
                                 </p>
                               </div>
-                              <div className="mt-2 workspace-meta-row">
-                                <span>{formatWorkspaceAssetType(asset.assetType)}</span>
-                                {asset.format ? <span>{asset.format}</span> : null}
-                                {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
-                              </div>
-                            </div>
                             </div>
                             <StatusPill value="approved" />
+                          </div>
+                          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                            <div>
+                              <p className="workspace-section-label">Quelle</p>
+                              <p className="mt-2 text-sm text-[var(--workspace-copy-body)]">
+                                {asset.source ?? "Noch keine Quelle dokumentiert"}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="workspace-section-label">Speicherreferenz</p>
+                              <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
+                                {asset.storagePath ?? "Noch kein Pfad hinterlegt"}
+                              </p>
+                            </div>
                           </div>
                         </article>
                       ))}
@@ -186,7 +269,7 @@ export function HandoverCenter({
                   href={`/workspace/campaigns/${campaign.id}/review`}
                   className="workspace-button workspace-button-secondary"
                 >
-                  Zurück ins Review
+                  Review erneut öffnen
                 </Link>
               </div>
             )}
@@ -194,9 +277,9 @@ export function HandoverCenter({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Liefer-Metadaten</p>
+              <p className="workspace-section-label">Referenzprotokoll</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Liefer-Referenzen
+                Storage-, Preview- und Quellenlage
               </h2>
             </div>
 
@@ -204,7 +287,7 @@ export function HandoverCenter({
               {approvedAssets.map((asset) => (
                 <article key={asset.id} className="py-4">
                   <div className="flex items-start gap-3">
-                    <div className="overflow-hidden rounded-[12px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.65)]">
+                    <div className="overflow-hidden border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)]">
                       <WorkspaceAssetPreview
                         assetType={asset.assetType}
                         title={asset.title}
@@ -213,9 +296,9 @@ export function HandoverCenter({
                         autoPlay={asset.assetType.includes("video")}
                         loop={asset.assetType.includes("video")}
                         muted={asset.assetType.includes("video")}
-                        className="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)]"
+                        className="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.25)]"
                         mediaClassName="h-[4.75rem] w-[6rem] object-cover"
-                        fallbackClassName="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.55)] px-2 text-center"
+                        fallbackClassName="flex h-[4.75rem] w-[6rem] items-center justify-center bg-[rgba(255,255,255,0.25)] px-2 text-center"
                       />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -226,8 +309,9 @@ export function HandoverCenter({
                         </p>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                        Das Deliverable-Paket ist vorbereitet. Die Referenzen
-                        unten bleiben für Übergabe und späteren Austausch sichtbar.
+                        Review-Freigabe ist erteilt. Die Referenzen unten
+                        dokumentieren, worauf Delivery und spätere Nutzung
+                        verweisen.
                       </p>
                     </div>
                   </div>
@@ -239,9 +323,9 @@ export function HandoverCenter({
                       </p>
                     </div>
                     <div>
-                      <p className="workspace-section-label">Thumbnail-Pfad</p>
+                      <p className="workspace-section-label">Preview / Poster</p>
                       <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
-                        {asset.thumbnailPath ?? "Kein Thumbnail-Pfad vorhanden"}
+                        {asset.previewUrl ?? asset.posterUrl ?? asset.thumbnailPath ?? "Kein Preview-Pfad hinterlegt"}
                       </p>
                     </div>
                     <div>
@@ -261,8 +345,9 @@ export function HandoverCenter({
               ))}
             </div>
             <p className="mt-5 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-              Die Liefer-Referenzen sind hier verfügbar. Eine Live-Download-Automatisierung
-              ist in diesem Workspace bewusst nicht enthalten.
+              Live-Downloads bleiben bewusst außerhalb dieser Ansicht. Diese
+              Seite dokumentiert Referenzen und Nachweise, nicht
+              die finale Versandautomatisierung.
             </p>
           </section>
         </div>
@@ -270,9 +355,9 @@ export function HandoverCenter({
         <div className="grid gap-4 xl:sticky xl:top-5 xl:self-start">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Nutzungs- und Rechteübersicht</p>
+              <p className="workspace-section-label">Vertrauenscenter</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Nutzung und Rechte
+                Nutzung, Rechte und Übergabe-Sicherheit
               </h2>
             </div>
             <p className="mt-4 text-base font-semibold text-[var(--workspace-copy-strong)]">
@@ -283,10 +368,52 @@ export function HandoverCenter({
             </p>
 
             <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
+              <p className="workspace-section-label">Übergabe-Checks</p>
+              <div className="mt-3 workspace-split-list">
+                <div className="flex items-center justify-between gap-3 py-3">
+                  <span className="text-sm text-[var(--workspace-copy-body)]">
+                    Freigegebene Assets vorhanden
+                  </span>
+                  <StatusPill value={approvedAssets.length > 0 ? "approved" : "pending"} />
+                </div>
+                <div className="flex items-center justify-between gap-3 py-3">
+                  <span className="text-sm text-[var(--workspace-copy-body)]">
+                    Quellen dokumentiert
+                  </span>
+                  <StatusPill
+                    value={sourceCoverage === approvedAssets.length && approvedAssets.length > 0 ? "approved" : "pending"}
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-3 py-3">
+                  <span className="text-sm text-[var(--workspace-copy-body)]">
+                    Speicherreferenzen hinterlegt
+                  </span>
+                  <StatusPill
+                    value={storageCoverage === approvedAssets.length && approvedAssets.length > 0 ? "approved" : "pending"}
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-3 py-3">
+                  <span className="text-sm text-[var(--workspace-copy-body)]">
+                    Preview-/Posterpfade erfasst
+                  </span>
+                  <StatusPill
+                    value={previewCoverage === approvedAssets.length && approvedAssets.length > 0 ? "approved" : "pending"}
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-3 py-3">
+                  <span className="text-sm text-[var(--workspace-copy-body)]">
+                    KI-Kennzeichnung vor Versand prüfen
+                  </span>
+                  <StatusPill value="pending" />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
               <p className="workspace-section-label">Kampagnenhinweise</p>
               <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
                 {campaignNotes ??
-                  "Für diese Übergabe liegen noch keine zusätzlichen Lieferhinweise vor."}
+                  "Für diese Delivery liegen noch keine zusätzlichen Hinweise vor."}
               </p>
             </div>
 
@@ -294,7 +421,10 @@ export function HandoverCenter({
               <p className="workspace-section-label">Workflow-Status</p>
               <div className="mt-3 workspace-split-list">
                 {stageItems.map((stage) => (
-                  <div key={stage.stageKey} className="flex items-center justify-between gap-3 py-3">
+                  <div
+                    key={stage.stageKey}
+                    className="flex items-center justify-between gap-3 py-3"
+                  >
                     <span className="text-sm text-[var(--workspace-copy-body)]">
                       {formatWorkspaceLabel(stage.stageKey)}
                     </span>
@@ -302,46 +432,85 @@ export function HandoverCenter({
                   </div>
                 ))}
               </div>
+              <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
+                {completedStages}/{stageItems.length} Stufen haben einen
+                belastbaren Arbeitsstand.
+              </p>
             </div>
           </section>
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Nächster Schritt</p>
+              <p className="workspace-section-label">Kommerzieller nächster Schritt</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Nächster Schritt
+                Pilot-Bereitschaft
               </h2>
             </div>
             <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
               {nextStep ??
-                "Nutzt diese Übergabeansicht, um zu entscheiden, ob die Kampagne bereit für einen bezahlten Piloten ist."}
+                "Die Delivery-Seite prüft zuerst Freigaben, Referenzen und Delivery-Sicherheit. Erst danach sollte der kommerzielle Anschluss gestartet werden."}
             </p>
 
+            <div className="mt-5 workspace-split-list border-t border-[var(--workspace-line)] pt-4">
+              <div className="flex items-center justify-between gap-3 py-3">
+                <span className="text-sm text-[var(--workspace-copy-body)]">
+                  Kampagne ist freigegeben
+                </span>
+                <StatusPill
+                  value={
+                    campaign.currentStage === "approved" || campaign.currentStage === "handover_ready"
+                      ? "approved"
+                      : "pending"
+                  }
+                />
+              </div>
+              <div className="flex items-center justify-between gap-3 py-3">
+                <span className="text-sm text-[var(--workspace-copy-body)]">
+                  Deliverables dokumentiert
+                </span>
+                <StatusPill value={approvedAssets.length > 0 ? "approved" : "pending"} />
+              </div>
+              <div className="flex items-center justify-between gap-3 py-3">
+                <span className="text-sm text-[var(--workspace-copy-body)]">
+                  Delivery-Nachweise vorhanden
+                </span>
+                <StatusPill
+                  value={storageCoverage === approvedAssets.length && approvedAssets.length > 0 ? "approved" : "pending"}
+                />
+              </div>
+            </div>
+
             <div className="mt-5 grid gap-3">
-              <Link
-                href={`/workspace/campaigns/${campaign.id}/review`}
-                className="workspace-button workspace-button-secondary"
-              >
-                Zurück ins Review
-              </Link>
-              {demo.isReadOnly ? (
-                <div className="workspace-button workspace-button-disabled">
-                  Pilot-Anfrage in der Demo deaktiviert
-                </div>
-              ) : (
+              {commercialReady ? (
                 <Link
                   href={`/workspace/pilot-request?campaignId=${campaign.id}`}
                   className="workspace-button workspace-button-primary"
                 >
-                  Bezahlten Piloten anfragen
+                  Kommerziellen Schritt starten
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+              ) : demo.isReadOnly ? (
+                <div className="workspace-button workspace-button-disabled">
+                  Pilot-Anfrage in der Demo deaktiviert
+                </div>
+              ) : (
+                <div className="workspace-button workspace-button-secondary workspace-button-disabled">
+                  Noch nicht bereit für den Piloten
+                </div>
               )}
+              <Link
+                href={`/workspace/campaigns/${campaign.id}/review`}
+                className="workspace-button workspace-button-secondary"
+              >
+                Review erneut prüfen
+              </Link>
             </div>
             <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
               {demo.isReadOnly
                 ? demo.mutationMessage
-                : "Wenn das Deliverable-Paket stimmig ist, schickt die Pilot-Anfrage ab, um in den nächsten kommerziellen Schritt zu gehen."}
+                : commercialReady
+                  ? "Alle sichtbaren Nachweise sprechen für einen belastbaren kommerziellen Anschluss."
+                  : "Der kommerzielle Schritt bleibt nachrangig, bis Freigaben und Delivery-Nachweise sauber stehen."}
             </p>
           </section>
         </div>

@@ -137,13 +137,13 @@ export function PilotRequestFlow({
     <div className="grid gap-4">
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="space-y-3">
-          <p className="workspace-section-label">Pilot-Anfrage</p>
+          <p className="workspace-section-label">Commercial</p>
           <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            Bezahlten Piloten anfragen
+            Commercial next step
           </h1>
           <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            Haltet Paket, Startfenster und internen Kontext fest und gebt die
-            Anfrage direkt an Ops weiter.
+            Capture the scope, start window, and stakeholders for the next paid
+            engagement once delivery is ready to move forward.
           </p>
         </div>
 
@@ -164,14 +164,14 @@ export function PilotRequestFlow({
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
         <section className="workspace-panel px-5 py-5">
           <div className="space-y-2">
-            <p className="workspace-section-label">Anfragedetails</p>
+            <p className="workspace-section-label">Commercial handoff</p>
             <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-              Formular für die Pilot-Übergabe
+              Scope for the next engagement
             </h2>
           </div>
 
           <div className="mt-5 grid gap-5">
-            <Field label="Kampagne">
+            <Field label="Workstream">
               <select
                 value={selectedCampaignId}
                 onChange={(event) => handleCampaignChange(event.target.value)}
@@ -179,7 +179,7 @@ export function PilotRequestFlow({
                 disabled={isPending || demo.isReadOnly}
               >
                 {campaigns.length === 0 ? (
-                  <option value="">Keine Kampagne verfügbar</option>
+                  <option value="">No workstream available</option>
                 ) : null}
                 {campaigns.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -189,7 +189,7 @@ export function PilotRequestFlow({
               </select>
             </Field>
 
-            <Field label="Empfohlenes Paket">
+            <Field label="Proposed package">
               <TextInput
                 value={values.desiredTier}
                 onChange={(event) => updateValue("desiredTier", event.target.value)}
@@ -197,29 +197,29 @@ export function PilotRequestFlow({
               />
             </Field>
 
-            <Field label="Gewünschtes Startfenster">
+            <Field label="Preferred start window">
               <TextInput
                 value={values.startWindow}
                 onChange={(event) => updateValue("startWindow", event.target.value)}
-                placeholder="Innerhalb der nächsten 30 Tage"
+                placeholder="Within the next 30 days"
                 disabled={isPending || demo.isReadOnly}
               />
             </Field>
 
-            <Field label="Interne Stakeholder">
+            <Field label="Stakeholders">
               <TextInput
                 value={values.internalStakeholders}
                 onChange={(event) => updateValue("internalStakeholders", event.target.value)}
-                placeholder="Founder, Growth Lead, Brand Lead"
+                placeholder="Founder, growth lead, brand lead"
                 disabled={isPending || demo.isReadOnly}
               />
             </Field>
 
-            <Field label="Kurze Notiz">
+            <Field label="Commercial note">
               <TextareaInput
                 value={values.message}
                 onChange={(event) => updateValue("message", event.target.value)}
-                placeholder="Warum ist jetzt der richtige Moment für einen bezahlten Piloten?"
+                placeholder="Why is this the right moment to move into a paid engagement?"
                 disabled={isPending || demo.isReadOnly}
               />
             </Field>
@@ -232,7 +232,7 @@ export function PilotRequestFlow({
               disabled={isPending || !selectedCampaignId || demo.isReadOnly}
               onClick={handleSubmit}
             >
-              {isPending ? "Wird eingereicht..." : "Pilot-Anfrage einreichen"}
+              {isPending ? "Sending..." : "Send commercial handoff"}
             </button>
             <button
               type="button"
@@ -246,7 +246,7 @@ export function PilotRequestFlow({
                 )
               }
             >
-              Zurück zur Übergabe
+              Back to delivery
             </button>
           </div>
 
@@ -262,9 +262,9 @@ export function PilotRequestFlow({
         <div className="grid gap-4 xl:sticky xl:top-5 xl:self-start">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Vorbefüllter Kontext</p>
+              <p className="workspace-section-label">Readiness context</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Aktuelle Workspace-Signale
+                Current delivery signals
               </h2>
             </div>
             <div className="mt-5 workspace-split-list">
@@ -276,7 +276,7 @@ export function PilotRequestFlow({
               </div>
               {selectedCampaign ? (
                 <div className="py-4">
-                  <p className="workspace-section-label">Kampagne</p>
+                  <p className="workspace-section-label">Workstream</p>
                   <p className="mt-2 text-sm font-semibold text-[var(--workspace-copy-strong)]">
                     {selectedCampaign.name}
                   </p>
@@ -291,17 +291,17 @@ export function PilotRequestFlow({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Letzter Anfragestatus</p>
+              <p className="workspace-section-label">Latest commercial state</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Ergebnis der Übergabe
+                Handoff result
               </h2>
             </div>
             {requestState ? (
               <div className="mt-4 space-y-3">
                 <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
                   {requestState.success
-                    ? "Die letzte Anfrage wurde erfasst und erfolgreich an Ops übergeben."
-                    : "Die letzte Anfrage wurde gespeichert, aber die Übergabe an Ops war nicht erfolgreich."}
+                    ? "The latest commercial handoff was captured and sent to ops."
+                    : "The latest commercial handoff was saved, but delivery to ops did not succeed."}
                 </p>
                 <div className="workspace-meta-row">
                   {requestState.status ? <span>{formatWorkspaceLabel(requestState.status)}</span> : null}
@@ -311,7 +311,7 @@ export function PilotRequestFlow({
             ) : latestRequest ? (
               <div className="mt-4 space-y-3">
                 <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
-                  Für diese Kampagne existiert bereits eine Pilot-Anfrage.
+                  A commercial handoff already exists for this workstream.
                 </p>
                 <div className="workspace-meta-row">
                   <span>{formatWorkspaceLabel(latestRequest.status)}</span>
@@ -324,7 +324,7 @@ export function PilotRequestFlow({
               </div>
             ) : (
               <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Für diese Kampagne wurde noch keine Pilot-Anfrage eingereicht.
+                No commercial handoff has been sent for this workstream yet.
               </p>
             )}
           </section>

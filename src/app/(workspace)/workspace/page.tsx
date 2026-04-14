@@ -34,8 +34,8 @@ export default async function WorkspacePage() {
         organizationName={bootstrap.organization.name}
         audience={dashboard.profile?.targetAudience ?? null}
         primaryChannels={dashboard.profile?.primaryChannels ?? null}
-        campaignCount={dashboard.campaigns.length}
-        assetCount={dashboard.latestAssets.length}
+        openReviewCount={dashboard.reviewThreadCount}
+        approvedAssetCount={approvedAssetCount}
         onboardingCompletion={onboardingCompletion}
       />
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.95fr)]">

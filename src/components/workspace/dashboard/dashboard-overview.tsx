@@ -4,8 +4,8 @@ type DashboardOverviewProps = {
   organizationName: string;
   audience: string | null;
   primaryChannels: string | null;
-  campaignCount: number;
-  assetCount: number;
+  openReviewCount: number;
+  approvedAssetCount: number;
   onboardingCompletion: {
     completed: number;
     total: number;
@@ -18,32 +18,38 @@ export function DashboardOverview({
   organizationName,
   audience,
   primaryChannels,
-  campaignCount,
-  assetCount,
+  openReviewCount,
+  approvedAssetCount,
   onboardingCompletion,
 }: DashboardOverviewProps) {
   const items = [
     {
-      label: "Organisation",
+      label: "Engagement",
       value: organizationName,
-      detail: primaryChannels ?? audience ?? "Privater Brand-Workspace",
+      detail: primaryChannels ?? audience ?? "Managed delivery workspace",
     },
     {
-      label: "Kampagnen",
-      value: String(campaignCount),
-      detail: campaignCount === 1 ? "1 aktive Kampagne im Workspace" : "Kampagnen aktuell im Workspace",
+      label: "Needs input",
+      value: String(openReviewCount),
+      detail:
+        openReviewCount === 1
+          ? "1 open review decision is waiting"
+          : "Open review decisions are waiting",
     },
     {
-      label: "Assets",
-      value: String(assetCount),
-      detail: assetCount === 1 ? "1 Asset ist reviewbereit" : "Assets sind reviewbereit",
+      label: "Ready",
+      value: String(approvedAssetCount),
+      detail:
+        approvedAssetCount === 1
+          ? "1 approved output is ready for delivery"
+          : "Approved outputs are ready for delivery",
     },
     {
-      label: "Setup-Fortschritt",
+      label: "Context",
       value: `${onboardingCompletion.percent}%`,
       detail: onboardingCompletion.isComplete
-        ? "Der Brand-Kontext ist vollständig genug, damit sich der Workspace spezifisch anfühlt."
-        : `${onboardingCompletion.completed} von ${onboardingCompletion.total} Profilfeldern sind ausgefüllt.`,
+        ? "Brand context is complete enough for review, delivery, and commercial handoff."
+        : `${onboardingCompletion.completed} of ${onboardingCompletion.total} context fields are filled.`,
     },
   ];
 
@@ -62,13 +68,13 @@ export function DashboardOverview({
             <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
               {item.detail}
             </p>
-            {item.label === "Setup-Fortschritt" ? (
+            {item.label === "Context" ? (
               <div className="mt-3">
                 <Link
                   href="/workspace/onboarding"
                   className="workspace-button workspace-button-secondary"
                 >
-                  {onboardingCompletion.isComplete ? "Setup prüfen" : "Setup fortsetzen"}
+                  {onboardingCompletion.isComplete ? "Review context" : "Complete context"}
                 </Link>
               </div>
             ) : null}

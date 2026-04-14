@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ComponentType } from "react";
 import {
   ArrowUpRight,
   ClipboardList,
@@ -16,20 +15,13 @@ import { cn } from "@/lib/utils";
 import { formatWorkspaceRole } from "@/lib/workspace/formatting";
 import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 
-type PlannedNavigationItem = {
-  label: string;
-  helper: string;
-  icon: ComponentType<{ className?: string }>;
-};
-
-const plannedNavigation: PlannedNavigationItem[] = [];
-
 type WorkspaceShellProps = {
   organizationName: string;
   role: string;
   website?: string | null;
   activeCampaignId?: string | null;
   demo?: WorkspaceDemoState;
+  showCommercialStep?: boolean;
   children: React.ReactNode;
 };
 
@@ -39,27 +31,28 @@ export function WorkspaceShell({
   website,
   activeCampaignId,
   demo,
+  showCommercialStep = false,
   children,
 }: WorkspaceShellProps) {
   const pathname = usePathname();
   const mobileLocationLabel = pathname.includes("/review")
     ? "Review"
     : pathname.includes("/handover")
-      ? "Übergabe"
+      ? "Delivery"
     : pathname.includes("/onboarding")
-      ? "Setup"
+      ? "Brand Context"
     : pathname.includes("/briefs/")
       ? "Briefings"
     : pathname.includes("/pilot-request")
-      ? "Pilot-Anfrage"
+      ? "Commercial"
     : pathname.includes("/campaigns/")
-      ? "Kampagne"
-      : "Übersicht";
-  const navigation = [
+      ? "Workstream"
+      : "Today";
+  const primaryNavigation = [
     {
       href: "/workspace",
-      label: "Übersicht",
-      helper: "Aktuelle Kampagne und nächste Schritte",
+      label: "Today",
+      helper: "Status, decisions, readiness",
       icon: LayoutGrid,
       active: pathname === "/workspace",
     },
@@ -67,8 +60,8 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}`
         : undefined,
-      label: "Kampagne",
-      helper: "Strategie, Angles und Assets",
+      label: "Workstream",
+      helper: "Objective, stage, deliverables",
       icon: FolderKanban,
       active:
         Boolean(activeCampaignId) &&
@@ -79,84 +72,91 @@ export function WorkspaceShell({
         ? `/workspace/campaigns/${activeCampaignId}/review`
         : undefined,
       label: "Review",
-      helper: "Kommentare, Freigaben, Änderungswünsche",
+      helper: "Decisions, changes, approvals",
       icon: ShieldCheck,
       active: pathname.includes("/review"),
     },
     {
+      href: activeCampaignId
+        ? `/workspace/campaigns/${activeCampaignId}/handover`
+        : undefined,
+      label: "Delivery",
+      helper: "Approved outputs and ledger",
+      icon: Rocket,
+      active: pathname.includes("/handover"),
+    },
+  ];
+  const secondaryNavigation = [
+    {
       href: "/workspace/onboarding",
-      label: "Setup",
-      helper: "Brand-Profil und Stakeholder",
+      label: "Brand Context",
+      helper: "Channels, guardrails, reviewers",
       icon: Settings2,
       active: pathname === "/workspace/onboarding",
     },
     {
       href: "/workspace/briefs/new",
       label: "Briefings",
-      helper: "Intake und Freigabe im Produkt",
+      helper: "Structured requests and intake",
       icon: ClipboardList,
       active: pathname.includes("/briefs/"),
     },
-    {
-      href: activeCampaignId
-        ? `/workspace/campaigns/${activeCampaignId}/handover`
-        : undefined,
-      label: "Übergabe",
-      helper: "Freigegebene Assets und Liefernotizen",
-      icon: Rocket,
-      active: pathname.includes("/handover"),
-    },
-    {
-      href: activeCampaignId
-        ? `/workspace/pilot-request?campaignId=${activeCampaignId}`
-        : "/workspace/pilot-request",
-      label: "Pilot-Anfrage",
-      helper: "Kommerzielle Übergabe an Ops",
-      icon: ArrowUpRight,
-      active: pathname === "/workspace/pilot-request",
-    },
   ];
+  const commercialNavigation = showCommercialStep
+    ? [
+        {
+          href: activeCampaignId
+            ? `/workspace/pilot-request?campaignId=${activeCampaignId}`
+            : "/workspace/pilot-request",
+          label: "Commercial",
+          helper: "Next engagement and handoff",
+          icon: ArrowUpRight,
+          active: pathname === "/workspace/pilot-request",
+        },
+      ]
+    : [];
 
   return (
     <div className="workspace-app min-h-screen text-[var(--workspace-copy-strong)]">
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px]">
-        <aside className="workspace-sidebar hidden w-[288px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
+        <aside className="workspace-sidebar hidden w-[264px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <div className="space-y-2">
-              <p className="workspace-eyebrow">Brand Workspace</p>
-              <div className="space-y-1">
-                <p className="text-lg font-semibold tracking-[-0.02em]">
-                  {organizationName}
+            <p className="workspace-eyebrow">Client Operations</p>
+            <div className="mt-3 space-y-1">
+              <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
+                {organizationName}
+              </p>
+              {website ? (
+                <p className="text-sm text-[var(--workspace-copy-muted)]">
+                  {website}
                 </p>
-                {website ? (
-                  <p className="text-sm text-[var(--workspace-copy-muted)]">
-                    {website}
-                  </p>
-                ) : null}
-              </div>
+              ) : null}
             </div>
-            <div className="mt-4 workspace-meta-row text-[var(--workspace-sidebar-copy-muted)]">
-              <span>{demo?.isDemoWorkspace ? "Demo-Zugang" : formatWorkspaceRole(role)}</span>
-              <span>{demo?.isDemoWorkspace ? demo.shellBadge : "Privater Brand-Workspace"}</span>
+            <div className="mt-4 space-y-1 text-sm text-[var(--workspace-copy-muted)]">
+              <p>{demo?.isDemoWorkspace ? demo.shellBadge : formatWorkspaceRole(role)}</p>
+              <p>{showCommercialStep ? "Commercial step available" : "Delivery in progress"}</p>
             </div>
           </div>
 
           {demo?.isDemoWorkspace ? (
-            <div className="mt-4 rounded-[1.35rem] border border-[rgba(255,255,255,0.14)] bg-[rgba(217,101,71,0.12)] px-4 py-4">
-              <p className="workspace-eyebrow text-[rgba(255,228,222,0.76)]">
+            <div className="mt-4 border border-[var(--workspace-line)] bg-[var(--workspace-panel-muted)] px-4 py-4">
+              <p className="workspace-eyebrow">
                 {demo.shellBadge}
               </p>
-              <p className="mt-2 text-sm font-semibold tracking-[-0.02em] text-[var(--workspace-sidebar-copy)]">
-                Schreibgeschützter Showcase
+              <p className="mt-2 text-sm font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
+                Read-only delivery view
               </p>
-              <p className="mt-2 text-sm leading-6 text-[var(--workspace-sidebar-copy-muted)]">
+              <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
                 {demo.shellDescription}
               </p>
             </div>
           ) : null}
 
-          <nav className="mt-6 space-y-2" aria-label="Workspace navigation">
-            {navigation.map((item) => {
+          <div className="mt-6">
+            <p className="workspace-section-label">Core surfaces</p>
+          </div>
+          <nav className="mt-3 space-y-1" aria-label="Workspace navigation">
+            {primaryNavigation.map((item) => {
               const Icon = item.icon;
               const className = cn(
                 "workspace-nav-item",
@@ -187,7 +187,7 @@ export function WorkspaceShell({
                   <span className="workspace-nav-icon">
                     <Icon className="h-4 w-4" />
                   </span>
-                  <span className="space-y-0.5">
+                  <span className="space-y-0.5 min-w-0">
                     <span className="block text-sm font-semibold tracking-[-0.01em]">
                       {item.label}
                     </span>
@@ -200,45 +200,65 @@ export function WorkspaceShell({
             })}
           </nav>
 
-          {plannedNavigation.length > 0 ? (
-            <div className="mt-8 space-y-3">
-              <p className="workspace-section-label">Als Nächstes geplant</p>
-              <div className="space-y-2">
-                {plannedNavigation.map((item) => {
-                  const Icon = item.icon;
+          <div className="mt-8">
+            <p className="workspace-section-label">Context</p>
+          </div>
+          <nav className="mt-3 space-y-1">
+            {[...secondaryNavigation, ...commercialNavigation].map((item) => {
+              const Icon = item.icon;
+              const className = cn(
+                "workspace-nav-item workspace-nav-item-secondary",
+                item.active ? "workspace-nav-item-active" : "workspace-nav-item-muted",
+                !item.href && "opacity-60",
+              );
 
-                  return (
-                    <div key={item.label} className="workspace-nav-item workspace-nav-item-muted">
-                      <span className="workspace-nav-icon workspace-nav-icon-muted">
-                        <Icon className="h-4 w-4" />
+              if (!item.href) {
+                return (
+                  <div key={item.label} className={className}>
+                    <span className="workspace-nav-icon">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="space-y-0.5 min-w-0">
+                      <span className="block text-sm font-semibold tracking-[-0.01em]">
+                        {item.label}
                       </span>
-                      <span className="min-w-0 flex-1 space-y-0.5">
-                        <span className="block text-sm font-medium text-[var(--workspace-copy-strong)]">
-                          {item.label}
-                        </span>
-                        <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                          {item.helper}
-                        </span>
+                      <span className="block text-xs text-[var(--workspace-copy-muted)]">
+                        {item.helper}
                       </span>
-                      <span className="workspace-coming-soon">Geplant</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
+                    </span>
+                  </div>
+                );
+              }
+
+              return (
+                <Link key={item.label} href={item.href} className={className}>
+                  <span className="workspace-nav-icon">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <span className="space-y-0.5 min-w-0">
+                    <span className="block text-sm font-semibold tracking-[-0.01em]">
+                      {item.label}
+                    </span>
+                    <span className="block text-xs text-[var(--workspace-copy-muted)]">
+                      {item.helper}
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
 
           <div className="mt-auto border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Warum es diesen Workspace gibt</p>
+            <p className="workspace-section-label">Delivery stance</p>
             <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Zeigt Kampagnenstruktur, Review-Pfad und Übergabequalität, bevor ein
-              Buyer sich auf einen bezahlten Piloten festlegt.
+              Follow the workstream, clear decisions in review, and use delivery
+              as the source of truth for approvals, provenance, and next steps.
             </p>
           </div>
         </aside>
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
-          <div className="border-b border-[var(--workspace-line)] bg-[rgba(248,250,252,0.92)] px-4 py-3 backdrop-blur lg:hidden">
+          <div className="border-b border-[var(--workspace-line)] bg-[var(--workspace-panel)] px-4 py-3 lg:hidden">
             <div className="space-y-1">
               <p className="truncate text-sm font-semibold tracking-[-0.01em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
@@ -251,7 +271,7 @@ export function WorkspaceShell({
           </div>
 
           <main className="min-w-0 flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
-            <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+            <div className="mx-auto flex w-full max-w-[1500px] flex-col gap-6">
               {children}
             </div>
           </main>

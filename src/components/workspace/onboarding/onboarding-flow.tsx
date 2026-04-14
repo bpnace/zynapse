@@ -34,20 +34,20 @@ type StepDefinition = {
 const steps: StepDefinition[] = [
   {
     key: "brand-basics",
-    label: "Brand-Grundlagen",
-    description: "Erfasst Website und Angebotskontext, damit sich der Workspace von Anfang an konkret anfühlt.",
+    label: "Foundation",
+    description: "Capture website and offer context so the workstream starts from the right operating baseline.",
     fields: ["website", "offerSummary"],
   },
   {
     key: "audience-and-tone",
-    label: "Zielgruppe und Tonalität",
-    description: "Beschreibt, für wen die Arbeit gedacht ist, wo sie laufen soll und wie die Brand klingen muss.",
+    label: "Audience and channels",
+    description: "Define who the work is for, where it runs, and how the brand should show up in delivery.",
     fields: ["targetAudience", "primaryChannels", "brandTone"],
   },
   {
     key: "review-and-guardrails",
-    label: "Review und Guardrails",
-    description: "Haltet fest, wer reviewt und welche Leitplanken das Team einhalten muss.",
+    label: "Review rules",
+    description: "Document reviewers, claims, and constraints so review and delivery stay predictable.",
     fields: ["reviewNotes", "claimGuardrails"],
   },
 ];
@@ -125,21 +125,21 @@ export function OnboardingFlow({
     return (
       <div className="grid gap-4">
         <section className="workspace-topbar px-4 py-4 sm:px-5">
-          <p className="workspace-section-label">Setup abgeschlossen</p>
+          <p className="workspace-section-label">Brand Context complete</p>
           <h1 className="mt-3 text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            {organizationName} ist bereit für den Workspace
+            {organizationName} is ready for delivery
           </h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            Das Brand-Profil gibt Kampagne, Review und Übergabe jetzt genug Kontext,
-            damit sie sich spezifisch statt generisch anfühlen.
+            The core brand context is in place, so review, delivery, and the commercial
+            next step can rely on the same operating assumptions.
           </p>
         </section>
 
         <section className="workspace-panel px-5 py-5">
           <p className="workspace-section-label">Status</p>
           <div className="mt-4 workspace-meta-row">
-            <span>{completion.completed} von {completion.total} Feldern ausgefüllt</span>
-            <span>{completion.percent}% abgeschlossen</span>
+            <span>{completion.completed} of {completion.total} fields captured</span>
+            <span>{completion.percent}% complete</span>
           </div>
           <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
             {statusMessage}
@@ -150,7 +150,7 @@ export function OnboardingFlow({
               className="workspace-button workspace-button-primary"
               onClick={() => router.push("/workspace")}
             >
-              Zurück zur Übersicht
+              Back to Today
             </button>
             <button
               type="button"
@@ -160,7 +160,7 @@ export function OnboardingFlow({
                 setStepIndex(0);
               }}
             >
-              Setup prüfen
+              Review context
             </button>
           </div>
         </section>
@@ -172,21 +172,21 @@ export function OnboardingFlow({
     <div className="grid gap-4">
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="space-y-3">
-          <p className="workspace-section-label">Setup</p>
+          <p className="workspace-section-label">Brand Context</p>
           <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            Brand-Setup
+            Operating context
           </h1>
           <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            Ergänzt den Brand-Kontext, den der Workspace braucht, damit Kampagne,
-            Review und Übergabe sich von Beginn an spezifisch für euer Team anfühlen.
+            Capture the context the workspace needs for review, delivery, and commercial
+            decisions without repeating it across every route.
           </p>
         </div>
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{stepTitle}</span>
-            <span>{completion.completed} von {completion.total} Feldern ausgefüllt</span>
-            <span>{completion.percent}% abgeschlossen</span>
+            <span>{completion.completed} of {completion.total} fields captured</span>
+            <span>{completion.percent}% complete</span>
           </div>
           {demo.isDemoWorkspace ? (
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
@@ -198,8 +198,8 @@ export function OnboardingFlow({
 
       <div className="grid gap-4 xl:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)]">
         <section className="workspace-panel px-5 py-5">
-          <div className="space-y-3">
-            <p className="workspace-section-label">Fortschritt</p>
+            <div className="space-y-3">
+            <p className="workspace-section-label">Sections</p>
             <div className="workspace-split-list">
               {steps.map((item, index) => (
                 <button
@@ -250,44 +250,44 @@ export function OnboardingFlow({
             ) : null}
 
             {step.fields.includes("offerSummary") ? (
-              <Field label="Produkt oder Angebot" error={fieldErrors.offerSummary}>
+              <Field label="Offer summary" error={fieldErrors.offerSummary}>
                 <TextareaInput
                   value={values.offerSummary}
                   onChange={(event) => updateValue("offerSummary", event.target.value)}
-                  placeholder="Was die Brand verkauft und warum es relevant ist."
+                  placeholder="What is being sold and why it matters in this engagement."
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("targetAudience") ? (
-              <Field label="Zielgruppe" error={fieldErrors.targetAudience}>
+              <Field label="Audience" error={fieldErrors.targetAudience}>
                 <TextareaInput
                   value={values.targetAudience}
                   onChange={(event) => updateValue("targetAudience", event.target.value)}
-                  placeholder="Bei wem die Kampagne Anklang finden soll."
+                  placeholder="Who the work needs to resonate with."
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("primaryChannels") ? (
-              <Field label="Primäre Kanäle" error={fieldErrors.primaryChannels}>
+              <Field label="Primary channels" error={fieldErrors.primaryChannels}>
                 <TextareaInput
                   value={values.primaryChannels}
                   onChange={(event) => updateValue("primaryChannels", event.target.value)}
-                  placeholder="Welche Kanäle für diesen Workspace am wichtigsten sind."
+                  placeholder="Where this engagement is expected to run."
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("brandTone") ? (
-              <Field label="Brand-Tonalität" error={fieldErrors.brandTone}>
+              <Field label="Brand tone" error={fieldErrors.brandTone}>
                 <TextareaInput
                   value={values.brandTone}
                   onChange={(event) => updateValue("brandTone", event.target.value)}
-                  placeholder="Wie sich die Arbeit anhören und anfühlen soll."
+                  placeholder="How the work should sound and feel."
                   disabled={demo.isReadOnly}
                 />
               </Field>
@@ -295,25 +295,25 @@ export function OnboardingFlow({
 
             {step.fields.includes("reviewNotes") ? (
               <Field
-                label="Reviewer und Hinweise"
-                hint="Hier notiert ihr, wer reviewt und worauf diese Personen achten."
+                label="Reviewers and notes"
+                hint="Record who signs off and what matters in approval."
                 error={fieldErrors.reviewNotes}
               >
                 <TextareaInput
                   value={values.reviewNotes}
                   onChange={(event) => updateValue("reviewNotes", event.target.value)}
-                  placeholder="Wer reviewt die Arbeit, und welcher Kontext ist für die Freigabe wichtig?"
+                  placeholder="Who reviews this work and what context matters for approval?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("claimGuardrails") ? (
-              <Field label="Rechtliche oder Claim-Guardrails" error={fieldErrors.claimGuardrails}>
+              <Field label="Claims and guardrails" error={fieldErrors.claimGuardrails}>
                 <TextareaInput
                   value={values.claimGuardrails}
                   onChange={(event) => updateValue("claimGuardrails", event.target.value)}
-                  placeholder="Welche Aussagen der Workflow nicht versprechen oder andeuten darf."
+                  placeholder="Which claims, legal limits, or no-gos the workstream must respect."
                   disabled={demo.isReadOnly}
                 />
               </Field>
@@ -333,7 +333,7 @@ export function OnboardingFlow({
               disabled={isSaving || demo.isReadOnly}
               onClick={() => saveCurrentStep(false)}
             >
-              {isSaving ? "Speichert..." : "Entwurf speichern"}
+              {isSaving ? "Saving..." : "Save draft"}
             </button>
             <button
               type="button"
@@ -341,7 +341,7 @@ export function OnboardingFlow({
               disabled={isSaving || demo.isReadOnly}
               onClick={() => saveCurrentStep(stepIndex === steps.length - 1)}
             >
-              {stepIndex === steps.length - 1 ? "Setup abschließen" : "Speichern und weiter"}
+              {stepIndex === steps.length - 1 ? "Finish context" : "Save and continue"}
             </button>
           </div>
         </section>
