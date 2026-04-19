@@ -75,6 +75,28 @@ export function mapBrandProfile(row: TableRow<"brand_profiles">) {
   };
 }
 
+export function mapCreativeProfile(row: TableRow<"creative_profiles">) {
+  return {
+    userId: row.user_id,
+    slug: row.slug,
+    displayName: row.display_name,
+    headline: row.headline,
+    bio: row.bio,
+    portfolioUrl: row.portfolio_url,
+    specialtiesJson: row.specialties_json,
+    toolsJson: row.tools_json,
+    industryFitJson: row.industry_fit_json,
+    availabilityStatus: row.availability_status,
+    capacityNotes: row.capacity_notes,
+    hourlyRate: row.hourly_rate,
+    dayRate: row.day_rate,
+    packageRate: row.package_rate,
+    qualityScore: row.quality_score,
+    createdAt: parseDate(row.created_at) ?? new Date(0),
+    updatedAt: parseDate(row.updated_at) ?? new Date(0),
+  };
+}
+
 export function mapCampaign(row: TableRow<"campaigns">) {
   return {
     id: row.id,
@@ -89,6 +111,22 @@ export function mapCampaign(row: TableRow<"campaigns">) {
   };
 }
 
+export function mapCampaignAssignment(row: TableRow<"campaign_assignments">) {
+  return {
+    id: row.id,
+    campaignId: row.campaign_id,
+    userId: row.user_id,
+    assignmentRole: row.assignment_role,
+    status: row.status,
+    assignedBy: row.assigned_by,
+    invitedAt: parseDate(row.invited_at) ?? new Date(0),
+    acceptedAt: parseDate(row.accepted_at),
+    dueAt: parseDate(row.due_at),
+    scopeSummary: row.scope_summary,
+    createdAt: parseDate(row.created_at) ?? new Date(0),
+  };
+}
+
 export function mapCampaignStage(row: TableRow<"campaign_stages">) {
   return {
     id: row.id,
@@ -98,6 +136,25 @@ export function mapCampaignStage(row: TableRow<"campaign_stages">) {
     status: row.status,
     startedAt: parseDate(row.started_at),
     completedAt: parseDate(row.completed_at),
+  };
+}
+
+export function mapCreativeTask(row: TableRow<"creative_tasks">) {
+  return {
+    id: row.id,
+    campaignId: row.campaign_id,
+    assignmentId: row.assignment_id,
+    taskType: row.task_type,
+    title: row.title,
+    description: row.description,
+    status: row.status,
+    priority: row.priority,
+    ownerUserId: row.owner_user_id,
+    createdBy: row.created_by,
+    blockedReason: row.blocked_reason,
+    dueAt: parseDate(row.due_at),
+    completedAt: parseDate(row.completed_at),
+    createdAt: parseDate(row.created_at) ?? new Date(0),
   };
 }
 
@@ -120,6 +177,21 @@ export function mapAsset(row: TableRow<"assets">) {
   };
 }
 
+export function mapAssetVersion(row: TableRow<"asset_versions">) {
+  return {
+    id: row.id,
+    assetId: row.asset_id,
+    campaignId: row.campaign_id,
+    createdBy: row.created_by,
+    versionLabel: row.version_label,
+    storagePath: row.storage_path,
+    thumbnailPath: row.thumbnail_path,
+    submissionStatus: row.submission_status,
+    submissionNotes: row.submission_notes,
+    createdAt: parseDate(row.created_at) ?? new Date(0),
+  };
+}
+
 export function mapReviewThread(row: TableRow<"review_threads">) {
   return {
     id: row.id,
@@ -138,6 +210,24 @@ export function mapComment(row: TableRow<"comments">) {
     body: row.body,
     commentType: row.comment_type,
     createdAt: parseDate(row.created_at) ?? new Date(0),
+  };
+}
+
+export function mapRevisionItem(row: TableRow<"revision_items">) {
+  return {
+    id: row.id,
+    campaignId: row.campaign_id,
+    assetId: row.asset_id,
+    taskId: row.task_id,
+    sourceRole: row.source_role,
+    sourceType: row.source_type,
+    category: row.category,
+    priority: row.priority,
+    body: row.body,
+    status: row.status,
+    dueAt: parseDate(row.due_at),
+    resolvedAt: parseDate(row.resolved_at),
+    resolvedBy: row.resolved_by,
   };
 }
 
