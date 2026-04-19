@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="de" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         <Script
-          src="https://cloud.ccm19.de/app.js?apiKey=507d502de0eb3f51b6e05274ca2398f5e01f425482111733&domain=69c1143c6b7facd13b028a22"
+          src="https://cloud.ccm19.de/app.js?apiKey=d592996048b9c1ae961182587a25572046e9d8439d2b26cb&domain=69e4d88aec1e79c0e70e9662"
           strategy="beforeInteractive"
           referrerPolicy="origin"
         />
