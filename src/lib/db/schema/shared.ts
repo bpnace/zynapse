@@ -48,6 +48,55 @@ export const pilotRequestHandoffModeEnum = pgEnum("pilot_request_handoff_mode", 
   "log",
 ]);
 
+export const creativeAvailabilityStatusEnum = pgEnum("creative_availability_status", [
+  "available",
+  "limited",
+  "unavailable",
+]);
+
+export const campaignAssignmentStatusEnum = pgEnum("campaign_assignment_status", [
+  "invited",
+  "active",
+  "paused",
+  "completed",
+  "archived",
+]);
+
+export const creativeTaskStatusEnum = pgEnum("creative_task_status", [
+  "todo",
+  "in_progress",
+  "in_review",
+  "blocked",
+  "completed",
+]);
+
+export const workPriorityEnum = pgEnum("work_priority", [
+  "low",
+  "medium",
+  "high",
+  "urgent",
+]);
+
+export const assetVersionSubmissionStatusEnum = pgEnum("asset_version_submission_status", [
+  "draft",
+  "submitted",
+  "changes_requested",
+  "approved",
+]);
+
+export const revisionSourceRoleEnum = pgEnum("revision_source_role", [
+  "brand",
+  "creative",
+  "ops",
+]);
+
+export const revisionItemStatusEnum = pgEnum("revision_item_status", [
+  "open",
+  "in_progress",
+  "resolved",
+  "cancelled",
+]);
+
 export function createdAtColumn() {
   return timestamp("created_at", { withTimezone: true }).defaultNow().notNull();
 }
