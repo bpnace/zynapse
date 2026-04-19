@@ -6,6 +6,7 @@ import {
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
 import { decorateWorkspaceAssetMedia } from "@/lib/workspace/media";
+import { getBrandWorkspaceReadiness } from "@/lib/workspace/readiness";
 import { getSeedTemplate } from "@/lib/workspace/seeds/templates";
 
 type GetHandoverViewParams = {
@@ -84,6 +85,19 @@ export async function getHandoverView({
     : null;
 
   const approvedAssets = campaignAssets.filter((asset) => asset.reviewStatus === "approved");
+  const campaignAssetIds = campaignAssets.map((asset) => asset.id);
+  const unresolvedReviewCount =
+    campaignAssetIds.length > 0
+      ? await supabase
+          .from("review_threads")
+          .select("id", { count: "exact", head: true })
+          .in("asset_id", campaignAssetIds)
+          .is("resolved_at", null)
+          .then(({ count, error }) => {
+            assertSupabaseResult(error, "Failed to load unresolved review threads");
+            return count ?? 0;
+          })
+      : 0;
 
   const groupedAssets = Array.from(
     approvedAssets.reduce((map, asset) => {
@@ -101,6 +115,11 @@ export async function getHandoverView({
   return {
     campaign,
     stageItems,
+    readiness: getBrandWorkspaceReadiness({
+      stageItems,
+      latestAssets: campaignAssets,
+      openReviewCount: unresolvedReviewCount,
+    }),
     approvedAssets,
     groupedAssets,
     usageSummary: buildUsageSummary(campaign.currentStage),

@@ -72,7 +72,9 @@ export async function getDashboardView(organizationId: string) {
             .in("asset_id", latestAssetIds)
             .then(({ data, error }) => {
               assertSupabaseResult(error, "Failed to load review threads");
-              return (data ?? []).map(mapReviewThread);
+              return (data ?? [])
+                .map(mapReviewThread)
+                .filter((thread) => !thread.resolvedAt);
             }),
           supabase
             .from("comments")

@@ -1,6 +1,10 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { PilotRequestFlow } from "@/components/workspace/pilot/pilot-request-flow";
+
+afterEach(() => {
+  cleanup();
+});
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -19,12 +23,14 @@ const campaigns = [
     name: "Launch Sprint",
     packageTier: "Starter",
     currentStage: "in_review",
+    commercialReady: false,
   },
   {
     id: "campaign-b",
     name: "Growth Refresh",
     packageTier: "Growth",
     currentStage: "approved",
+    commercialReady: true,
   },
 ];
 
@@ -93,5 +99,21 @@ describe("PilotRequestFlow", () => {
     expect(
       screen.getByDisplayValue("Bitte mit erweitertem Scope planen."),
     ).toBeInTheDocument();
+  });
+
+  it("blocks submission controls until the selected campaign is commercially ready", () => {
+    renderFlow();
+
+    expect(
+      screen.getByRole("button", { name: "Pilotanfrage senden" }),
+    ).toBeDisabled();
+
+    fireEvent.change(screen.getAllByLabelText("Kampagne")[0], {
+      target: { value: "campaign-b" },
+    });
+
+    expect(
+      screen.getByRole("button", { name: "Pilotanfrage senden" }),
+    ).not.toBeDisabled();
   });
 });

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Field, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 import { saveBrandProfileDraft } from "@/lib/workspace/actions/save-brand-profile-draft";
 import type { WorkspaceDemoState } from "@/lib/workspace/demo";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import type {
   WorkspaceOnboardingField,
   WorkspaceOnboardingInput,
@@ -148,7 +149,7 @@ export function OnboardingFlow({
             <button
               type="button"
               className="workspace-button workspace-button-primary"
-              onClick={() => router.push("/workspace")}
+              onClick={() => router.push(brandsWorkspaceRoutes.overview())}
             >
               Zur Übersicht
             </button>

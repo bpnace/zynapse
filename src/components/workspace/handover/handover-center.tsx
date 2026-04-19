@@ -2,11 +2,13 @@ import Link from "next/link";
 import { ArrowRight, FileImage, FileVideo, FolderOutput } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
 import { WorkspaceAssetPreview } from "@/components/workspace/shared/workspace-asset-preview";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import {
   formatWorkspaceAssetType,
   formatWorkspaceLabel,
 } from "@/lib/workspace/formatting";
 import type { WorkspaceDemoState } from "@/lib/workspace/demo";
+import type { BrandWorkspaceReadiness } from "@/lib/workspace/readiness";
 
 type HandoverCenterProps = {
   campaign: {
@@ -19,6 +21,7 @@ type HandoverCenterProps = {
     stageKey: string;
     status: string;
   }>;
+  readiness: BrandWorkspaceReadiness;
   approvedAssets: Array<{
     id: string;
     title: string;
@@ -62,6 +65,7 @@ function hasOperationalStatus(value: string) {
 export function HandoverCenter({
   campaign,
   stageItems,
+  readiness,
   approvedAssets,
   groupedAssets,
   usageSummary,
@@ -75,10 +79,7 @@ export function HandoverCenter({
     (asset) => asset.previewUrl || asset.posterUrl || asset.thumbnailPath,
   ).length;
   const completedStages = stageItems.filter((stage) => hasOperationalStatus(stage.status)).length;
-  const commercialReady =
-    !demo.isReadOnly &&
-    approvedAssets.length > 0 &&
-    (campaign.currentStage === "approved" || campaign.currentStage === "handover_ready");
+  const commercialReady = !demo.isReadOnly && readiness.showCommercialStep;
 
   return (
     <div className="grid gap-4">
@@ -100,14 +101,14 @@ export function HandoverCenter({
 
           <div className="grid gap-2 sm:grid-cols-2">
             <Link
-              href={`/workspace/campaigns/${campaign.id}/review`}
+              href={brandsWorkspaceRoutes.campaigns.review(campaign.id)}
               className="workspace-button workspace-button-secondary"
             >
               Zurück zur Freigabe
             </Link>
             {commercialReady ? (
               <Link
-                href={`/workspace/pilot-request?campaignId=${campaign.id}`}
+                href={brandsWorkspaceRoutes.pilotRequest({ campaignId: campaign.id })}
                 className="workspace-button workspace-button-primary"
               >
                 Kommerziellen Schritt öffnen
@@ -163,7 +164,9 @@ export function HandoverCenter({
                 />
               </div>
               <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Abgeleitet aus Freigaben und Kampagnenstatus
+                {readiness.readinessSource === "workflow_state"
+                  ? "Abgeleitet aus Workflow-Zustand, Freigaben und offenen Reviews"
+                  : "Abgeleitet aus Freigaben und offenen Reviews"}
               </p>
             </div>
           </div>
@@ -266,7 +269,7 @@ export function HandoverCenter({
                   Noch keine freigegebenen Varianten sind bereit für die Übergabe.
                 </p>
                 <Link
-                  href={`/workspace/campaigns/${campaign.id}/review`}
+                  href={brandsWorkspaceRoutes.campaigns.review(campaign.id)}
                   className="workspace-button workspace-button-secondary"
                 >
                   Freigabe erneut öffnen
@@ -483,7 +486,7 @@ export function HandoverCenter({
             <div className="mt-5 grid gap-3">
               {commercialReady ? (
                 <Link
-                  href={`/workspace/pilot-request?campaignId=${campaign.id}`}
+                  href={brandsWorkspaceRoutes.pilotRequest({ campaignId: campaign.id })}
                   className="workspace-button workspace-button-primary"
                 >
                   Kommerziellen Schritt starten
@@ -499,7 +502,7 @@ export function HandoverCenter({
                 </div>
               )}
               <Link
-                href={`/workspace/campaigns/${campaign.id}/review`}
+                href={brandsWorkspaceRoutes.campaigns.review(campaign.id)}
                 className="workspace-button workspace-button-secondary"
               >
                 Freigabe erneut prüfen

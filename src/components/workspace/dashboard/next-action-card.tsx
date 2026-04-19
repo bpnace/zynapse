@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type NextActionCardProps = {
   campaignId?: string | null;
@@ -25,7 +26,7 @@ export function NextActionCard({
       <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
         <div className="grid gap-3">
           <a
-            href={campaignId ? `/workspace/campaigns/${campaignId}` : "#campaign-focus"}
+            href={campaignId ? brandsWorkspaceRoutes.campaigns.detail(campaignId) : "#campaign-focus"}
             className="workspace-button workspace-button-primary"
           >
             In der Kampagne weiterarbeiten

@@ -9,15 +9,19 @@ import { StageTracker } from "@/components/workspace/dashboard/stage-tracker";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
 import { getDashboardView } from "@/lib/workspace/queries/get-dashboard-view";
 import { getBrandProfileCompletion } from "@/lib/workspace/profile-completion";
+import { getBrandWorkspaceReadiness } from "@/lib/workspace/readiness";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 export const dynamic = "force-dynamic";
 
 export default async function WorkspacePage() {
   const bootstrap = await requireWorkspaceAccess();
   const dashboard = await getDashboardView(bootstrap.organization.id);
-  const approvedAssetCount = dashboard.latestAssets.filter(
-    (asset) => asset.reviewStatus === "approved",
-  ).length;
+  const readiness = getBrandWorkspaceReadiness({
+    stageItems: dashboard.stageItems,
+    latestAssets: dashboard.latestAssets,
+    openReviewCount: dashboard.reviewThreadCount,
+  });
   const onboardingCompletion = getBrandProfileCompletion(bootstrap.brandProfile);
 
   return (
@@ -27,15 +31,15 @@ export default async function WorkspacePage() {
         campaignId={dashboard.latestCampaign?.id ?? null}
         campaignName={dashboard.latestCampaign?.name ?? null}
         currentStage={dashboard.latestCampaign?.currentStage ?? null}
-        openReviewCount={dashboard.reviewThreadCount}
-        approvedAssetCount={approvedAssetCount}
+        openReviewCount={readiness.openReviewCount}
+        approvedAssetCount={readiness.approvedAssetCount}
       />
       <DashboardOverview
         organizationName={bootstrap.organization.name}
         audience={dashboard.profile?.targetAudience ?? null}
         primaryChannels={dashboard.profile?.primaryChannels ?? null}
-        openReviewCount={dashboard.reviewThreadCount}
-        approvedAssetCount={approvedAssetCount}
+        openReviewCount={readiness.openReviewCount}
+        approvedAssetCount={readiness.approvedAssetCount}
         onboardingCompletion={onboardingCompletion}
       />
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.95fr)]">
@@ -72,7 +76,7 @@ export default async function WorkspacePage() {
           />
           <NextActionCard
             campaignId={dashboard.latestCampaign?.id ?? null}
-            briefHref="/workspace/briefs/new"
+            briefHref={brandsWorkspaceRoutes.briefs.new()}
             title={dashboard.template?.nextAction.title ?? "Bereit für die Freigabe"}
             body={
               dashboard.template?.nextAction.body ??

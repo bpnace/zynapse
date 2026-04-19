@@ -13,6 +13,7 @@ import {
   type WorkspaceOnboardingInput,
 } from "@/lib/validation/workspace-onboarding";
 import { getBrandProfileCompletion } from "@/lib/workspace/profile-completion";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type SaveBrandProfileResult =
   | {
@@ -88,8 +89,9 @@ export async function saveBrandProfileDraft(
 
   assertSupabaseResult(error, "Failed to save brand profile draft");
 
-  revalidatePath("/workspace");
-  revalidatePath("/workspace/onboarding");
+  for (const path of brandsWorkspaceRoutes.revalidation()) {
+    revalidatePath(path);
+  }
 
   return {
     success: true,

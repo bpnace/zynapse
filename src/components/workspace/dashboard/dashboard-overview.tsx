@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type DashboardOverviewProps = {
   organizationName: string;
@@ -71,7 +72,7 @@ export function DashboardOverview({
             {item.label === "Kontext" ? (
               <div className="mt-3">
                 <Link
-                  href="/workspace/onboarding"
+                  href={brandsWorkspaceRoutes.onboarding()}
                   className="workspace-button workspace-button-secondary"
                 >
                   {onboardingCompletion.isComplete ? "Kontext prüfen" : "Kontext vervollständigen"}

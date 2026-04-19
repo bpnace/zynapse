@@ -38,6 +38,7 @@ export default async function PilotRequestPage({
               name: pilotRequestView.selectedCampaign.name,
               packageTier: pilotRequestView.selectedCampaign.packageTier,
               currentStage: pilotRequestView.selectedCampaign.currentStage,
+              commercialReady: pilotRequestView.selectedCampaign.commercialReady,
             }
           : null
       }
@@ -46,6 +47,7 @@ export default async function PilotRequestPage({
         name: campaign.name,
         packageTier: campaign.packageTier,
         currentStage: campaign.currentStage,
+        commercialReady: campaign.commercialReady,
       }))}
       latestRequest={
         pilotRequestView.latestRequest

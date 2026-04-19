@@ -1,5 +1,6 @@
 import { FolderKanban, MessageSquareText } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type OverviewTopBarProps = {
   organizationName: string;
@@ -37,14 +38,14 @@ export function OverviewTopBar({
 
         <div className="grid gap-2 sm:grid-cols-2">
           <a
-            href={campaignId ? `/workspace/campaigns/${campaignId}` : "#campaign-focus"}
+            href={campaignId ? brandsWorkspaceRoutes.campaigns.detail(campaignId) : "#campaign-focus"}
             className="workspace-button workspace-button-primary"
           >
             <FolderKanban className="h-4 w-4" />
             Kampagne öffnen
           </a>
           <a
-            href={campaignId ? `/workspace/campaigns/${campaignId}/review` : "#review-queue"}
+            href={campaignId ? brandsWorkspaceRoutes.campaigns.review(campaignId) : "#review-queue"}
             className="workspace-button workspace-button-secondary"
           >
             <MessageSquareText className="h-4 w-4" />

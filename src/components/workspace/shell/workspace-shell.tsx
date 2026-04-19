@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatWorkspaceRole } from "@/lib/workspace/formatting";
 import type { WorkspaceDemoState } from "@/lib/workspace/demo";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type WorkspaceShellProps = {
   organizationName: string;
@@ -35,6 +36,15 @@ export function WorkspaceShell({
   children,
 }: WorkspaceShellProps) {
   const pathname = usePathname();
+  const activeCampaignDetailPath = activeCampaignId
+    ? brandsWorkspaceRoutes.campaigns.detail(activeCampaignId)
+    : undefined;
+  const activeCampaignReviewPath = activeCampaignId
+    ? brandsWorkspaceRoutes.campaigns.review(activeCampaignId)
+    : undefined;
+  const activeCampaignHandoverPath = activeCampaignId
+    ? brandsWorkspaceRoutes.campaigns.handover(activeCampaignId)
+    : undefined;
   const mobileLocationLabel = pathname.includes("/review")
     ? "Freigabe"
     : pathname.includes("/handover")
@@ -50,36 +60,29 @@ export function WorkspaceShell({
       : "Heute";
   const primaryNavigation = [
     {
-      href: "/workspace",
+      href: brandsWorkspaceRoutes.overview(),
       label: "Heute",
       helper: "Status, Entscheidungen, Freigabereife",
       icon: LayoutGrid,
-      active: pathname === "/workspace",
+      active: pathname === brandsWorkspaceRoutes.overview(),
     },
     {
-      href: activeCampaignId
-        ? `/workspace/campaigns/${activeCampaignId}`
-        : undefined,
+      href: activeCampaignDetailPath,
       label: "Kampagne",
       helper: "Ziel, Phase und Varianten",
       icon: FolderKanban,
       active:
-        Boolean(activeCampaignId) &&
-        pathname === `/workspace/campaigns/${activeCampaignId}`,
+        Boolean(activeCampaignDetailPath) && pathname === activeCampaignDetailPath,
     },
     {
-      href: activeCampaignId
-        ? `/workspace/campaigns/${activeCampaignId}/review`
-        : undefined,
+      href: activeCampaignReviewPath,
       label: "Freigabe",
       helper: "Feedback, Änderungen, Freigaben",
       icon: ShieldCheck,
       active: pathname.includes("/review"),
     },
     {
-      href: activeCampaignId
-        ? `/workspace/campaigns/${activeCampaignId}/handover`
-        : undefined,
+      href: activeCampaignHandoverPath,
       label: "Übergabe",
       helper: "Freigegebene Varianten und Nachweise",
       icon: Rocket,
@@ -88,14 +91,14 @@ export function WorkspaceShell({
   ];
   const secondaryNavigation = [
     {
-      href: "/workspace/onboarding",
+      href: brandsWorkspaceRoutes.onboarding(),
       label: "Markenkontext",
       helper: "Kanäle, Leitplanken, Freigabe",
       icon: Settings2,
-      active: pathname === "/workspace/onboarding",
+      active: pathname === brandsWorkspaceRoutes.onboarding(),
     },
     {
-      href: "/workspace/briefs/new",
+      href: brandsWorkspaceRoutes.briefs.new(),
       label: "Briefings",
       helper: "Strukturierte Anfragen und Erstaufnahme",
       icon: ClipboardList,
@@ -105,13 +108,13 @@ export function WorkspaceShell({
   const commercialNavigation = showCommercialStep
     ? [
         {
-          href: activeCampaignId
-            ? `/workspace/pilot-request?campaignId=${activeCampaignId}`
-            : "/workspace/pilot-request",
+          href: brandsWorkspaceRoutes.pilotRequest({
+            campaignId: activeCampaignId,
+          }),
           label: "Pilotanfrage",
           helper: "Nächster Auftrag und Übergabe",
           icon: ArrowUpRight,
-          active: pathname === "/workspace/pilot-request",
+          active: pathname === brandsWorkspaceRoutes.pilotRequest(),
         },
       ]
     : [];
@@ -121,7 +124,7 @@ export function WorkspaceShell({
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px]">
         <aside className="workspace-sidebar hidden w-[264px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <p className="workspace-eyebrow">Kundenbereich</p>
+            <p className="workspace-eyebrow">Brands Workspace</p>
             <div className="mt-3 space-y-1">
               <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
@@ -155,7 +158,7 @@ export function WorkspaceShell({
           <div className="mt-6">
             <p className="workspace-section-label">Kernbereiche</p>
           </div>
-          <nav className="mt-3 space-y-1" aria-label="Navigation im Arbeitsbereich">
+          <nav className="mt-3 space-y-1" aria-label="Navigation im Brands Workspace">
             {primaryNavigation.map((item) => {
               const Icon = item.icon;
               const className = cn(
@@ -261,6 +264,7 @@ export function WorkspaceShell({
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
           <div className="border-b border-[var(--workspace-line)] bg-[var(--workspace-panel)] px-4 py-3 lg:hidden">
             <div className="space-y-1">
+              <p className="workspace-eyebrow">Brands Workspace</p>
               <p className="truncate text-sm font-semibold tracking-[-0.01em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
               </p>

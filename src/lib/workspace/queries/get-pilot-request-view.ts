@@ -5,6 +5,7 @@ import {
   mapPilotRequest,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import { getBrandWorkspaceReadiness } from "@/lib/workspace/readiness";
 
 type GetPilotRequestViewParams = {
   organizationId: string;
@@ -41,10 +42,83 @@ export async function getPilotRequestView({
   assertSupabaseResult(campaignError, "Failed to load campaigns");
 
   const campaignsInOrg = (campaignRows ?? []).map(mapCampaign);
+  const campaignIds = campaignsInOrg.map((campaign) => campaign.id);
+  const stageItemsByCampaignId = new Map<string, Array<{ stageKey: string; status: string }>>();
+  const assetsByCampaignId = new Map<string, Array<{ id: string; reviewStatus: string }>>();
+  const unresolvedReviewCountByCampaignId = new Map<string, number>();
+
+  if (campaignIds.length > 0) {
+    const [stageRows, assetRows] = await Promise.all([
+      supabase
+        .from("campaign_stages")
+        .select("campaign_id,stage_key,status")
+        .in("campaign_id", campaignIds),
+      supabase
+        .from("assets")
+        .select("id,campaign_id,review_status")
+        .in("campaign_id", campaignIds),
+    ]);
+
+    assertSupabaseResult(stageRows.error, "Failed to load pilot request stages");
+    assertSupabaseResult(assetRows.error, "Failed to load pilot request assets");
+
+    for (const row of stageRows.data ?? []) {
+      const existing = stageItemsByCampaignId.get(row.campaign_id) ?? [];
+      existing.push({
+        stageKey: row.stage_key,
+        status: row.status,
+      });
+      stageItemsByCampaignId.set(row.campaign_id, existing);
+    }
+
+    const assetIdToCampaignId = new Map<string, string>();
+    for (const row of assetRows.data ?? []) {
+      const existing = assetsByCampaignId.get(row.campaign_id) ?? [];
+      existing.push({
+        id: row.id,
+        reviewStatus: row.review_status,
+      });
+      assetsByCampaignId.set(row.campaign_id, existing);
+      assetIdToCampaignId.set(row.id, row.campaign_id);
+    }
+
+    const assetIds = Array.from(assetIdToCampaignId.keys());
+    if (assetIds.length > 0) {
+      const { data: reviewThreadRows, error: reviewThreadError } = await supabase
+        .from("review_threads")
+        .select("asset_id")
+        .in("asset_id", assetIds)
+        .is("resolved_at", null);
+
+      assertSupabaseResult(reviewThreadError, "Failed to load pilot request review threads");
+
+      for (const row of reviewThreadRows ?? []) {
+        const campaignId = assetIdToCampaignId.get(row.asset_id);
+        if (!campaignId) continue;
+        unresolvedReviewCountByCampaignId.set(
+          campaignId,
+          (unresolvedReviewCountByCampaignId.get(campaignId) ?? 0) + 1,
+        );
+      }
+    }
+  }
+
+  const campaignsWithReadiness = campaignsInOrg.map((campaign) => {
+    const readiness = getBrandWorkspaceReadiness({
+      stageItems: stageItemsByCampaignId.get(campaign.id) ?? [],
+      latestAssets: assetsByCampaignId.get(campaign.id) ?? [],
+      openReviewCount: unresolvedReviewCountByCampaignId.get(campaign.id) ?? 0,
+    });
+
+    return {
+      ...campaign,
+      commercialReady: readiness.showCommercialStep,
+    };
+  });
 
   const selectedCampaign =
-    campaignsInOrg.find((campaign) => campaign.id === campaignId) ??
-    campaignsInOrg[0] ??
+    campaignsWithReadiness.find((campaign) => campaign.id === campaignId) ??
+    campaignsWithReadiness[0] ??
     null;
 
   const latestRequest = selectedCampaign
@@ -63,7 +137,7 @@ export async function getPilotRequestView({
 
   return {
     organization,
-    campaigns: campaignsInOrg,
+    campaigns: campaignsWithReadiness,
     selectedCampaign,
     latestRequest,
   };

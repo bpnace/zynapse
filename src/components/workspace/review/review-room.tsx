@@ -3,6 +3,7 @@ import { ArrowRight, FileImage, FileVideo } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
 import { ReviewMutationPanel } from "@/components/workspace/review/review-mutation-panel";
 import { WorkspaceAssetPreview } from "@/components/workspace/shared/workspace-asset-preview";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import {
   formatWorkspaceAssetType,
   formatWorkspaceDate,
@@ -116,13 +117,13 @@ export function ReviewRoom({
 
           <div className="grid gap-2 sm:grid-cols-2">
             <Link
-              href={`/workspace/campaigns/${campaign.id}`}
+              href={brandsWorkspaceRoutes.campaigns.detail(campaign.id)}
               className="workspace-button workspace-button-secondary"
             >
               Kampagne öffnen
             </Link>
             <Link
-              href={`/workspace/campaigns/${campaign.id}/handover`}
+              href={brandsWorkspaceRoutes.campaigns.handover(campaign.id)}
               className="workspace-button workspace-button-secondary"
             >
               Übergabeprotokoll öffnen
@@ -212,7 +213,7 @@ export function ReviewRoom({
               return (
                 <Link
                   key={asset.id}
-                  href={`/workspace/campaigns/${campaign.id}/review?asset=${asset.id}`}
+                  href={`${brandsWorkspaceRoutes.campaigns.review(campaign.id)}?asset=${asset.id}`}
                   className={
                     isSelected
                       ? "block border-l-2 border-[var(--workspace-copy-strong)] bg-[rgba(255,255,255,0.35)] py-4 pl-3 pr-1"
@@ -339,7 +340,7 @@ export function ReviewRoom({
                 demo={demo}
               />
               <Link
-                href={`/workspace/campaigns/${campaign.id}/handover`}
+                href={brandsWorkspaceRoutes.campaigns.handover(campaign.id)}
                 className="workspace-button workspace-button-secondary"
               >
                 Übergabeprotokoll prüfen
@@ -426,7 +427,10 @@ export function ReviewRoom({
           )}
 
           <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
-            <Link href="/workspace" className="workspace-button workspace-button-secondary">
+            <Link
+              href={brandsWorkspaceRoutes.overview()}
+              className="workspace-button workspace-button-secondary"
+            >
               Zurück zur Übersicht
               <ArrowRight className="h-4 w-4" />
             </Link>

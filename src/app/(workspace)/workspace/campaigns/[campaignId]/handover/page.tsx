@@ -26,6 +26,7 @@ export default async function HandoverPage({ params }: HandoverPageProps) {
     <HandoverCenter
       campaign={handover.campaign}
       stageItems={handover.stageItems}
+      readiness={handover.readiness}
       approvedAssets={handover.approvedAssets}
       groupedAssets={handover.groupedAssets}
       usageSummary={handover.usageSummary}

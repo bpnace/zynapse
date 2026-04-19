@@ -6,6 +6,7 @@ import { Field, TextInput, TextareaInput } from "@/components/forms/form-primiti
 import { submitPilotRequest } from "@/lib/workspace/actions/submit-pilot-request";
 import { formatWorkspaceDateTime, formatWorkspaceLabel } from "@/lib/workspace/formatting";
 import type { WorkspaceDemoState } from "@/lib/workspace/demo";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import type { WorkspacePilotRequestInput } from "@/lib/validation/workspace-pilot-request";
 
 type PilotRequestFlowProps = {
@@ -16,12 +17,14 @@ type PilotRequestFlowProps = {
     name: string;
     packageTier: string;
     currentStage: string;
+    commercialReady: boolean;
   } | null;
   campaigns: Array<{
     id: string;
     name: string;
     packageTier: string;
     currentStage: string;
+    commercialReady: boolean;
   }>;
   latestRequest: {
     desiredTier: string;
@@ -61,6 +64,7 @@ export function PilotRequestFlow({
     () => campaigns.find((item) => item.id === selectedCampaignId) ?? null,
     [campaigns, selectedCampaignId],
   );
+  const isCampaignCommerciallyReady = selectedCampaign?.commercialReady ?? false;
 
   function updateValue(
     field: keyof WorkspacePilotRequestInput,
@@ -115,6 +119,13 @@ export function PilotRequestFlow({
       return;
     }
 
+    if (!isCampaignCommerciallyReady) {
+      setStatusMessage(
+        "Die Pilotanfrage bleibt gesperrt, bis Freigabe und Übergabe ohne offene Review-Punkte vorbereitet sind.",
+      );
+      return;
+    }
+
     setIsPending(true);
     setStatusMessage("");
 
@@ -159,6 +170,12 @@ export function PilotRequestFlow({
           {demo.isDemoWorkspace ? (
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
               {demo.mutationMessage}
+            </p>
+          ) : selectedCampaign && !isCampaignCommerciallyReady ? (
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+              Diese Kampagne ist noch nicht pilotbereit. Erst wenn freigegebene Varianten
+              vorliegen und keine offenen Review-Punkte mehr blockieren, wird die
+              Pilotanfrage freigeschaltet.
             </p>
           ) : null}
         </div>
@@ -232,9 +249,14 @@ export function PilotRequestFlow({
             <button
               type="button"
               className="workspace-button workspace-button-primary"
-              disabled={isPending || !selectedCampaignId || demo.isReadOnly}
-              onClick={handleSubmit}
-            >
+                disabled={
+                  isPending ||
+                  !selectedCampaignId ||
+                  demo.isReadOnly ||
+                  !isCampaignCommerciallyReady
+                }
+                onClick={handleSubmit}
+              >
               {isPending ? "Wird gesendet..." : "Pilotanfrage senden"}
             </button>
             <button
@@ -244,8 +266,8 @@ export function PilotRequestFlow({
               onClick={() =>
                 router.push(
                   selectedCampaign
-                    ? `/workspace/campaigns/${selectedCampaign.id}/handover`
-                    : "/workspace",
+                    ? brandsWorkspaceRoutes.campaigns.handover(selectedCampaign.id)
+                    : brandsWorkspaceRoutes.overview(),
                 )
               }
             >

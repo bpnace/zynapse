@@ -1,13 +1,10 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/auth/server";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 function resolveSafeNextPath(next: string | null) {
-  if (!next || !next.startsWith("/") || next.startsWith("//")) {
-    return "/workspace";
-  }
-
-  return next;
+  return brandsWorkspaceRoutes.resolveNextPath(next);
 }
 
 export async function GET(request: Request) {

@@ -15,6 +15,7 @@ import {
   workspaceDecisionSchema,
 } from "@/lib/validation/workspace-review";
 import { deriveCampaignReviewState } from "@/lib/workspace/review/state";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type ReviewMutationResult =
   | {
@@ -200,10 +201,9 @@ async function syncCampaignReviewState(
 }
 
 function revalidateReviewPaths(campaignId: string) {
-  revalidatePath("/workspace");
-  revalidatePath(`/workspace/campaigns/${campaignId}`);
-  revalidatePath(`/workspace/campaigns/${campaignId}/review`);
-  revalidatePath(`/workspace/campaigns/${campaignId}/handover`);
+  for (const path of brandsWorkspaceRoutes.revalidation({ campaignId })) {
+    revalidatePath(path);
+  }
 }
 
 export async function addReviewComment(

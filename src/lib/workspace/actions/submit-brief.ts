@@ -9,6 +9,7 @@ import {
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
 import { serializeBriefReferences } from "@/lib/workspace/briefs/form-helpers";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import { workspaceBriefSchema, type WorkspaceBriefInput } from "@/lib/validation/workspace-brief";
 
 type SubmitBriefResult =
@@ -97,9 +98,9 @@ export async function submitBrief(
 
     assertSupabaseResult(updateError, "Failed to submit brief");
 
-    revalidatePath("/workspace");
-    revalidatePath("/workspace/briefs/new");
-    revalidatePath(`/workspace/briefs/${briefId}`);
+    for (const path of brandsWorkspaceRoutes.revalidation({ briefId })) {
+      revalidatePath(path);
+    }
 
     return {
       success: true,
@@ -137,9 +138,9 @@ export async function submitBrief(
 
   const created = mapBrief(createdRow);
 
-  revalidatePath("/workspace");
-  revalidatePath("/workspace/briefs/new");
-  revalidatePath(`/workspace/briefs/${created.id}`);
+  for (const path of brandsWorkspaceRoutes.revalidation({ briefId: created.id })) {
+    revalidatePath(path);
+  }
 
   return {
     success: true,

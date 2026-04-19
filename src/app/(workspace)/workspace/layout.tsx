@@ -1,6 +1,7 @@
 import { WorkspaceShell } from "@/components/workspace/shell/workspace-shell";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
 import { getDashboardView } from "@/lib/workspace/queries/get-dashboard-view";
+import { getBrandWorkspaceReadiness } from "@/lib/workspace/readiness";
 
 export const dynamic = "force-dynamic";
 
@@ -11,11 +12,11 @@ export default async function WorkspaceLayout({
 }>) {
   const bootstrap = await requireWorkspaceAccess();
   const dashboard = await getDashboardView(bootstrap.organization.id);
-  const approvedAssetCount = dashboard.latestAssets.filter(
-    (asset) => asset.reviewStatus === "approved",
-  ).length;
-  const showCommercialStep =
-    approvedAssetCount > 0 && dashboard.reviewThreadCount === 0;
+  const readiness = getBrandWorkspaceReadiness({
+    stageItems: dashboard.stageItems,
+    latestAssets: dashboard.latestAssets,
+    openReviewCount: dashboard.reviewThreadCount,
+  });
 
   return (
     <WorkspaceShell
@@ -24,7 +25,7 @@ export default async function WorkspaceLayout({
       website={bootstrap.brandProfile?.website ?? null}
       activeCampaignId={dashboard.latestCampaign?.id ?? null}
       demo={bootstrap.demo}
-      showCommercialStep={showCommercialStep}
+      showCommercialStep={readiness.showCommercialStep}
     >
       {children}
     </WorkspaceShell>

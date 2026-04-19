@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Field, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 import { saveBriefDraft } from "@/lib/workspace/actions/save-brief-draft";
 import { submitBrief } from "@/lib/workspace/actions/submit-brief";
+import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import {
   formatWorkspaceDate,
   formatWorkspaceLabel,
@@ -122,7 +123,7 @@ export function BriefFlow({
       setStatusMessage(result.message);
 
       if (briefId !== result.briefId) {
-        router.replace(`/workspace/briefs/${result.briefId}`);
+        router.replace(brandsWorkspaceRoutes.briefs.detail(result.briefId));
       }
 
       if (advance) {
@@ -153,7 +154,7 @@ export function BriefFlow({
       setCurrentStatus(result.status);
       setFieldErrors({});
       setStatusMessage(result.message);
-      router.replace(`/workspace/briefs/${result.briefId}`);
+      router.replace(brandsWorkspaceRoutes.briefs.detail(result.briefId));
     });
   }
 
@@ -217,7 +218,7 @@ export function BriefFlow({
                 {recentBriefs.map((brief) => (
                   <a
                     key={brief.id}
-                    href={`/workspace/briefs/${brief.id}`}
+                    href={brandsWorkspaceRoutes.briefs.detail(brief.id)}
                     className="block py-3"
                   >
                     <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
