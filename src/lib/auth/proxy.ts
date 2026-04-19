@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getRequiredSupabaseEnv } from "@/lib/env";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { isProtectedWorkspacePath, resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 export async function updateSession(request: NextRequest) {
   const env = getRequiredSupabaseEnv();
@@ -29,12 +29,15 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const userClaims = data?.claims;
 
-  if (!userClaims && brandsWorkspaceRoutes.isKnownPath(request.nextUrl.pathname)) {
+  if (!userClaims && isProtectedWorkspacePath(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set(
       "next",
-      `${request.nextUrl.pathname}${request.nextUrl.search}`,
+      resolveWorkspaceNextPath(
+        `${request.nextUrl.pathname}${request.nextUrl.search}`,
+        "/app",
+      ),
     );
     return NextResponse.redirect(url);
   }

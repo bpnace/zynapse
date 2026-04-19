@@ -10,37 +10,47 @@ export type CampaignStageKey =
 
 export type CampaignStageStatus = "pending" | "in_progress" | "completed";
 export type AssetScope = "input" | "output";
+export type WorkspaceType = "brand" | "creative" | "ops";
+export type MembershipStatus = "invited" | "active" | "paused" | "archived";
 export type AssetReviewStatus =
   | "pending"
   | "approved"
   | "changes_requested"
   | "rejected";
-export type CreativeAvailabilityStatus = "available" | "limited" | "unavailable";
-export type CampaignAssignmentStatus =
-  | "invited"
-  | "active"
-  | "paused"
-  | "completed"
-  | "archived";
-export type CreativeTaskStatus =
-  | "todo"
-  | "in_progress"
-  | "in_review"
-  | "blocked"
-  | "completed";
-export type WorkPriority = "low" | "medium" | "high" | "urgent";
-export type AssetVersionSubmissionStatus =
-  | "draft"
-  | "submitted"
-  | "changes_requested"
-  | "approved";
-export type RevisionSourceRole = "brand" | "creative" | "ops";
-export type RevisionItemStatus = "open" | "in_progress" | "resolved" | "cancelled";
 export type CommentType = "comment" | "change_request" | "approval_note";
 export type BriefStatus = "draft" | "submitted";
 export type PilotRequestStatus = "submitted" | "failed";
 export type PilotRequestHandoffMode = "webhook" | "log";
 export type OrganizationStatus = "invited" | "active" | "archived";
+export type AssignmentRole =
+  | "creative"
+  | "creative_lead"
+  | "editor"
+  | "motion"
+  | "designer"
+  | "copy";
+export type AssignmentStatus =
+  | "assigned"
+  | "accepted"
+  | "in_progress"
+  | "blocked"
+  | "submitted"
+  | "completed";
+export type CreativeTaskType = "concept" | "production" | "revision" | "delivery";
+export type CreativeTaskStatus =
+  | "todo"
+  | "in_progress"
+  | "blocked"
+  | "submitted"
+  | "completed";
+export type CreativeTaskPriority = "low" | "medium" | "high";
+export type AssetVersionStatus =
+  | "draft"
+  | "submitted_for_ops_review"
+  | "submitted_for_brand_review"
+  | "approved"
+  | "rejected";
+export type RevisionItemStatus = "open" | "submitted" | "resolved";
 
 type TableDefinition<Row, Insert = Row, Update = Partial<Insert>> = {
   Row: Row;
@@ -96,6 +106,8 @@ export type WorkspaceDatabase = {
           organization_id: string;
           user_id: string;
           role: WorkspaceRole;
+          workspace_type: WorkspaceType;
+          membership_status: MembershipStatus;
           invited_by: string | null;
           accepted_at: string;
         },
@@ -104,6 +116,8 @@ export type WorkspaceDatabase = {
           organization_id: string;
           user_id: string;
           role: WorkspaceRole;
+          workspace_type?: WorkspaceType;
+          membership_status?: MembershipStatus;
           invited_by?: string | null;
           accepted_at?: string;
         }
@@ -134,42 +148,28 @@ export type WorkspaceDatabase = {
       >;
       creative_profiles: TableDefinition<
         {
+          id: string;
           user_id: string;
           slug: string;
           display_name: string;
           headline: string | null;
           bio: string | null;
+          specialties: string | null;
           portfolio_url: string | null;
-          specialties_json: string | null;
-          tools_json: string | null;
-          industry_fit_json: string | null;
-          availability_status: CreativeAvailabilityStatus;
-          capacity_notes: string | null;
-          hourly_rate: number | null;
-          day_rate: number | null;
-          package_rate: number | null;
-          quality_score: number | null;
+          availability_status: string;
           created_at: string;
-          updated_at: string;
         },
         {
+          id?: string;
           user_id: string;
           slug: string;
           display_name: string;
           headline?: string | null;
           bio?: string | null;
+          specialties?: string | null;
           portfolio_url?: string | null;
-          specialties_json?: string | null;
-          tools_json?: string | null;
-          industry_fit_json?: string | null;
-          availability_status?: CreativeAvailabilityStatus;
-          capacity_notes?: string | null;
-          hourly_rate?: number | null;
-          day_rate?: number | null;
-          package_rate?: number | null;
-          quality_score?: number | null;
+          availability_status?: string;
           created_at?: string;
-          updated_at?: string;
         }
       >;
       campaigns: TableDefinition<
@@ -201,26 +201,26 @@ export type WorkspaceDatabase = {
           id: string;
           campaign_id: string;
           user_id: string;
-          assignment_role: string;
-          status: CampaignAssignmentStatus;
-          assigned_by: string;
-          invited_at: string;
-          accepted_at: string | null;
-          due_at: string | null;
+          assignment_role: AssignmentRole;
+          status: AssignmentStatus;
+          assigned_by: string | null;
           scope_summary: string | null;
+          due_at: string | null;
+          accepted_at: string | null;
+          submitted_at: string | null;
           created_at: string;
         },
         {
           id?: string;
           campaign_id: string;
           user_id: string;
-          assignment_role: string;
-          status?: CampaignAssignmentStatus;
-          assigned_by: string;
-          invited_at?: string;
-          accepted_at?: string | null;
-          due_at?: string | null;
+          assignment_role?: AssignmentRole;
+          status?: AssignmentStatus;
+          assigned_by?: string | null;
           scope_summary?: string | null;
+          due_at?: string | null;
+          accepted_at?: string | null;
+          submitted_at?: string | null;
           created_at?: string;
         }
       >;
@@ -249,15 +249,16 @@ export type WorkspaceDatabase = {
           id: string;
           campaign_id: string;
           assignment_id: string | null;
-          task_type: string;
+          asset_id: string | null;
+          owner_user_id: string;
           title: string;
           description: string | null;
+          task_type: CreativeTaskType;
           status: CreativeTaskStatus;
-          priority: WorkPriority;
-          owner_user_id: string | null;
-          created_by: string;
+          priority: CreativeTaskPriority;
           blocked_reason: string | null;
           due_at: string | null;
+          submitted_at: string | null;
           completed_at: string | null;
           created_at: string;
         },
@@ -265,15 +266,16 @@ export type WorkspaceDatabase = {
           id?: string;
           campaign_id: string;
           assignment_id?: string | null;
-          task_type: string;
+          asset_id?: string | null;
+          owner_user_id: string;
           title: string;
           description?: string | null;
+          task_type?: CreativeTaskType;
           status?: CreativeTaskStatus;
-          priority?: WorkPriority;
-          owner_user_id?: string | null;
-          created_by: string;
+          priority?: CreativeTaskPriority;
           blocked_reason?: string | null;
           due_at?: string | null;
+          submitted_at?: string | null;
           completed_at?: string | null;
           created_at?: string;
         }
@@ -317,24 +319,26 @@ export type WorkspaceDatabase = {
           id: string;
           asset_id: string;
           campaign_id: string;
+          assignment_id: string | null;
           created_by: string;
           version_label: string;
-          storage_path: string | null;
+          storage_path: string;
           thumbnail_path: string | null;
-          submission_status: AssetVersionSubmissionStatus;
-          submission_notes: string | null;
+          notes: string | null;
+          submission_status: AssetVersionStatus;
           created_at: string;
         },
         {
           id?: string;
           asset_id: string;
           campaign_id: string;
+          assignment_id?: string | null;
           created_by: string;
           version_label: string;
-          storage_path?: string | null;
+          storage_path: string;
           thumbnail_path?: string | null;
-          submission_status?: AssetVersionSubmissionStatus;
-          submission_notes?: string | null;
+          notes?: string | null;
+          submission_status?: AssetVersionStatus;
           created_at?: string;
         }
       >;
@@ -376,32 +380,32 @@ export type WorkspaceDatabase = {
         {
           id: string;
           campaign_id: string;
+          assignment_id: string | null;
           asset_id: string | null;
-          task_id: string | null;
-          source_role: RevisionSourceRole;
-          source_type: string;
-          category: string;
-          priority: WorkPriority;
-          body: string;
+          review_thread_id: string | null;
+          source_comment_id: string | null;
+          created_by: string | null;
+          title: string;
+          detail: string;
           status: RevisionItemStatus;
-          due_at: string | null;
+          priority: CreativeTaskPriority;
+          created_at: string;
           resolved_at: string | null;
-          resolved_by: string | null;
         },
         {
           id?: string;
           campaign_id: string;
+          assignment_id?: string | null;
           asset_id?: string | null;
-          task_id?: string | null;
-          source_role: RevisionSourceRole;
-          source_type: string;
-          category: string;
-          priority?: WorkPriority;
-          body: string;
+          review_thread_id?: string | null;
+          source_comment_id?: string | null;
+          created_by?: string | null;
+          title: string;
+          detail: string;
           status?: RevisionItemStatus;
-          due_at?: string | null;
+          priority?: CreativeTaskPriority;
+          created_at?: string;
           resolved_at?: string | null;
-          resolved_by?: string | null;
         }
       >;
       briefs: TableDefinition<
@@ -483,6 +487,5 @@ export type WorkspaceDatabase = {
   };
 };
 
-export type TableRow<
-  T extends keyof WorkspaceDatabase["public"]["Tables"],
-> = WorkspaceDatabase["public"]["Tables"][T]["Row"];
+export type TableRow<T extends keyof WorkspaceDatabase["public"]["Tables"]> =
+  WorkspaceDatabase["public"]["Tables"][T]["Row"];

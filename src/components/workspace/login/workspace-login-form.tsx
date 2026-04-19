@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/forms/form-primitives";
 import { createBrowserSupabaseClient } from "@/lib/auth/client";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 type WorkspaceLoginFormProps = {
   next?: string;
@@ -88,14 +88,14 @@ function mapPasswordError(error: unknown) {
 }
 
 export function WorkspaceLoginForm({
-  next = brandsWorkspaceRoutes.overview(),
+  next = "/app",
   availableMethods = ["otp"],
   initialMethod = availableMethods[0] ?? "otp",
   initialEmail = "",
 }: WorkspaceLoginFormProps) {
   const router = useRouter();
   const safeNextPath = useMemo(
-    () => brandsWorkspaceRoutes.resolveNextPath(next),
+    () => resolveWorkspaceNextPath(next, "/app"),
     [next],
   );
   const [email, setEmail] = useState(initialEmail);

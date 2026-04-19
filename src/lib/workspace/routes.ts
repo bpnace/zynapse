@@ -1,44 +1,57 @@
 export type BrandsWorkspaceNamespace = "workspace" | "brands";
 
 const DEFAULT_NAMESPACE: BrandsWorkspaceNamespace = "workspace";
-const KNOWN_NAMESPACES: BrandsWorkspaceNamespace[] = ["workspace", "brands"];
-
-function getNamespace(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-  return namespace;
-}
-
-function getBasePath(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-  return `/${getNamespace(namespace)}`;
-}
+const KNOWN_BRAND_NAMESPACES: BrandsWorkspaceNamespace[] = ["workspace", "brands"];
 
 function getPathnameOnly(pathname: string) {
   return pathname.split(/[?#]/, 1)[0] ?? pathname;
 }
 
+function getBrandBasePath(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+  return `/${namespace}`;
+}
+
+export const creativeWorkspaceRoutes = {
+  landing() {
+    return "/app";
+  },
+  tasks() {
+    return "/creatives/tasks";
+  },
+  feedback() {
+    return "/creatives/feedback";
+  },
+  campaigns: {
+    detail(campaignId: string) {
+      return `/creatives/campaigns/${campaignId}`;
+    },
+  },
+};
+
 export const brandsWorkspaceRoutes = {
   overview(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-    return getBasePath(namespace);
+    return getBrandBasePath(namespace);
   },
   onboarding(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-    return `${getBasePath(namespace)}/onboarding`;
+    return `${getBrandBasePath(namespace)}/onboarding`;
   },
   briefs: {
     new(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return `${getBasePath(namespace)}/briefs/new`;
+      return `${getBrandBasePath(namespace)}/briefs/new`;
     },
     detail(briefId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return `${getBasePath(namespace)}/briefs/${briefId}`;
+      return `${getBrandBasePath(namespace)}/briefs/${briefId}`;
     },
   },
   campaigns: {
     detail(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return `${getBasePath(namespace)}/campaigns/${campaignId}`;
+      return `${getBrandBasePath(namespace)}/campaigns/${campaignId}`;
     },
     review(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return `${getBasePath(namespace)}/campaigns/${campaignId}/review`;
+      return `${getBrandBasePath(namespace)}/campaigns/${campaignId}/review`;
     },
     handover(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return `${getBasePath(namespace)}/campaigns/${campaignId}/handover`;
+      return `${getBrandBasePath(namespace)}/campaigns/${campaignId}/handover`;
     },
   },
   pilotRequest(
@@ -56,8 +69,8 @@ export const brandsWorkspaceRoutes = {
 
     const query = searchParams.toString();
     return query
-      ? `${getBasePath(namespace)}/pilot-request?${query}`
-      : `${getBasePath(namespace)}/pilot-request`;
+      ? `${getBrandBasePath(namespace)}/pilot-request?${query}`
+      : `${getBrandBasePath(namespace)}/pilot-request`;
   },
   revalidation(options: {
     campaignId?: string | null;
@@ -69,7 +82,7 @@ export const brandsWorkspaceRoutes = {
       brandsWorkspaceRoutes.overview(namespace),
       brandsWorkspaceRoutes.onboarding(namespace),
       brandsWorkspaceRoutes.briefs.new(namespace),
-      `${getBasePath(namespace)}/pilot-request`,
+      `${getBrandBasePath(namespace)}/pilot-request`,
     ];
 
     if (options.briefId) {
@@ -86,8 +99,8 @@ export const brandsWorkspaceRoutes = {
   },
   isKnownPath(pathname: string) {
     const safePathname = getPathnameOnly(pathname);
-    return KNOWN_NAMESPACES.some((namespace) => {
-      const prefix = getBasePath(namespace);
+    return KNOWN_BRAND_NAMESPACES.some((namespace) => {
+      const prefix = getBrandBasePath(namespace);
       return safePathname === prefix || safePathname.startsWith(`${prefix}/`);
     });
   },
@@ -95,16 +108,44 @@ export const brandsWorkspaceRoutes = {
     next: string | null | undefined,
     namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE,
   ) {
-    const candidate = next?.trim() ?? "";
-
-    if (
-      candidate &&
-      !candidate.startsWith("//") &&
-      brandsWorkspaceRoutes.isKnownPath(candidate)
-    ) {
-      return candidate;
-    }
-
-    return brandsWorkspaceRoutes.overview(namespace);
+    return resolveWorkspaceNextPath(next, brandsWorkspaceRoutes.overview(namespace));
   },
 };
+
+export function isProtectedWorkspacePath(pathname: string) {
+  const safePathname = getPathnameOnly(pathname);
+
+  if (safePathname === creativeWorkspaceRoutes.landing()) {
+    return true;
+  }
+
+  if (
+    safePathname === brandsWorkspaceRoutes.overview() ||
+    safePathname.startsWith(`${brandsWorkspaceRoutes.overview()}/`)
+  ) {
+    return true;
+  }
+
+  return (
+    safePathname === creativeWorkspaceRoutes.tasks() ||
+    safePathname === creativeWorkspaceRoutes.feedback() ||
+    safePathname.startsWith("/creatives/campaigns/")
+  );
+}
+
+export function resolveWorkspaceNextPath(
+  next: string | null | undefined,
+  fallback: string = brandsWorkspaceRoutes.overview(),
+) {
+  const candidate = next?.trim() ?? "";
+
+  if (
+    candidate &&
+    !candidate.startsWith("//") &&
+    (isProtectedWorkspacePath(candidate) || brandsWorkspaceRoutes.isKnownPath(candidate))
+  ) {
+    return candidate;
+  }
+
+  return fallback;
+}

@@ -1,6 +1,10 @@
 import { pgTable, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 import { organizations } from "@/lib/db/schema/organizations";
-import { workspaceRoleEnum } from "@/lib/db/schema/shared";
+import {
+  membershipStatusEnum,
+  workspaceRoleEnum,
+  workspaceTypeEnum,
+} from "@/lib/db/schema/shared";
 
 export const memberships = pgTable(
   "memberships",
@@ -12,6 +16,10 @@ export const memberships = pgTable(
     // Supabase owns auth.users. Keep the user_id typed here without generating auth-schema migrations.
     userId: uuid("user_id").notNull(),
     role: workspaceRoleEnum("role").notNull(),
+    workspaceType: workspaceTypeEnum("workspace_type").default("brand").notNull(),
+    membershipStatus: membershipStatusEnum("membership_status")
+      .default("active")
+      .notNull(),
     invitedBy: uuid("invited_by"),
     acceptedAt: timestamp("accepted_at", { withTimezone: true }).defaultNow().notNull(),
   },
@@ -20,6 +28,5 @@ export const memberships = pgTable(
       table.organizationId,
       table.userId,
     ),
-    userUniqueIndex: uniqueIndex("memberships_user_unique").on(table.userId),
   }),
 );

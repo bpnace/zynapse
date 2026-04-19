@@ -1,4 +1,4 @@
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 const DEFAULT_DEMO_WORKSPACE_EMAIL = "demo@zynapse.eu";
 const DEFAULT_DEMO_WORKSPACE_ORGANIZATION_SLUG = "zynapse-closed-demo";
@@ -74,5 +74,5 @@ export function getWorkspaceDemoState(input: {
 }
 
 export function resolveDemoWorkspaceNextPath(next: string | null | undefined) {
-  return brandsWorkspaceRoutes.resolveNextPath(next);
+  return resolveWorkspaceNextPath(next, "/workspace");
 }

@@ -1,8 +1,5 @@
 import { createServiceRoleSupabaseClient } from "@/lib/auth/admin";
-import type {
-  TableRow,
-  WorkspaceDatabase,
-} from "@/lib/workspace/data/types";
+import type { TableRow, WorkspaceDatabase } from "@/lib/workspace/data/types";
 
 function parseDate(value: string | null | undefined) {
   return value ? new Date(value) : null;
@@ -56,6 +53,8 @@ export function mapMembership(row: TableRow<"memberships">) {
     organizationId: row.organization_id,
     userId: row.user_id,
     role: row.role,
+    workspaceType: row.workspace_type,
+    membershipStatus: row.membership_status,
     invitedBy: row.invited_by,
     acceptedAt: parseDate(row.accepted_at) ?? new Date(0),
   };
@@ -77,23 +76,16 @@ export function mapBrandProfile(row: TableRow<"brand_profiles">) {
 
 export function mapCreativeProfile(row: TableRow<"creative_profiles">) {
   return {
+    id: row.id,
     userId: row.user_id,
     slug: row.slug,
     displayName: row.display_name,
     headline: row.headline,
     bio: row.bio,
+    specialties: row.specialties,
     portfolioUrl: row.portfolio_url,
-    specialtiesJson: row.specialties_json,
-    toolsJson: row.tools_json,
-    industryFitJson: row.industry_fit_json,
     availabilityStatus: row.availability_status,
-    capacityNotes: row.capacity_notes,
-    hourlyRate: row.hourly_rate,
-    dayRate: row.day_rate,
-    packageRate: row.package_rate,
-    qualityScore: row.quality_score,
     createdAt: parseDate(row.created_at) ?? new Date(0),
-    updatedAt: parseDate(row.updated_at) ?? new Date(0),
   };
 }
 
@@ -119,10 +111,10 @@ export function mapCampaignAssignment(row: TableRow<"campaign_assignments">) {
     assignmentRole: row.assignment_role,
     status: row.status,
     assignedBy: row.assigned_by,
-    invitedAt: parseDate(row.invited_at) ?? new Date(0),
-    acceptedAt: parseDate(row.accepted_at),
-    dueAt: parseDate(row.due_at),
     scopeSummary: row.scope_summary,
+    dueAt: parseDate(row.due_at),
+    acceptedAt: parseDate(row.accepted_at),
+    submittedAt: parseDate(row.submitted_at),
     createdAt: parseDate(row.created_at) ?? new Date(0),
   };
 }
@@ -144,15 +136,16 @@ export function mapCreativeTask(row: TableRow<"creative_tasks">) {
     id: row.id,
     campaignId: row.campaign_id,
     assignmentId: row.assignment_id,
-    taskType: row.task_type,
+    assetId: row.asset_id,
+    ownerUserId: row.owner_user_id,
     title: row.title,
     description: row.description,
+    taskType: row.task_type,
     status: row.status,
     priority: row.priority,
-    ownerUserId: row.owner_user_id,
-    createdBy: row.created_by,
     blockedReason: row.blocked_reason,
     dueAt: parseDate(row.due_at),
+    submittedAt: parseDate(row.submitted_at),
     completedAt: parseDate(row.completed_at),
     createdAt: parseDate(row.created_at) ?? new Date(0),
   };
@@ -182,12 +175,13 @@ export function mapAssetVersion(row: TableRow<"asset_versions">) {
     id: row.id,
     assetId: row.asset_id,
     campaignId: row.campaign_id,
+    assignmentId: row.assignment_id,
     createdBy: row.created_by,
     versionLabel: row.version_label,
     storagePath: row.storage_path,
     thumbnailPath: row.thumbnail_path,
+    notes: row.notes,
     submissionStatus: row.submission_status,
-    submissionNotes: row.submission_notes,
     createdAt: parseDate(row.created_at) ?? new Date(0),
   };
 }
@@ -217,17 +211,17 @@ export function mapRevisionItem(row: TableRow<"revision_items">) {
   return {
     id: row.id,
     campaignId: row.campaign_id,
+    assignmentId: row.assignment_id,
     assetId: row.asset_id,
-    taskId: row.task_id,
-    sourceRole: row.source_role,
-    sourceType: row.source_type,
-    category: row.category,
-    priority: row.priority,
-    body: row.body,
+    reviewThreadId: row.review_thread_id,
+    sourceCommentId: row.source_comment_id,
+    createdBy: row.created_by,
+    title: row.title,
+    detail: row.detail,
     status: row.status,
-    dueAt: parseDate(row.due_at),
+    priority: row.priority,
+    createdAt: parseDate(row.created_at) ?? new Date(0),
     resolvedAt: parseDate(row.resolved_at),
-    resolvedBy: row.resolved_by,
   };
 }
 

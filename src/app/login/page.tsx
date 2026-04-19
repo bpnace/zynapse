@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { LoginWaitlistForm } from "@/components/forms/waitlist/login-waitlist-form";
 import { WorkspaceLoginForm } from "@/components/workspace/login/workspace-login-form";
 import { getDemoWorkspaceConfig } from "@/lib/workspace/demo";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
@@ -21,8 +21,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const demoConfig = getDemoWorkspaceConfig();
   const next =
     typeof params.next === "string" && params.next.length > 0
-      ? brandsWorkspaceRoutes.resolveNextPath(params.next)
-      : brandsWorkspaceRoutes.overview();
+      ? resolveWorkspaceNextPath(params.next, "/app")
+      : "/app";
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">

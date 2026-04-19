@@ -1,10 +1,10 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/auth/server";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 function resolveSafeNextPath(next: string | null) {
-  return brandsWorkspaceRoutes.resolveNextPath(next);
+  return resolveWorkspaceNextPath(next, "/app");
 }
 
 export async function GET(request: Request) {

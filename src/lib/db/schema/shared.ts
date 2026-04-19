@@ -9,7 +9,22 @@ export const organizationStatusEnum = pgEnum("organization_status", [
 export const workspaceRoleEnum = pgEnum("workspace_role", [
   "brand_admin",
   "brand_reviewer",
+  "creative",
+  "creative_lead",
   "zynapse_ops",
+]);
+
+export const workspaceTypeEnum = pgEnum("workspace_type", [
+  "brand",
+  "creative",
+  "ops",
+]);
+
+export const membershipStatusEnum = pgEnum("membership_status", [
+  "invited",
+  "active",
+  "paused",
+  "archived",
 ]);
 
 export const stageKeyEnum = pgEnum("campaign_stage_key", [
@@ -48,53 +63,57 @@ export const pilotRequestHandoffModeEnum = pgEnum("pilot_request_handoff_mode", 
   "log",
 ]);
 
-export const creativeAvailabilityStatusEnum = pgEnum("creative_availability_status", [
-  "available",
-  "limited",
-  "unavailable",
+export const assignmentRoleEnum = pgEnum("assignment_role", [
+  "creative",
+  "creative_lead",
+  "editor",
+  "motion",
+  "designer",
+  "copy",
 ]);
 
-export const campaignAssignmentStatusEnum = pgEnum("campaign_assignment_status", [
-  "invited",
-  "active",
-  "paused",
+export const assignmentStatusEnum = pgEnum("assignment_status", [
+  "assigned",
+  "accepted",
+  "in_progress",
+  "blocked",
+  "submitted",
   "completed",
-  "archived",
+]);
+
+export const creativeTaskTypeEnum = pgEnum("creative_task_type", [
+  "concept",
+  "production",
+  "revision",
+  "delivery",
 ]);
 
 export const creativeTaskStatusEnum = pgEnum("creative_task_status", [
   "todo",
   "in_progress",
-  "in_review",
   "blocked",
+  "submitted",
   "completed",
 ]);
 
-export const workPriorityEnum = pgEnum("work_priority", [
+export const creativeTaskPriorityEnum = pgEnum("creative_task_priority", [
   "low",
   "medium",
   "high",
-  "urgent",
 ]);
 
-export const assetVersionSubmissionStatusEnum = pgEnum("asset_version_submission_status", [
+export const assetVersionStatusEnum = pgEnum("asset_version_status", [
   "draft",
-  "submitted",
-  "changes_requested",
+  "submitted_for_ops_review",
+  "submitted_for_brand_review",
   "approved",
-]);
-
-export const revisionSourceRoleEnum = pgEnum("revision_source_role", [
-  "brand",
-  "creative",
-  "ops",
+  "rejected",
 ]);
 
 export const revisionItemStatusEnum = pgEnum("revision_item_status", [
   "open",
-  "in_progress",
+  "submitted",
   "resolved",
-  "cancelled",
 ]);
 
 export function createdAtColumn() {

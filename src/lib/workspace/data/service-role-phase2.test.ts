@@ -8,35 +8,27 @@ import {
 } from "@/lib/workspace/data/service-role";
 
 describe("phase 2 creative service-role mappers", () => {
-  it("maps creative profiles with lifecycle metadata", () => {
+  it("maps creative profiles with the curated execution fields", () => {
     const mapped = mapCreativeProfile({
+      id: "profile-1",
       user_id: "user-1",
       slug: "alex-motion",
       display_name: "Alex Motion",
       headline: "UGC editor",
       bio: "Cuts performant paid social edits.",
+      specialties: "UGC, editing",
       portfolio_url: "https://portfolio.test/alex",
-      specialties_json: JSON.stringify(["UGC", "editing"]),
-      tools_json: JSON.stringify(["Premiere", "CapCut"]),
-      industry_fit_json: JSON.stringify(["beauty", "wellness"]),
       availability_status: "limited",
-      capacity_notes: "Two launches left this month",
-      hourly_rate: 8500,
-      day_rate: 60000,
-      package_rate: 180000,
-      quality_score: 92,
       created_at: "2026-04-19T09:00:00.000Z",
-      updated_at: "2026-04-19T11:15:00.000Z",
     });
 
     expect(mapped).toMatchObject({
+      id: "profile-1",
       userId: "user-1",
       slug: "alex-motion",
       availabilityStatus: "limited",
-      qualityScore: 92,
     });
     expect(mapped.createdAt.toISOString()).toBe("2026-04-19T09:00:00.000Z");
-    expect(mapped.updatedAt.toISOString()).toBe("2026-04-19T11:15:00.000Z");
   });
 
   it("maps assignments, tasks, versions, and revisions with nullable dates", () => {
@@ -44,13 +36,13 @@ describe("phase 2 creative service-role mappers", () => {
       id: "assignment-1",
       campaign_id: "campaign-1",
       user_id: "user-1",
-      assignment_role: "video_editor",
-      status: "active",
+      assignment_role: "creative",
+      status: "in_progress",
       assigned_by: "ops-user",
-      invited_at: "2026-04-19T10:00:00.000Z",
-      accepted_at: "2026-04-19T10:30:00.000Z",
-      due_at: null,
       scope_summary: "Own hook variants and final exports",
+      due_at: null,
+      accepted_at: "2026-04-19T10:30:00.000Z",
+      submitted_at: null,
       created_at: "2026-04-19T10:00:00.000Z",
     });
 
@@ -58,15 +50,16 @@ describe("phase 2 creative service-role mappers", () => {
       id: "task-1",
       campaign_id: "campaign-1",
       assignment_id: "assignment-1",
-      task_type: "edit",
+      asset_id: "asset-1",
+      owner_user_id: "user-1",
       title: "Cut founder testimonial variants",
       description: "Prepare 3 short paid-social cuts",
+      task_type: "production",
       status: "in_progress",
       priority: "high",
-      owner_user_id: "user-1",
-      created_by: "ops-user",
       blocked_reason: null,
       due_at: "2026-04-21T12:00:00.000Z",
+      submitted_at: null,
       completed_at: null,
       created_at: "2026-04-19T10:05:00.000Z",
     });
@@ -75,29 +68,30 @@ describe("phase 2 creative service-role mappers", () => {
       id: "version-1",
       asset_id: "asset-1",
       campaign_id: "campaign-1",
+      assignment_id: "assignment-1",
       created_by: "user-1",
       version_label: "v2",
-      storage_path: "campaigns/campaign-1/v2.mp4",
-      thumbnail_path: "campaigns/campaign-1/v2.jpg",
-      submission_status: "submitted",
-      submission_notes: "Updated CTA end card",
+      storage_path: "https://example.com/campaigns/campaign-1/v2.mp4",
+      thumbnail_path: "https://example.com/campaigns/campaign-1/v2.jpg",
+      notes: "Updated CTA end card",
+      submission_status: "submitted_for_ops_review",
       created_at: "2026-04-19T12:15:00.000Z",
     });
 
     const revision = mapRevisionItem({
       id: "revision-1",
       campaign_id: "campaign-1",
+      assignment_id: "assignment-1",
       asset_id: "asset-1",
-      task_id: "task-1",
-      source_role: "brand",
-      source_type: "change_request",
-      category: "hook",
-      priority: "urgent",
-      body: "Lead with the founder close-up in the first second.",
+      review_thread_id: "thread-1",
+      source_comment_id: "comment-1",
+      created_by: "brand_admin",
+      title: "Lead with the founder close-up",
+      detail: "Lead with the founder close-up in the first second.",
       status: "open",
-      due_at: null,
+      priority: "high",
+      created_at: "2026-04-19T12:20:00.000Z",
       resolved_at: null,
-      resolved_by: null,
     });
 
     expect(assignment.acceptedAt?.toISOString()).toBe("2026-04-19T10:30:00.000Z");
@@ -106,12 +100,12 @@ describe("phase 2 creative service-role mappers", () => {
     expect(task.completedAt).toBeNull();
     expect(version).toMatchObject({
       versionLabel: "v2",
-      submissionStatus: "submitted",
+      submissionStatus: "submitted_for_ops_review",
     });
     expect(revision).toMatchObject({
-      sourceRole: "brand",
+      title: "Lead with the founder close-up",
       status: "open",
-      priority: "urgent",
+      priority: "high",
     });
   });
 });

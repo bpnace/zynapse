@@ -1,3 +1,4 @@
+import { getWorkspaceTypeForRole } from "@/lib/auth/roles";
 import type { User } from "@supabase/supabase-js";
 import {
   assertSupabaseResult,
@@ -65,10 +66,12 @@ export async function ensureMembershipForCurrentUser(user: User) {
           organization_id: demoOrganization.id,
           user_id: user.id,
           role: "brand_reviewer",
+          workspace_type: "brand",
+          membership_status: "active",
           accepted_at: new Date().toISOString(),
         },
         {
-          onConflict: "user_id",
+          onConflict: "organization_id,user_id",
         },
       )
       .select();
@@ -143,9 +146,11 @@ export async function ensureMembershipForCurrentUser(user: User) {
         organization_id: activeInvite.organizationId,
         user_id: user.id,
         role: activeInvite.role,
+        workspace_type: getWorkspaceTypeForRole(activeInvite.role),
+        membership_status: "active",
       },
       {
-        onConflict: "user_id",
+        onConflict: "organization_id,user_id",
       },
     )
     .select();

@@ -1,22 +1,29 @@
 import {
   assertSupabaseResult,
+  mapCreativeProfile,
   mapBrandProfile,
   mapMembership,
   mapOrganization,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
+import { selectDefaultMembership, selectMembershipForWorkspace } from "@/lib/workspace/membership-selection";
 import {
   getDemoWorkspaceConfig,
   getWorkspaceDemoState,
   isDemoWorkspaceEmail,
 } from "@/lib/workspace/demo";
+import type { WorkspaceType } from "@/lib/auth/roles";
 
 type WorkspaceBootstrapUser = {
   id: string;
   email?: string | null;
 };
 
-export async function getWorkspaceBootstrap(user: WorkspaceBootstrapUser) {
+type GetWorkspaceBootstrapOptions = {
+  workspaceType?: WorkspaceType;
+};
+
+async function getWorkspaceMemberships(user: WorkspaceBootstrapUser) {
   const supabase = requireServiceRoleClient();
   const demoConfig = getDemoWorkspaceConfig();
 
@@ -49,23 +56,24 @@ export async function getWorkspaceBootstrap(user: WorkspaceBootstrapUser) {
     isDemoWorkspaceEmail(user.email) && demoConfig.isEnabled;
 
   if (isCanonicalDemoUser && !demoOrganization) {
-    return null;
+    return {
+      memberships: [],
+      demoOrganization: null,
+      isCanonicalDemoUser,
+    };
   }
 
-  const demoMembership = isCanonicalDemoUser
-    ? memberships.find(
-        (membership) =>
-          membership.organizationId === demoOrganization?.id,
-      ) ?? null
-    : null;
+  return {
+    memberships,
+    demoOrganization,
+    isCanonicalDemoUser,
+  };
+}
 
-  const membership = isCanonicalDemoUser
-    ? demoMembership
-    : memberships[0] ?? null;
-
-  if (!membership) {
-    return null;
-  }
+async function getOrganizationContext(membership: {
+  organizationId: string;
+}) {
+  const supabase = requireServiceRoleClient();
 
   const { data: organizationRow, error: organizationError } = await supabase
     .from("organizations")
@@ -82,6 +90,38 @@ export async function getWorkspaceBootstrap(user: WorkspaceBootstrapUser) {
     return null;
   }
 
+  return organization;
+}
+
+export async function getWorkspaceBootstrap(
+  user: WorkspaceBootstrapUser,
+  options: GetWorkspaceBootstrapOptions = {},
+) {
+  const { memberships, demoOrganization, isCanonicalDemoUser } =
+    await getWorkspaceMemberships(user);
+
+  const demoMembership = isCanonicalDemoUser
+    ? memberships.find((membership) => membership.organizationId === demoOrganization?.id) ?? null
+    : null;
+
+  const membership = isCanonicalDemoUser
+    ? demoMembership
+    : options.workspaceType
+      ? selectMembershipForWorkspace(memberships, options.workspaceType)
+      : selectDefaultMembership(memberships);
+
+  if (!membership) {
+    return null;
+  }
+
+  const organization = await getOrganizationContext(membership);
+
+  if (!organization) {
+    return null;
+  }
+
+  const supabase = requireServiceRoleClient();
+
   const { data: brandProfileRow, error: brandProfileError } = await supabase
     .from("brand_profiles")
     .select("*")
@@ -97,6 +137,51 @@ export async function getWorkspaceBootstrap(user: WorkspaceBootstrapUser) {
     membership,
     organization,
     brandProfile,
+    demo: getWorkspaceDemoState({
+      userEmail: user.email,
+      organizationSlug: organization.slug,
+    }),
+  };
+}
+
+export async function getCreativeWorkspaceBootstrap(user: WorkspaceBootstrapUser) {
+  const { memberships, demoOrganization, isCanonicalDemoUser } =
+    await getWorkspaceMemberships(user);
+
+  const demoMembership = isCanonicalDemoUser
+    ? memberships.find((membership) => membership.organizationId === demoOrganization?.id) ?? null
+    : null;
+
+  const membership = isCanonicalDemoUser
+    ? demoMembership
+    : selectMembershipForWorkspace(memberships, "creative");
+
+  if (!membership) {
+    return null;
+  }
+
+  const organization = await getOrganizationContext(membership);
+
+  if (!organization) {
+    return null;
+  }
+
+  const supabase = requireServiceRoleClient();
+  const { data: creativeProfileRow, error: creativeProfileError } = await supabase
+    .from("creative_profiles")
+    .select("*")
+    .eq("user_id", membership.userId)
+    .limit(1)
+    .maybeSingle();
+
+  assertSupabaseResult(creativeProfileError, "Failed to load creative profile");
+
+  const creativeProfile = creativeProfileRow ? mapCreativeProfile(creativeProfileRow) : null;
+
+  return {
+    membership,
+    organization,
+    creativeProfile,
     demo: getWorkspaceDemoState({
       userEmail: user.email,
       organizationSlug: organization.slug,
