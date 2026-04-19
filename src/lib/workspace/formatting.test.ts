@@ -18,5 +18,6 @@ describe("workspace formatting helpers", () => {
     expect(formatWorkspaceAssetType("short_video")).toBe("Kurzvideo");
     expect(formatWorkspaceAssetType("static")).toBe("Statisches Motiv");
     expect(formatWorkspaceRole("brand_admin")).toBe("Brand-Admin");
+    expect(formatWorkspaceRole("zynapse_ops")).toBe("Zynapse Service Team");
   });
 });

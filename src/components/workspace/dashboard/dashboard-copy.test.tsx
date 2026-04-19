@@ -37,11 +37,14 @@ describe("workspace dashboard copy", () => {
     );
 
     expect(
-      screen.getByRole("link", { name: /In der Kampagne weiterarbeiten/i }),
+      screen.getByRole("link", { name: /Kampagnenstand ansehen/i }),
     ).toHaveAttribute("href", "/workspace/campaigns/campaign-1");
     expect(
       screen.getByRole("link", { name: "Briefing erstellen" }),
     ).toHaveAttribute("href", "/workspace/briefs/new");
+    expect(
+      screen.getByText(/Den nächsten Auftrag stößt Zynapse erst an/i),
+    ).toBeInTheDocument();
   });
 
   it("renders seeded next-step copy without mixed-language workspace wording", () => {

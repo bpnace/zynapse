@@ -24,9 +24,10 @@ describe("WorkspaceShell copy", () => {
     );
 
     expect(
-      screen.getByRole("navigation", { name: "Navigation im Brands Workspace" }),
+      screen.getByRole("navigation", { name: "Navigation im betreuten Kampagnenbereich" }),
     ).toBeInTheDocument();
-    expect(screen.getAllByText("Brands Workspace")).toHaveLength(2);
+    expect(screen.getByText("Betreuter Kampagnenbereich")).toBeInTheDocument();
+    expect(screen.getByText("Zynapse bereitet den nächsten Schritt vor")).toBeInTheDocument();
     expect(screen.getByText("Strukturierte Anfragen und Erstaufnahme")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Heute/i })).toHaveAttribute(
       "href",
@@ -75,5 +76,6 @@ describe("WorkspaceShell copy", () => {
     expect(
       screen.queryByRole("link", { name: /Pilotanfrage/i }),
     ).not.toBeInTheDocument();
+    expect(screen.getByText("Zynapse begleitet die Übergabe")).toBeInTheDocument();
   });
 });
