@@ -27,7 +27,7 @@ export function DashboardOverview({
     {
       label: "Mandat",
       value: organizationName,
-      detail: primaryChannels ?? audience ?? "Geschützter Bereich für laufende Zusammenarbeit",
+      detail: primaryChannels ?? audience ?? "Betreuter Bereich für laufende Zusammenarbeit",
     },
     {
       label: "Offen",
@@ -49,7 +49,7 @@ export function DashboardOverview({
       label: "Kontext",
       value: `${onboardingCompletion.percent}%`,
       detail: onboardingCompletion.isComplete
-        ? "Der Markenkontext ist vollständig genug, damit Freigabe, Übergabe und Pilotanfrage auf derselben Grundlage laufen."
+        ? "Der Markenkontext ist vollständig genug, damit Freigabe, Übergabe und die nächste betreute Runde auf derselben Grundlage laufen."
         : `${onboardingCompletion.completed} von ${onboardingCompletion.total} Kontextfeldern sind ausgefüllt.`,
     },
   ];

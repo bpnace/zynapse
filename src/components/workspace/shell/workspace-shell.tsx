@@ -124,7 +124,7 @@ export function WorkspaceShell({
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px]">
         <aside className="workspace-sidebar hidden w-[264px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <p className="workspace-eyebrow">Brands Workspace</p>
+            <p className="workspace-eyebrow">Betreuter Kampagnenbereich</p>
             <div className="mt-3 space-y-1">
               <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
@@ -137,7 +137,11 @@ export function WorkspaceShell({
             </div>
             <div className="mt-4 space-y-1 text-sm text-[var(--workspace-copy-muted)]">
               <p>{demo?.isDemoWorkspace ? demo.shellBadge : formatWorkspaceRole(role)}</p>
-              <p>{showCommercialStep ? "Pilotanfrage verfügbar" : "Übergabe läuft"}</p>
+              <p>
+                {showCommercialStep
+                  ? "Zynapse bereitet den nächsten Schritt vor"
+                  : "Zynapse begleitet die Übergabe"}
+              </p>
             </div>
           </div>
 
@@ -158,7 +162,7 @@ export function WorkspaceShell({
           <div className="mt-6">
             <p className="workspace-section-label">Kernbereiche</p>
           </div>
-          <nav className="mt-3 space-y-1" aria-label="Navigation im Brands Workspace">
+          <nav className="mt-3 space-y-1" aria-label="Navigation im betreuten Kampagnenbereich">
             {primaryNavigation.map((item) => {
               const Icon = item.icon;
               const className = cn(

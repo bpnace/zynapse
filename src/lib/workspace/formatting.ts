@@ -21,7 +21,7 @@ const workspaceLabelMap: Record<string, string> = {
   starter: "Starter",
   submitted: "Eingereicht",
   webhook: "Webhook",
-  zynapse_ops: "Zynapse Ops",
+  zynapse_ops: "Zynapse Service Team",
 };
 
 const workspaceAssetTypeMap: Record<string, string> = {

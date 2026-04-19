@@ -29,7 +29,7 @@ export function NextActionCard({
             href={campaignId ? brandsWorkspaceRoutes.campaigns.detail(campaignId) : "#campaign-focus"}
             className="workspace-button workspace-button-primary"
           >
-            In der Kampagne weiterarbeiten
+            Kampagnenstand ansehen
             <ArrowRight className="h-4 w-4" />
           </a>
           {briefHref ? (
@@ -40,8 +40,8 @@ export function NextActionCard({
         </div>
       </div>
       <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-        Eine Pilotanfrage sollte erst folgen, wenn Freigabe und Übergabe sauber
-        vorbereitet sind.
+        Den nächsten Auftrag stößt Zynapse erst an, wenn Freigabe und Übergabe
+        sauber vorbereitet sind.
       </p>
     </section>
   );
