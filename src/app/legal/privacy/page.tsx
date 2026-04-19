@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Datenschutz | Zynapse",
   description:
-    "Datenschutzhinweise für Zynapse, Codariq, Formulare, Hosting und Analytics.",
+    "Datenschutzhinweise für Zynapse, Codariq, Consent-Management, Formulare, Hosting und Analytics.",
   path: "/legal/privacy",
   indexable: false,
 });
@@ -209,12 +209,42 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="8. Google Analytics">
+      <LegalSection title="8. Consent-Management mit CCM19">
         <p>
-          Sofern auf der Website eine Google-Analytics-ID hinterlegt ist, wird
-          Google Analytics zur Reichweitenmessung und Analyse der Nutzung der
-          Website eingesetzt. Nach dem aktuellen Setup wird Analytics nur
-          eingebunden, wenn eine entsprechende Konfiguration vorhanden ist.
+          Wir verwenden auf dieser Website das Consent-Management-Tool CCM19,
+          um Einwilligungen für einwilligungspflichtige Technologien
+          einzuholen, zu verwalten und zu dokumentieren.
+        </p>
+        <p>
+          Anbieter ist Papoo Software &amp; Media GmbH, Auguststr. 4, 53229
+          Bonn, Deutschland.
+        </p>
+        <p>
+          Dabei können insbesondere der Zeitpunkt des Seitenaufrufs, eine
+          zufällige Kennung, der Einwilligungsstatus sowie technische
+          Informationen zur Auslieferung des Consent-Banners verarbeitet
+          werden.
+        </p>
+        <p>
+          Die Verarbeitung erfolgt, um gesetzlich erforderliche Einwilligungen
+          nachweisbar einzuholen und Widerrufe zu verwalten.
+        </p>
+        <p>
+          Rechtsgrundlage ist Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit den
+          jeweils anwendbaren Anforderungen an das Setzen und Auslesen nicht
+          technisch erforderlicher Technologien auf Endgeräten.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="9. Google Analytics 4">
+        <p>
+          Wir setzen Google Analytics 4 zur Reichweitenmessung und Analyse der
+          Nutzung der Website ein. Die aktuelle Mess-ID lautet
+          <span className="font-medium text-[var(--copy-strong)]">
+            {" "}
+            G-H08K2Z3F23
+          </span>
+          .
         </p>
         <p>
           Dabei können insbesondere Informationen über Seitenaufrufe,
@@ -223,27 +253,31 @@ export default function PrivacyPage() {
           IP-Adresse verarbeitet werden.
         </p>
         <p>
+          Google Analytics wird erst nach deiner Einwilligung über das
+          vorgeschaltete Consent-Management mit CCM19 geladen. Ohne
+          Einwilligung bleibt der Google-Tag blockiert.
+        </p>
+        <p>
           Rechtsgrundlage für den Einsatz von Google Analytics ist Art. 6 Abs.
           1 lit. a DSGVO sowie § 25 TDDDG, soweit für den Zugriff auf
           Informationen auf deinem Endgerät oder deren Speicherung eine
           Einwilligung erforderlich ist.
         </p>
         <p>
-          Vor einem produktiven Einsatz ist daher eine wirksame
-          Consent-Management-Lösung erforderlich, die Google Analytics bis zur
-          Einwilligung blockiert und einen Widerruf ermöglicht.
+          Anbieter von Google Analytics 4 ist Google Ireland Limited, Gordon
+          House, Barrow Street, Dublin 4, Irland. Es kann nicht ausgeschlossen
+          werden, dass Daten auch durch verbundene Unternehmen von Google,
+          insbesondere Google LLC in den USA, verarbeitet werden. Google
+          verwendet nach eigenen Angaben geeignete Transfermechanismen,
+          insbesondere Standardvertragsklauseln, soweit erforderlich.
         </p>
         <p>
-          Anbieter von Google Analytics ist Google Ireland Limited. Es kann
-          nicht ausgeschlossen werden, dass Daten auch durch verbundene
-          Unternehmen von Google, insbesondere in den USA, verarbeitet werden.
-          Google verwendet nach eigenen Angaben geeignete
-          Transfermechanismen, insbesondere Standardvertragsklauseln, soweit
-          erforderlich.
+          Deine Einwilligung kannst du jederzeit mit Wirkung für die Zukunft
+          über die Einstellungen des Consent-Banners widerrufen oder anpassen.
         </p>
       </LegalSection>
 
-      <LegalSection title="9. Schriftarten">
+      <LegalSection title="10. Schriftarten">
         <p>
           Für die Wortmarke wird die Schriftart Outfit über `next/font/google`
           eingebunden. Nach dem aktuellen technischen Stand werden die benötigten
@@ -253,7 +287,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="10. Speicherdauer">
+      <LegalSection title="11. Speicherdauer">
         <p>
           Wir speichern personenbezogene Daten nur so lange, wie dies für die
           jeweiligen Zwecke erforderlich ist.
@@ -283,13 +317,14 @@ export default function PrivacyPage() {
         </ul>
       </LegalSection>
 
-      <LegalSection title="11. Empfänger und Drittlandbezug">
+      <LegalSection title="12. Empfänger und Drittlandbezug">
         <p>Empfänger personenbezogener Daten können insbesondere sein:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>Strato als Hosting-Dienstleister</li>
+          <li>Papoo Software &amp; Media GmbH als Anbieter von CCM19</li>
           <li>die selbst betriebene n8n-Instanz zur Formularweiterleitung</li>
           <li>Google Sheets zur Lead- und Anfrageverwaltung</li>
-          <li>Google Analytics, sofern aktiviert und eingewilligt wurde</li>
+          <li>Google Analytics 4, sofern eingewilligt wurde</li>
         </ul>
         <p>
           Bei der Nutzung von Google-Diensten kann eine Übermittlung in
@@ -299,7 +334,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="12. Deine Rechte">
+      <LegalSection title="13. Deine Rechte">
         <p>Du hast im Rahmen der gesetzlichen Voraussetzungen das Recht auf:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>Auskunft über deine bei uns gespeicherten Daten</li>
@@ -315,7 +350,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="13. Beschwerderecht bei einer Aufsichtsbehörde">
+      <LegalSection title="14. Beschwerderecht bei einer Aufsichtsbehörde">
         <p>
           Du hast außerdem das Recht, dich bei einer Datenschutzaufsichtsbehörde
           zu beschweren. Zuständig für uns ist insbesondere:
@@ -333,7 +368,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="14. Keine automatisierte Entscheidungsfindung">
+      <LegalSection title="15. Keine automatisierte Entscheidungsfindung">
         <p>
           Eine automatisierte Entscheidungsfindung oder ein Profiling im Sinne
           von Art. 22 DSGVO findet im Zusammenhang mit dieser Website und den
@@ -341,7 +376,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="15. Aktualisierung dieser Hinweise">
+      <LegalSection title="16. Aktualisierung dieser Hinweise">
         <p>
           Wir passen diese Datenschutzhinweise an, wenn sich die Website, die
           eingesetzten Dienste oder die rechtlichen Anforderungen ändern.

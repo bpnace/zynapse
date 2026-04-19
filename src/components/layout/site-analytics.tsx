@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-const analyticsId = process.env.NEXT_PUBLIC_ANALYTICS_ID;
+const analyticsId = "G-H08K2Z3F23";
 
 export function SiteAnalytics() {
   if (!analyticsId) {
@@ -18,7 +18,7 @@ export function SiteAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${analyticsId}', { anonymize_ip: true });
+          gtag('config', '${analyticsId}');
         `}
       </Script>
     </>
