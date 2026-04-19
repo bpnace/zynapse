@@ -41,4 +41,36 @@ describe("brandsWorkspaceRoutes", () => {
     expect(brandsWorkspaceRoutes.isKnownPath("/workspace-brand")).toBe(false);
     expect(brandsWorkspaceRoutes.isKnownPath("/workspaceful")).toBe(false);
   });
+
+  it("deduplicates revalidation paths and keeps both workspace namespaces stable", () => {
+    expect(
+      brandsWorkspaceRoutes.revalidation({
+        campaignId: "campaign-1",
+        briefId: "brief-1",
+        namespace: "brands",
+      }),
+    ).toEqual([
+      "/brands",
+      "/brands/onboarding",
+      "/brands/briefs/new",
+      "/brands/pilot-request",
+      "/brands/briefs/brief-1",
+      "/brands/campaigns/campaign-1",
+      "/brands/campaigns/campaign-1/review",
+      "/brands/campaigns/campaign-1/handover",
+    ]);
+  });
+
+  it("preserves safe next paths and falls back to the active namespace for unsafe values", () => {
+    expect(brandsWorkspaceRoutes.resolveNextPath("/brands/campaigns/campaign-1")).toBe(
+      "/brands/campaigns/campaign-1",
+    );
+    expect(brandsWorkspaceRoutes.resolveNextPath("/workspace?view=home", "brands")).toBe(
+      "/workspace?view=home",
+    );
+    expect(brandsWorkspaceRoutes.resolveNextPath("//evil.test", "brands")).toBe("/brands");
+    expect(brandsWorkspaceRoutes.resolveNextPath("/workspace-brand", "brands")).toBe(
+      "/brands",
+    );
+  });
 });
