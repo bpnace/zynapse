@@ -89,7 +89,7 @@ export async function getDashboardView(organizationId: string) {
               .map((comment) => ({
                 threadId: thread.id,
                 assetId: thread.assetId,
-                assetTitle: assetTitleById.get(thread.assetId) ?? "Asset",
+                assetTitle: assetTitleById.get(thread.assetId) ?? "Variante",
                 createdBy: thread.createdBy,
                 anchorJson: thread.anchorJson,
                 commentBody: comment.body,

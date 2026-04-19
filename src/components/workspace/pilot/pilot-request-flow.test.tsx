@@ -36,7 +36,7 @@ const demo = {
   isDemoWorkspace: false,
   isReadOnly: false,
   shellBadge: "Geschlossene Demo",
-  shellDescription: "Read-only demo workspace.",
+  shellDescription: "Schreibgeschützte Demo-Ansicht.",
   mutationMessage: "Die Demo ist schreibgeschützt.",
 };
 
@@ -62,11 +62,11 @@ describe("PilotRequestFlow", () => {
   it("updates tier and message when the selected campaign changes and fields still use defaults", () => {
     renderFlow();
 
-    fireEvent.change(screen.getAllByLabelText("Workstream")[0], {
+    fireEvent.change(screen.getAllByLabelText("Kampagne")[0], {
       target: { value: "campaign-b" },
     });
 
-    expect(screen.getByDisplayValue("Growth")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Wachstum")).toBeInTheDocument();
     expect(
       screen.getByDisplayValue(
         "Wir möchten Growth Refresh in einen bezahlten Piloten überführen.",
@@ -78,14 +78,14 @@ describe("PilotRequestFlow", () => {
   it("preserves manual edits when the selected campaign changes", () => {
     renderFlow();
 
-    fireEvent.change(screen.getAllByLabelText("Proposed package")[0], {
+    fireEvent.change(screen.getAllByLabelText("Vorgeschlagenes Paket")[0], {
       target: { value: "Custom Tier" },
     });
-    fireEvent.change(screen.getAllByLabelText("Commercial note")[0], {
+    fireEvent.change(screen.getAllByLabelText("Hinweis zur Pilotanfrage")[0], {
       target: { value: "Bitte mit erweitertem Scope planen." },
     });
 
-    fireEvent.change(screen.getAllByLabelText("Workstream")[0], {
+    fireEvent.change(screen.getAllByLabelText("Kampagne")[0], {
       target: { value: "campaign-b" },
     });
 

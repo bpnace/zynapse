@@ -34,20 +34,20 @@ type StepDefinition = {
 const steps: StepDefinition[] = [
   {
     key: "brand-basics",
-    label: "Foundation",
-    description: "Capture website and offer context so the workstream starts from the right operating baseline.",
+    label: "Grundlage",
+    description: "Halte Website und Angebotskontext fest, damit die Kampagne auf einer klaren operativen Basis startet.",
     fields: ["website", "offerSummary"],
   },
   {
     key: "audience-and-tone",
-    label: "Audience and channels",
-    description: "Define who the work is for, where it runs, and how the brand should show up in delivery.",
+    label: "Zielgruppe und Kanäle",
+    description: "Lege fest, wen die Arbeit erreichen soll, wo sie läuft und wie die Marke in der Umsetzung wirken muss.",
     fields: ["targetAudience", "primaryChannels", "brandTone"],
   },
   {
     key: "review-and-guardrails",
-    label: "Review rules",
-    description: "Document reviewers, claims, and constraints so review and delivery stay predictable.",
+    label: "Freigaberegeln",
+    description: "Dokumentiere Freigebende, Aussagen und Grenzen, damit Freigabe und Übergabe verlässlich bleiben.",
     fields: ["reviewNotes", "claimGuardrails"],
   },
 ];
@@ -112,12 +112,12 @@ export function OnboardingFlow({
 
       if (isFinal || result.completion.isComplete) {
         setIsComplete(true);
-        setStatusMessage("Setup gespeichert. Der Workspace hat jetzt genug Brand-Kontext, um sich spezifisch für euer Team anzufühlen.");
+        setStatusMessage("Kontext gespeichert. Der Bereich hat jetzt genug Markenkontext, um sich spezifisch für euer Team anzufühlen.");
         return;
       }
 
       setStepIndex((current) => Math.min(current + 1, steps.length - 1));
-      setStatusMessage("Entwurf gespeichert. Weiter mit dem nächsten Setup-Schritt.");
+      setStatusMessage("Entwurf gespeichert. Weiter mit dem nächsten Schritt.");
     });
   }
 
@@ -125,21 +125,21 @@ export function OnboardingFlow({
     return (
       <div className="grid gap-4">
         <section className="workspace-topbar px-4 py-4 sm:px-5">
-          <p className="workspace-section-label">Brand Context complete</p>
+          <p className="workspace-section-label">Markenkontext vollständig</p>
           <h1 className="mt-3 text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            {organizationName} is ready for delivery
+            {organizationName} ist bereit für Freigabe und Übergabe
           </h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            The core brand context is in place, so review, delivery, and the commercial
-            next step can rely on the same operating assumptions.
+            Der zentrale Markenkontext steht. Damit bauen Freigabe, Übergabe
+            und der nächste kommerzielle Schritt auf denselben Annahmen auf.
           </p>
         </section>
 
         <section className="workspace-panel px-5 py-5">
           <p className="workspace-section-label">Status</p>
           <div className="mt-4 workspace-meta-row">
-            <span>{completion.completed} of {completion.total} fields captured</span>
-            <span>{completion.percent}% complete</span>
+            <span>{completion.completed} von {completion.total} Feldern erfasst</span>
+            <span>{completion.percent}% vollständig</span>
           </div>
           <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
             {statusMessage}
@@ -150,7 +150,7 @@ export function OnboardingFlow({
               className="workspace-button workspace-button-primary"
               onClick={() => router.push("/workspace")}
             >
-              Back to Today
+              Zur Übersicht
             </button>
             <button
               type="button"
@@ -160,7 +160,7 @@ export function OnboardingFlow({
                 setStepIndex(0);
               }}
             >
-              Review context
+              Kontext prüfen
             </button>
           </div>
         </section>
@@ -172,21 +172,22 @@ export function OnboardingFlow({
     <div className="grid gap-4">
       <section className="workspace-topbar px-4 py-4 sm:px-5">
         <div className="space-y-3">
-          <p className="workspace-section-label">Brand Context</p>
+          <p className="workspace-section-label">Markenkontext</p>
           <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-            Operating context
+            Operativer Rahmen
           </h1>
           <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-            Capture the context the workspace needs for review, delivery, and commercial
-            decisions without repeating it across every route.
+            Halte den Kontext fest, den der Arbeitsbereich für Freigabe,
+            Übergabe und Pilotanfrage braucht, ohne ihn in jeder Route neu
+            erklären zu müssen.
           </p>
         </div>
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
             <span>{stepTitle}</span>
-            <span>{completion.completed} of {completion.total} fields captured</span>
-            <span>{completion.percent}% complete</span>
+            <span>{completion.completed} von {completion.total} Feldern erfasst</span>
+            <span>{completion.percent}% vollständig</span>
           </div>
           {demo.isDemoWorkspace ? (
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
@@ -199,7 +200,7 @@ export function OnboardingFlow({
       <div className="grid gap-4 xl:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)]">
         <section className="workspace-panel px-5 py-5">
             <div className="space-y-3">
-            <p className="workspace-section-label">Sections</p>
+            <p className="workspace-section-label">Bereiche</p>
             <div className="workspace-split-list">
               {steps.map((item, index) => (
                 <button
@@ -250,44 +251,44 @@ export function OnboardingFlow({
             ) : null}
 
             {step.fields.includes("offerSummary") ? (
-              <Field label="Offer summary" error={fieldErrors.offerSummary}>
+              <Field label="Angebotskern" error={fieldErrors.offerSummary}>
                 <TextareaInput
                   value={values.offerSummary}
                   onChange={(event) => updateValue("offerSummary", event.target.value)}
-                  placeholder="What is being sold and why it matters in this engagement."
+                  placeholder="Was genau wird angeboten und warum ist es für diese Zusammenarbeit relevant?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("targetAudience") ? (
-              <Field label="Audience" error={fieldErrors.targetAudience}>
+              <Field label="Zielgruppe" error={fieldErrors.targetAudience}>
                 <TextareaInput
                   value={values.targetAudience}
                   onChange={(event) => updateValue("targetAudience", event.target.value)}
-                  placeholder="Who the work needs to resonate with."
+                  placeholder="Wen soll die Kampagne konkret erreichen?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("primaryChannels") ? (
-              <Field label="Primary channels" error={fieldErrors.primaryChannels}>
+              <Field label="Zentrale Kanäle" error={fieldErrors.primaryChannels}>
                 <TextareaInput
                   value={values.primaryChannels}
                   onChange={(event) => updateValue("primaryChannels", event.target.value)}
-                  placeholder="Where this engagement is expected to run."
+                  placeholder="Auf welchen Kanälen soll die Kampagne eingesetzt werden?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("brandTone") ? (
-              <Field label="Brand tone" error={fieldErrors.brandTone}>
+              <Field label="Tonalität" error={fieldErrors.brandTone}>
                 <TextareaInput
                   value={values.brandTone}
                   onChange={(event) => updateValue("brandTone", event.target.value)}
-                  placeholder="How the work should sound and feel."
+                  placeholder="Wie soll die Marke sprachlich und visuell wirken?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
@@ -295,25 +296,25 @@ export function OnboardingFlow({
 
             {step.fields.includes("reviewNotes") ? (
               <Field
-                label="Reviewers and notes"
-                hint="Record who signs off and what matters in approval."
+                label="Freigebende und Hinweise"
+                hint="Halte fest, wer freigibt und worauf in der Freigabe geachtet werden muss."
                 error={fieldErrors.reviewNotes}
               >
                 <TextareaInput
                   value={values.reviewNotes}
                   onChange={(event) => updateValue("reviewNotes", event.target.value)}
-                  placeholder="Who reviews this work and what context matters for approval?"
+                  placeholder="Wer gibt die Arbeit frei und welcher Kontext ist für die Entscheidung wichtig?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("claimGuardrails") ? (
-              <Field label="Claims and guardrails" error={fieldErrors.claimGuardrails}>
+              <Field label="Aussagen und Leitplanken" error={fieldErrors.claimGuardrails}>
                 <TextareaInput
                   value={values.claimGuardrails}
                   onChange={(event) => updateValue("claimGuardrails", event.target.value)}
-                  placeholder="Which claims, legal limits, or no-gos the workstream must respect."
+                  placeholder="Welche Aussagen, rechtlichen Grenzen oder No-Gos muss die Kampagne beachten?"
                   disabled={demo.isReadOnly}
                 />
               </Field>
@@ -333,7 +334,7 @@ export function OnboardingFlow({
               disabled={isSaving || demo.isReadOnly}
               onClick={() => saveCurrentStep(false)}
             >
-              {isSaving ? "Saving..." : "Save draft"}
+              {isSaving ? "Wird gespeichert..." : "Entwurf speichern"}
             </button>
             <button
               type="button"
@@ -341,7 +342,7 @@ export function OnboardingFlow({
               disabled={isSaving || demo.isReadOnly}
               onClick={() => saveCurrentStep(stepIndex === steps.length - 1)}
             >
-              {stepIndex === steps.length - 1 ? "Finish context" : "Save and continue"}
+              {stepIndex === steps.length - 1 ? "Kontext abschließen" : "Speichern und weiter"}
             </button>
           </div>
         </section>

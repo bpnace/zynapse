@@ -37,35 +37,35 @@ function extractAngleLabel(title: string) {
 function buildPackageRecommendation(packageTier: string, nextStepCopy: string | null) {
   if (packageTier === "growth") {
     return {
-      heading: "Passender Fit für das Growth-Paket",
+      heading: "Passender Fit für das Wachstumspaket",
       body:
         nextStepCopy ??
-        "Diese Seed-Kampagne deutet bereits auf einen laufenden Rhythmus hin. Die stärkere Empfehlung ist deshalb Kontinuität statt eines einmaligen Sprints.",
+        "Diese vorbereitete Kampagne deutet bereits auf einen laufenden Rhythmus hin. Die stärkere Empfehlung ist deshalb Kontinuität statt eines einmaligen Sprints.",
     };
   }
 
   return {
-    heading: "Passender Fit für den Starter-Piloten",
-    body:
-      nextStepCopy ??
-      "Die aktuelle Kampagne ist als fokussierter Prozessbeweis strukturiert und passt damit gut zu einem bezahlten Starter-Piloten vor einem breiteren Rollout.",
+      heading: "Passender Fit für den Starter-Piloten",
+      body:
+        nextStepCopy ??
+      "Die aktuelle Kampagne ist als fokussierter Prozessbeweis strukturiert und passt damit gut zu einem bezahlten Starter-Piloten vor einem breiteren Ausbau.",
   };
 }
 
 function buildReviewDeadlineContext(currentStage: string, changeRequestedCount: number) {
   if (currentStage === "in_review") {
     return {
-      label: "Aktueller Review-Zyklus",
+      label: "Aktuelle Freigaberunde",
       detail:
         changeRequestedCount > 0
-          ? "Es ist keine feste Deadline hinterlegt. Der aktuelle Review-Zyklus bleibt offen, bis die angeforderten Änderungen erledigt sind."
-          : "Es ist keine feste Deadline hinterlegt. Der aktuelle Review-Zyklus bleibt offen, bis die finalen Reviewer-Entscheidungen vorliegen.",
+          ? "Es ist keine feste Deadline hinterlegt. Die aktuelle Freigaberunde bleibt offen, bis die angeforderten Änderungen erledigt sind."
+          : "Es ist keine feste Deadline hinterlegt. Die aktuelle Freigaberunde bleibt offen, bis die finalen Entscheidungen der Freigebenden vorliegen.",
     };
   }
 
   return {
-    label: "Review-Timing",
-    detail: "Der Seed-Workspace definiert für diesen Status noch keine harte Deadline.",
+    label: "Timing der Freigabe",
+    detail: "Für diesen Status ist aktuell keine feste Frist hinterlegt.",
   };
 }
 

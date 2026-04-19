@@ -73,10 +73,10 @@ export default async function WorkspacePage() {
           <NextActionCard
             campaignId={dashboard.latestCampaign?.id ?? null}
             briefHref="/workspace/briefs/new"
-            title={dashboard.template?.nextAction.title ?? "Workspace bereit"}
+            title={dashboard.template?.nextAction.title ?? "Bereit für die Freigabe"}
             body={
               dashboard.template?.nextAction.body ??
-              "Der Workspace ist bereit für den nächsten Review-Durchgang."
+              "Der geschützte Bereich ist bereit für die nächste Freigaberunde."
             }
           />
         </div>

@@ -1,8 +1,8 @@
 {
   "key": "d2c_product_launch",
-  "label": "D2C product launch",
-  "campaignName": "Daily Glow Serum Launch Sprint",
-  "campaignGoal": "Launch-ready paid social creative for a new hero serum.",
+  "label": "D2C-Produktlaunch",
+  "campaignName": "Daily Glow Serum · Kampagnenstart",
+  "campaignGoal": "Paid-Social-Motive, die für den Start eines neuen Leitserums bereitstehen.",
   "packageTier": "starter",
   "currentStage": "in_review",
   "stageDefinitions": [
@@ -14,27 +14,27 @@
     { "key": "handover_ready", "status": "pending" }
   ],
   "brandProfile": {
-    "offerSummary": "A D2C skincare launch centered on glow, texture, and ingredient proof.",
-    "targetAudience": "Women 25-40 with an existing skincare routine and high creative fatigue.",
-    "primaryChannels": "Meta Reels, paid social landing videos, TikTok Spark Ads",
-    "brandTone": "Clean, premium, credible, but performance-aware",
-    "reviewNotes": "Keep product proof concrete, avoid broad beauty superlatives, and maintain fast mobile readability.",
-    "claimGuardrails": "No medical or cure claims. Avoid promising visible results in under 24 hours."
+    "offerSummary": "Eine D2C-Hautpflegekampagne, die Glow, Textur und belastbare Inhaltsstoffbelege ins Zentrum stellt.",
+    "targetAudience": "Frauen zwischen 25 und 40 mit bestehender Skincare-Routine und hoher Ermüdung durch ähnliche Motive.",
+    "primaryChannels": "Reels auf Meta, Landingvideos für bezahlte Social-Ausspielung und TikTok-Spark-Anzeigen",
+    "brandTone": "Klar, hochwertig, glaubwürdig und zugleich performance-orientiert",
+    "reviewNotes": "Produktbelege konkret halten, breite Beauty-Superlative vermeiden und mobile Lesbarkeit hoch halten.",
+    "claimGuardrails": "Keine medizinischen oder heilungsbezogenen Aussagen. Keine sichtbaren Ergebnisse in unter 24 Stunden versprechen."
   },
   "preparedBlocks": {
-    "prepared": "Eine Launch-Kampagne, sechs launchbereite Varianten und ein bereits vorbereiteter Review-Pfad für euer Team.",
-    "review": "Euer Team kann Hook-Angles, Proof-Momente und CTA-Setups vergleichen, ohne dass dafür ein Sales-Walkthrough nötig ist.",
-    "output": "Der Seed-Output spiegelt wider, was Zynapse nach dem ersten Review-Zyklus übergeben würde: exportbereite Paid-Social-Varianten.",
-    "nextStep": "Wenn diese Launch-Logik passt, ist der nächste Schritt, die Freigaben zu schärfen und den Starter-Pilot sauber einzugrenzen."
+    "prepared": "Eine Kampagne zur Markteinführung, sechs startbereite Varianten und ein bereits vorbereiteter Freigabepfad für euer Team.",
+    "review": "Euer Team kann Einstiege, Wirkbeweise und Handlungsaufforderungen vergleichen, ohne dass dafür ein zusätzlicher Vertriebsdurchgang nötig ist.",
+    "output": "Das vorbereitete Paket spiegelt wider, was Zynapse nach der ersten Freigaberunde übergeben würde: exportbereite Paid-Social-Varianten.",
+    "nextStep": "Wenn diese Mechanik für die Markteinführung passt, ist der nächste Schritt, die Freigaben zu schärfen und den Starter-Pilot sauber einzugrenzen."
   },
   "nextAction": {
-    "title": "Stärksten proof-getriebenen Launch-Angle reviewen",
-    "body": "Zwei Varianten wirken bereits fast freigabereif. Die verbleibende offene Diskussion dreht sich vor allem um Claim-Präzision und CTA-Schärfe."
+    "title": "Den stärksten Ansatz für die Markteinführung mit klarem Wirkbeweis prüfen",
+    "body": "Zwei Varianten wirken bereits fast freigabereif. Die verbleibende offene Diskussion dreht sich vor allem um die Präzision der Aussagen und die Schärfe der Handlungsaufforderung."
   },
   "assets": [
     {
       "key": "launch-hook-proof",
-      "title": "Hook 01 · Ingredient-first proof cut",
+      "title": "Variante 01 · Wirkbeweis mit Fokus auf die Inhaltsstoffe",
       "assetType": "short_video",
       "format": "9:16",
       "durationSeconds": 15,
@@ -46,7 +46,7 @@
     },
     {
       "key": "launch-hook-texture",
-      "title": "Hook 02 · Texture reveal opener",
+      "title": "Variante 02 · Einstieg über die Textur",
       "assetType": "short_video",
       "format": "4:5",
       "durationSeconds": 10,
@@ -58,7 +58,7 @@
     },
     {
       "key": "launch-hook-routine",
-      "title": "Hook 03 · AM routine integration",
+      "title": "Variante 03 · Integration in die Morgenroutine",
       "assetType": "short_video",
       "format": "3:4",
       "durationSeconds": 18,
@@ -70,7 +70,7 @@
     },
     {
       "key": "launch-static-ugc",
-      "title": "Static 01 · Founder quote card",
+      "title": "Statisch 01 · Statement aus dem Gründerteam",
       "assetType": "static",
       "format": "4:5",
       "versionLabel": "v1",
@@ -81,7 +81,7 @@
     },
     {
       "key": "launch-static-benefits",
-      "title": "Static 02 · Benefits stack",
+      "title": "Statisch 02 · Nutzen-Stack",
       "assetType": "static",
       "format": "4:5",
       "versionLabel": "v2",
@@ -92,7 +92,7 @@
     },
     {
       "key": "launch-cutdown-reminder",
-      "title": "Cutdown · Retargeting reminder",
+      "title": "Kurzfassung · Erinnerung für die Wiederansprache",
       "assetType": "short_video",
       "format": "1:1",
       "durationSeconds": 12,
@@ -111,12 +111,12 @@
       "comments": [
         {
           "authorId": "brand_reviewer",
-          "body": "The opening line is directionally right, but it still sounds too much like a promise. We should keep it closer to texture proof.",
+          "body": "Die erste Zeile geht in die richtige Richtung, klingt aber noch zu sehr nach einem Versprechen. Sie sollte stärker über die Textur belegt werden.",
           "commentType": "change_request"
         },
         {
           "authorId": "zynapse_ops",
-          "body": "Noted. We can reframe it around product feel and ingredient context without implying guaranteed outcome.",
+          "body": "Verstanden. Wir können es stärker über Produktgefühl und Inhaltsstoff-Kontext aufziehen, ohne ein garantiertes Ergebnis anzudeuten.",
           "commentType": "comment"
         }
       ]
@@ -128,7 +128,7 @@
       "comments": [
         {
           "authorId": "brand_admin",
-          "body": "This one feels ready. The proof sequence lands and the CTA is clean enough for a first paid test.",
+          "body": "Das wirkt bereit. Die Sequenz mit dem Wirkbeweis sitzt und die Handlungsaufforderung ist klar genug für einen ersten bezahlten Test.",
           "commentType": "approval_note"
         }
       ]

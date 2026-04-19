@@ -24,32 +24,32 @@ export function DashboardOverview({
 }: DashboardOverviewProps) {
   const items = [
     {
-      label: "Engagement",
+      label: "Mandat",
       value: organizationName,
-      detail: primaryChannels ?? audience ?? "Managed delivery workspace",
+      detail: primaryChannels ?? audience ?? "Geschützter Bereich für laufende Zusammenarbeit",
     },
     {
-      label: "Needs input",
+      label: "Offen",
       value: String(openReviewCount),
       detail:
         openReviewCount === 1
-          ? "1 open review decision is waiting"
-          : "Open review decisions are waiting",
+          ? "Eine Freigabe wartet auf Entscheidung"
+          : "Offene Freigaben warten auf Entscheidung",
     },
     {
-      label: "Ready",
+      label: "Freigegeben",
       value: String(approvedAssetCount),
       detail:
         approvedAssetCount === 1
-          ? "1 approved output is ready for delivery"
-          : "Approved outputs are ready for delivery",
+          ? "Eine Variante ist bereit für die Übergabe"
+          : "Freigegebene Varianten sind bereit für die Übergabe",
     },
     {
-      label: "Context",
+      label: "Kontext",
       value: `${onboardingCompletion.percent}%`,
       detail: onboardingCompletion.isComplete
-        ? "Brand context is complete enough for review, delivery, and commercial handoff."
-        : `${onboardingCompletion.completed} of ${onboardingCompletion.total} context fields are filled.`,
+        ? "Der Markenkontext ist vollständig genug, damit Freigabe, Übergabe und Pilotanfrage auf derselben Grundlage laufen."
+        : `${onboardingCompletion.completed} von ${onboardingCompletion.total} Kontextfeldern sind ausgefüllt.`,
     },
   ];
 
@@ -68,13 +68,13 @@ export function DashboardOverview({
             <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
               {item.detail}
             </p>
-            {item.label === "Context" ? (
+            {item.label === "Kontext" ? (
               <div className="mt-3">
                 <Link
                   href="/workspace/onboarding"
                   className="workspace-button workspace-button-secondary"
                 >
-                  {onboardingCompletion.isComplete ? "Review context" : "Complete context"}
+                  {onboardingCompletion.isComplete ? "Kontext prüfen" : "Kontext vervollständigen"}
                 </Link>
               </div>
             ) : null}

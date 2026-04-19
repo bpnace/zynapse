@@ -40,7 +40,7 @@ function mapOtpError(error: unknown) {
   const message = error.message.toLowerCase();
 
   if (message.includes("signups not allowed for otp")) {
-    return "Diese E-Mail hat noch keinen Workspace-Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Waitlist.";
+    return "Diese E-Mail hat noch keinen Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Warteliste.";
   }
 
   if (message.includes("invalid") && message.includes("otp")) {
@@ -139,7 +139,7 @@ export function WorkspaceLoginForm({
       const payload = (await eligibilityResponse.json()) as { error?: string };
       throw new Error(
         payload.error ??
-          "Diese E-Mail hat noch keinen Workspace-Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Waitlist.",
+          "Diese E-Mail hat noch keinen Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Warteliste.",
       );
     }
   }
@@ -339,10 +339,10 @@ export function WorkspaceLoginForm({
     >
       <div className="space-y-2">
         <h2 className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-          Invite-only Login
+          Zugang auf Einladung
         </h2>
         <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-          Der Zugang zum Workspace ist nur für eingeladene Brand-Teams vorgesehen.
+          Der geschützte Bereich ist nur für eingeladene Teams freigeschaltet.
         </p>
       </div>
 
@@ -444,7 +444,7 @@ export function WorkspaceLoginForm({
             </p>
             <p className="mt-1 text-sm leading-6 text-[color:var(--copy-body)]">
               Gib den 6-stelligen Code aus deiner E-Mail ein, um direkt in den
-              Workspace zu wechseln.
+              geschützten Bereich zu wechseln.
             </p>
           </div>
 
@@ -504,7 +504,7 @@ export function WorkspaceLoginForm({
           className="justify-center disabled:cursor-wait"
           disabled={isEmailSubmitDisabled}
         >
-          {isPending ? "Code wird gesendet..." : "Anmelden"}
+          {isPending ? "Code wird gesendet..." : "Code anfordern"}
         </Button>
       ) : (
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

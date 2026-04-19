@@ -12,10 +12,10 @@ export function PreparedBlocks({
   nextStep,
 }: PreparedBlocksProps) {
   const items = [
-    { title: "Prepared", copy: prepared },
-    { title: "Review path", copy: review },
-    { title: "Delivery package", copy: output },
-    { title: "Next allowed step", copy: nextStep },
+    { title: "Vorbereitet", copy: prepared },
+    { title: "Freigabepfad", copy: review },
+    { title: "Übergabepaket", copy: output },
+    { title: "Nächster Schritt", copy: nextStep },
   ];
 
   return (

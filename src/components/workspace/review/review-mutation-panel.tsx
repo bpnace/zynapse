@@ -59,7 +59,7 @@ export function ReviewMutationPanel({
     <div className="space-y-4">
       <div>
         <label className="workspace-section-label" htmlFor="review-note">
-          Review-Notiz hinzufügen
+          Notiz zur Freigabe
         </label>
         <textarea
           id="review-note"
@@ -86,7 +86,7 @@ export function ReviewMutationPanel({
           disabled={!canReview || isPending}
           onClick={() => runMutation("approved")}
         >
-          Asset freigeben
+          Variante freigeben
         </button>
         <button
           type="button"
@@ -102,7 +102,7 @@ export function ReviewMutationPanel({
         {demo.isDemoWorkspace
           ? demo.mutationMessage
           : canReview
-          ? "Notizen und Entscheidungen werden sofort gespeichert und aktualisieren den Review-Status für Asset und Kampagne."
+          ? "Notizen und Entscheidungen werden sofort gespeichert und aktualisieren den Freigabestatus für Variante und Kampagne."
           : "Diese Rolle kann die Historie sehen, aber keine Entscheidungen absenden."}
       </p>
 

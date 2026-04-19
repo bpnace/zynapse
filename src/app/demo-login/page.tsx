@@ -9,7 +9,7 @@ import {
 export const metadata = buildMetadata({
   title: "Geschlossene Demo | Zynapse",
   description:
-    "Geschlossener Demo-Zugang für den kuratierten Brand-Workspace von Zynapse.",
+    "Geschlossener Demo-Zugang für den kuratierten Markenbereich von Zynapse.",
   path: "/demo-login",
   indexable: false,
 });
@@ -60,7 +60,7 @@ export default async function DemoLoginPage({
       <div className="max-w-3xl space-y-4">
         <p className="workspace-section-label">Geschlossene Demo</p>
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
-          Demo-Login für den Zynapse Workspace.
+          Demo-Login für den Zynapse-Arbeitsbereich.
         </h1>
         <p className="text-base text-[color:var(--copy-body)] sm:text-[1.0625rem]">
           Dieser Zugang ist für eine kuratierte, schreibgeschützte Produktdemo
@@ -78,7 +78,8 @@ export default async function DemoLoginPage({
             Geschlossener Demo-Zugang
           </h2>
           <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-            Das Demo-Konto landet direkt im schreibgeschützten Showcase-Workspace.
+            Das Demo-Konto landet direkt in einem schreibgeschützten
+            Demo-Bereich.
           </p>
         </div>
 

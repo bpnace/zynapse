@@ -10,6 +10,8 @@ describe("workspace formatting helpers", () => {
     expect(formatWorkspaceLabel("in_review")).toBe("In Prüfung");
     expect(formatWorkspaceLabel("changes_requested")).toBe("Änderungen angefordert");
     expect(formatWorkspaceLabel("approval_note")).toBe("Freigabehinweis");
+    expect(formatWorkspaceLabel("growth")).toBe("Wachstum");
+    expect(formatWorkspaceLabel("starter")).toBe("Starter");
   });
 
   it("translates asset types and roles consistently", () => {

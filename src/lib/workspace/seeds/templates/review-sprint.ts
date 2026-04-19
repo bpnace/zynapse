@@ -2,9 +2,9 @@ import type { SeedTemplate } from "@/lib/workspace/seeds/types";
 
 export const reviewSprintTemplate: SeedTemplate = {
   key: "review_sprint",
-  label: "Multi-stakeholder brand review sprint",
-  campaignName: "Stakeholder Review Sprint · Spring Narrative Alignment",
-  campaignGoal: "Align a multi-stakeholder team around one review-ready creative route without operational chaos.",
+  label: "Freigabe-Sprint mit mehreren Entscheidungsträgern",
+  campaignName: "Freigabesprint mit Entscheidungsträgern · Frühlingsnarrativ abstimmen",
+  campaignGoal: "Ein Team mit mehreren Entscheidungsträgern auf eine freigabereife Kreativroute ausrichten, ohne operative Unruhe zu erzeugen.",
   packageTier: "starter",
   currentStage: "in_review",
   stageDefinitions: [
@@ -16,27 +16,27 @@ export const reviewSprintTemplate: SeedTemplate = {
     { key: "handover_ready", status: "pending" },
   ],
   brandProfile: {
-    offerSummary: "A cross-functional review sprint for seasonal messaging where marketing, brand, and founder feedback all need to converge.",
-    targetAudience: "Existing prospect audience segments already familiar with the product category but sensitive to narrative framing.",
-    primaryChannels: "Meta video, paid social statics, internal stakeholder review rooms",
-    brandTone: "Brand-led, confident, and operationally clean",
-    reviewNotes: "The goal is less about volume and more about reducing approval chaos across multiple reviewers.",
-    claimGuardrails: "Avoid overclaiming competitive superiority. Keep positioning language comparative but grounded.",
+    offerSummary: "Ein bereichsübergreifender Freigabe-Sprint für saisonale Kommunikation, in dem Marketing, Marke und Feedback aus dem Gründerteam sauber zusammenlaufen müssen.",
+    targetAudience: "Bestehende Zielgruppensegmente mit Verständnis für die Produktkategorie, die sensibel auf das richtige Narrativ reagieren.",
+    primaryChannels: "Meta-Video, statische Paid-Social-Motive und interne Freigaberäume für Entscheidungsträger",
+    brandTone: "Markengeführt, souverän und operativ klar",
+    reviewNotes: "Das Ziel ist weniger Volumen als saubere Freigaben über mehrere Freigebende hinweg.",
+    claimGuardrails: "Keine überzogenen Aussagen zur Überlegenheit. Positionierung vergleichend, aber belastbar formulieren.",
   },
   preparedBlocks: {
-    prepared: "Der Workspace ist bereits um einen klaren Review-Sprint strukturiert, damit mehrere Stakeholder reagieren können, ohne das Briefing jedes Mal neu zu öffnen.",
-    review: "Jede offene Diskussion ist an ein konkretes Asset und einen Kontext-Hinweis gebunden, sodass schnell klar wird, was die Freigabe noch blockiert.",
-    output: "Der Seed-Output zeigt, was Zynapse einem Team mit Abstimmungsbedarf tatsächlich übergeben würde und nicht nur rohe Creative-Masse.",
-    nextStep: "Der nächste Schritt ist, die offenen Review-Hinweise in eine freigabereife Route zu verdichten, statt den Sprint weiter in die Länge zu ziehen.",
+    prepared: "Der Bereich ist bereits um einen klaren Freigabe-Sprint strukturiert, damit mehrere Entscheidungsträger reagieren können, ohne das Briefing jedes Mal neu zu öffnen.",
+    review: "Jede offene Diskussion ist an eine konkrete Variante und einen Kontext-Hinweis gebunden, sodass schnell klar wird, was die Freigabe noch blockiert.",
+    output: "Das vorbereitete Paket zeigt, was Zynapse einem Team mit Abstimmungsbedarf tatsächlich übergeben würde und nicht nur rohe Kreativmasse.",
+    nextStep: "Der nächste Schritt ist, die offenen Hinweise aus der Freigabe in eine freigabereife Richtung zu verdichten, statt den Sprint weiter in die Länge zu ziehen.",
   },
   nextAction: {
-    title: "Offene Review-Hinweise in eine freigabereife Route verdichten",
-    body: "Der Workspace zeigt bereits, wo sich Stakeholder-Feedback überschneidet und wo die finale Freigabe noch blockiert ist.",
+    title: "Offene Hinweise aus der Freigabe in eine freigabereife Richtung verdichten",
+    body: "Der Bereich zeigt bereits, wo sich Feedback aus dem Entscheidungskreis überschneidet und wo die finale Freigabe noch blockiert ist.",
   },
   assets: [
     {
       key: "review-hero-cut",
-      title: "Hero Cut · Seasonal narrative opener",
+      title: "Leitmotiv-Variante · Saisonaler Einstieg ins Narrativ",
       assetType: "short_video",
       format: "9:16",
       durationSeconds: 24,
@@ -48,7 +48,7 @@ export const reviewSprintTemplate: SeedTemplate = {
     },
     {
       key: "review-proof-cut",
-      title: "Proof Cut · Benefits compression",
+      title: "Wirkbeweis-Variante · Verdichtete Nutzenargumentation",
       assetType: "short_video",
       format: "9:16",
       durationSeconds: 19,
@@ -60,7 +60,7 @@ export const reviewSprintTemplate: SeedTemplate = {
     },
     {
       key: "review-founder-note",
-      title: "Founder Note · Narrative rationale",
+      title: "Hinweis aus dem Gründerteam · Einordnung des Narrativs",
       assetType: "static",
       format: "4:5",
       versionLabel: "v1",
@@ -71,7 +71,7 @@ export const reviewSprintTemplate: SeedTemplate = {
     },
     {
       key: "review-comparison-card",
-      title: "Comparison Card · Why this route now",
+      title: "Vergleichskarte · Warum diese Richtung jetzt trägt",
       assetType: "static",
       format: "1:1",
       versionLabel: "v2",
@@ -82,7 +82,7 @@ export const reviewSprintTemplate: SeedTemplate = {
     },
     {
       key: "review-ugc-remix",
-      title: "UGC Remix · Voice-over variant",
+      title: "Remix aus nutzernaher Perspektive · Variante mit Sprechertext",
       assetType: "short_video",
       format: "9:16",
       durationSeconds: 16,
@@ -94,7 +94,7 @@ export const reviewSprintTemplate: SeedTemplate = {
     },
     {
       key: "review-square-summary",
-      title: "Summary Card · Internal approval snapshot",
+      title: "Zusammenfassungskarte · Momentaufnahme für die interne Freigabe",
       assetType: "static",
       format: "1:1",
       versionLabel: "v1",
@@ -112,12 +112,12 @@ export const reviewSprintTemplate: SeedTemplate = {
       comments: [
         {
           authorId: "brand_admin",
-          body: "The opener feels close, but the brand framing should land slightly earlier so internal reviewers do not miss the strategic context.",
+          body: "Der Einstieg ist nah dran, aber die Markenführung sollte etwas früher einsetzen, damit der strategische Kontext intern sofort klar ist.",
           commentType: "change_request",
         },
         {
           authorId: "brand_reviewer",
-          body: "Agree on the timing. Once that line lands earlier, I think the rest of the cut is strong enough to move forward.",
+          body: "Sehe ich genauso. Wenn diese Zeile früher sitzt, ist der Rest des Cuts stark genug für den nächsten Schritt.",
           commentType: "comment",
         },
       ],
@@ -129,7 +129,7 @@ export const reviewSprintTemplate: SeedTemplate = {
       comments: [
         {
           authorId: "brand_reviewer",
-          body: "This one is likely the cleanest approval path. The benefit ordering already feels understandable without extra explanation.",
+          body: "Das ist im Moment der sauberste Weg zur Freigabe. Die Reihenfolge der Nutzenargumente trägt schon ohne zusätzliche Erklärung.",
           commentType: "approval_note",
         },
       ],
@@ -141,7 +141,7 @@ export const reviewSprintTemplate: SeedTemplate = {
       comments: [
         {
           authorId: "zynapse_ops",
-          body: "This is usable, but still a little too close to generic category language. We should push it further toward the agreed narrative route.",
+          body: "Das ist nutzbar, liegt sprachlich aber noch zu nah an generischer Kategorie-Kommunikation. Wir sollten es stärker auf die vereinbarte Narrativrichtung ziehen.",
           commentType: "change_request",
         },
       ],

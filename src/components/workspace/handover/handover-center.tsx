@@ -92,7 +92,7 @@ export function HandoverCenter({
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
                 Diese Ansicht dokumentiert, was freigegeben ist, wie die
-                Deliverables referenziert werden und ob der nächste
+                Varianten referenziert werden und ob der nächste
                 kommerzielle Schritt belastbar vorbereitet ist.
               </p>
             </div>
@@ -103,7 +103,7 @@ export function HandoverCenter({
               href={`/workspace/campaigns/${campaign.id}/review`}
               className="workspace-button workspace-button-secondary"
             >
-              Zurück ins Review
+              Zurück zur Freigabe
             </Link>
             {commercialReady ? (
               <Link
@@ -122,8 +122,8 @@ export function HandoverCenter({
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
           <div className="workspace-meta-row">
-            <span>{campaign.packageTier}</span>
-            <span>{approvedAssets.length} freigegebene Assets</span>
+            <span>{formatWorkspaceLabel(campaign.packageTier)}</span>
+            <span>{approvedAssets.length} freigegebene Varianten</span>
             <span>{groupedAssets.length} Übergabegruppen</span>
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-4">
@@ -133,7 +133,7 @@ export function HandoverCenter({
                 {approvedAssets.length}
               </p>
               <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Outputs mit bestätigter Freigabe
+                Freigegebene Varianten
               </p>
             </div>
             <div className="border border-[var(--workspace-line)] px-3 py-3">
@@ -142,7 +142,7 @@ export function HandoverCenter({
                 {sourceCoverage}/{approvedAssets.length}
               </p>
               <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Assets mit dokumentierter Herkunft
+                Varianten mit dokumentierter Herkunft
               </p>
             </div>
             <div className="border border-[var(--workspace-line)] px-3 py-3">
@@ -151,7 +151,7 @@ export function HandoverCenter({
                 {storageCoverage}/{approvedAssets.length}
               </p>
               <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Speicherpfade für Delivery hinterlegt
+                Speicherpfade für die Übergabe hinterlegt
               </p>
             </div>
             <div className="border border-[var(--workspace-line)] px-3 py-3">
@@ -174,13 +174,13 @@ export function HandoverCenter({
         <div className="grid gap-4">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Freigegebene Outputs</p>
+              <p className="workspace-section-label">Freigegebene Varianten</p>
               <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
                 Übergabepaket nach Kanal und Format
               </h2>
               <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                Jeder Eintrag bleibt als freigegebenes Deliverable mit Quelle,
-                Referenzen und Delivery-Hinweisen sichtbar.
+                Jede Variante bleibt mit Quelle,
+                Referenzen und Hinweisen zur Übergabe sichtbar.
               </p>
             </div>
 
@@ -232,8 +232,8 @@ export function HandoverCenter({
                                   {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
                                 </div>
                                 <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                                  Freigabe liegt vor. Dieses Deliverable bleibt
-                                  für Handover, Rückfragen und kommerzielle
+                                  Freigabe liegt vor. Diese Variante bleibt
+                                  für Übergabe, Rückfragen und kommerzielle
                                   Anschlussarbeit referenzierbar.
                                 </p>
                               </div>
@@ -263,13 +263,13 @@ export function HandoverCenter({
             ) : (
               <div className="mt-5 space-y-3">
                 <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
-                  Noch keine freigegebenen Assets sind bereit für die Übergabe.
+                  Noch keine freigegebenen Varianten sind bereit für die Übergabe.
                 </p>
                 <Link
                   href={`/workspace/campaigns/${campaign.id}/review`}
                   className="workspace-button workspace-button-secondary"
                 >
-                  Review erneut öffnen
+                  Freigabe erneut öffnen
                 </Link>
               </div>
             )}
@@ -309,8 +309,8 @@ export function HandoverCenter({
                         </p>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                        Review-Freigabe ist erteilt. Die Referenzen unten
-                        dokumentieren, worauf Delivery und spätere Nutzung
+                        Die Freigabe ist erteilt. Die Referenzen unten
+                        dokumentieren, worauf Übergabe und spätere Nutzung
                         verweisen.
                       </p>
                     </div>
@@ -372,7 +372,7 @@ export function HandoverCenter({
               <div className="mt-3 workspace-split-list">
                 <div className="flex items-center justify-between gap-3 py-3">
                   <span className="text-sm text-[var(--workspace-copy-body)]">
-                    Freigegebene Assets vorhanden
+                    Freigegebene Varianten vorhanden
                   </span>
                   <StatusPill value={approvedAssets.length > 0 ? "approved" : "pending"} />
                 </div>
@@ -413,7 +413,7 @@ export function HandoverCenter({
               <p className="workspace-section-label">Kampagnenhinweise</p>
               <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
                 {campaignNotes ??
-                  "Für diese Delivery liegen noch keine zusätzlichen Hinweise vor."}
+                  "Für diese Übergabe liegen noch keine zusätzlichen Hinweise vor."}
               </p>
             </div>
 
@@ -448,7 +448,7 @@ export function HandoverCenter({
             </div>
             <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
               {nextStep ??
-                "Die Delivery-Seite prüft zuerst Freigaben, Referenzen und Delivery-Sicherheit. Erst danach sollte der kommerzielle Anschluss gestartet werden."}
+                "Die Übergabeseite prüft zuerst Freigaben, Referenzen und Übergabesicherheit. Erst danach sollte der kommerzielle Anschluss gestartet werden."}
             </p>
 
             <div className="mt-5 workspace-split-list border-t border-[var(--workspace-line)] pt-4">
@@ -466,13 +466,13 @@ export function HandoverCenter({
               </div>
               <div className="flex items-center justify-between gap-3 py-3">
                 <span className="text-sm text-[var(--workspace-copy-body)]">
-                  Deliverables dokumentiert
+                  Varianten dokumentiert
                 </span>
                 <StatusPill value={approvedAssets.length > 0 ? "approved" : "pending"} />
               </div>
               <div className="flex items-center justify-between gap-3 py-3">
                 <span className="text-sm text-[var(--workspace-copy-body)]">
-                  Delivery-Nachweise vorhanden
+                  Nachweise für die Übergabe vorhanden
                 </span>
                 <StatusPill
                   value={storageCoverage === approvedAssets.length && approvedAssets.length > 0 ? "approved" : "pending"}
@@ -502,7 +502,7 @@ export function HandoverCenter({
                 href={`/workspace/campaigns/${campaign.id}/review`}
                 className="workspace-button workspace-button-secondary"
               >
-                Review erneut prüfen
+                Freigabe erneut prüfen
               </Link>
             </div>
             <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
@@ -510,7 +510,7 @@ export function HandoverCenter({
                 ? demo.mutationMessage
                 : commercialReady
                   ? "Alle sichtbaren Nachweise sprechen für einen belastbaren kommerziellen Anschluss."
-                  : "Der kommerzielle Schritt bleibt nachrangig, bis Freigaben und Delivery-Nachweise sauber stehen."}
+                  : "Der kommerzielle Schritt bleibt nachrangig, bis Freigaben und Übergabe-Nachweise sauber stehen."}
             </p>
           </section>
         </div>

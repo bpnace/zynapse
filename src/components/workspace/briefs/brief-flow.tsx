@@ -45,7 +45,7 @@ const steps: StepDefinition[] = [
   {
     key: "audience-and-channels",
     label: "Zielgruppe und Kanäle",
-    description: "Beschreibt, wen das Briefing anspricht, wo es laufen soll und welche Angles führen müssen.",
+    description: "Beschreibt, wen das Briefing anspricht, wo es laufen soll und welche Richtungen tragen müssen.",
     fields: ["audience", "channels", "hooks", "creativeReferences"],
   },
   {
@@ -232,7 +232,7 @@ export function BriefFlow({
               </div>
             ) : (
               <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Für diesen Workspace wurde noch kein Briefing gespeichert.
+                Für diesen Bereich wurde noch kein Briefing gespeichert.
               </p>
             )}
           </div>
@@ -255,7 +255,7 @@ export function BriefFlow({
                 <TextInput
                   value={values.title}
                   onChange={(event) => updateValue("title", event.target.value)}
-                  placeholder="Q2 Briefing für Serum-Launch"
+                  placeholder="Q2-Briefing für die Serumeinführung"
                   disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
@@ -306,22 +306,22 @@ export function BriefFlow({
             ) : null}
 
             {step.fields.includes("hooks") ? (
-              <Field label="Hooks oder Messaging-Prioritäten" error={fieldErrors.hooks}>
+              <Field label="Einstiege oder Prioritäten in der Ansprache" error={fieldErrors.hooks}>
                 <TextareaInput
                   value={values.hooks}
                   onChange={(event) => updateValue("hooks", event.target.value)}
-                  placeholder="Welche Angles, Hooks oder Proof-Momente sollen führen?"
+                  placeholder="Welche Ansätze, Einstiege oder Wirkbeweise sollen führen?"
                   disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
             ) : null}
 
             {step.fields.includes("creativeReferences") ? (
-              <Field label="Creative-Referenzen" error={fieldErrors.creativeReferences}>
+              <Field label="Kreativ-Referenzen" error={fieldErrors.creativeReferences}>
                 <TextareaInput
                   value={values.creativeReferences}
                   onChange={(event) => updateValue("creativeReferences", event.target.value)}
-                  placeholder="Relevante Assets, Beispiele oder aktuelle Gewinner ergänzen."
+                  placeholder="Relevante Varianten, Beispiele oder aktuelle Gewinner ergänzen."
                   disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>
@@ -343,7 +343,7 @@ export function BriefFlow({
                 <TextInput
                   value={values.timeline}
                   onChange={(event) => updateValue("timeline", event.target.value)}
-                  placeholder="Launch innerhalb von vier Wochen"
+                  placeholder="Markteinführung innerhalb von vier Wochen"
                   disabled={currentStatus === "submitted" || demo.isReadOnly}
                 />
               </Field>

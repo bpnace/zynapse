@@ -36,23 +36,23 @@ export function WorkspaceShell({
 }: WorkspaceShellProps) {
   const pathname = usePathname();
   const mobileLocationLabel = pathname.includes("/review")
-    ? "Review"
+    ? "Freigabe"
     : pathname.includes("/handover")
-      ? "Delivery"
+      ? "Übergabe"
     : pathname.includes("/onboarding")
-      ? "Brand Context"
+      ? "Markenkontext"
     : pathname.includes("/briefs/")
       ? "Briefings"
     : pathname.includes("/pilot-request")
-      ? "Commercial"
+      ? "Pilotanfrage"
     : pathname.includes("/campaigns/")
-      ? "Workstream"
-      : "Today";
+      ? "Kampagne"
+      : "Heute";
   const primaryNavigation = [
     {
       href: "/workspace",
-      label: "Today",
-      helper: "Status, decisions, readiness",
+      label: "Heute",
+      helper: "Status, Entscheidungen, Freigabereife",
       icon: LayoutGrid,
       active: pathname === "/workspace",
     },
@@ -60,8 +60,8 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}`
         : undefined,
-      label: "Workstream",
-      helper: "Objective, stage, deliverables",
+      label: "Kampagne",
+      helper: "Ziel, Phase und Varianten",
       icon: FolderKanban,
       active:
         Boolean(activeCampaignId) &&
@@ -71,8 +71,8 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}/review`
         : undefined,
-      label: "Review",
-      helper: "Decisions, changes, approvals",
+      label: "Freigabe",
+      helper: "Feedback, Änderungen, Freigaben",
       icon: ShieldCheck,
       active: pathname.includes("/review"),
     },
@@ -80,8 +80,8 @@ export function WorkspaceShell({
       href: activeCampaignId
         ? `/workspace/campaigns/${activeCampaignId}/handover`
         : undefined,
-      label: "Delivery",
-      helper: "Approved outputs and ledger",
+      label: "Übergabe",
+      helper: "Freigegebene Varianten und Nachweise",
       icon: Rocket,
       active: pathname.includes("/handover"),
     },
@@ -89,15 +89,15 @@ export function WorkspaceShell({
   const secondaryNavigation = [
     {
       href: "/workspace/onboarding",
-      label: "Brand Context",
-      helper: "Channels, guardrails, reviewers",
+      label: "Markenkontext",
+      helper: "Kanäle, Leitplanken, Freigabe",
       icon: Settings2,
       active: pathname === "/workspace/onboarding",
     },
     {
       href: "/workspace/briefs/new",
       label: "Briefings",
-      helper: "Structured requests and intake",
+      helper: "Strukturierte Anfragen und Erstaufnahme",
       icon: ClipboardList,
       active: pathname.includes("/briefs/"),
     },
@@ -108,8 +108,8 @@ export function WorkspaceShell({
           href: activeCampaignId
             ? `/workspace/pilot-request?campaignId=${activeCampaignId}`
             : "/workspace/pilot-request",
-          label: "Commercial",
-          helper: "Next engagement and handoff",
+          label: "Pilotanfrage",
+          helper: "Nächster Auftrag und Übergabe",
           icon: ArrowUpRight,
           active: pathname === "/workspace/pilot-request",
         },
@@ -121,7 +121,7 @@ export function WorkspaceShell({
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px]">
         <aside className="workspace-sidebar hidden w-[264px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <p className="workspace-eyebrow">Client Operations</p>
+            <p className="workspace-eyebrow">Kundenbereich</p>
             <div className="mt-3 space-y-1">
               <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
@@ -134,7 +134,7 @@ export function WorkspaceShell({
             </div>
             <div className="mt-4 space-y-1 text-sm text-[var(--workspace-copy-muted)]">
               <p>{demo?.isDemoWorkspace ? demo.shellBadge : formatWorkspaceRole(role)}</p>
-              <p>{showCommercialStep ? "Commercial step available" : "Delivery in progress"}</p>
+              <p>{showCommercialStep ? "Pilotanfrage verfügbar" : "Übergabe läuft"}</p>
             </div>
           </div>
 
@@ -144,7 +144,7 @@ export function WorkspaceShell({
                 {demo.shellBadge}
               </p>
               <p className="mt-2 text-sm font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
-                Read-only delivery view
+                Schreibgeschützte Demo-Ansicht
               </p>
               <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
                 {demo.shellDescription}
@@ -153,9 +153,9 @@ export function WorkspaceShell({
           ) : null}
 
           <div className="mt-6">
-            <p className="workspace-section-label">Core surfaces</p>
+            <p className="workspace-section-label">Kernbereiche</p>
           </div>
-          <nav className="mt-3 space-y-1" aria-label="Workspace navigation">
+          <nav className="mt-3 space-y-1" aria-label="Navigation im Arbeitsbereich">
             {primaryNavigation.map((item) => {
               const Icon = item.icon;
               const className = cn(
@@ -201,7 +201,7 @@ export function WorkspaceShell({
           </nav>
 
           <div className="mt-8">
-            <p className="workspace-section-label">Context</p>
+            <p className="workspace-section-label">Kontext</p>
           </div>
           <nav className="mt-3 space-y-1">
             {[...secondaryNavigation, ...commercialNavigation].map((item) => {
@@ -249,10 +249,11 @@ export function WorkspaceShell({
           </nav>
 
           <div className="mt-auto border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Delivery stance</p>
+            <p className="workspace-section-label">Leitlinie</p>
             <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Follow the workstream, clear decisions in review, and use delivery
-              as the source of truth for approvals, provenance, and next steps.
+              Arbeite entlang der Kampagne, kläre Freigaben sauber und nutze
+              die Übergabe als verlässliche Basis für Nachweise, Freigaben und
+              die nächsten Schritte.
             </p>
           </div>
         </aside>

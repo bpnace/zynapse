@@ -65,7 +65,7 @@ describe("workspace login eligibility route", () => {
     expect(response.status).toBe(403);
     await expect(response.json()).resolves.toEqual({
       error:
-        "Diese E-Mail hat noch keinen Workspace-Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Waitlist.",
+        "Diese E-Mail hat noch keinen Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Warteliste.",
     });
   });
 

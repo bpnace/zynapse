@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "Diese E-Mail hat noch keinen Workspace-Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Waitlist.",
+            "Diese E-Mail hat noch keinen Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Warteliste.",
         },
         { status: 403 },
       );

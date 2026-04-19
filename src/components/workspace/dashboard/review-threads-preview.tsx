@@ -23,16 +23,16 @@ export function ReviewThreadsPreview({
   return (
     <section id="review-queue" className="workspace-panel px-5 py-5">
       <div className="space-y-2">
-        <p className="workspace-section-label">Decision queue</p>
+        <p className="workspace-section-label">Freigabeübersicht</p>
         <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-          Latest review signals
+          Neueste Rückmeldungen
         </h2>
       </div>
 
       {threads.length === 0 ? (
         <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
-          No review feedback has been recorded yet. As soon as comments land,
-          the latest decision signals will appear here.
+          Bisher ist noch kein Feedback eingegangen. Sobald Kommentare
+          vorliegen, siehst du hier die neuesten Signale aus der Freigabe.
         </p>
       ) : (
         <div className="mt-5 workspace-split-list">
@@ -52,7 +52,7 @@ export function ReviewThreadsPreview({
                         {thread.assetTitle}
                       </p>
                       <p className="mt-1 text-sm text-[var(--workspace-copy-muted)]">
-                        Opened by {formatWorkspaceRole(thread.createdBy)}
+                        Gestartet von {formatWorkspaceRole(thread.createdBy)}
                       </p>
                     </div>
                   </div>

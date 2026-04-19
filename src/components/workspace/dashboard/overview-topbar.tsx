@@ -22,14 +22,15 @@ export function OverviewTopBar({
     <section className="workspace-topbar px-4 py-4 sm:px-5">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="space-y-3">
-          <p className="workspace-section-label">Today</p>
+          <p className="workspace-section-label">Heute</p>
           <div className="space-y-1">
             <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-              Decision desk
+              Was heute ansteht
             </h1>
             <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-              Track what needs input now, what changed in the current workstream,
-              and what is already ready for delivery.
+              Hier siehst du, wo heute Entscheidungen gebraucht werden, was
+              sich in der laufenden Kampagne verändert hat und was bereits
+              sauber für die Übergabe vorbereitet ist.
             </p>
           </div>
         </div>
@@ -40,14 +41,14 @@ export function OverviewTopBar({
             className="workspace-button workspace-button-primary"
           >
             <FolderKanban className="h-4 w-4" />
-            Open workstream
+            Kampagne öffnen
           </a>
           <a
             href={campaignId ? `/workspace/campaigns/${campaignId}/review` : "#review-queue"}
             className="workspace-button workspace-button-secondary"
           >
             <MessageSquareText className="h-4 w-4" />
-            Open review
+            Freigabe öffnen
           </a>
         </div>
       </div>
@@ -61,8 +62,12 @@ export function OverviewTopBar({
               {campaignName}
             </span>
           ) : null}
-          <span>{openReviewCount} open review {openReviewCount === 1 ? "thread" : "threads"}</span>
-          <span>{approvedAssetCount} approved {approvedAssetCount === 1 ? "asset" : "assets"}</span>
+          <span>
+            {openReviewCount} offene {openReviewCount === 1 ? "Diskussion" : "Diskussionen"}
+          </span>
+          <span>
+            {approvedAssetCount} freigegebene {approvedAssetCount === 1 ? "Variante" : "Varianten"}
+          </span>
         </div>
         {campaignName ? (
           <div className="mt-3">

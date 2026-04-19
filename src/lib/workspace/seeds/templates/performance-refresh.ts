@@ -2,9 +2,9 @@ import type { SeedTemplate } from "@/lib/workspace/seeds/types";
 
 export const performanceRefreshTemplate: SeedTemplate = {
   key: "performance_refresh",
-  label: "Performance creative refresh",
-  campaignName: "Quarterly Creative Refresh · Core Offer Retest",
-  campaignGoal: "Refresh fatigued paid social creatives without changing the underlying offer.",
+  label: "Kreative Auffrischung für bestehende Anzeigenmotive",
+  campaignName: "Quartals-Auffrischung · Kernangebot neu testen",
+  campaignGoal: "Abgenutzte Paid-Social-Motive erneuern, ohne das zugrunde liegende Angebot zu verändern.",
   packageTier: "growth",
   currentStage: "approved",
   stageDefinitions: [
@@ -16,27 +16,27 @@ export const performanceRefreshTemplate: SeedTemplate = {
     { key: "handover_ready", status: "pending" },
   ],
   brandProfile: {
-    offerSummary: "An established consumer product with stable CAC but declining creative response.",
-    targetAudience: "Returning high-intent shoppers and lookalike audiences fatigued by the current hero variants.",
-    primaryChannels: "Meta paid social, TikTok cutdowns, landing page hero loops",
-    brandTone: "Direct response clarity with lighter lifestyle polish",
-    reviewNotes: "Protect winning proof points while making the hook feel materially newer.",
-    claimGuardrails: "Keep before/after implications subtle and avoid absolute statements.",
+    offerSummary: "Ein etabliertes Consumer-Produkt mit stabilem CAC, aber sinkender Reaktion auf die aktuellen Motive.",
+    targetAudience: "Wiederkehrende Käuferinnen mit hoher Kaufabsicht und Lookalikes, die auf die bisherigen Leitmotive kaum noch reagieren.",
+    primaryChannels: "Bezahlte Social-Ausspielung auf Meta, TikTok-Kurzfassungen und Hero-Schleifen auf der Landingpage",
+    brandTone: "Klar in der Performance-Ansprache, mit leichtem Lifestyle-Finish",
+    reviewNotes: "Starke Wirkbeweise schützen und gleichzeitig den Einstieg spürbar frischer wirken lassen.",
+    claimGuardrails: "Vorher/Nachher nur zurückhaltend andeuten und absolute Aussagen vermeiden.",
   },
   preparedBlocks: {
-    prepared: "Der Workspace gruppiert den Refresh bereits nach Angle, Version und Freigabestatus, damit euer Team sofort sieht, wo das nächste Testfenster aufgeht.",
-    review: "Im Review geht es hier darum zu entscheiden, welcher überarbeitete Angle wieder Budget verdient und nicht darum, die Kampagne neu zu starten.",
-    output: "Die Seed-Deliverables simulieren die Art kontrollierter Creative-Refreshes, die Zynapse für einen monatlichen Rhythmus paketieren würde.",
+    prepared: "Der Bereich gruppiert die Auffrischung bereits nach Ansatz, Version und Freigabestatus, damit euer Team sofort sieht, wo das nächste Testfenster aufgeht.",
+    review: "In der Freigabe geht es hier darum zu entscheiden, welcher überarbeitete Ansatz wieder Budget verdient und nicht darum, die Kampagne neu zu starten.",
+    output: "Die vorbereiteten Varianten simulieren die Art kontrollierter kreativer Auffrischungen, die Zynapse für einen monatlichen Rhythmus bündeln würde.",
     nextStep: "Der klarste nächste Schritt ist, die besten freigegebenen Varianten in den nächsten Sprint zu übernehmen.",
   },
   nextAction: {
-    title: "Entscheiden, welche freigegebenen Refresh-Varianten das nächste Spend-Fenster bekommen",
-    body: "Der aktuelle Workspace deutet auf einen Growth-Rhythmus hin, weil mehrere Iterationen bereits rund um ein bewährtes Angebot gebündelt sind.",
+    title: "Entscheiden, welche freigegebenen Varianten in das nächste Budgetfenster gehen",
+    body: "Der aktuelle Bereich deutet auf einen Wachstumsrhythmus hin, weil mehrere Iterationen bereits rund um ein bewährtes Angebot gebündelt sind.",
   },
   assets: [
     {
       key: "refresh-proof-angle",
-      title: "Refresh 01 · Proof-led retest",
+      title: "Variante 01 · Retest mit klarem Wirkbeweis",
       assetType: "short_video",
       format: "9:16",
       durationSeconds: 20,
@@ -48,7 +48,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
     },
     {
       key: "refresh-social-proof",
-      title: "Refresh 02 · Social proof remix",
+      title: "Variante 02 · Remix mit sozialem Beweis",
       assetType: "short_video",
       format: "9:16",
       durationSeconds: 17,
@@ -60,7 +60,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
     },
     {
       key: "refresh-ugc-style",
-      title: "Refresh 03 · UGC-style open",
+      title: "Variante 03 · Einstieg mit UGC-Anmutung",
       assetType: "short_video",
       format: "9:16",
       durationSeconds: 21,
@@ -72,7 +72,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
     },
     {
       key: "refresh-square-proof",
-      title: "Square 01 · Carousel proof frame",
+      title: "Quadrat 01 · Wirkbeweis fürs Karussell",
       assetType: "static",
       format: "1:1",
       versionLabel: "v2",
@@ -83,7 +83,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
     },
     {
       key: "refresh-square-comparison",
-      title: "Square 02 · Comparison card",
+      title: "Quadrat 02 · Vergleichskarte",
       assetType: "static",
       format: "1:1",
       versionLabel: "v1",
@@ -94,7 +94,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
     },
     {
       key: "refresh-cutdown",
-      title: "Cutdown · Retargeting proof loop",
+      title: "Kurzfassung · Schleife für die Wiederansprache mit Wirkbeweis",
       assetType: "short_video",
       format: "4:5",
       durationSeconds: 14,
@@ -113,12 +113,12 @@ export const performanceRefreshTemplate: SeedTemplate = {
       comments: [
         {
           authorId: "brand_reviewer",
-          body: "The idea is directionally useful, but the opening reads too generic compared to the existing winner. It needs a clearer proof beat.",
+          body: "Die Richtung ist grundsätzlich brauchbar, aber der Einstieg wirkt im Vergleich zum bisherigen Gewinner noch zu generisch. Es braucht einen klareren Wirkbeweis gleich am Anfang.",
           commentType: "change_request",
         },
         {
           authorId: "zynapse_ops",
-          body: "We can tighten the first two beats and keep the social proof lower in the frame. That should make the retest more distinct.",
+          body: "Wir können die ersten beiden Beats schärfen und den sozialen Beweis weiter unten im Frame halten. Dann hebt sich der Retest sauberer ab.",
           commentType: "comment",
         },
       ],
@@ -130,7 +130,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
       comments: [
         {
           authorId: "brand_admin",
-          body: "This version is strong enough to include in the next launch batch. It keeps the core offer but feels sufficiently refreshed.",
+          body: "Diese Version ist stark genug für die nächste Ausspielung. Sie hält das Kernangebot zusammen und fühlt sich trotzdem deutlich frischer an.",
           commentType: "approval_note",
         },
       ],

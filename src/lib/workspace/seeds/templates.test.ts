@@ -45,4 +45,37 @@ describe("workspace seed templates", () => {
       flagshipTemplate.assets.some((asset) => asset.source === "demo_public"),
     ).toBe(true);
   });
+
+  it("keeps the seeded demo copy in product-ready German", () => {
+    const flagshipTemplate = getSeedTemplate("d2c_product_launch");
+    const refreshTemplate = getSeedTemplate("performance_refresh");
+    const reviewTemplate = getSeedTemplate("review_sprint");
+
+    expect(flagshipTemplate.nextAction.title).not.toMatch(/proof-getriebenen Launch-Ansatz/i);
+    expect(flagshipTemplate.assets[0]?.title).not.toMatch(/Hook 01/i);
+    expect(flagshipTemplate.assets[3]?.title).not.toMatch(/Founder-Statement/i);
+    expect(flagshipTemplate.preparedBlocks.review).not.toMatch(/Sales-Walkthrough/i);
+    expect(flagshipTemplate.preparedBlocks.prepared).not.toMatch(/Launch-Kampagne/i);
+    expect(flagshipTemplate.brandProfile.reviewNotes).not.toMatch(/Produkt-Proof/i);
+    expect(flagshipTemplate.nextAction.body).not.toMatch(/CTA-Schärfe/i);
+    expect(flagshipTemplate.brandProfile.primaryChannels).not.toMatch(/TikTok Spark Ads/i);
+    expect(flagshipTemplate.assets[0]?.title).not.toMatch(/Proof-Cut/i);
+    expect(flagshipTemplate.assets[5]?.title).not.toMatch(/Retargeting-Erinnerung/i);
+
+    expect(refreshTemplate.label).not.toMatch(/Performance-Refresh/i);
+    expect(refreshTemplate.assets[0]?.title).not.toMatch(/Refresh 01/i);
+    expect(refreshTemplate.assets[1]?.title).not.toMatch(/Social-Proof-Remix/i);
+    expect(refreshTemplate.preparedBlocks.output).not.toMatch(/Creative-Refreshes/i);
+    expect(refreshTemplate.nextAction.title).not.toMatch(/Refresh-Varianten/i);
+    expect(refreshTemplate.assets[2]?.title).not.toMatch(/UGC-Stil/i);
+    expect(refreshTemplate.assets[3]?.title).not.toMatch(/Proof-Frame/i);
+    expect(refreshTemplate.campaignName).not.toMatch(/Quartals-Refresh/i);
+    expect(refreshTemplate.preparedBlocks.prepared).not.toMatch(/den Refresh/i);
+
+    expect(reviewTemplate.brandProfile.offerSummary).not.toMatch(/Founder-Team/i);
+    expect(reviewTemplate.assets[2]?.title).not.toMatch(/Founder-Hinweis/i);
+    expect(reviewTemplate.assets[5]?.title).not.toMatch(/Snapshot/i);
+    expect(reviewTemplate.nextAction.body).not.toMatch(/Der Workspace zeigt bereits/i);
+    expect(reviewTemplate.assets[4]?.title).not.toMatch(/Voice-over/i);
+  });
 });

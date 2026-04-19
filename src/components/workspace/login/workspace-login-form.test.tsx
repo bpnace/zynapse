@@ -93,7 +93,7 @@ describe("WorkspaceLoginForm", () => {
     fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "Anmelden" }));
+    fireEvent.click(screen.getByRole("button", { name: "Code anfordern" }));
 
     await screen.findByLabelText("6-stelliger Code");
 
@@ -162,7 +162,7 @@ describe("WorkspaceLoginForm", () => {
     fireEvent.change(screen.getByLabelText(businessEmailLabel), {
       target: { value: "team@brand.com" },
     });
-    fireEvent.submit(screen.getByRole("button", { name: "Anmelden" }).closest("form")!);
+    fireEvent.submit(screen.getByRole("button", { name: "Code anfordern" }).closest("form")!);
 
     await act(async () => {
       await Promise.resolve();
@@ -224,7 +224,7 @@ describe("WorkspaceLoginForm", () => {
       target: { value: "team@brand.com" },
     });
 
-    expect(screen.getByRole("button", { name: "Anmelden" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Code anfordern" })).toBeDisabled();
     expect(
       screen.getByText(
         "Login ist aktuell nicht verfügbar. Die Supabase-Konfiguration fehlt.",

@@ -6,7 +6,7 @@ import { getDemoWorkspaceConfig } from "@/lib/workspace/demo";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
-  description: "Invite-only Login für den Brand Workspace von Zynapse mit Fallback zur Waitlist.",
+  description: "Zugang zum geschützten Zynapse-Bereich für eingeladene Teams mit Wartelisten-Fallback.",
   path: "/login",
   indexable: false,
 });
@@ -27,13 +27,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">
       <div className="max-w-5xl space-y-4">
         <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
-          Zugang zum Workspace von Zynapse.
+          Zugang zum geschützten Bereich von Zynapse.
         </h1>
         <p className="text-base text-[color:var(--copy-body)] sm:text-[1.0625rem]">
-          Der Workspace ist aktuell invite-only. Eingeladene Benutzer erhalten
-          einen Login-Code per E-Mail für ihren persönlichen, geschützten Bereich. Wenn du
-          noch keinen Zugang hast, kannst du dich  weiter für frühen
-          Zugang vormerken.
+          Der Bereich ist derzeit nur auf Einladung zugänglich. Eingeladene
+          Teams erhalten einen Code per E-Mail und gelangen damit direkt in
+          ihren geschützten Arbeitsbereich. Wenn dein Zugang noch nicht
+          freigeschaltet ist, kannst du dich auf die Warteliste setzen lassen.
         </p>
         {demoConfig.isEnabled ? (
           <p className="text-sm text-[var(--copy-muted)]">
@@ -50,11 +50,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <WorkspaceLoginForm next={next} availableMethods={["otp"]} />
         <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-[rgba(247,244,238,0.72)] p-6">
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-            Kein Invite? Trag dich für den frühen Zugang ein.
+            Noch kein Zugang? Trag dich auf die Warteliste ein.
           </h2>
           <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-            Bis der invite-only Zugriff breiter freigeschaltet wird, bleibt die
-            Waitlist der richtige Weg für neue Teams ohne direkten Zugangslink.
+            Solange der Zugang nur ausgewählten Teams offensteht, ist die
+            Warteliste der richtige Weg für neue Anfragen ohne direkten
+            Einladungslink.
           </p>
           <div className="mt-5">
             <LoginWaitlistForm />

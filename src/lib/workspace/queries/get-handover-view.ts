@@ -15,10 +15,10 @@ type GetHandoverViewParams = {
 
 function groupAssetLabel(assetType: string) {
   if (assetType.includes("video")) {
-    return "Video-Deliverables";
+    return "Videoformate";
   }
 
-  return "Statische Deliverables";
+  return "Statische Motive";
 }
 
 function buildUsageSummary(currentStage: string) {
@@ -26,14 +26,14 @@ function buildUsageSummary(currentStage: string) {
     return {
       heading: "Für die Übergabe freigegeben",
       body:
-        "Diese freigegebenen Assets stehen für das, was der Buyer am Ende des aktuellen Seed-Workflows erhalten würde. Rechte und Nutzung werden in diesem Schritt als Lieferhinweise dargestellt, nicht als juristische Automatisierung.",
+        "Diese freigegebenen Varianten stehen für das, was der Käufer am Ende des aktuellen Demo-Ablaufs erhalten würde. Rechte und Nutzung werden in diesem Schritt als Lieferhinweise dargestellt, nicht als juristische Automatisierung.",
     };
   }
 
   return {
     heading: "Lieferhinweise in Arbeit",
-    body:
-      "Die Übergabeansicht ist bereit, freigegebene Outputs zu zeigen. Die Seed-Kampagne hängt aber noch vom finalen Review ab, bevor daraus ein abgeschlossenes Deliverable-Paket wird.",
+      body:
+      "Die Übergabeansicht ist bereit, freigegebene Varianten zu zeigen. Die vorbereitete Kampagne hängt aber noch von der finalen Freigabe ab, bevor daraus ein abgeschlossenes Übergabepaket wird.",
   };
 }
 

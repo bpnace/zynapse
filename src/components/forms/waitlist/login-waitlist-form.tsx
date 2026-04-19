@@ -116,7 +116,7 @@ export function LoginWaitlistForm() {
           className="min-w-[11rem] justify-center whitespace-nowrap disabled:cursor-wait"
           disabled={isPending}
         >
-          {isPending ? "Wird eingetragen..." : "Join Waitlist"}
+          {isPending ? "Wird eingetragen..." : "Auf die Warteliste"}
         </Button>
       </form>
 
@@ -133,7 +133,8 @@ export function LoginWaitlistForm() {
       ) : null}
 
       <p className="text-sm leading-6 text-[color:var(--copy-muted)]">
-        Kein Newsletter, kein Spam, nur eine Benarichtigung zum Start von Zynapse. <b>Versprochen</b>.
+        Kein Newsletter, kein Spam, nur eine Benachrichtigung zum Start von
+        Zynapse. <b>Versprochen</b>.
       </p>
     </div>
   );
