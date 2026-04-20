@@ -96,16 +96,43 @@ For a repeatable customer or e2e demo flow:
 pnpm demo:reset -- --email "${E2E_WORKSPACE_EMAIL:-$DEMO_WORKSPACE_EMAIL}" --password "$E2E_WORKSPACE_PASSWORD" --template d2c_product_launch
 ```
 
+   Phase-4 expectation for this reset: one run should restore a coherent
+   cross-surface fixture for the same seeded campaign graph.
+   - Brand surface: the canonical closed demo login still lands in the
+     read-only `/brands/*` review and handover flow.
+   - Creative surface: the seeded campaign should expose active creative
+     membership context, assignment-linked tasks, and revision-ready asset
+     feedback for the creative workspace.
+   - Ops surface: the same campaign should remain visible in `/ops/*` with
+     workflow, assignment, delivery, and commercial readiness context aligned
+     to the seeded review state.
+
 4. Log in through `/demo-login` with the canonical demo credentials. The route
    is only exposed when `DEMO_WORKSPACE_LOGIN_ENABLED=true`.
 5. Walk the flow: `/brands/today` -> review -> handover.
-6. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
+6. Use the creative and ops workspaces as verification surfaces for the same
+   seeded campaign, not as separate demo resets.
+7. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
    seeded state before the next session.
 
 The current demo reuses public videos from `public/videos/*` and placeholder
 images from `public/hero/*` / `public/brand/*`. These can be swapped later
 without changing the workspace UI contract as long as the seeded asset paths
 and `assets.source` values remain aligned.
+
+### Phase 4 review notes to verify in code
+
+- `scripts/reset-demo-workspace.mjs` still advertises the reset as "Phase 1"
+  and still needs its seeded membership/workflow assumptions reviewed against
+  the tri-surface fixture described above.
+- `scripts/reset-demo-workspace.mjs` and
+  `src/lib/workspace/seeds/bootstrap-creative-workspace.ts` were both observed
+  with legacy membership upsert conflict assumptions during review; verify they
+  converge on the `organization_id,user_id` uniqueness contract before calling
+  the tooling fully cut over.
+- Highest-value follow-up review targets after this README update:
+  `README.md`, `scripts/reset-demo-workspace.mjs`, and
+  `src/lib/workspace/seeds/bootstrap-creative-workspace.ts`.
 
 ### Demo safety contract
 
