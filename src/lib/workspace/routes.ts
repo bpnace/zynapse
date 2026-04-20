@@ -67,10 +67,16 @@ export const opsWorkspaceRoutes = {
   assignments() {
     return "/ops/assignments";
   },
-  reviewReadiness() {
+  delivery() {
+    return "/ops/delivery";
+  },
+  commercial() {
+    return "/ops/commercial";
+  },
+  legacyReviewReadiness() {
     return "/ops/review-readiness";
   },
-  commercialHandoffs() {
+  legacyCommercialHandoffs() {
     return "/ops/commercial-handoffs";
   },
   isKnownPath(pathname: string) {
@@ -79,8 +85,10 @@ export const opsWorkspaceRoutes = {
       opsWorkspaceRoutes.overview(),
       opsWorkspaceRoutes.campaigns(),
       opsWorkspaceRoutes.assignments(),
-      opsWorkspaceRoutes.reviewReadiness(),
-      opsWorkspaceRoutes.commercialHandoffs(),
+      opsWorkspaceRoutes.delivery(),
+      opsWorkspaceRoutes.commercial(),
+      opsWorkspaceRoutes.legacyReviewReadiness(),
+      opsWorkspaceRoutes.legacyCommercialHandoffs(),
     ];
 
     return prefixes.some((prefix) => {

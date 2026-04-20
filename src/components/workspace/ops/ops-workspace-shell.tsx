@@ -51,18 +51,22 @@ export function OpsWorkspaceShell({
       active: pathname === opsWorkspaceRoutes.assignments(),
     },
     {
-      href: opsWorkspaceRoutes.reviewReadiness(),
-      label: "Review readiness",
-      helper: "Submissions, blockers, revision debt",
+      href: opsWorkspaceRoutes.delivery(),
+      label: "Delivery",
+      helper: "Review readiness, blockers, submission flow",
       icon: ShieldCheck,
-      active: pathname === opsWorkspaceRoutes.reviewReadiness(),
+      active:
+        pathname === opsWorkspaceRoutes.delivery() ||
+        pathname === opsWorkspaceRoutes.legacyReviewReadiness(),
     },
     {
-      href: opsWorkspaceRoutes.commercialHandoffs(),
-      label: "Commercial handoffs",
-      helper: "Delivery / pilot transition visibility",
+      href: opsWorkspaceRoutes.commercial(),
+      label: "Commercial",
+      helper: "Pilot readiness and handoff visibility",
       icon: ArrowUpRight,
-      active: pathname === opsWorkspaceRoutes.commercialHandoffs(),
+      active:
+        pathname === opsWorkspaceRoutes.commercial() ||
+        pathname === opsWorkspaceRoutes.legacyCommercialHandoffs(),
     },
   ];
 

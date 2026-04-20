@@ -44,7 +44,7 @@ describe("AppShell", () => {
   });
 
   it("suppresses marketing chrome for protected ops routes", () => {
-    usePathnameMock.mockReturnValue("/ops/review-readiness");
+    usePathnameMock.mockReturnValue("/ops/delivery");
     render(<AppShell><div>content</div></AppShell>);
 
     expect(screen.queryByTestId("site-header")).not.toBeInTheDocument();

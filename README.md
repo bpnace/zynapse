@@ -82,16 +82,18 @@ For a repeatable customer or e2e demo flow:
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `DEMO_WORKSPACE_LOGIN_ENABLED=true`
    - `DEMO_WORKSPACE_EMAIL` (defaults to `demo@zynapse.eu`)
+   - `DEMO_WORKSPACE_NAME` (optional, defaults to `Zynapse Closed Demo`)
    - `DEMO_WORKSPACE_ORGANIZATION_SLUG` (optional, defaults to `zynapse-closed-demo`)
    - `E2E_WORKSPACE_EMAIL` (optional override for browser automation)
    - `E2E_WORKSPACE_PASSWORD`
+   - `--template d2c_product_launch` (optional; the reset script currently only accepts this template)
 2. Create or confirm the auth user in Supabase Auth. The reset command will
    attach that user to the canonical closed demo workspace and refresh the
    seeded campaign state.
 3. Reset and reseed the demo workspace:
 
 ```bash
-pnpm demo:reset -- --email "${E2E_WORKSPACE_EMAIL:-$DEMO_WORKSPACE_EMAIL}" --password "$E2E_WORKSPACE_PASSWORD"
+pnpm demo:reset -- --email "${E2E_WORKSPACE_EMAIL:-$DEMO_WORKSPACE_EMAIL}" --password "$E2E_WORKSPACE_PASSWORD" --template d2c_product_launch
 ```
 
 4. Log in through `/demo-login` with the canonical demo credentials. The route
@@ -119,7 +121,8 @@ and `assets.source` values remain aligned.
 - Public creative entrypoint: `/creatives`
 - Protected brand workspace: `/brands/today`, `/brands/onboarding`, `/brands/briefs/*`, `/brands/campaigns/*`, `/brands/pilot-request`
 - Protected creative workspace: `/app`, `/creatives/tasks`, `/creatives/feedback`, `/creatives/campaigns/*`
-- Phase 3 target: protected internal `/ops/*` control plane for assignments, readiness, delivery/commercial transitions, and workflow audit visibility
+- Protected ops workspace: `/ops`, `/ops/campaigns/*`, `/ops/assignments`, `/ops/delivery`, `/ops/commercial`
+- Legacy ops aliases still resolve: `/ops/review-readiness`, `/ops/commercial-handoffs`
 - Do not introduce or document a unified `/workspace/*` surface; any remaining legacy references should resolve to the explicit brand or creative routes above
 
 ## Structure

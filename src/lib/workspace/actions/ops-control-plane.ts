@@ -104,8 +104,10 @@ function revalidateOpsSurface(campaignId: string) {
   revalidatePath(opsWorkspaceRoutes.campaigns());
   revalidatePath(opsWorkspaceRoutes.campaignDetail(campaignId));
   revalidatePath(opsWorkspaceRoutes.assignments());
-  revalidatePath(opsWorkspaceRoutes.reviewReadiness());
-  revalidatePath(opsWorkspaceRoutes.commercialHandoffs());
+  revalidatePath(opsWorkspaceRoutes.delivery());
+  revalidatePath(opsWorkspaceRoutes.commercial());
+  revalidatePath(opsWorkspaceRoutes.legacyReviewReadiness());
+  revalidatePath(opsWorkspaceRoutes.legacyCommercialHandoffs());
 
   for (const path of brandsWorkspaceRoutes.revalidation({ campaignId })) {
     revalidatePath(path);
