@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { WorkspaceRole } from "@/lib/auth/roles";
-import { getWorkspaceBootstrap } from "@/lib/workspace/queries/get-workspace-bootstrap";
+import {
+  getCreativeWorkspaceBootstrap,
+  getWorkspaceBootstrap,
+} from "@/lib/workspace/queries/get-workspace-bootstrap";
 import { getDemoWorkspaceConfig, getWorkspaceDemoState, isDemoWorkspaceEmail } from "@/lib/workspace/demo";
 import { requireServiceRoleClient } from "@/lib/workspace/data/service-role";
 
@@ -73,6 +76,21 @@ function makeBrandProfileRow(organizationId: string) {
   };
 }
 
+function makeCreativeProfileRow(userId: string) {
+  return {
+    id: `creative-profile-${userId}`,
+    user_id: userId,
+    slug: "alex-motion",
+    display_name: "Alex Motion",
+    headline: "Motion creative lead",
+    bio: "Focused on launch-ready creative delivery",
+    specialties: "Motion, Hooks",
+    portfolio_url: null,
+    availability_status: "active",
+    created_at: "2026-04-19T10:00:00.000Z",
+  };
+}
+
 function resolved<T>(data: T): QueryResult<T> {
   return Promise.resolve({ data, error: null });
 }
@@ -82,6 +100,7 @@ function createBootstrapSupabaseMock(input: {
   memberships: ReturnType<typeof makeMembershipRow>[];
   organizationsById: Record<string, ReturnType<typeof makeOrganizationRow> | null>;
   brandProfilesByOrganizationId: Record<string, ReturnType<typeof makeBrandProfileRow> | null>;
+  creativeProfilesByUserId?: Record<string, ReturnType<typeof makeCreativeProfileRow> | null>;
 }) {
   return {
     from(table: string) {
@@ -117,6 +136,19 @@ function createBootstrapSupabaseMock(input: {
               limit: () => ({
                 maybeSingle: () =>
                   resolved(input.brandProfilesByOrganizationId[value] ?? null),
+              }),
+            }),
+          }),
+        };
+      }
+
+      if (table === "creative_profiles") {
+        return {
+          select: () => ({
+            eq: (_column: string, value: string) => ({
+              limit: () => ({
+                maybeSingle: () =>
+                  resolved(input.creativeProfilesByUserId?.[value] ?? null),
               }),
             }),
           }),
@@ -280,6 +312,78 @@ describe("getWorkspaceBootstrap", () => {
     expect(bootstrap?.membership.organizationId).toBe("org-ops");
     expect(bootstrap?.organization.slug).toBe("zynapse-ops");
     expect(bootstrap?.brandProfile?.organizationId).toBe("org-ops");
+    expect(bootstrap?.demo.isDemoWorkspace).toBe(false);
+  });
+});
+
+describe("getCreativeWorkspaceBootstrap", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(getDemoWorkspaceConfig).mockReturnValue({
+      canonicalEmail: "demo@zynapse.eu",
+      organizationSlug: "zynapse-closed-demo",
+      loginRoute: "/demo-login",
+      isEnabled: true,
+    });
+    vi.mocked(getWorkspaceDemoState).mockImplementation(({ userEmail, organizationSlug }) => ({
+      canonicalEmail: "demo@zynapse.eu",
+      organizationSlug: organizationSlug ?? "unknown",
+      loginRoute: "/demo-login",
+      isEnabled: true,
+      isDemoWorkspace: userEmail === "demo@zynapse.eu",
+      isReadOnly: userEmail === "demo@zynapse.eu",
+      shellBadge: "Geschlossene Demo",
+      shellDescription: "Demo workspace",
+      mutationMessage: "Read only",
+    }));
+  });
+
+  it("selects the creative membership and creative profile for creative workspace bootstraps", async () => {
+    vi.mocked(isDemoWorkspaceEmail).mockReturnValue(false);
+
+    vi.mocked(requireServiceRoleClient).mockReturnValue(
+      createBootstrapSupabaseMock({
+        demoOrganization: null,
+        memberships: [
+          makeMembershipRow({
+            id: "membership-brand",
+            organizationId: "org-brand",
+            role: "brand_owner",
+            acceptedAt: "2026-04-19T12:00:00.000Z",
+          }),
+          makeMembershipRow({
+            id: "membership-creative",
+            organizationId: "org-creative",
+            role: "creative_lead",
+            acceptedAt: "2026-04-19T09:00:00.000Z",
+          }),
+        ],
+        organizationsById: {
+          "org-brand": makeOrganizationRow({ id: "org-brand", slug: "acme" }),
+          "org-creative": makeOrganizationRow({
+            id: "org-creative",
+            slug: "creative-studio",
+            name: "Creative Studio",
+          }),
+        },
+        brandProfilesByOrganizationId: {},
+        creativeProfilesByUserId: {
+          "user-1": makeCreativeProfileRow("user-1"),
+        },
+      }) as never,
+    );
+
+    const bootstrap = await getCreativeWorkspaceBootstrap({
+      id: "user-1",
+      email: "creator@studio.test",
+    });
+
+    expect(bootstrap).not.toBeNull();
+    expect(bootstrap?.membership.organizationId).toBe("org-creative");
+    expect(bootstrap?.membership.role).toBe("creative_lead");
+    expect(bootstrap?.organization.slug).toBe("creative-studio");
+    expect(bootstrap?.creativeProfile?.userId).toBe("user-1");
+    expect(bootstrap?.creativeProfile?.displayName).toBe("Alex Motion");
     expect(bootstrap?.demo.isDemoWorkspace).toBe(false);
   });
 });

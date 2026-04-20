@@ -1,0 +1,125 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Zynapse Startseite" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img "Zynapse" [ref=e6]
+        - navigation [ref=e7]:
+          - link "Für Brands" [ref=e8] [cursor=pointer]:
+            - /url: /brands
+          - link "Für Kreative" [ref=e9] [cursor=pointer]:
+            - /url: /creatives
+          - link "Studio" [ref=e10] [cursor=pointer]:
+            - /url: /about
+          - link "Preise" [ref=e11] [cursor=pointer]:
+            - /url: /pricing
+          - link "Kontakt" [ref=e12] [cursor=pointer]:
+            - /url: /contact
+        - generic [ref=e13]:
+          - link "Login" [ref=e14] [cursor=pointer]:
+            - /url: /login
+            - generic [ref=e15]: Login
+          - link "Brand-Anfrage" [ref=e16] [cursor=pointer]:
+            - /url: /request
+            - generic [ref=e17]: Brand-Anfrage
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Geschlossene Demo
+          - heading "Demo-Login für den Zynapse-Arbeitsbereich." [level=1] [ref=e22]
+          - paragraph [ref=e23]: Dieser Zugang ist für eine kuratierte, schreibgeschützte Produktdemo vorgesehen. Inhalte werden für Demos zurückgesetzt und dienen nur zur Ansicht des aktuellen Produktstands.
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - heading "Geschlossener Demo-Zugang" [level=2] [ref=e26]
+            - paragraph [ref=e27]: Das Demo-Konto landet direkt in einem schreibgeschützten Demo-Bereich.
+          - generic [ref=e28]:
+            - text: Geschäftliche E-Mail
+            - textbox "Geschäftliche E-Mail" [ref=e29]:
+              - /placeholder: team@brand.com
+          - generic [ref=e30]:
+            - text: Passwort
+            - textbox "Passwort" [ref=e31]:
+              - /placeholder: Demo-Passwort
+          - button "Mit Passwort anmelden" [ref=e32]
+    - contentinfo [ref=e33]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - img "Zynapse Signet" [ref=e37]
+            - link "Zynapse Startseite" [ref=e38] [cursor=pointer]:
+              - /url: /
+              - img "Zynapse" [ref=e39]
+          - heading "Von der einfachen Idee zum kuratierten Kampagnen-Setup, das sofort einsatzbereit ist." [level=2] [ref=e40]
+          - paragraph [ref=e41]: Zynapse verbindet Brands mit passenden AI-Spezialist:innen und übersetzt Briefings in klare Setups, Varianten und Handover.
+        - generic [ref=e42]:
+          - heading "Navigation" [level=3] [ref=e43]
+          - list [ref=e44]:
+            - listitem [ref=e45]:
+              - link "Für Brands" [ref=e46] [cursor=pointer]:
+                - /url: /brands
+            - listitem [ref=e47]:
+              - link "Für Kreative" [ref=e48] [cursor=pointer]:
+                - /url: /creatives
+            - listitem [ref=e49]:
+              - link "Studio" [ref=e50] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e51]:
+              - link "Preise" [ref=e52] [cursor=pointer]:
+                - /url: /pricing
+            - listitem [ref=e53]:
+              - link "Kontakt" [ref=e54] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e55]:
+          - heading "Ressourcen" [level=3] [ref=e56]
+          - list [ref=e57]:
+            - listitem [ref=e58]:
+              - link "Brand-Anfrage" [ref=e59] [cursor=pointer]:
+                - /url: /request
+            - listitem [ref=e60]:
+              - link "Bewerbung für Kreative" [ref=e61] [cursor=pointer]:
+                - /url: /apply
+            - listitem [ref=e62]:
+              - link "Kontakt" [ref=e63] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e64]:
+          - heading "Rechtliches" [level=3] [ref=e65]
+          - list [ref=e66]:
+            - listitem [ref=e67]:
+              - link "Impressum" [ref=e68] [cursor=pointer]:
+                - /url: /legal/imprint
+            - listitem [ref=e69]:
+              - link "Datenschutz" [ref=e70] [cursor=pointer]:
+                - /url: /legal/privacy
+    - button "Zur Seitenoberkante":
+      - img
+  - button "Open Next.js Dev Tools" [ref=e76] [cursor=pointer]:
+    - img [ref=e77]
+  - generic:
+    - dialog "Wir nutzen Cookies und andere Technologien.":
+      - generic [ref=e80]:
+        - generic:
+          - generic [ref=e81]:
+            - generic "Sprache auswählen" [ref=e82]:
+              - img "Sprache auswählen"
+            - combobox "Sprache auswählen" [ref=e83] [cursor=pointer]:
+              - option "Deutsch" [selected]
+              - option "Englisch (English)"
+          - button "Schließen" [ref=e84] [cursor=pointer]: x
+        - generic [ref=e85]:
+          - document "Wir nutzen Cookies und andere Technologien." [active] [ref=e87]:
+            - heading "Wir nutzen Cookies und andere Technologien." [level=2] [ref=e88]
+            - paragraph [ref=e90]: Diese Website nutzt Cookies und vergleichbare Funktionen zur Verarbeitung von Endgeräteinformationen und personenbezogenen Daten. Die Verarbeitung dient der Einbindung von Inhalten, externen Diensten und Elementen Dritter, der statistischen Analyse/Messung, der personalisierten Werbung sowie der Einbindung sozialer Medien. Je nach Funktion werden dabei Daten an Dritte weitergegeben und an Dritte in Ländern, in denen kein angemessenes Datenschutzniveau vorliegt und von diesen verarbeitet wird, z. B. die USA. Ihre Einwilligung ist stets freiwillig, für die Nutzung unserer Website nicht erforderlich und kann jederzeit auf unserer Seite abgelehnt oder widerrufen werden.
+          - group [ref=e91]:
+            - button "Alles ablehnen" [ref=e92] [cursor=pointer]
+            - button "Einstellungen" [ref=e93] [cursor=pointer]
+            - button "Alles akzeptieren" [ref=e94] [cursor=pointer]
+        - group [ref=e95]:
+          - generic [ref=e96]:
+            - link "Impressum" [ref=e97] [cursor=pointer]:
+              - /url: https://zynapse.eu/legal/imprint
+            - link "Datenschutzhinweis" [ref=e98] [cursor=pointer]:
+              - /url: https://zynapse.eu/legal/privacy
+          - link "Made & Hosted in Germany by CCM19" [ref=e99] [cursor=pointer]:
+            - /url: https://www.ccm19.de/
+  - alert [ref=e100]
