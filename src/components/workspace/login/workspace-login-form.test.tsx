@@ -81,11 +81,14 @@ describe("WorkspaceLoginForm", () => {
 
   it("sends an OTP for an eligible email and switches to code entry", async () => {
     const supabase = createSupabaseMock();
-    supabase.auth.signInWithOtp.mockResolvedValue({ error: null });
     vi.mocked(createBrowserSupabaseClient).mockReturnValue(supabase as never);
     fetchMock.mockResolvedValue({
       ok: true,
-      json: async () => ({ ok: true }),
+      json: async () => ({
+        ok: true,
+        message:
+          "Wenn diese E-Mail für den geschützten Bereich freigeschaltet ist, haben wir einen Code gesendet. Andernfalls nutze bitte die Warteliste.",
+      }),
     });
 
     render(<WorkspaceLoginForm />);
@@ -103,12 +106,12 @@ describe("WorkspaceLoginForm", () => {
         method: "POST",
       }),
     );
-    expect(supabase.auth.signInWithOtp).toHaveBeenCalledWith({
-      email: "team@brand.com",
-      options: {
-        shouldCreateUser: true,
-      },
-    });
+    expect(supabase.auth.signInWithOtp).not.toHaveBeenCalled();
+    expect(
+      screen.getByText(
+        "Wenn diese E-Mail für den geschützten Bereich freigeschaltet ist, haben wir einen Code gesendet. Andernfalls nutze bitte die Warteliste.",
+      ),
+    ).toBeInTheDocument();
   });
 
   it("switches to password mode and signs in with email and password", async () => {
@@ -150,11 +153,14 @@ describe("WorkspaceLoginForm", () => {
     vi.useFakeTimers();
 
     const supabase = createSupabaseMock();
-    supabase.auth.signInWithOtp.mockResolvedValue({ error: null });
     vi.mocked(createBrowserSupabaseClient).mockReturnValue(supabase as never);
     fetchMock.mockResolvedValue({
       ok: true,
-      json: async () => ({ ok: true }),
+      json: async () => ({
+        ok: true,
+        message:
+          "Wenn diese E-Mail für den geschützten Bereich freigeschaltet ist, haben wir einen Code gesendet. Andernfalls nutze bitte die Warteliste.",
+      }),
     });
 
     render(<WorkspaceLoginForm />);

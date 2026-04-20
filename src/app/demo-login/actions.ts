@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { enforceDemoLoginRateLimit } from "@/lib/auth/login-rate-limit";
 import { createServerSupabaseClient } from "@/lib/auth/server";
 import {
   getDemoWorkspaceConfig,
@@ -31,8 +32,14 @@ export async function submitDemoLogin(formData: FormData) {
     redirect("/login");
   }
 
+  const rateLimit = enforceDemoLoginRateLimit({ email });
+
+  if (!rateLimit.ok) {
+    redirect(buildLoginRedirect("invalid_credentials", next));
+  }
+
   if (email !== demoConfig.canonicalEmail) {
-    redirect(buildLoginRedirect("demo_account_required", next));
+    redirect(buildLoginRedirect("invalid_credentials", next));
   }
 
   let signInError = false;

@@ -129,8 +129,8 @@ export function WorkspaceLoginForm({
     return () => window.clearTimeout(timeoutId);
   }, [cooldownSecondsLeft, method, step]);
 
-  async function ensureEligible(targetEmail: string) {
-    const eligibilityResponse = await fetch("/api/auth/workspace-login", {
+  async function requestOtp(targetEmail: string) {
+    const loginPreparationResponse = await fetch("/api/auth/workspace-login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,36 +140,22 @@ export function WorkspaceLoginForm({
       }),
     });
 
-    if (!eligibilityResponse.ok) {
-      const payload = (await eligibilityResponse.json()) as { error?: string };
+    if (!loginPreparationResponse.ok) {
+      const payload = (await loginPreparationResponse.json()) as { error?: string };
       throw new Error(
         payload.error ??
-          "Diese E-Mail hat noch keinen Zugang. Nutze bitte eine eingeladene E-Mail-Adresse oder die Warteliste.",
-      );
-    }
-  }
-
-  async function requestOtp(targetEmail: string) {
-    const supabase = createBrowserSupabaseClient();
-
-    if (!supabase) {
-      throw new Error(
-        "Login ist aktuell nicht verfügbar. Bitte später erneut versuchen.",
+          "Login ist aktuell nicht verfügbar. Bitte später erneut versuchen.",
       );
     }
 
-    await ensureEligible(targetEmail);
+    const payload = (await loginPreparationResponse.json()) as {
+      message?: string;
+    };
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email: targetEmail,
-      options: {
-        shouldCreateUser: true,
-      },
-    });
-
-    if (error) {
-      throw error;
-    }
+    return (
+      payload.message ??
+      "Wenn diese E-Mail freigeschaltet ist, wurde ein Code versendet."
+    );
   }
 
   function resetModeState(nextMethod: LoginMethod) {
@@ -195,13 +181,11 @@ export function WorkspaceLoginForm({
 
     try {
       setEmail(targetEmail);
-      await requestOtp(targetEmail);
+      const helperCopy = await requestOtp(targetEmail);
       setStep("otp-entry");
       setOtpCode("");
       setCooldownSecondsLeft(RESEND_COOLDOWN_SECONDS);
-      setHelperMessage(
-        "Wir haben dir einen 6-stelligen Code per E-Mail gesendet.",
-      );
+      setHelperMessage(helperCopy);
     } catch (error) {
       setSubmitError(mapOtpError(error));
     } finally {
@@ -271,7 +255,6 @@ export function WorkspaceLoginForm({
 
       setEmail(targetEmail);
       setPassword(targetPassword);
-      await ensureEligible(targetEmail);
 
       const { error } = await supabase.auth.signInWithPassword({
         email: targetEmail,
@@ -285,13 +268,7 @@ export function WorkspaceLoginForm({
       router.push(safeNextPath);
       router.refresh();
     } catch (error) {
-      const fallbackError =
-        error instanceof Error &&
-        error.message.includes("Workspace-Zugang")
-          ? error.message
-          : mapPasswordError(error);
-
-      setSubmitError(fallbackError);
+      setSubmitError(mapPasswordError(error));
     } finally {
       setIsPending(false);
     }

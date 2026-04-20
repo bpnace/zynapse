@@ -27,12 +27,8 @@ function readStringParam(
 }
 
 function getErrorMessage(errorCode: string) {
-  if (errorCode === "demo_account_required") {
-    return "Diese Demo-Anmeldung ist nur für das konfigurierte Demo-Konto freigeschaltet.";
-  }
-
   if (errorCode === "invalid_credentials") {
-    return "Die Demo-Zugangsdaten sind ungültig.";
+    return "Die Demo-Zugangsdaten sind ungültig oder die Demo-Anmeldung ist für diese Adresse nicht freigeschaltet.";
   }
 
   if (errorCode === "auth_unavailable") {
@@ -97,8 +93,8 @@ export default async function DemoLoginPage({
             name="workspace-email"
             type="email"
             autoComplete="email"
-            defaultValue={demoConfig.canonicalEmail}
             className="field-input"
+            placeholder="team@brand.com"
             required
           />
         </div>
