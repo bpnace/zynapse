@@ -2,6 +2,7 @@ import { config as loadEnv } from "dotenv";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import demoTemplate from "../src/lib/workspace/seeds/templates/d2c-product-launch.data.json" with { type: "json" };
+import { buildDemoWorkspaceParticipants } from "./reset-demo-workspace.fixture.mjs";
 
 loadEnv({ path: ".env" });
 loadEnv({ path: ".env.local", override: true });
@@ -14,15 +15,16 @@ const canonicalDemoOrganizationSlug =
   process.env.DEMO_WORKSPACE_ORGANIZATION_SLUG ?? "zynapse-closed-demo";
 const canonicalDemoOrganizationName =
   process.env.DEMO_WORKSPACE_NAME ?? "Zynapse Closed Demo";
-const defaultCreativeDemoEmail =
-  process.env.DEMO_CREATIVE_WORKSPACE_EMAIL ?? "creative-demo@zynapse.eu";
-const defaultOpsDemoEmail =
-  process.env.DEMO_OPS_WORKSPACE_EMAIL ?? "ops-demo@zynapse.eu";
+const canonicalCreativeEmail =
+  process.env.DEMO_WORKSPACE_CREATIVE_EMAIL ?? null;
+const canonicalOpsEmail = process.env.DEMO_WORKSPACE_OPS_EMAIL ?? null;
 
 function parseArgs(argv) {
   const args = {
     email: canonicalDemoEmail,
     password: process.env.E2E_WORKSPACE_PASSWORD ?? "",
+    creativeEmail: canonicalCreativeEmail,
+    opsEmail: canonicalOpsEmail,
     template: "d2c_product_launch",
   };
 
@@ -38,6 +40,18 @@ function parseArgs(argv) {
 
     if (current === "--password" && next) {
       args.password = next;
+      index += 1;
+      continue;
+    }
+
+    if (current === "--creative-email" && next) {
+      args.creativeEmail = next;
+      index += 1;
+      continue;
+    }
+
+    if (current === "--ops-email" && next) {
+      args.opsEmail = next;
       index += 1;
       continue;
     }
@@ -283,9 +297,45 @@ async function resetSeedState(supabase, organizationId) {
   assertResult(campaignDeleteError, "Failed to delete campaigns");
 }
 
-async function seedWorkspace(supabase, organization, user, email) {
+async function upsertParticipantAccess(supabase, input) {
+  const { organizationId, templateKey, participant, userId, acceptedAt } = input;
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString();
+
+  const { error: inviteError } = await supabase
+    .from("invites")
+    .upsert(
+      {
+        organization_id: organizationId,
+        email: participant.email,
+        role: participant.role,
+        seed_template_key: templateKey,
+        expires_at: expiresAt,
+        accepted_at: acceptedAt,
+      },
+      { onConflict: "organization_id,email" },
+    );
+
+  assertResult(inviteError, `Failed to upsert ${participant.key} invite`);
+
+  const { error: membershipError } = await supabase
+    .from("memberships")
+    .upsert(
+      {
+        organization_id: organizationId,
+        user_id: userId,
+        role: participant.role,
+        workspace_type: participant.workspaceType,
+        membership_status: "active",
+        accepted_at: acceptedAt,
+      },
+      { onConflict: "organization_id,user_id" },
+    );
+
+  assertResult(membershipError, `Failed to upsert ${participant.key} membership`);
+}
+
+async function seedWorkspace(supabase, organization) {
   const template = demoTemplate;
-  const nowIso = new Date().toISOString();
 
   const { error: brandProfileError } = await supabase
     .from("brand_profiles")
@@ -304,38 +354,7 @@ async function seedWorkspace(supabase, organization, user, email) {
     );
 
   assertResult(brandProfileError, "Failed to upsert brand profile");
-
-  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString();
-
-  const { error: inviteError } = await supabase
-    .from("invites")
-    .upsert(
-      {
-        organization_id: organization.id,
-        email,
-        role: "brand_reviewer",
-        seed_template_key: template.key,
-        expires_at: expiresAt,
-        accepted_at: nowIso,
-      },
-      { onConflict: "organization_id,email" },
-    );
-
-  assertResult(inviteError, "Failed to upsert invite");
-
-  const { error: membershipError } = await supabase
-    .from("memberships")
-    .upsert(
-      {
-        organization_id: organization.id,
-        user_id: user.id,
-        role: "brand_reviewer",
-        accepted_at: nowIso,
-      },
-      { onConflict: "user_id" },
-    );
-
-  assertResult(membershipError, "Failed to upsert membership");
+  const nowIso = new Date().toISOString();
 
   const { data: campaign, error: campaignError } = await supabase
     .from("campaigns")
@@ -444,7 +463,7 @@ async function main() {
 
   if (args.template !== "d2c_product_launch") {
     throw new Error(
-      `Unsupported template '${args.template}'. Phase 1 supports only d2c_product_launch.`,
+      `Unsupported template '${args.template}'. The Phase 4 demo reset currently supports only d2c_product_launch.`,
     );
   }
 
@@ -464,11 +483,36 @@ async function main() {
     },
   });
 
-  const user = await ensureAuthUser(supabase, args.email, args.password);
-  const organization = await ensureOrganization(supabase, args.email);
+  const participants = buildDemoWorkspaceParticipants({
+    canonicalBrandEmail: canonicalDemoEmail,
+    requestedBrandEmail: args.email,
+    creativeEmail: args.creativeEmail,
+    opsEmail: args.opsEmail,
+  });
+
+  const users = await Promise.all(
+    participants.map(async (participant) => ({
+      participant,
+      user: await ensureAuthUser(supabase, participant.email, args.password),
+    })),
+  );
+  const organization = await ensureOrganization(supabase, canonicalDemoEmail);
 
   await resetSeedState(supabase, organization.id);
-  const campaign = await seedWorkspace(supabase, organization, user, args.email);
+  const campaign = await seedWorkspace(supabase, organization);
+
+  const acceptedAt = new Date().toISOString();
+  await Promise.all(
+    users.map(({ participant, user }) =>
+      upsertParticipantAccess(supabase, {
+        organizationId: organization.id,
+        templateKey: demoTemplate.key,
+        participant,
+        userId: user.id,
+        acceptedAt,
+      }),
+    ),
+  );
 
   console.log(
     JSON.stringify(
@@ -478,6 +522,12 @@ async function main() {
         organizationId: organization.id,
         organizationSlug: organization.slug,
         campaignId: campaign.id,
+        brandLoginEmail: canonicalDemoEmail,
+        participants: participants.map((participant) => ({
+          email: participant.email,
+          role: participant.role,
+          workspaceType: participant.workspaceType,
+        })),
         template: args.template,
       },
       null,
