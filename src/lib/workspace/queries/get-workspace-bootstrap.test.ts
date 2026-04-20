@@ -234,4 +234,52 @@ describe("getWorkspaceBootstrap", () => {
     expect(bootstrap?.organization.slug).toBe("acme");
     expect(bootstrap?.demo.isDemoWorkspace).toBe(false);
   });
+
+  it("selects the ops membership when the bootstrap is requested for the ops control plane", async () => {
+    vi.mocked(isDemoWorkspaceEmail).mockReturnValue(false);
+
+    vi.mocked(requireServiceRoleClient).mockReturnValue(
+      createBootstrapSupabaseMock({
+        demoOrganization: null,
+        memberships: [
+          makeMembershipRow({
+            id: "membership-brand",
+            organizationId: "org-brand",
+            role: "brand_owner",
+            acceptedAt: "2026-04-19T12:00:00.000Z",
+          }),
+          makeMembershipRow({
+            id: "membership-ops",
+            organizationId: "org-ops",
+            role: "ops_admin",
+            acceptedAt: "2026-04-19T09:00:00.000Z",
+          }),
+        ],
+        organizationsById: {
+          "org-brand": makeOrganizationRow({ id: "org-brand", slug: "acme" }),
+          "org-ops": makeOrganizationRow({ id: "org-ops", slug: "zynapse-ops" }),
+        },
+        brandProfilesByOrganizationId: {
+          "org-ops": makeBrandProfileRow("org-ops"),
+        },
+      }) as never,
+    );
+
+    const bootstrap = await getWorkspaceBootstrap(
+      {
+        id: "user-1",
+        email: "ops@zynapse.eu",
+      },
+      {
+        workspaceType: "ops",
+      },
+    );
+
+    expect(bootstrap).not.toBeNull();
+    expect(bootstrap?.membership.role).toBe("ops_admin");
+    expect(bootstrap?.membership.organizationId).toBe("org-ops");
+    expect(bootstrap?.organization.slug).toBe("zynapse-ops");
+    expect(bootstrap?.brandProfile?.organizationId).toBe("org-ops");
+    expect(bootstrap?.demo.isDemoWorkspace).toBe(false);
+  });
 });

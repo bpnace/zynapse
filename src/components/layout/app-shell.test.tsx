@@ -43,6 +43,15 @@ describe("AppShell", () => {
     expect(screen.queryByTestId("back-to-top")).not.toBeInTheDocument();
   });
 
+  it("suppresses marketing chrome for protected ops routes", () => {
+    usePathnameMock.mockReturnValue("/ops/review-readiness");
+    render(<AppShell><div>content</div></AppShell>);
+
+    expect(screen.queryByTestId("site-header")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("site-footer")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("back-to-top")).not.toBeInTheDocument();
+  });
+
   it("keeps marketing chrome for unrelated prefixes", () => {
     usePathnameMock.mockReturnValue("/workspaceful");
     render(<AppShell><div>content</div></AppShell>);

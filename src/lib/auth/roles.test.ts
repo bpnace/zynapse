@@ -12,6 +12,29 @@ describe("workspace roles", () => {
     expect(getWorkspaceCapabilities("creative").canSubmitCreativeWork).toBe(true);
   });
 
+  it("grants ops roles access across brand, creative, and ops control planes", () => {
+    expect(getWorkspaceTypeForRole("ops")).toBe("ops");
+    expect(getWorkspaceTypeForRole("ops_admin")).toBe("ops");
+
+    expect(getWorkspaceCapabilities("ops")).toMatchObject({
+      canAccessBrandWorkspace: true,
+      canAccessCreativeWorkspace: true,
+      canAccessOpsWorkspace: true,
+      canManageInvites: true,
+      canReviewAssets: true,
+      canSubmitCreativeWork: true,
+    });
+
+    expect(getWorkspaceCapabilities("ops_admin", { isReadOnly: true })).toMatchObject({
+      canAccessBrandWorkspace: true,
+      canAccessCreativeWorkspace: true,
+      canAccessOpsWorkspace: true,
+      canManageInvites: true,
+      canReviewAssets: false,
+      canSubmitCreativeWork: false,
+    });
+  });
+
   it("preserves read-only behavior for creative submissions", () => {
     expect(
       getWorkspaceCapabilities("creative_lead", { isReadOnly: true }).canSubmitCreativeWork,

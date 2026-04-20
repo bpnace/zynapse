@@ -9,8 +9,10 @@ export const config = {
   matcher: [
     "/app/:path*",
     "/brands/:path*",
+    "/ops/:path*",
     "/creatives/tasks/:path*",
     "/creatives/campaigns/:path*",
     "/creatives/feedback/:path*",
+    "/ops/:path*",
   ],
 };

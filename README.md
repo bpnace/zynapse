@@ -96,7 +96,7 @@ pnpm demo:reset -- --email "${E2E_WORKSPACE_EMAIL:-$DEMO_WORKSPACE_EMAIL}" --pas
 
 4. Log in through `/demo-login` with the canonical demo credentials. The route
    is only exposed when `DEMO_WORKSPACE_LOGIN_ENABLED=true`.
-5. Walk the flow: `/workspace` -> review -> handover.
+5. Walk the flow: `/brands/today` -> review -> handover.
 6. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
    seeded state before the next session.
 
@@ -112,6 +112,15 @@ and `assets.source` values remain aligned.
   blocked for the demo user and should be treated as showcase-only.
 - The shell visibly labels the workspace as a closed demo and explains that
   content is reset for demos.
+
+## Workspace surfaces
+
+- Public brand entrypoint: `/brands`
+- Public creative entrypoint: `/creatives`
+- Protected brand workspace: `/brands/today`, `/brands/onboarding`, `/brands/briefs/*`, `/brands/campaigns/*`, `/brands/pilot-request`
+- Protected creative workspace: `/app`, `/creatives/tasks`, `/creatives/feedback`, `/creatives/campaigns/*`
+- Phase 3 target: protected internal `/ops/*` control plane for assignments, readiness, delivery/commercial transitions, and workflow audit visibility
+- Do not introduce or document a unified `/workspace/*` surface; any remaining legacy references should resolve to the explicit brand or creative routes above
 
 ## Structure
 

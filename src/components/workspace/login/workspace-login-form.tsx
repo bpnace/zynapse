@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/forms/form-primitives";
+import { resolveProtectedWorkspaceNextPath } from "@/lib/auth/workspace-navigation";
 import { createBrowserSupabaseClient } from "@/lib/auth/client";
-import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 type WorkspaceLoginFormProps = {
   next?: string;
@@ -95,7 +95,7 @@ export function WorkspaceLoginForm({
 }: WorkspaceLoginFormProps) {
   const router = useRouter();
   const safeNextPath = useMemo(
-    () => resolveWorkspaceNextPath(next, "/app"),
+    () => resolveProtectedWorkspaceNextPath(next, "/app"),
     [next],
   );
   const [email, setEmail] = useState(initialEmail);

@@ -16,6 +16,7 @@ playwright-report/
 .omx/
 .vercel/
 docs/
+output/
 
 # env / debug
 .env*.local

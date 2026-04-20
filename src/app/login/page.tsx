@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { resolveProtectedWorkspaceNextPath } from "@/lib/auth/workspace-navigation";
 import { LoginWaitlistForm } from "@/components/forms/waitlist/login-waitlist-form";
 import { WorkspaceLoginForm } from "@/components/workspace/login/workspace-login-form";
 import { getDemoWorkspaceConfig } from "@/lib/workspace/demo";
-import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
 
 export const metadata = buildMetadata({
   title: "Anmelden | Zynapse",
@@ -21,7 +21,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const demoConfig = getDemoWorkspaceConfig();
   const next =
     typeof params.next === "string" && params.next.length > 0
-      ? resolveWorkspaceNextPath(params.next, "/app")
+      ? resolveProtectedWorkspaceNextPath(params.next, "/app")
       : "/app";
 
   return (

@@ -21,12 +21,21 @@ const memberships = [
     workspaceType: "creative" as const,
     acceptedAt: new Date("2026-04-19T10:00:00.000Z"),
   },
+  {
+    id: "ops",
+    organizationId: "org-zynapse",
+    userId: "user-1",
+    role: "ops_admin" as const,
+    workspaceType: "ops" as const,
+    acceptedAt: new Date("2026-04-18T10:00:00.000Z"),
+  },
 ];
 
 describe("workspace membership selection", () => {
   it("selects the requested workspace type deterministically", () => {
     expect(selectMembershipForWorkspace(memberships, "brand")?.id).toBe("brand");
     expect(selectMembershipForWorkspace(memberships, "creative")?.id).toBe("creative");
+    expect(selectMembershipForWorkspace(memberships, "ops")?.id).toBe("ops");
   });
 
   it("prefers the brand workspace as the default managed-service entry when available", () => {

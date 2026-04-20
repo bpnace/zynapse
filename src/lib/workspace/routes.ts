@@ -54,6 +54,45 @@ export const creativeWorkspaceRoutes = {
   },
 };
 
+export const opsWorkspaceRoutes = {
+  overview() {
+    return "/ops";
+  },
+  campaigns() {
+    return "/ops/campaigns";
+  },
+  campaignDetail(campaignId: string) {
+    return `/ops/campaigns/${campaignId}`;
+  },
+  assignments() {
+    return "/ops/assignments";
+  },
+  reviewReadiness() {
+    return "/ops/review-readiness";
+  },
+  commercialHandoffs() {
+    return "/ops/commercial-handoffs";
+  },
+  isKnownPath(pathname: string) {
+    const safePathname = getPathnameOnly(pathname);
+    const prefixes = [
+      opsWorkspaceRoutes.overview(),
+      opsWorkspaceRoutes.campaigns(),
+      opsWorkspaceRoutes.assignments(),
+      opsWorkspaceRoutes.reviewReadiness(),
+      opsWorkspaceRoutes.commercialHandoffs(),
+    ];
+
+    return prefixes.some((prefix) => {
+      if (safePathname === prefix) {
+        return true;
+      }
+
+      return safePathname.startsWith(`${prefix}/`);
+    });
+  },
+};
+
 export const brandsWorkspaceRoutes = {
   overview(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
     void namespace;
@@ -156,6 +195,10 @@ export function isProtectedWorkspacePath(pathname: string) {
     return true;
   }
 
+  if (opsWorkspaceRoutes.isKnownPath(safePathname)) {
+    return true;
+  }
+
   return (
     safePathname === creativeWorkspaceRoutes.tasks() ||
     safePathname === creativeWorkspaceRoutes.feedback() ||
@@ -172,7 +215,9 @@ export function resolveWorkspaceNextPath(
   if (
     candidate &&
     !candidate.startsWith("//") &&
-    (isProtectedWorkspacePath(candidate) || brandsWorkspaceRoutes.isKnownPath(candidate))
+    (isProtectedWorkspacePath(candidate) ||
+      brandsWorkspaceRoutes.isKnownPath(candidate) ||
+      opsWorkspaceRoutes.isKnownPath(candidate))
   ) {
     return candidate;
   }
