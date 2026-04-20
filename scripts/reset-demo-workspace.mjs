@@ -59,6 +59,76 @@ function titleize(input) {
     .join(" ");
 }
 
+export function buildDemoWorkspaceParticipants(config) {
+  const requestedEmail = config.requestedEmail.trim().toLowerCase();
+  const canonicalEmail = config.canonicalEmail.trim().toLowerCase();
+  const participants = [
+    {
+      key: "brand",
+      email: requestedEmail,
+      password: config.requestedPassword,
+      role: "brand_reviewer",
+      workspaceType: "brand",
+    },
+  ];
+
+  if (requestedEmail === canonicalEmail) {
+    participants.push(
+      {
+        key: "creative",
+        email: (config.creativeEmail ?? defaultCreativeDemoEmail).trim().toLowerCase(),
+        password: config.creativePassword ?? config.requestedPassword,
+        role: "creative_lead",
+        workspaceType: "creative",
+      },
+      {
+        key: "ops",
+        email: (config.opsEmail ?? defaultOpsDemoEmail).trim().toLowerCase(),
+        password: config.opsPassword ?? config.requestedPassword,
+        role: "ops_admin",
+        workspaceType: "ops",
+      },
+    );
+  }
+
+  return participants.filter(
+    (participant, index, items) =>
+      items.findIndex((candidate) => candidate.email === participant.email) === index,
+  );
+}
+
+export function deriveWorkflowSeedState(currentStage) {
+  const workflowStatus =
+    currentStage === "handover_ready"
+      ? "handover"
+      : currentStage === "approved" || currentStage === "in_review"
+        ? "review"
+        : "production";
+  const reviewStatus =
+    currentStage === "approved" || currentStage === "handover_ready"
+      ? "approved"
+      : currentStage === "in_review"
+        ? "in_review"
+        : "not_ready";
+  const deliveryStatus =
+    currentStage === "handover_ready"
+      ? "ready"
+      : currentStage === "approved"
+        ? "preparing"
+        : "not_ready";
+  const commercialStatus =
+    currentStage === "approved" || currentStage === "handover_ready"
+      ? "ready_for_pilot"
+      : "not_ready";
+
+  return {
+    workflowStatus,
+    reviewStatus,
+    deliveryStatus,
+    commercialStatus,
+  };
+}
+
 function assertResult(error, context) {
   if (error) {
     throw new Error(`${context}: ${error.message ?? "Unknown Supabase error"}`);
