@@ -5,15 +5,11 @@ import { useRouter } from "next/navigation";
 import { upsertOpsAssignment } from "@/lib/workspace/actions/ops-control-plane";
 import { Button } from "@/components/ui/button";
 import { Field, SelectInput, TextInput, TextareaInput } from "@/components/forms/form-primitives";
+import type { OpsCreativeOption } from "@/lib/workspace/ops-creative-options";
 
 type OpsAssignmentFormProps = {
   campaignId: string;
-  creatives: Array<{
-    userId: string;
-    displayName: string;
-    role: string;
-    membershipStatus: string;
-  }>;
+  creatives: OpsCreativeOption[];
   initialValues?: {
     userId?: string | null;
     assignmentRole?: string;
@@ -64,15 +60,19 @@ export function OpsAssignmentForm({
 
   const hasCreatives = creatives.length > 0;
   const helperText = useMemo(() => {
+    if (!campaignId) {
+      return "Create or select a campaign before assigning work.";
+    }
+
     if (!hasCreatives) {
       return "No creative memberships are available in this org yet.";
     }
 
     return "Assignments update the shared campaign graph and revalidate /brands, /creatives, and /ops.";
-  }, [hasCreatives]);
+  }, [campaignId, hasCreatives]);
 
   function submitAssignment() {
-    if (!hasCreatives) {
+    if (!campaignId || !hasCreatives) {
       return;
     }
 
@@ -110,7 +110,7 @@ export function OpsAssignmentForm({
           <SelectInput
             value={userId}
             onChange={(event) => setUserId(event.target.value)}
-            disabled={!hasCreatives || isPending}
+            disabled={!campaignId || !hasCreatives || isPending}
           >
             {creatives.map((creative) => (
               <option key={creative.userId} value={creative.userId}>
@@ -123,7 +123,7 @@ export function OpsAssignmentForm({
           <SelectInput
             value={assignmentRole}
             onChange={(event) => setAssignmentRole(event.target.value)}
-            disabled={!hasCreatives || isPending}
+            disabled={!campaignId || !hasCreatives || isPending}
           >
             {assignmentRoles.map((value) => (
               <option key={value} value={value}>
@@ -139,7 +139,7 @@ export function OpsAssignmentForm({
           <SelectInput
             value={status}
             onChange={(event) => setStatus(event.target.value)}
-            disabled={!hasCreatives || isPending}
+            disabled={!campaignId || !hasCreatives || isPending}
           >
             {assignmentStatuses.map((value) => (
               <option key={value} value={value}>
@@ -153,7 +153,7 @@ export function OpsAssignmentForm({
             type="date"
             value={dueAt}
             onChange={(event) => setDueAt(event.target.value)}
-            disabled={!hasCreatives || isPending}
+            disabled={!campaignId || !hasCreatives || isPending}
           />
         </Field>
       </div>
@@ -162,7 +162,7 @@ export function OpsAssignmentForm({
         <TextareaInput
           value={scopeSummary}
           onChange={(event) => setScopeSummary(event.target.value)}
-          disabled={!hasCreatives || isPending}
+          disabled={!campaignId || !hasCreatives || isPending}
         />
       </Field>
 
@@ -171,7 +171,11 @@ export function OpsAssignmentForm({
       ) : null}
 
       <div className="flex justify-end">
-        <Button type="button" onClick={submitAssignment} disabled={!hasCreatives || isPending}>
+        <Button
+          type="button"
+          onClick={submitAssignment}
+          disabled={!campaignId || !hasCreatives || isPending}
+        >
           {isPending ? "Saving…" : "Save assignment"}
         </Button>
       </div>

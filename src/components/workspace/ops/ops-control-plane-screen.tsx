@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { formatWorkspaceDateTime } from "@/lib/workspace/formatting";
 import { opsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { Field, SelectInput } from "@/components/forms/form-primitives";
 import { OpsAssignmentForm } from "@/components/workspace/ops/ops-assignment-form";
 import { OpsWorkflowForm } from "@/components/workspace/ops/ops-workflow-form";
 import type { getOpsOverview } from "@/lib/workspace/queries/get-ops-overview";
@@ -25,6 +29,18 @@ export function OpsControlPlaneScreen({
   view: OpsOverviewView;
   mode: OpsScreenMode;
 }) {
+  const [selectedCampaignId, setSelectedCampaignId] = useState(
+    view.campaigns[0]?.id ?? "",
+  );
+
+  const selectedCampaign = useMemo(
+    () =>
+      view.campaigns.find((campaign) => campaign.id === selectedCampaignId) ??
+      view.campaigns[0] ??
+      null,
+    [selectedCampaignId, view.campaigns],
+  );
+
   const visibleCampaigns =
     mode === "review"
       ? view.reviewReadinessQueue
@@ -69,7 +85,10 @@ export function OpsControlPlaneScreen({
         ]}
       </section>
 
-      {(mode === "overview" || mode === "campaigns" || mode === "review" || mode === "commercial") ? (
+      {mode === "overview" ||
+      mode === "campaigns" ||
+      mode === "review" ||
+      mode === "commercial" ? (
         <section className="grid gap-4">
           {visibleCampaigns.map((campaign) => (
             <article key={campaign.id} className="workspace-panel rounded-[1.6rem] p-6">
@@ -81,7 +100,9 @@ export function OpsControlPlaneScreen({
                   </h2>
                   <p className="text-sm text-[var(--workspace-copy-muted)]">
                     Stage {campaign.currentStage} · queue {campaign.reviewQueueStatus}
-                    {campaign.workflow?.blockedReason ? ` · blocked: ${campaign.workflow.blockedReason}` : ""}
+                    {campaign.workflow?.blockedReason
+                      ? ` · blocked: ${campaign.workflow.blockedReason}`
+                      : ""}
                   </p>
                 </div>
                 <Link
@@ -131,7 +152,7 @@ export function OpsControlPlaneScreen({
         </section>
       ) : null}
 
-      {(mode === "overview" || mode === "assignments") ? (
+      {mode === "overview" || mode === "assignments" ? (
         <section className="grid gap-4 xl:grid-cols-[minmax(0,1.4fr)_minmax(360px,0.9fr)]">
           <article className="workspace-panel rounded-[1.6rem] p-6">
             <p className="workspace-eyebrow">Assignment board</p>
@@ -156,21 +177,33 @@ export function OpsControlPlaneScreen({
             </div>
           </article>
 
-          <OpsAssignmentForm
-            campaignId={view.campaigns[0]?.id ?? ""}
-            creatives={view.assignmentBoard
-              .map((assignment) => assignment.creativeProfile)
-              .filter((profile, index, items): profile is NonNullable<typeof profile> => {
-                if (!profile) return false;
-                return items.findIndex((candidate) => candidate?.userId === profile.userId) === index;
-              })
-              .map((profile) => ({
-                userId: profile.userId,
-                displayName: profile.displayName,
-                role: "creative",
-                membershipStatus: "active",
-              }))}
-          />
+          <div className="grid gap-4">
+            {selectedCampaign ? (
+              <div className="workspace-panel rounded-[1.6rem] p-4">
+                <Field label="Assignment campaign">
+                  <SelectInput
+                    value={selectedCampaign.id}
+                    onChange={(event) => setSelectedCampaignId(event.target.value)}
+                  >
+                    {view.campaigns.map((campaign) => (
+                      <option key={campaign.id} value={campaign.id}>
+                        {campaign.name}
+                      </option>
+                    ))}
+                  </SelectInput>
+                </Field>
+              </div>
+            ) : (
+              <article className="workspace-panel rounded-[1.6rem] p-6 text-sm leading-6 text-[var(--workspace-copy-muted)]">
+                Create the first campaign before assigning creative work from the ops surface.
+              </article>
+            )}
+
+            <OpsAssignmentForm
+              campaignId={selectedCampaign?.id ?? ""}
+              creatives={view.availableCreatives}
+            />
+          </div>
         </section>
       ) : null}
 
@@ -195,15 +228,16 @@ export function OpsControlPlaneScreen({
             </div>
           </article>
 
-          {view.campaigns[0]?.workflow ? (
+          {selectedCampaign?.workflow ? (
             <OpsWorkflowForm
-              campaignId={view.campaigns[0].id}
+              campaignId={selectedCampaign.id}
               initialValues={{
-                workflowStatus: view.campaigns[0].workflow?.workflowStatus,
-                reviewStatus: view.campaigns[0].workflow?.reviewStatus,
-                deliveryStatus: view.campaigns[0].workflow?.deliveryStatus,
-                commercialStatus: view.campaigns[0].workflow?.commercialStatus,
-                blockedReason: view.campaigns[0].workflow?.blockedReason ?? "",
+                workflowStatus: selectedCampaign.workflow?.workflowStatus,
+                reviewStatus: selectedCampaign.workflow?.reviewStatus,
+                deliveryStatus: selectedCampaign.workflow?.deliveryStatus,
+                commercialStatus: selectedCampaign.workflow?.commercialStatus,
+                blockedReason: selectedCampaign.workflow?.blockedReason ?? "",
+                slaDueAt: selectedCampaign.workflow?.slaDueAt?.toISOString() ?? null,
               }}
             />
           ) : null}

@@ -1,4 +1,4 @@
-import { formatWorkspaceDateTime, formatWorkspaceRole } from "@/lib/workspace/formatting";
+import { formatWorkspaceDateTime } from "@/lib/workspace/formatting";
 import { OpsAssignmentForm } from "@/components/workspace/ops/ops-assignment-form";
 import { OpsWorkflowForm } from "@/components/workspace/ops/ops-workflow-form";
 import type { getOpsCampaignDetail } from "@/lib/workspace/queries/get-ops-campaign-detail";
@@ -55,12 +55,7 @@ export function OpsCampaignDetailScreen({
         <div className="grid gap-4">
           <OpsAssignmentForm
             campaignId={view.campaign.id}
-            creatives={view.availableCreatives.map((profile) => ({
-              userId: profile.userId,
-              displayName: profile.displayName,
-              role: formatWorkspaceRole("creative"),
-              membershipStatus: "active",
-            }))}
+            creatives={view.availableCreatives}
             initialValues={{
               userId: view.assignments[0]?.userId,
               assignmentRole: view.assignments[0]?.assignmentRole,
