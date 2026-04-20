@@ -36,18 +36,9 @@ export function WorkspaceShell({
   children,
 }: WorkspaceShellProps) {
   const pathname = usePathname();
-  const workspaceOverviewAlias = brandsWorkspaceRoutes.overview("workspace");
-  const canonicalOverviewPath = brandsWorkspaceRoutes.overview();
   const activeCampaignDetailPath = activeCampaignId
     ? brandsWorkspaceRoutes.campaigns.detail(activeCampaignId)
     : undefined;
-  const activeCampaignDetailLegacyPath = activeCampaignId
-    ? brandsWorkspaceRoutes.campaigns.detail(activeCampaignId, "workspace")
-    : undefined;
-  const onboardingLegacyPath = brandsWorkspaceRoutes.onboarding("workspace");
-  const pilotRequestLegacyPath = brandsWorkspaceRoutes.pilotRequest({
-    namespace: "workspace",
-  });
   const activeCampaignReviewPath = activeCampaignId
     ? brandsWorkspaceRoutes.campaigns.review(activeCampaignId)
     : undefined;
@@ -73,16 +64,14 @@ export function WorkspaceShell({
       label: "Heute",
       helper: "Status, Entscheidungen, Freigabereife",
       icon: LayoutGrid,
-      active: pathname === canonicalOverviewPath || pathname === workspaceOverviewAlias,
+      active: pathname === brandsWorkspaceRoutes.overview(),
     },
     {
       href: activeCampaignDetailPath,
       label: "Kampagne",
       helper: "Ziel, Phase und Varianten",
       icon: FolderKanban,
-      active:
-        Boolean(activeCampaignDetailPath) &&
-        (pathname === activeCampaignDetailPath || pathname === activeCampaignDetailLegacyPath),
+      active: Boolean(activeCampaignDetailPath) && pathname === activeCampaignDetailPath,
     },
     {
       href: activeCampaignReviewPath,
@@ -105,7 +94,7 @@ export function WorkspaceShell({
       label: "Markenkontext",
       helper: "Kanäle, Leitplanken, Freigabe",
       icon: Settings2,
-      active: pathname === brandsWorkspaceRoutes.onboarding() || pathname === onboardingLegacyPath,
+      active: pathname === brandsWorkspaceRoutes.onboarding(),
     },
     {
       href: brandsWorkspaceRoutes.briefs.new(),
@@ -124,8 +113,7 @@ export function WorkspaceShell({
           label: "Pilotanfrage",
           helper: "Nächster Auftrag und Übergabe",
           icon: ArrowUpRight,
-          active:
-            pathname === brandsWorkspaceRoutes.pilotRequest() || pathname === pilotRequestLegacyPath,
+          active: pathname === brandsWorkspaceRoutes.pilotRequest(),
         },
       ]
     : [];

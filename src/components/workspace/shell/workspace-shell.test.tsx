@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { WorkspaceShell } from "@/components/workspace/shell/workspace-shell";
 
 vi.mock("next/navigation", () => ({
-  usePathname: () => "/workspace",
+  usePathname: () => "/brands/today",
 }));
 
 afterEach(() => {

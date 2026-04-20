@@ -1,45 +1,34 @@
-export type BrandsWorkspaceNamespace = "workspace" | "brands";
+export type BrandsWorkspaceNamespace = "brands";
 
 const DEFAULT_NAMESPACE: BrandsWorkspaceNamespace = "brands";
-const BRAND_NAMESPACES: BrandsWorkspaceNamespace[] = ["workspace", "brands"];
 
 function getPathnameOnly(pathname: string) {
   return pathname.split(/[?#]/, 1)[0] ?? pathname;
 }
 
-function getBrandBasePath(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-  return `/${namespace}`;
-}
-
-function getBrandOverviewPath(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-  return namespace === "brands" ? "/brands/today" : "/workspace";
+function getBrandBasePath() {
+  return "/brands";
 }
 
 function buildBrandPath(
   suffix: string,
-  namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE,
 ) {
-  return namespace === "workspace"
-    ? `${getBrandBasePath(namespace)}${suffix}`
-    : `${getBrandBasePath(namespace)}${suffix}`;
+  return `${getBrandBasePath()}${suffix}`;
 }
 
-function getBrandProtectedPrefixes(namespace: BrandsWorkspaceNamespace) {
+function getBrandProtectedPrefixes() {
   return [
-    getBrandOverviewPath(namespace),
-    buildBrandPath("/onboarding", namespace),
-    buildBrandPath("/briefs", namespace),
-    buildBrandPath("/campaigns", namespace),
-    buildBrandPath("/pilot-request", namespace),
+    "/brands/today",
+    buildBrandPath("/onboarding"),
+    buildBrandPath("/briefs"),
+    buildBrandPath("/campaigns"),
+    buildBrandPath("/pilot-request"),
   ];
 }
 
-function isBrandProtectedPathForNamespace(
-  pathname: string,
-  namespace: BrandsWorkspaceNamespace,
-) {
+function isBrandProtectedPath(pathname: string) {
   const safePathname = getPathnameOnly(pathname);
-  return getBrandProtectedPrefixes(namespace).some((prefix) => {
+  return getBrandProtectedPrefixes().some((prefix) => {
     if (safePathname === prefix) {
       return true;
     }
@@ -67,28 +56,35 @@ export const creativeWorkspaceRoutes = {
 
 export const brandsWorkspaceRoutes = {
   overview(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-    return getBrandOverviewPath(namespace);
+    void namespace;
+    return "/brands/today";
   },
   onboarding(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-    return buildBrandPath("/onboarding", namespace);
+    void namespace;
+    return buildBrandPath("/onboarding");
   },
   briefs: {
     new(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return buildBrandPath("/briefs/new", namespace);
+      void namespace;
+      return buildBrandPath("/briefs/new");
     },
     detail(briefId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return buildBrandPath(`/briefs/${briefId}`, namespace);
+      void namespace;
+      return buildBrandPath(`/briefs/${briefId}`);
     },
   },
   campaigns: {
     detail(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return buildBrandPath(`/campaigns/${campaignId}`, namespace);
+      void namespace;
+      return buildBrandPath(`/campaigns/${campaignId}`);
     },
     review(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return buildBrandPath(`/campaigns/${campaignId}/review`, namespace);
+      void namespace;
+      return buildBrandPath(`/campaigns/${campaignId}/review`);
     },
     handover(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
-      return buildBrandPath(`/campaigns/${campaignId}/handover`, namespace);
+      void namespace;
+      return buildBrandPath(`/campaigns/${campaignId}/handover`);
     },
   },
   pilotRequest(
@@ -97,7 +93,6 @@ export const brandsWorkspaceRoutes = {
       namespace?: BrandsWorkspaceNamespace;
     } = {},
   ) {
-    const namespace = options.namespace ?? DEFAULT_NAMESPACE;
     const searchParams = new URLSearchParams();
 
     if (options.campaignId) {
@@ -106,44 +101,41 @@ export const brandsWorkspaceRoutes = {
 
     const query = searchParams.toString();
     return query
-      ? `${buildBrandPath("/pilot-request", namespace)}?${query}`
-      : buildBrandPath("/pilot-request", namespace);
+      ? `${buildBrandPath("/pilot-request")}?${query}`
+      : buildBrandPath("/pilot-request");
   },
   revalidation(options: {
     campaignId?: string | null;
     briefId?: string | null;
     namespace?: BrandsWorkspaceNamespace;
   } = {}) {
-    const namespaces = options.namespace ? [options.namespace] : BRAND_NAMESPACES;
     return [
       ...new Set(
-        namespaces.flatMap((namespace) => {
+        (() => {
           const paths = [
-            brandsWorkspaceRoutes.overview(namespace),
-            brandsWorkspaceRoutes.onboarding(namespace),
-            brandsWorkspaceRoutes.briefs.new(namespace),
-            buildBrandPath("/pilot-request", namespace),
+            brandsWorkspaceRoutes.overview(),
+            brandsWorkspaceRoutes.onboarding(),
+            brandsWorkspaceRoutes.briefs.new(),
+            buildBrandPath("/pilot-request"),
           ];
 
           if (options.briefId) {
-            paths.push(brandsWorkspaceRoutes.briefs.detail(options.briefId, namespace));
+            paths.push(brandsWorkspaceRoutes.briefs.detail(options.briefId));
           }
 
           if (options.campaignId) {
-            paths.push(brandsWorkspaceRoutes.campaigns.detail(options.campaignId, namespace));
-            paths.push(brandsWorkspaceRoutes.campaigns.review(options.campaignId, namespace));
-            paths.push(brandsWorkspaceRoutes.campaigns.handover(options.campaignId, namespace));
+            paths.push(brandsWorkspaceRoutes.campaigns.detail(options.campaignId));
+            paths.push(brandsWorkspaceRoutes.campaigns.review(options.campaignId));
+            paths.push(brandsWorkspaceRoutes.campaigns.handover(options.campaignId));
           }
 
           return paths;
-        }),
+        })(),
       ),
     ];
   },
   isKnownPath(pathname: string) {
-    return BRAND_NAMESPACES.some((namespace) =>
-      isBrandProtectedPathForNamespace(pathname, namespace),
-    );
+    return isBrandProtectedPath(pathname);
   },
   resolveNextPath(
     next: string | null | undefined,

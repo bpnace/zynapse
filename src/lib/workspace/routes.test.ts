@@ -7,7 +7,7 @@ import {
 } from "@/lib/workspace/routes";
 
 describe("workspace routes", () => {
-  it("builds canonical brand routes under /brands while preserving the legacy workspace alias", () => {
+  it("builds canonical brand routes under /brands", () => {
     expect(brandsWorkspaceRoutes.overview()).toBe("/brands/today");
     expect(brandsWorkspaceRoutes.onboarding()).toBe("/brands/onboarding");
     expect(brandsWorkspaceRoutes.briefs.new()).toBe("/brands/briefs/new");
@@ -21,10 +21,6 @@ describe("workspace routes", () => {
     expect(brandsWorkspaceRoutes.campaigns.handover("campaign-1")).toBe(
       "/brands/campaigns/campaign-1/handover",
     );
-    expect(brandsWorkspaceRoutes.overview("workspace")).toBe("/workspace");
-    expect(brandsWorkspaceRoutes.campaigns.review("campaign-1", "workspace")).toBe(
-      "/workspace/campaigns/campaign-1/review",
-    );
   });
 
   it("supports creative workspace paths alongside the brand namespace split", () => {
@@ -36,7 +32,6 @@ describe("workspace routes", () => {
   });
 
   it("recognizes protected workspace-like paths without matching public marketing routes", () => {
-    expect(brandsWorkspaceRoutes.isKnownPath("/workspace")).toBe(true);
     expect(brandsWorkspaceRoutes.isKnownPath("/brands/today")).toBe(true);
     expect(brandsWorkspaceRoutes.isKnownPath("/brands/campaigns/campaign-1")).toBe(true);
     expect(brandsWorkspaceRoutes.isKnownPath("/brands")).toBe(false);
@@ -55,7 +50,6 @@ describe("workspace routes", () => {
       brandsWorkspaceRoutes.revalidation({
         campaignId: "campaign-1",
         briefId: "brief-1",
-        namespace: "brands",
       }),
     ).toEqual([
       "/brands/today",
@@ -73,6 +67,7 @@ describe("workspace routes", () => {
     expect(resolveWorkspaceNextPath("/brands/campaigns/campaign-1", "/app")).toBe(
       "/brands/campaigns/campaign-1",
     );
+    expect(resolveWorkspaceNextPath("/workspace", "/app")).toBe("/app");
     expect(resolveWorkspaceNextPath("/brands", "/app")).toBe("/app");
     expect(resolveWorkspaceNextPath("/creatives/tasks", "/app")).toBe("/creatives/tasks");
     expect(resolveWorkspaceNextPath("//evil.test", "/app")).toBe("/app");

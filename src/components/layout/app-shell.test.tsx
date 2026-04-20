@@ -26,7 +26,7 @@ describe("AppShell", () => {
   });
 
   it("suppresses marketing chrome for workspace routes", () => {
-    usePathnameMock.mockReturnValue("/workspace/campaigns/campaign-1");
+    usePathnameMock.mockReturnValue("/brands/campaigns/campaign-1");
     render(<AppShell><div>content</div></AppShell>);
 
     expect(screen.queryByTestId("site-header")).not.toBeInTheDocument();

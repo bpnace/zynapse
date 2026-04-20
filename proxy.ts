@@ -9,7 +9,6 @@ export const config = {
   matcher: [
     "/app/:path*",
     "/brands/:path*",
-    "/workspace/:path*",
     "/creatives/tasks/:path*",
     "/creatives/campaigns/:path*",
     "/creatives/feedback/:path*",

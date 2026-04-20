@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import WorkspaceLayout from "@/app/(workspace)/workspace/layout";
+import BrandsLayout from "@/app/(workspace)/brands/layout";
 
 const requireWorkspaceAccessMock = vi.fn();
 const getDashboardViewMock = vi.fn();
@@ -28,16 +28,21 @@ vi.mock("@/components/workspace/shell/workspace-shell", () => ({
   },
 }));
 
-describe("WorkspaceLayout", () => {
+describe("BrandsLayout", () => {
   it("drives shell commercial visibility through the readiness helper", async () => {
     requireWorkspaceAccessMock.mockResolvedValue({
       organization: { id: "org-1", name: "Acme" },
-      membership: { role: "brand_admin" },
+      membership: { role: "brand_owner" },
       brandProfile: { website: "https://acme.test" },
       demo: { isReadOnly: false },
     });
     getDashboardViewMock.mockResolvedValue({
       latestCampaign: { id: "campaign-1" },
+      latestCampaignWorkflow: {
+        reviewStatus: "approved",
+        deliveryStatus: "ready",
+        commercialStatus: "ready_for_pilot",
+      },
       latestAssets: [{ reviewStatus: "approved" }],
       reviewThreadCount: 0,
       stageItems: [{ stageKey: "approved", status: "in_progress" }],
@@ -46,13 +51,18 @@ describe("WorkspaceLayout", () => {
       showCommercialStep: true,
     });
 
-    const tree = await WorkspaceLayout({ children: <div>child</div> });
+    const tree = await BrandsLayout({ children: <div>child</div> });
     render(tree);
 
     expect(getBrandWorkspaceReadinessMock).toHaveBeenCalledWith({
       stageItems: [{ stageKey: "approved", status: "in_progress" }],
       latestAssets: [{ reviewStatus: "approved" }],
       openReviewCount: 0,
+      workflowState: {
+        reviewStatus: "approved",
+        deliveryStatus: "ready",
+        commercialStatus: "ready_for_pilot",
+      },
     });
     expect(workspaceShellMock).toHaveBeenCalledWith(
       expect.objectContaining({
