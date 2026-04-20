@@ -84,6 +84,8 @@ For a repeatable customer or e2e demo flow:
    - `DEMO_WORKSPACE_EMAIL` (defaults to `demo@zynapse.eu`)
    - `DEMO_WORKSPACE_NAME` (optional, defaults to `Zynapse Closed Demo`)
    - `DEMO_WORKSPACE_ORGANIZATION_SLUG` (optional, defaults to `zynapse-closed-demo`)
+   - `DEMO_WORKSPACE_CREATIVE_EMAIL` (optional; defaults to a `+creative` alias of the canonical demo email)
+   - `DEMO_WORKSPACE_OPS_EMAIL` (optional; defaults to a `+ops` alias of the canonical demo email)
    - `E2E_WORKSPACE_EMAIL` (optional override for browser automation)
    - `E2E_WORKSPACE_PASSWORD`
    - `--template d2c_product_launch` (optional; the reset script currently only accepts this template)
@@ -106,13 +108,19 @@ pnpm demo:reset -- --email "${E2E_WORKSPACE_EMAIL:-$DEMO_WORKSPACE_EMAIL}" --pas
    - Ops surface: the same campaign should remain visible in `/ops/*` with
      workflow, assignment, delivery, and commercial readiness context aligned
      to the seeded review state.
+   - Participant fixture: the reset also provisions creative and ops users for
+     the same organization, so the brand, creative, and ops surfaces can all
+     inspect one shared seeded campaign graph.
 
 4. Log in through `/demo-login` with the canonical demo credentials. The route
    is only exposed when `DEMO_WORKSPACE_LOGIN_ENABLED=true`.
-5. Walk the flow: `/brands/today` -> review -> handover.
-6. Use the creative and ops workspaces as verification surfaces for the same
+5. Walk the brand flow: `/brands/today` -> review -> handover.
+6. Log in through the standard `/login` route with the creative or ops demo
+   credentials when you need to inspect the seeded `/app`, `/creatives/*`, or
+   `/ops/*` surfaces.
+7. Use the creative and ops workspaces as verification surfaces for the same
    seeded campaign, not as separate demo resets.
-7. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
+8. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
    seeded state before the next session.
 
 The current demo reuses public videos from `public/videos/*` and placeholder
@@ -120,19 +128,15 @@ images from `public/hero/*` / `public/brand/*`. These can be swapped later
 without changing the workspace UI contract as long as the seeded asset paths
 and `assets.source` values remain aligned.
 
-### Phase 4 review notes to verify in code
+### Phase 4 reset invariants
 
-- `scripts/reset-demo-workspace.mjs` still advertises the reset as "Phase 1"
-  and still needs its seeded membership/workflow assumptions reviewed against
-  the tri-surface fixture described above.
-- `scripts/reset-demo-workspace.mjs` and
-  `src/lib/workspace/seeds/bootstrap-creative-workspace.ts` were both observed
-  with legacy membership upsert conflict assumptions during review; verify they
-  converge on the `organization_id,user_id` uniqueness contract before calling
-  the tooling fully cut over.
-- Highest-value follow-up review targets after this README update:
-  `README.md`, `scripts/reset-demo-workspace.mjs`, and
-  `src/lib/workspace/seeds/bootstrap-creative-workspace.ts`.
+- Demo access provisioning must continue to use the
+  `organization_id,user_id` membership uniqueness contract.
+- One reset must rebuild the brand review path plus seeded creative tasks,
+  revisions, and ops workflow visibility for the same campaign.
+- The canonical `/demo-login` route remains brand-facing and read-only; creative
+  and ops verification should continue to use the standard authenticated login
+  flow.
 
 ### Demo safety contract
 

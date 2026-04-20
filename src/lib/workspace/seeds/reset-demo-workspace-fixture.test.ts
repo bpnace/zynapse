@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { buildDemoWorkspaceParticipants } from "../../../../scripts/reset-demo-workspace.fixture.mjs";
+import {
+  buildDemoWorkspaceParticipants,
+  deriveWorkflowSeedState,
+} from "../../../../scripts/reset-demo-workspace.fixture.mjs";
 
 describe("buildDemoWorkspaceParticipants", () => {
   it("builds the canonical brand, creative, and ops demo fixture", () => {
@@ -76,5 +79,25 @@ describe("buildDemoWorkspaceParticipants", () => {
       "creative",
       "ops",
     ]);
+  });
+});
+
+describe("deriveWorkflowSeedState", () => {
+  it("maps handover-ready campaigns to ready-for-pilot workflow state", () => {
+    expect(deriveWorkflowSeedState("handover_ready")).toEqual({
+      workflowStatus: "handover",
+      reviewStatus: "approved",
+      deliveryStatus: "ready",
+      commercialStatus: "ready_for_pilot",
+    });
+  });
+
+  it("keeps in-review campaigns blocked from delivery readiness", () => {
+    expect(deriveWorkflowSeedState("in_review")).toEqual({
+      workflowStatus: "review",
+      reviewStatus: "in_review",
+      deliveryStatus: "not_ready",
+      commercialStatus: "not_ready",
+    });
   });
 });

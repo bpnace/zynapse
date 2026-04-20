@@ -2,7 +2,10 @@ import { config as loadEnv } from "dotenv";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import demoTemplate from "../src/lib/workspace/seeds/templates/d2c-product-launch.data.json" with { type: "json" };
-import { buildDemoWorkspaceParticipants } from "./reset-demo-workspace.fixture.mjs";
+import {
+  buildDemoWorkspaceParticipants,
+  deriveWorkflowSeedState,
+} from "./reset-demo-workspace.fixture.mjs";
 
 loadEnv({ path: ".env" });
 loadEnv({ path: ".env.local", override: true });
@@ -72,81 +75,28 @@ function titleize(input) {
     .map((part) => part[0].toUpperCase() + part.slice(1))
     .join(" ");
 }
-
-export function buildDemoWorkspaceParticipants(config) {
-  const requestedEmail = config.requestedEmail.trim().toLowerCase();
-  const canonicalEmail = config.canonicalEmail.trim().toLowerCase();
-  const participants = [
-    {
-      key: "brand",
-      email: requestedEmail,
-      password: config.requestedPassword,
-      role: "brand_reviewer",
-      workspaceType: "brand",
-    },
-  ];
-
-  if (requestedEmail === canonicalEmail) {
-    participants.push(
-      {
-        key: "creative",
-        email: (config.creativeEmail ?? defaultCreativeDemoEmail).trim().toLowerCase(),
-        password: config.creativePassword ?? config.requestedPassword,
-        role: "creative_lead",
-        workspaceType: "creative",
-      },
-      {
-        key: "ops",
-        email: (config.opsEmail ?? defaultOpsDemoEmail).trim().toLowerCase(),
-        password: config.opsPassword ?? config.requestedPassword,
-        role: "ops_admin",
-        workspaceType: "ops",
-      },
-    );
-  }
-
-  return participants.filter(
-    (participant, index, items) =>
-      items.findIndex((candidate) => candidate.email === participant.email) === index,
-  );
-}
-
-export function deriveWorkflowSeedState(currentStage) {
-  const workflowStatus =
-    currentStage === "handover_ready"
-      ? "handover"
-      : currentStage === "approved" || currentStage === "in_review"
-        ? "review"
-        : "production";
-  const reviewStatus =
-    currentStage === "approved" || currentStage === "handover_ready"
-      ? "approved"
-      : currentStage === "in_review"
-        ? "in_review"
-        : "not_ready";
-  const deliveryStatus =
-    currentStage === "handover_ready"
-      ? "ready"
-      : currentStage === "approved"
-        ? "preparing"
-        : "not_ready";
-  const commercialStatus =
-    currentStage === "approved" || currentStage === "handover_ready"
-      ? "ready_for_pilot"
-      : "not_ready";
-
-  return {
-    workflowStatus,
-    reviewStatus,
-    deliveryStatus,
-    commercialStatus,
-  };
-}
-
 function assertResult(error, context) {
   if (error) {
     throw new Error(`${context}: ${error.message ?? "Unknown Supabase error"}`);
   }
+}
+
+function deriveCreativeIdentity(email) {
+  const normalizedEmail = email?.trim().toLowerCase() ?? "creative@zynapse.eu";
+  const handle = normalizedEmail.split("@")[0] ?? "creative";
+  const words = handle
+    .split(/[._+-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1));
+
+  return {
+    slug: handle.replace(/[^a-z0-9-]/g, "-"),
+    displayName: words.join(" ") || "Creative Partner",
+  };
+}
+
+function mapAssignmentRole(role) {
+  return role === "creative_lead" ? "creative_lead" : "creative";
 }
 
 async function ensureAuthUser(supabase, email, password) {
@@ -334,8 +284,21 @@ async function upsertParticipantAccess(supabase, input) {
   assertResult(membershipError, `Failed to upsert ${participant.key} membership`);
 }
 
-async function seedWorkspace(supabase, organization) {
+async function seedWorkspace(supabase, organization, participants) {
   const template = demoTemplate;
+  const brandParticipant = participants.find(
+    ({ participant }) => participant.workspaceType === "brand",
+  );
+  const creativeParticipant = participants.find(
+    ({ participant }) => participant.workspaceType === "creative",
+  );
+  const opsParticipant = participants.find(
+    ({ participant }) => participant.workspaceType === "ops",
+  );
+
+  if (!brandParticipant) {
+    throw new Error("Failed to seed demo workspace: missing brand participant.");
+  }
 
   const { error: brandProfileError } = await supabase
     .from("brand_profiles")
@@ -386,6 +349,24 @@ async function seedWorkspace(supabase, organization) {
   );
 
   assertResult(stageError, "Failed to create campaign stages");
+
+  const workflowSeedState = deriveWorkflowSeedState(template.currentStage);
+  const { error: workflowError } = await supabase
+    .from("campaign_workflows")
+    .upsert(
+      {
+        campaign_id: campaign.id,
+        ops_owner_user_id: opsParticipant?.user.id ?? null,
+        workflow_status: workflowSeedState.workflowStatus,
+        review_status: workflowSeedState.reviewStatus,
+        delivery_status: workflowSeedState.deliveryStatus,
+        commercial_status: workflowSeedState.commercialStatus,
+        last_transition_at: nowIso,
+      },
+      { onConflict: "campaign_id" },
+    );
+
+  assertResult(workflowError, "Failed to create campaign workflow");
 
   const { data: insertedAssets, error: assetError } = await supabase
     .from("assets")
@@ -441,6 +422,116 @@ async function seedWorkspace(supabase, organization) {
     );
 
     assertResult(commentError, "Failed to create review comments");
+  }
+
+  if (creativeParticipant && insertedAssets?.length) {
+    const creativeIdentity = deriveCreativeIdentity(creativeParticipant.participant.email);
+    const { error: creativeProfileError } = await supabase
+      .from("creative_profiles")
+      .upsert(
+        {
+          user_id: creativeParticipant.user.id,
+          slug: creativeIdentity.slug,
+          display_name: creativeIdentity.displayName,
+          headline: "Curated creative execution partner",
+          bio: "Focused on creative production, revisions, and delivery-readiness handoffs.",
+          specialties: "Concepting, Prompting, Motion, Delivery",
+          portfolio_url: null,
+          availability_status: "active",
+        },
+        { onConflict: "user_id" },
+      );
+
+    assertResult(creativeProfileError, "Failed to upsert creative profile");
+
+    const { data: assignment, error: assignmentError } = await supabase
+      .from("campaign_assignments")
+      .upsert(
+        {
+          campaign_id: campaign.id,
+          user_id: creativeParticipant.user.id,
+          assignment_role: mapAssignmentRole(creativeParticipant.participant.role),
+          status: "in_progress",
+          assigned_by: opsParticipant?.user.id ?? null,
+          scope_summary:
+            "Own the current delivery sprint, tighten variants, and respond to review feedback quickly.",
+          due_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2).toISOString(),
+          accepted_at: nowIso,
+        },
+        { onConflict: "campaign_id,user_id" },
+      )
+      .select("*")
+      .single();
+
+    assertResult(assignmentError, "Failed to upsert campaign assignment");
+
+    const seededTasks = insertedAssets.slice(0, 2).map((asset, index) => ({
+      campaign_id: campaign.id,
+      assignment_id: assignment.id,
+      asset_id: asset.id,
+      owner_user_id: creativeParticipant.user.id,
+      title: `${index === 0 ? "Refine" : "Package"} ${asset.title}`,
+      description:
+        index === 0
+          ? "Tighten the current hook, CTA framing, and proof sequencing for the next review."
+          : "Prepare the approved cut with clean naming, thumbnail coverage, and handoff-ready notes.",
+      task_type: index === 0 ? "revision" : "delivery",
+      status: index === 0 ? "in_progress" : "todo",
+      priority: index === 0 ? "high" : "medium",
+      due_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2).toISOString(),
+    }));
+
+    const { error: taskError } = await supabase.from("creative_tasks").insert(seededTasks);
+
+    assertResult(taskError, "Failed to create creative tasks");
+
+    const submissionAsset =
+      insertedAssets.find((asset) => asset.review_status !== "approved") ?? insertedAssets[0];
+    const { error: versionError } = await supabase.from("asset_versions").insert({
+      asset_id: submissionAsset.id,
+      campaign_id: campaign.id,
+      assignment_id: assignment.id,
+      created_by: creativeParticipant.user.id,
+      version_label: `${submissionAsset.version_label ?? "v1"}-ops-review`,
+      storage_path: submissionAsset.storage_path,
+      thumbnail_path: submissionAsset.thumbnail_path,
+      notes: "Seeded demo submission for ops review coverage.",
+      submission_status: "submitted_for_ops_review",
+    });
+
+    assertResult(versionError, "Failed to create seeded asset version");
+
+    const revisionItems = template.reviewThreads.flatMap((thread) => {
+      const targetAsset = assetByKey.get(thread.assetKey);
+      const sourceComment = thread.comments.find(
+        (comment) => comment.commentType === "change_request",
+      );
+
+      if (!targetAsset || !sourceComment) {
+        return [];
+      }
+
+      return [
+        {
+          campaign_id: campaign.id,
+          assignment_id: assignment.id,
+          asset_id: targetAsset.id,
+          created_by: opsParticipant?.user.id ?? sourceComment.authorId,
+          title: `Resolve feedback for ${targetAsset.title}`,
+          detail: sourceComment.body,
+          status: "open",
+          priority: "high",
+        },
+      ];
+    });
+
+    if (revisionItems.length > 0) {
+      const { error: revisionError } = await supabase
+        .from("revision_items")
+        .insert(revisionItems);
+
+      assertResult(revisionError, "Failed to create revision queue items");
+    }
   }
 
   return campaign;
@@ -499,7 +590,7 @@ async function main() {
   const organization = await ensureOrganization(supabase, canonicalDemoEmail);
 
   await resetSeedState(supabase, organization.id);
-  const campaign = await seedWorkspace(supabase, organization);
+  const campaign = await seedWorkspace(supabase, organization, users);
 
   const acceptedAt = new Date().toISOString();
   await Promise.all(
@@ -536,7 +627,9 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exit(1);
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exit(1);
+  });
+}

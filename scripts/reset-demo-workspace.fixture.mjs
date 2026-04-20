@@ -67,3 +67,35 @@ export function buildDemoWorkspaceParticipants(input) {
 
   return participants;
 }
+
+export function deriveWorkflowSeedState(currentStage) {
+  const workflowStatus =
+    currentStage === "handover_ready"
+      ? "handover"
+      : currentStage === "approved" || currentStage === "in_review"
+        ? "review"
+        : "production";
+  const reviewStatus =
+    currentStage === "approved" || currentStage === "handover_ready"
+      ? "approved"
+      : currentStage === "in_review"
+        ? "in_review"
+        : "not_ready";
+  const deliveryStatus =
+    currentStage === "handover_ready"
+      ? "ready"
+      : currentStage === "approved"
+        ? "preparing"
+        : "not_ready";
+  const commercialStatus =
+    currentStage === "approved" || currentStage === "handover_ready"
+      ? "ready_for_pilot"
+      : "not_ready";
+
+  return {
+    workflowStatus,
+    reviewStatus,
+    deliveryStatus,
+    commercialStatus,
+  };
+}
