@@ -198,6 +198,37 @@ async function syncCampaignReviewState(
     .eq("stage_key", "handover_ready");
 
   assertSupabaseResult(handoverUpdateError, "Failed to update handover stage");
+
+  const workflowPatch =
+    derived.currentStage === "approved"
+      ? ({
+          workflow_status: "handover",
+          review_status: "approved",
+          delivery_status: "preparing",
+          commercial_status: "ready_for_pilot",
+        } as const)
+      : ({
+          workflow_status: "review",
+          review_status:
+            derived.inReviewStatus === "in_progress" ? "in_review" : "not_ready",
+          delivery_status: "not_ready",
+          commercial_status: "not_ready",
+        } as const);
+
+  const { error: workflowUpdateError } = await supabase
+    .from("campaign_workflows")
+    .upsert(
+      {
+        campaign_id: campaignId,
+        ...workflowPatch,
+        last_transition_at: new Date().toISOString(),
+      },
+      {
+        onConflict: "campaign_id",
+      },
+    );
+
+  assertSupabaseResult(workflowUpdateError, "Failed to update campaign workflow state");
 }
 
 function revalidateReviewPaths(campaignId: string) {

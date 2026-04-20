@@ -23,14 +23,14 @@ describe("workspace dashboard copy", () => {
 
     expect(
       screen.getByRole("link", { name: "Kontext prüfen" }),
-    ).toHaveAttribute("href", "/workspace/onboarding");
+    ).toHaveAttribute("href", "/brands/onboarding");
   });
 
   it("renders localized follow-up actions in the next-step card", () => {
     render(
       <NextActionCard
         campaignId="campaign-1"
-        briefHref="/workspace/briefs/new"
+        briefHref="/brands/briefs/new"
         title="Bereit für die Freigabe"
         body="Der geschützte Bereich ist bereit für die nächste Freigaberunde."
       />,
@@ -38,10 +38,10 @@ describe("workspace dashboard copy", () => {
 
     expect(
       screen.getByRole("link", { name: /Kampagnenstand ansehen/i }),
-    ).toHaveAttribute("href", "/workspace/campaigns/campaign-1");
+    ).toHaveAttribute("href", "/brands/campaigns/campaign-1");
     expect(
       screen.getByRole("link", { name: "Briefing erstellen" }),
-    ).toHaveAttribute("href", "/workspace/briefs/new");
+    ).toHaveAttribute("href", "/brands/briefs/new");
     expect(
       screen.getByText(/Den nächsten Auftrag stößt Zynapse erst an/i),
     ).toBeInTheDocument();

@@ -6,6 +6,7 @@ export * from "@/lib/db/schema/brand-profiles";
 export * from "@/lib/db/schema/creative-profiles";
 export * from "@/lib/db/schema/briefs";
 export * from "@/lib/db/schema/campaigns";
+export * from "@/lib/db/schema/campaign-workflows";
 export * from "@/lib/db/schema/campaign-assignments";
 export * from "@/lib/db/schema/campaign-stages";
 export * from "@/lib/db/schema/creative-tasks";

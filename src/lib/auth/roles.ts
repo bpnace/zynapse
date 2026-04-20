@@ -1,25 +1,66 @@
-export const workspaceRoles = [
+export const legacyWorkspaceRoles = [
   "brand_admin",
   "brand_reviewer",
+  "zynapse_ops",
+] as const;
+
+export const canonicalWorkspaceRoles = [
+  "brand_owner",
+  "brand_marketing_lead",
+  "brand_reviewer",
+  "brand_legal_reviewer",
+  "brand_media_buyer",
   "creative",
   "creative_lead",
-  "zynapse_ops",
+  "ops",
+  "ops_admin",
+] as const;
+
+export const workspaceRoles = [
+  ...legacyWorkspaceRoles,
+  ...canonicalWorkspaceRoles,
 ] as const;
 
 export const workspaceTypes = ["brand", "creative", "ops"] as const;
 
 export type WorkspaceRole = (typeof workspaceRoles)[number];
+export type CanonicalWorkspaceRole = (typeof canonicalWorkspaceRoles)[number];
 export type WorkspaceType = (typeof workspaceTypes)[number];
 
 export function isWorkspaceRole(value: string): value is WorkspaceRole {
   return workspaceRoles.includes(value as WorkspaceRole);
 }
 
+const workspaceRoleAliases = {
+  brand_admin: "brand_owner",
+  zynapse_ops: "ops",
+} as const satisfies Partial<Record<WorkspaceRole, CanonicalWorkspaceRole>>;
+
+export function normalizeWorkspaceRole(role: WorkspaceRole): CanonicalWorkspaceRole {
+  return (
+    workspaceRoleAliases[role as keyof typeof workspaceRoleAliases] ??
+    (role as CanonicalWorkspaceRole)
+  );
+}
+
 export const workspaceCapabilities = {
-  brand_admin: {
+  brand_owner: {
     workspaceType: "brand",
     canAccessBrandWorkspace: true,
     canAccessCreativeWorkspace: false,
+    canAccessOpsWorkspace: false,
+    canManageInvites: false,
+    canEditBrandProfile: true,
+    canCreateBriefs: true,
+    canReviewAssets: true,
+    canSubmitPilotRequest: true,
+    canSubmitCreativeWork: false,
+  },
+  brand_marketing_lead: {
+    workspaceType: "brand",
+    canAccessBrandWorkspace: true,
+    canAccessCreativeWorkspace: false,
+    canAccessOpsWorkspace: false,
     canManageInvites: false,
     canEditBrandProfile: true,
     canCreateBriefs: true,
@@ -31,6 +72,7 @@ export const workspaceCapabilities = {
     workspaceType: "brand",
     canAccessBrandWorkspace: true,
     canAccessCreativeWorkspace: false,
+    canAccessOpsWorkspace: false,
     canManageInvites: false,
     canEditBrandProfile: false,
     canCreateBriefs: false,
@@ -38,10 +80,35 @@ export const workspaceCapabilities = {
     canSubmitPilotRequest: false,
     canSubmitCreativeWork: false,
   },
+  brand_legal_reviewer: {
+    workspaceType: "brand",
+    canAccessBrandWorkspace: true,
+    canAccessCreativeWorkspace: false,
+    canAccessOpsWorkspace: false,
+    canManageInvites: false,
+    canEditBrandProfile: false,
+    canCreateBriefs: false,
+    canReviewAssets: true,
+    canSubmitPilotRequest: false,
+    canSubmitCreativeWork: false,
+  },
+  brand_media_buyer: {
+    workspaceType: "brand",
+    canAccessBrandWorkspace: true,
+    canAccessCreativeWorkspace: false,
+    canAccessOpsWorkspace: false,
+    canManageInvites: false,
+    canEditBrandProfile: false,
+    canCreateBriefs: false,
+    canReviewAssets: true,
+    canSubmitPilotRequest: true,
+    canSubmitCreativeWork: false,
+  },
   creative: {
     workspaceType: "creative",
     canAccessBrandWorkspace: false,
     canAccessCreativeWorkspace: true,
+    canAccessOpsWorkspace: false,
     canManageInvites: false,
     canEditBrandProfile: false,
     canCreateBriefs: false,
@@ -53,6 +120,7 @@ export const workspaceCapabilities = {
     workspaceType: "creative",
     canAccessBrandWorkspace: false,
     canAccessCreativeWorkspace: true,
+    canAccessOpsWorkspace: false,
     canManageInvites: false,
     canEditBrandProfile: false,
     canCreateBriefs: false,
@@ -60,10 +128,23 @@ export const workspaceCapabilities = {
     canSubmitPilotRequest: false,
     canSubmitCreativeWork: true,
   },
-  zynapse_ops: {
+  ops: {
     workspaceType: "ops",
     canAccessBrandWorkspace: true,
     canAccessCreativeWorkspace: true,
+    canAccessOpsWorkspace: true,
+    canManageInvites: true,
+    canEditBrandProfile: true,
+    canCreateBriefs: true,
+    canReviewAssets: true,
+    canSubmitPilotRequest: true,
+    canSubmitCreativeWork: true,
+  },
+  ops_admin: {
+    workspaceType: "ops",
+    canAccessBrandWorkspace: true,
+    canAccessCreativeWorkspace: true,
+    canAccessOpsWorkspace: true,
     canManageInvites: true,
     canEditBrandProfile: true,
     canCreateBriefs: true,
@@ -77,7 +158,7 @@ export function getWorkspaceCapabilities(
   role: WorkspaceRole,
   options?: { isReadOnly?: boolean },
 ) {
-  const base = workspaceCapabilities[role];
+  const base = workspaceCapabilities[normalizeWorkspaceRole(role)];
 
   if (!options?.isReadOnly) {
     return base;
@@ -94,5 +175,5 @@ export function getWorkspaceCapabilities(
 }
 
 export function getWorkspaceTypeForRole(role: WorkspaceRole): WorkspaceType {
-  return workspaceCapabilities[role].workspaceType;
+  return workspaceCapabilities[normalizeWorkspaceRole(role)].workspaceType;
 }

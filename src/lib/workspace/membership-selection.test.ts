@@ -9,7 +9,7 @@ const memberships = [
     id: "brand",
     organizationId: "org-brand",
     userId: "user-1",
-    role: "brand_admin" as const,
+    role: "brand_owner" as const,
     workspaceType: "brand" as const,
     acceptedAt: new Date("2026-04-10T10:00:00.000Z"),
   },

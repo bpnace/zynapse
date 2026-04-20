@@ -1,6 +1,7 @@
 import {
   assertSupabaseResult,
   mapCampaign,
+  mapCampaignWorkflow,
   mapOrganization,
   mapPilotRequest,
   requireServiceRoleClient,
@@ -46,9 +47,10 @@ export async function getPilotRequestView({
   const stageItemsByCampaignId = new Map<string, Array<{ stageKey: string; status: string }>>();
   const assetsByCampaignId = new Map<string, Array<{ id: string; reviewStatus: string }>>();
   const unresolvedReviewCountByCampaignId = new Map<string, number>();
+  const workflowByCampaignId = new Map<string, ReturnType<typeof mapCampaignWorkflow>>();
 
   if (campaignIds.length > 0) {
-    const [stageRows, assetRows] = await Promise.all([
+    const [stageRows, assetRows, workflowRows] = await Promise.all([
       supabase
         .from("campaign_stages")
         .select("campaign_id,stage_key,status")
@@ -57,10 +59,15 @@ export async function getPilotRequestView({
         .from("assets")
         .select("id,campaign_id,review_status")
         .in("campaign_id", campaignIds),
+      supabase
+        .from("campaign_workflows")
+        .select("*")
+        .in("campaign_id", campaignIds),
     ]);
 
     assertSupabaseResult(stageRows.error, "Failed to load pilot request stages");
     assertSupabaseResult(assetRows.error, "Failed to load pilot request assets");
+    assertSupabaseResult(workflowRows.error, "Failed to load pilot request workflows");
 
     for (const row of stageRows.data ?? []) {
       const existing = stageItemsByCampaignId.get(row.campaign_id) ?? [];
@@ -80,6 +87,11 @@ export async function getPilotRequestView({
       });
       assetsByCampaignId.set(row.campaign_id, existing);
       assetIdToCampaignId.set(row.id, row.campaign_id);
+    }
+
+    for (const row of workflowRows.data ?? []) {
+      const workflow = mapCampaignWorkflow(row);
+      workflowByCampaignId.set(workflow.campaignId, workflow);
     }
 
     const assetIds = Array.from(assetIdToCampaignId.keys());
@@ -104,10 +116,12 @@ export async function getPilotRequestView({
   }
 
   const campaignsWithReadiness = campaignsInOrg.map((campaign) => {
+    const workflowState = workflowByCampaignId.get(campaign.id) ?? null;
     const readiness = getBrandWorkspaceReadiness({
       stageItems: stageItemsByCampaignId.get(campaign.id) ?? [],
       latestAssets: assetsByCampaignId.get(campaign.id) ?? [],
       openReviewCount: unresolvedReviewCountByCampaignId.get(campaign.id) ?? 0,
+      workflowState,
     });
 
     return {

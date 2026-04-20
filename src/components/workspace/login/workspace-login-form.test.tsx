@@ -125,7 +125,7 @@ describe("WorkspaceLoginForm", () => {
 
     render(
       <WorkspaceLoginForm
-        next="/workspace?view=home"
+        next="/brands/today?view=home"
         availableMethods={["password"]}
         initialMethod="password"
       />,
@@ -145,7 +145,7 @@ describe("WorkspaceLoginForm", () => {
       });
     });
 
-    expect(pushMock).toHaveBeenCalledWith("/workspace?view=home");
+    expect(pushMock).toHaveBeenCalledWith("/brands/today?view=home");
     expect(refreshMock).toHaveBeenCalled();
   });
 

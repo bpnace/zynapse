@@ -2,6 +2,7 @@ import {
   assertSupabaseResult,
   mapAsset,
   mapCampaign,
+  mapCampaignWorkflow,
   mapCampaignStage,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
@@ -59,7 +60,7 @@ export async function getHandoverView({
     return null;
   }
 
-  const [stageItems, campaignAssets] = await Promise.all([
+  const [stageItems, campaignAssets, workflowState] = await Promise.all([
     supabase
       .from("campaign_stages")
       .select("*")
@@ -77,6 +78,16 @@ export async function getHandoverView({
       .then(({ data, error }) => {
         assertSupabaseResult(error, "Failed to load campaign assets");
         return (data ?? []).map(mapAsset).map(decorateWorkspaceAssetMedia);
+      }),
+    supabase
+      .from("campaign_workflows")
+      .select("*")
+      .eq("campaign_id", campaignId)
+      .limit(1)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        assertSupabaseResult(error, "Failed to load campaign workflow");
+        return data ? mapCampaignWorkflow(data) : null;
       }),
   ]);
 
@@ -119,6 +130,7 @@ export async function getHandoverView({
       stageItems,
       latestAssets: campaignAssets,
       openReviewCount: unresolvedReviewCount,
+      workflowState,
     }),
     approvedAssets,
     groupedAssets,

@@ -22,6 +22,18 @@ export type BriefStatus = "draft" | "submitted";
 export type PilotRequestStatus = "submitted" | "failed";
 export type PilotRequestHandoffMode = "webhook" | "log";
 export type OrganizationStatus = "invited" | "active" | "archived";
+export type CampaignWorkflowStatus =
+  | "setup"
+  | "production"
+  | "review"
+  | "handover"
+  | "complete";
+export type CampaignWorkflowReviewStatus = "not_ready" | "in_review" | "approved";
+export type CampaignWorkflowDeliveryStatus = "not_ready" | "preparing" | "ready";
+export type CampaignWorkflowCommercialStatus =
+  | "not_ready"
+  | "ready_for_pilot"
+  | "pilot_requested";
 export type AssignmentRole =
   | "creative"
   | "creative_lead"
@@ -194,6 +206,32 @@ export type WorkspaceDatabase = {
           seeded_template_key?: string | null;
           campaign_goal?: string | null;
           created_at?: string;
+        }
+      >;
+      campaign_workflows: TableDefinition<
+        {
+          id: string;
+          campaign_id: string;
+          ops_owner_user_id: string | null;
+          workflow_status: CampaignWorkflowStatus;
+          review_status: CampaignWorkflowReviewStatus;
+          delivery_status: CampaignWorkflowDeliveryStatus;
+          commercial_status: CampaignWorkflowCommercialStatus;
+          blocked_reason: string | null;
+          sla_due_at: string | null;
+          last_transition_at: string;
+        },
+        {
+          id?: string;
+          campaign_id: string;
+          ops_owner_user_id?: string | null;
+          workflow_status?: CampaignWorkflowStatus;
+          review_status?: CampaignWorkflowReviewStatus;
+          delivery_status?: CampaignWorkflowDeliveryStatus;
+          commercial_status?: CampaignWorkflowCommercialStatus;
+          blocked_reason?: string | null;
+          sla_due_at?: string | null;
+          last_transition_at?: string;
         }
       >;
       campaign_assignments: TableDefinition<

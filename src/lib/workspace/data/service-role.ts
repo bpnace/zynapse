@@ -103,6 +103,21 @@ export function mapCampaign(row: TableRow<"campaigns">) {
   };
 }
 
+export function mapCampaignWorkflow(row: TableRow<"campaign_workflows">) {
+  return {
+    id: row.id,
+    campaignId: row.campaign_id,
+    opsOwnerUserId: row.ops_owner_user_id,
+    workflowStatus: row.workflow_status,
+    reviewStatus: row.review_status,
+    deliveryStatus: row.delivery_status,
+    commercialStatus: row.commercial_status,
+    blockedReason: row.blocked_reason,
+    slaDueAt: parseDate(row.sla_due_at),
+    lastTransitionAt: parseDate(row.last_transition_at) ?? new Date(0),
+  };
+}
+
 export function mapCampaignAssignment(row: TableRow<"campaign_assignments">) {
   return {
     id: row.id,

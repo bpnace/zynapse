@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { WorkspaceRole } from "@/lib/auth/roles";
 import { ensureMembershipForCurrentUser } from "@/lib/workspace/services/accept-invite";
 import { getDemoWorkspaceConfig, isDemoWorkspaceEmail } from "@/lib/workspace/demo";
 import { requireServiceRoleClient } from "@/lib/workspace/data/service-role";
@@ -31,7 +32,7 @@ type MembershipRow = {
   id: string;
   organization_id: string;
   user_id: string;
-  role: "brand_admin" | "brand_reviewer" | "zynapse_ops";
+  role: WorkspaceRole;
   invited_by: string | null;
   accepted_at: string;
 };
@@ -40,7 +41,7 @@ type InviteRow = {
   id: string;
   organization_id: string;
   email: string;
-  role: "brand_admin" | "brand_reviewer" | "zynapse_ops";
+  role: WorkspaceRole;
   seed_template_key: string | null;
   expires_at: string;
   accepted_at: string | null;
@@ -56,7 +57,7 @@ function makeMembershipRow(input: {
     id: input.id,
     organization_id: input.organizationId,
     user_id: "user-1",
-    role: input.role ?? "brand_admin",
+    role: input.role ?? "brand_owner",
     invited_by: null,
     accepted_at: input.acceptedAt ?? "2026-04-19T10:00:00.000Z",
   };

@@ -115,7 +115,7 @@
           "commentType": "change_request"
         },
         {
-          "authorId": "zynapse_ops",
+          "authorId": "ops",
           "body": "Verstanden. Wir können es stärker über Produktgefühl und Inhaltsstoff-Kontext aufziehen, ohne ein garantiertes Ergebnis anzudeuten.",
           "commentType": "comment"
         }
@@ -123,11 +123,11 @@
     },
     {
       "assetKey": "launch-hook-proof",
-      "createdBy": "brand_admin",
+      "createdBy": "brand_owner",
       "anchorJson": "{\"timecode\":\"00:11\",\"focus\":\"cta framing\"}",
       "comments": [
         {
-          "authorId": "brand_admin",
+          "authorId": "brand_owner",
           "body": "Das wirkt bereit. Die Sequenz mit dem Wirkbeweis sitzt und die Handlungsaufforderung ist klar genug für einen ersten bezahlten Test.",
           "commentType": "approval_note"
         }

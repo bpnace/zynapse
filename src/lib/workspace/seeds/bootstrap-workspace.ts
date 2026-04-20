@@ -128,6 +128,47 @@ export async function bootstrapWorkspaceForOrganization(organizationId: string) 
 
   assertSupabaseResult(campaignStageInsertError, "Failed to create campaign stages");
 
+  const workflowStatus =
+    template.currentStage === "handover_ready"
+      ? "handover"
+      : template.currentStage === "approved" || template.currentStage === "in_review"
+        ? "review"
+        : "production";
+  const workflowReviewStatus =
+    template.currentStage === "approved" || template.currentStage === "handover_ready"
+      ? "approved"
+      : template.currentStage === "in_review"
+        ? "in_review"
+        : "not_ready";
+  const workflowDeliveryStatus =
+    template.currentStage === "handover_ready"
+      ? "ready"
+      : template.currentStage === "approved"
+        ? "preparing"
+        : "not_ready";
+  const workflowCommercialStatus =
+    template.currentStage === "approved" || template.currentStage === "handover_ready"
+      ? "ready_for_pilot"
+      : "not_ready";
+
+  const { error: workflowInsertError } = await supabase
+    .from("campaign_workflows")
+    .upsert(
+      {
+        campaign_id: campaign.id,
+        workflow_status: workflowStatus,
+        review_status: workflowReviewStatus,
+        delivery_status: workflowDeliveryStatus,
+        commercial_status: workflowCommercialStatus,
+        last_transition_at: new Date().toISOString(),
+      },
+      {
+        onConflict: "campaign_id",
+      },
+    );
+
+  assertSupabaseResult(workflowInsertError, "Failed to create campaign workflow");
+
   const { data: insertedAssetRows, error: assetInsertError } = await supabase
     .from("assets")
     .insert(

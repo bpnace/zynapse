@@ -13,6 +13,11 @@ type BrandWorkspaceReadinessInput = {
   stageItems: ReadinessStage[];
   latestAssets: ReadinessAsset[];
   openReviewCount: number;
+  workflowState?: {
+    reviewStatus: string;
+    deliveryStatus: string;
+    commercialStatus: string;
+  } | null;
 };
 
 export type BrandWorkspaceReadiness = {
@@ -37,6 +42,7 @@ export function getBrandWorkspaceReadiness({
   stageItems,
   latestAssets,
   openReviewCount,
+  workflowState = null,
 }: BrandWorkspaceReadinessInput): BrandWorkspaceReadiness {
   const approvedAssetCount = latestAssets.filter(
     (asset) => asset.reviewStatus === "approved",
@@ -44,13 +50,14 @@ export function getBrandWorkspaceReadiness({
   const reviewStageStatus = getStageStatus(stageItems, "in_review");
   const approvedStageStatus = getStageStatus(stageItems, "approved");
   const handoverReadyStatus = getStageStatus(stageItems, "handover_ready");
-  const hasExplicitWorkflowState =
-    approvedStageStatus !== null || handoverReadyStatus !== null;
+  const hasExplicitWorkflowState = workflowState !== null;
+  const workflowCommercialReady =
+    workflowState?.commercialStatus === "ready_for_pilot" ||
+    workflowState?.commercialStatus === "pilot_requested";
   const approvedOrHandoverReady =
-    approvedStageStatus === "in_progress" ||
-    approvedStageStatus === "completed" ||
-    handoverReadyStatus === "in_progress" ||
-    handoverReadyStatus === "completed";
+    workflowState?.reviewStatus === "approved" &&
+    (workflowState?.deliveryStatus === "preparing" ||
+      workflowState?.deliveryStatus === "ready");
   const fallbackCommercialVisibility =
     approvedAssetCount > 0 && openReviewCount === 0;
 
@@ -64,7 +71,7 @@ export function getBrandWorkspaceReadiness({
     showCommercialStep: hasExplicitWorkflowState
       ? approvedAssetCount > 0 &&
         openReviewCount === 0 &&
-        approvedOrHandoverReady
+        (workflowCommercialReady || approvedOrHandoverReady)
       : fallbackCommercialVisibility,
   };
 }

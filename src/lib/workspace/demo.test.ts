@@ -7,8 +7,8 @@ describe("resolveDemoWorkspaceNextPath", () => {
     expect(resolveDemoWorkspaceNextPath("/workspace/campaigns/campaign-1/review")).toBe(
       "/workspace/campaigns/campaign-1/review",
     );
-    expect(resolveDemoWorkspaceNextPath("/workspace?view=home")).toBe(
-      "/workspace?view=home",
+    expect(resolveDemoWorkspaceNextPath("/brands/today?view=home")).toBe(
+      "/brands/today?view=home",
     );
     expect(resolveDemoWorkspaceNextPath("/brands/campaigns/campaign-1")).toBe(
       "/brands/campaigns/campaign-1",
@@ -16,9 +16,9 @@ describe("resolveDemoWorkspaceNextPath", () => {
   });
 
   it("falls back for unsafe or unrelated paths", () => {
-    expect(resolveDemoWorkspaceNextPath("//workspace")).toBe("/workspace");
-    expect(resolveDemoWorkspaceNextPath("/workspace-brand")).toBe("/workspace");
-    expect(resolveDemoWorkspaceNextPath("")).toBe("/workspace");
-    expect(resolveDemoWorkspaceNextPath(null)).toBe("/workspace");
+    expect(resolveDemoWorkspaceNextPath("//workspace")).toBe("/brands/today");
+    expect(resolveDemoWorkspaceNextPath("/workspace-brand")).toBe("/brands/today");
+    expect(resolveDemoWorkspaceNextPath("")).toBe("/brands/today");
+    expect(resolveDemoWorkspaceNextPath(null)).toBe("/brands/today");
   });
 });

@@ -6,6 +6,7 @@ import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import {
   assertSupabaseResult,
   mapCampaign,
+  mapCampaignWorkflow,
   mapPilotRequest,
   requireServiceRoleClient,
 } from "@/lib/workspace/data/service-role";
@@ -81,7 +82,11 @@ export async function submitPilotRequest(
     };
   }
 
-  const [{ data: stageRows, error: stageError }, { data: assetRows, error: assetError }] =
+  const [
+    { data: stageRows, error: stageError },
+    { data: assetRows, error: assetError },
+    { data: workflowRow, error: workflowError },
+  ] =
     await Promise.all([
       supabase
         .from("campaign_stages")
@@ -91,10 +96,17 @@ export async function submitPilotRequest(
         .from("assets")
         .select("id,review_status")
         .eq("campaign_id", campaign.id),
+      supabase
+        .from("campaign_workflows")
+        .select("*")
+        .eq("campaign_id", campaign.id)
+        .limit(1)
+        .maybeSingle(),
     ]);
 
   assertSupabaseResult(stageError, "Failed to load pilot request readiness stages");
   assertSupabaseResult(assetError, "Failed to load pilot request readiness assets");
+  assertSupabaseResult(workflowError, "Failed to load pilot request readiness workflow");
 
   const assetIds = (assetRows ?? []).map((asset) => asset.id);
   const unresolvedReviewCount =
@@ -119,6 +131,7 @@ export async function submitPilotRequest(
       reviewStatus: asset.review_status,
     })),
     openReviewCount: unresolvedReviewCount,
+    workflowState: workflowRow ? mapCampaignWorkflow(workflowRow) : null,
   });
 
   if (!readiness.showCommercialStep) {
@@ -183,6 +196,24 @@ export async function submitPilotRequest(
       .eq("id", request.id);
 
     assertSupabaseResult(successUpdateError, "Failed to update pilot request status");
+
+    const { error: workflowUpdateError } = await supabase
+      .from("campaign_workflows")
+      .upsert(
+        {
+          campaign_id: campaign.id,
+          workflow_status: "handover",
+          review_status: "approved",
+          delivery_status: "ready",
+          commercial_status: "pilot_requested",
+          last_transition_at: new Date().toISOString(),
+        },
+        {
+          onConflict: "campaign_id",
+        },
+      );
+
+    assertSupabaseResult(workflowUpdateError, "Failed to update pilot request workflow state");
 
     for (const path of brandsWorkspaceRoutes.revalidation({ campaignId: campaign.id })) {
       revalidatePath(path);

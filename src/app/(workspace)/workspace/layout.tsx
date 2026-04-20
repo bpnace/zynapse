@@ -16,6 +16,7 @@ export default async function WorkspaceLayout({
     stageItems: dashboard.stageItems,
     latestAssets: dashboard.latestAssets,
     openReviewCount: dashboard.reviewThreadCount,
+    workflowState: dashboard.latestCampaignWorkflow,
   });
 
   return (

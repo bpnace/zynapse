@@ -3,6 +3,7 @@ import {
   mapAsset,
   mapBrandProfile,
   mapCampaign,
+  mapCampaignWorkflow,
   mapCampaignStage,
   mapComment,
   mapReviewThread,
@@ -25,6 +26,18 @@ export async function getDashboardView(organizationId: string) {
   const organizationCampaigns = (organizationCampaignRows ?? []).map(mapCampaign);
 
   const latestCampaign = organizationCampaigns[0] ?? null;
+  const latestCampaignWorkflow = latestCampaign
+    ? await supabase
+        .from("campaign_workflows")
+        .select("*")
+        .eq("campaign_id", latestCampaign.id)
+        .limit(1)
+        .maybeSingle()
+        .then(({ data, error }) => {
+          assertSupabaseResult(error, "Failed to load campaign workflow");
+          return data ? mapCampaignWorkflow(data) : null;
+        })
+    : null;
 
   const { data: profileRow, error: profileError } = await supabase
     .from("brand_profiles")
@@ -154,6 +167,7 @@ export async function getDashboardView(organizationId: string) {
     profile,
     campaigns: organizationCampaigns,
     latestCampaign,
+    latestCampaignWorkflow,
     stageItems,
     latestAssets,
     reviewThreadCount: reviewThreadsById.size,

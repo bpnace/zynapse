@@ -21,6 +21,7 @@ export default async function WorkspacePage() {
     stageItems: dashboard.stageItems,
     latestAssets: dashboard.latestAssets,
     openReviewCount: dashboard.reviewThreadCount,
+    workflowState: dashboard.latestCampaignWorkflow,
   });
   const onboardingCompletion = getBrandProfileCompletion(bootstrap.brandProfile);
 

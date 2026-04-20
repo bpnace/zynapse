@@ -8,10 +8,16 @@ export const organizationStatusEnum = pgEnum("organization_status", [
 
 export const workspaceRoleEnum = pgEnum("workspace_role", [
   "brand_admin",
+  "brand_owner",
+  "brand_marketing_lead",
   "brand_reviewer",
+  "brand_legal_reviewer",
+  "brand_media_buyer",
   "creative",
   "creative_lead",
   "zynapse_ops",
+  "ops",
+  "ops_admin",
 ]);
 
 export const workspaceTypeEnum = pgEnum("workspace_type", [
@@ -61,6 +67,32 @@ export const pilotRequestStatusEnum = pgEnum("pilot_request_status", [
 export const pilotRequestHandoffModeEnum = pgEnum("pilot_request_handoff_mode", [
   "webhook",
   "log",
+]);
+
+export const campaignWorkflowStatusEnum = pgEnum("campaign_workflow_status", [
+  "setup",
+  "production",
+  "review",
+  "handover",
+  "complete",
+]);
+
+export const campaignWorkflowReviewStatusEnum = pgEnum("campaign_workflow_review_status", [
+  "not_ready",
+  "in_review",
+  "approved",
+]);
+
+export const campaignWorkflowDeliveryStatusEnum = pgEnum("campaign_workflow_delivery_status", [
+  "not_ready",
+  "preparing",
+  "ready",
+]);
+
+export const campaignWorkflowCommercialStatusEnum = pgEnum("campaign_workflow_commercial_status", [
+  "not_ready",
+  "ready_for_pilot",
+  "pilot_requested",
 ]);
 
 export const assignmentRoleEnum = pgEnum("assignment_role", [

@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { WorkspaceRole } from "@/lib/auth/roles";
 import { getWorkspaceBootstrap } from "@/lib/workspace/queries/get-workspace-bootstrap";
 import { getDemoWorkspaceConfig, getWorkspaceDemoState, isDemoWorkspaceEmail } from "@/lib/workspace/demo";
 import { requireServiceRoleClient } from "@/lib/workspace/data/service-role";
@@ -34,14 +35,14 @@ function makeMembershipRow(input: {
   id: string;
   organizationId: string;
   userId?: string;
-  role?: "brand_admin" | "brand_reviewer" | "zynapse_ops";
+  role?: WorkspaceRole;
   acceptedAt?: string;
 }) {
   return {
     id: input.id,
     organization_id: input.organizationId,
     user_id: input.userId ?? "user-1",
-    role: input.role ?? "brand_admin",
+    role: input.role ?? "brand_owner",
     invited_by: null,
     accepted_at: input.acceptedAt ?? "2026-04-19T10:00:00.000Z",
   };

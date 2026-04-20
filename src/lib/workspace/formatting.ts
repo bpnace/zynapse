@@ -3,7 +3,11 @@ const workspaceLabelMap: Record<string, string> = {
   approval_note: "Freigabehinweis",
   brief_received: "Briefing eingegangen",
   brand_admin: "Brand-Admin",
+  brand_owner: "Brand Owner",
+  brand_marketing_lead: "Marketing Lead",
   brand_reviewer: "Brand-Review",
+  brand_legal_reviewer: "Legal Review",
+  brand_media_buyer: "Media Buying",
   change_request: "Änderungswunsch",
   changes_requested: "Änderungen angefordert",
   comment: "Kommentar",
@@ -22,6 +26,8 @@ const workspaceLabelMap: Record<string, string> = {
   submitted: "Eingereicht",
   webhook: "Webhook",
   zynapse_ops: "Zynapse Service Team",
+  ops: "Zynapse Ops",
+  ops_admin: "Ops Admin",
 };
 
 const workspaceAssetTypeMap: Record<string, string> = {

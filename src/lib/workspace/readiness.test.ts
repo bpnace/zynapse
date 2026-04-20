@@ -10,6 +10,11 @@ describe("getBrandWorkspaceReadiness", () => {
       ],
       latestAssets: [{ reviewStatus: "approved" }],
       openReviewCount: 0,
+      workflowState: {
+        reviewStatus: "approved",
+        deliveryStatus: "ready",
+        commercialStatus: "ready_for_pilot",
+      },
     });
 
     expect(readiness.readinessSource).toBe("workflow_state");
@@ -45,6 +50,11 @@ describe("getBrandWorkspaceReadiness", () => {
       ],
       latestAssets: [{ reviewStatus: "approved" }],
       openReviewCount: 2,
+      workflowState: {
+        reviewStatus: "approved",
+        deliveryStatus: "ready",
+        commercialStatus: "ready_for_pilot",
+      },
     });
 
     expect(readiness.showCommercialStep).toBe(false);

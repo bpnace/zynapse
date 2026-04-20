@@ -7,27 +7,27 @@ import {
 } from "@/lib/workspace/routes";
 
 describe("workspace routes", () => {
-  it("builds the current brand workspace routes from one helper surface", () => {
-    expect(brandsWorkspaceRoutes.overview()).toBe("/workspace");
-    expect(brandsWorkspaceRoutes.onboarding()).toBe("/workspace/onboarding");
-    expect(brandsWorkspaceRoutes.briefs.new()).toBe("/workspace/briefs/new");
-    expect(brandsWorkspaceRoutes.briefs.detail("brief-1")).toBe("/workspace/briefs/brief-1");
+  it("builds canonical brand routes under /brands while preserving the legacy workspace alias", () => {
+    expect(brandsWorkspaceRoutes.overview()).toBe("/brands/today");
+    expect(brandsWorkspaceRoutes.onboarding()).toBe("/brands/onboarding");
+    expect(brandsWorkspaceRoutes.briefs.new()).toBe("/brands/briefs/new");
+    expect(brandsWorkspaceRoutes.briefs.detail("brief-1")).toBe("/brands/briefs/brief-1");
     expect(brandsWorkspaceRoutes.campaigns.detail("campaign-1")).toBe(
-      "/workspace/campaigns/campaign-1",
+      "/brands/campaigns/campaign-1",
     );
     expect(brandsWorkspaceRoutes.campaigns.review("campaign-1")).toBe(
-      "/workspace/campaigns/campaign-1/review",
+      "/brands/campaigns/campaign-1/review",
     );
     expect(brandsWorkspaceRoutes.campaigns.handover("campaign-1")).toBe(
-      "/workspace/campaigns/campaign-1/handover",
+      "/brands/campaigns/campaign-1/handover",
+    );
+    expect(brandsWorkspaceRoutes.overview("workspace")).toBe("/workspace");
+    expect(brandsWorkspaceRoutes.campaigns.review("campaign-1", "workspace")).toBe(
+      "/workspace/campaigns/campaign-1/review",
     );
   });
 
-  it("supports future brand aliases and creative workspace paths", () => {
-    expect(brandsWorkspaceRoutes.overview("brands")).toBe("/brands");
-    expect(brandsWorkspaceRoutes.campaigns.review("campaign-1", "brands")).toBe(
-      "/brands/campaigns/campaign-1/review",
-    );
+  it("supports creative workspace paths alongside the brand namespace split", () => {
     expect(creativeWorkspaceRoutes.tasks()).toBe("/creatives/tasks");
     expect(creativeWorkspaceRoutes.feedback()).toBe("/creatives/feedback");
     expect(creativeWorkspaceRoutes.campaigns.detail("campaign-1")).toBe(
@@ -37,8 +37,11 @@ describe("workspace routes", () => {
 
   it("recognizes protected workspace-like paths without matching public marketing routes", () => {
     expect(brandsWorkspaceRoutes.isKnownPath("/workspace")).toBe(true);
-    expect(brandsWorkspaceRoutes.isKnownPath("/brands")).toBe(true);
+    expect(brandsWorkspaceRoutes.isKnownPath("/brands/today")).toBe(true);
+    expect(brandsWorkspaceRoutes.isKnownPath("/brands/campaigns/campaign-1")).toBe(true);
+    expect(brandsWorkspaceRoutes.isKnownPath("/brands")).toBe(false);
     expect(isProtectedWorkspacePath("/app")).toBe(true);
+    expect(isProtectedWorkspacePath("/brands/today")).toBe(true);
     expect(isProtectedWorkspacePath("/creatives/tasks")).toBe(true);
     expect(isProtectedWorkspacePath("/creatives/campaigns/campaign-1")).toBe(true);
     expect(isProtectedWorkspacePath("/creatives/feedback")).toBe(true);
@@ -55,7 +58,7 @@ describe("workspace routes", () => {
         namespace: "brands",
       }),
     ).toEqual([
-      "/brands",
+      "/brands/today",
       "/brands/onboarding",
       "/brands/briefs/new",
       "/brands/pilot-request",
@@ -70,6 +73,7 @@ describe("workspace routes", () => {
     expect(resolveWorkspaceNextPath("/brands/campaigns/campaign-1", "/app")).toBe(
       "/brands/campaigns/campaign-1",
     );
+    expect(resolveWorkspaceNextPath("/brands", "/app")).toBe("/app");
     expect(resolveWorkspaceNextPath("/creatives/tasks", "/app")).toBe("/creatives/tasks");
     expect(resolveWorkspaceNextPath("//evil.test", "/app")).toBe("/app");
     expect(resolveWorkspaceNextPath("/creatives", "/app")).toBe("/app");

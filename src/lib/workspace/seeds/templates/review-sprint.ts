@@ -107,11 +107,11 @@ export const reviewSprintTemplate: SeedTemplate = {
   reviewThreads: [
     {
       assetKey: "review-hero-cut",
-      createdBy: "brand_admin",
+      createdBy: "brand_owner",
       anchorJson: "{\"timecode\":\"00:06\",\"focus\":\"brand framing\"}",
       comments: [
         {
-          authorId: "brand_admin",
+          authorId: "brand_owner",
           body: "Der Einstieg ist nah dran, aber die Markenführung sollte etwas früher einsetzen, damit der strategische Kontext intern sofort klar ist.",
           commentType: "change_request",
         },
@@ -136,11 +136,11 @@ export const reviewSprintTemplate: SeedTemplate = {
     },
     {
       assetKey: "review-ugc-remix",
-      createdBy: "zynapse_ops",
+      createdBy: "ops",
       anchorJson: "{\"timecode\":\"00:03\",\"focus\":\"opening voice-over\"}",
       comments: [
         {
-          authorId: "zynapse_ops",
+          authorId: "ops",
           body: "Das ist nutzbar, liegt sprachlich aber noch zu nah an generischer Kategorie-Kommunikation. Wir sollten es stärker auf die vereinbarte Narrativrichtung ziehen.",
           commentType: "change_request",
         },

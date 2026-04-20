@@ -1,4 +1,4 @@
-import { getWorkspaceTypeForRole } from "@/lib/auth/roles";
+import { getWorkspaceTypeForRole, normalizeWorkspaceRole } from "@/lib/auth/roles";
 import type { User } from "@supabase/supabase-js";
 import {
   assertSupabaseResult,
@@ -145,7 +145,7 @@ export async function ensureMembershipForCurrentUser(user: User) {
       {
         organization_id: activeInvite.organizationId,
         user_id: user.id,
-        role: activeInvite.role,
+        role: normalizeWorkspaceRole(activeInvite.role),
         workspace_type: getWorkspaceTypeForRole(activeInvite.role),
         membership_status: "active",
       },

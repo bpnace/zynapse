@@ -74,5 +74,5 @@ export function getWorkspaceDemoState(input: {
 }
 
 export function resolveDemoWorkspaceNextPath(next: string | null | undefined) {
-  return resolveWorkspaceNextPath(next, "/workspace");
+  return resolveWorkspaceNextPath(next, "/brands/today");
 }

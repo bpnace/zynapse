@@ -117,7 +117,7 @@ export const performanceRefreshTemplate: SeedTemplate = {
           commentType: "change_request",
         },
         {
-          authorId: "zynapse_ops",
+          authorId: "ops",
           body: "Wir können die ersten beiden Beats schärfen und den sozialen Beweis weiter unten im Frame halten. Dann hebt sich der Retest sauberer ab.",
           commentType: "comment",
         },
@@ -125,11 +125,11 @@ export const performanceRefreshTemplate: SeedTemplate = {
     },
     {
       assetKey: "refresh-social-proof",
-      createdBy: "brand_admin",
+      createdBy: "brand_owner",
       anchorJson: "{\"timecode\":\"00:09\",\"focus\":\"testimonial sequence\"}",
       comments: [
         {
-          authorId: "brand_admin",
+          authorId: "brand_owner",
           body: "Diese Version ist stark genug für die nächste Ausspielung. Sie hält das Kernangebot zusammen und fühlt sich trotzdem deutlich frischer an.",
           commentType: "approval_note",
         },

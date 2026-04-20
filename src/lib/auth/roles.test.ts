@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   getWorkspaceCapabilities,
   getWorkspaceTypeForRole,
+  normalizeWorkspaceRole,
 } from "@/lib/auth/roles";
 
 describe("workspace roles", () => {
@@ -15,5 +16,12 @@ describe("workspace roles", () => {
     expect(
       getWorkspaceCapabilities("creative_lead", { isReadOnly: true }).canSubmitCreativeWork,
     ).toBe(false);
+  });
+
+  it("normalizes legacy roles onto the canonical dual-workspace model", () => {
+    expect(normalizeWorkspaceRole("brand_admin")).toBe("brand_owner");
+    expect(normalizeWorkspaceRole("zynapse_ops")).toBe("ops");
+    expect(getWorkspaceTypeForRole("brand_admin")).toBe("brand");
+    expect(getWorkspaceCapabilities("zynapse_ops").canAccessOpsWorkspace).toBe(true);
   });
 });
