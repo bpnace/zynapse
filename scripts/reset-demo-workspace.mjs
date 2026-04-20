@@ -1,4 +1,5 @@
 import { config as loadEnv } from "dotenv";
+import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import demoTemplate from "../src/lib/workspace/seeds/templates/d2c-product-launch.data.json" with { type: "json" };
 
@@ -13,6 +14,10 @@ const canonicalDemoOrganizationSlug =
   process.env.DEMO_WORKSPACE_ORGANIZATION_SLUG ?? "zynapse-closed-demo";
 const canonicalDemoOrganizationName =
   process.env.DEMO_WORKSPACE_NAME ?? "Zynapse Closed Demo";
+const defaultCreativeDemoEmail =
+  process.env.DEMO_CREATIVE_WORKSPACE_EMAIL ?? "creative-demo@zynapse.eu";
+const defaultOpsDemoEmail =
+  process.env.DEMO_OPS_WORKSPACE_EMAIL ?? "ops-demo@zynapse.eu";
 
 function parseArgs(argv) {
   const args = {
