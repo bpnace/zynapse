@@ -16,7 +16,6 @@ ALTER TABLE "memberships"
 
 UPDATE "memberships"
 SET "workspace_type" = CASE
-  WHEN "role" IN ('creative', 'creative_lead') THEN 'creative'::workspace_type
   WHEN "role" = 'zynapse_ops' THEN 'ops'::workspace_type
   ELSE 'brand'::workspace_type
 END;--> statement-breakpoint
