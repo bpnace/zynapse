@@ -1,8 +1,24 @@
-import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
+import { getWorkspaceLandingPath } from "@/lib/auth/workspace-navigation";
+import {
+  brandsWorkspaceRoutes,
+  creativeWorkspaceRoutes,
+  resolveWorkspaceNextPath,
+} from "@/lib/workspace/routes";
 
 const DEFAULT_DEMO_WORKSPACE_EMAIL = "demo@zynapse.eu";
 const DEFAULT_DEMO_WORKSPACE_ORGANIZATION_SLUG = "zynapse-closed-demo";
 const DEMO_LOGIN_ROUTE = "/demo-login";
+
+function deriveSiblingEmail(baseEmail: string, suffix: string) {
+  const normalizedEmail = baseEmail.trim().toLowerCase();
+  const [localPart, domain] = normalizedEmail.split("@");
+
+  if (!localPart || !domain) {
+    return normalizedEmail;
+  }
+
+  return `${localPart}+${suffix}@${domain}`;
+}
 
 function readDemoEnv(key: string, fallback: string) {
   const value = process.env[key]?.trim();
@@ -29,6 +45,10 @@ export function getDemoWorkspaceConfig() {
 
   return {
     canonicalEmail: canonicalEmail.toLowerCase(),
+    creativeEmail: readDemoEnv(
+      "DEMO_WORKSPACE_CREATIVE_EMAIL",
+      deriveSiblingEmail(canonicalEmail, "creative"),
+    ).toLowerCase(),
     organizationSlug: readDemoEnv(
       "DEMO_WORKSPACE_ORGANIZATION_SLUG",
       DEFAULT_DEMO_WORKSPACE_ORGANIZATION_SLUG,
@@ -38,14 +58,33 @@ export function getDemoWorkspaceConfig() {
   } as const;
 }
 
-export function isDemoWorkspaceEmail(email: string | null | undefined) {
+export function getDemoWorkspaceTypeForEmail(
+  email: string | null | undefined,
+) {
   if (!email) {
-    return false;
+    return null;
   }
 
-  return (
-    email.trim().toLowerCase() === getDemoWorkspaceConfig().canonicalEmail
-  );
+  const normalizedEmail = email.trim().toLowerCase();
+  const config = getDemoWorkspaceConfig();
+
+  if (normalizedEmail === config.canonicalEmail) {
+    return "brand" as const;
+  }
+
+  if (normalizedEmail === config.creativeEmail) {
+    return "creative" as const;
+  }
+
+  return null;
+}
+
+export function isPrimaryDemoWorkspaceEmail(email: string | null | undefined) {
+  return getDemoWorkspaceTypeForEmail(email) === "brand";
+}
+
+export function isDemoWorkspaceEmail(email: string | null | undefined) {
+  return getDemoWorkspaceTypeForEmail(email) !== null;
 }
 
 export function getWorkspaceDemoState(input: {
@@ -74,5 +113,33 @@ export function getWorkspaceDemoState(input: {
 }
 
 export function resolveDemoWorkspaceNextPath(next: string | null | undefined) {
-  return resolveWorkspaceNextPath(next, "/brands/today");
+  return resolveWorkspaceNextPath(next, getWorkspaceLandingPath("brand"));
+}
+
+export function resolveDemoWorkspaceNextPathForEmail(
+  email: string | null | undefined,
+  next: string | null | undefined,
+) {
+  const workspaceType = getDemoWorkspaceTypeForEmail(email) ?? "brand";
+  const resolvedNext = resolveWorkspaceNextPath(next, getWorkspaceLandingPath(workspaceType));
+
+  if (workspaceType === "creative") {
+    if (
+      resolvedNext === creativeWorkspaceRoutes.landing() ||
+      resolvedNext === creativeWorkspaceRoutes.tasks() ||
+      resolvedNext === creativeWorkspaceRoutes.feedback() ||
+      resolvedNext === creativeWorkspaceRoutes.campaigns.index() ||
+      resolvedNext.startsWith("/creatives/campaigns/")
+    ) {
+      return resolvedNext;
+    }
+
+    return getWorkspaceLandingPath("creative");
+  }
+
+  if (brandsWorkspaceRoutes.isKnownPath(resolvedNext)) {
+    return resolvedNext;
+  }
+
+  return getWorkspaceLandingPath("brand");
 }

@@ -65,8 +65,8 @@ export default async function DemoLoginPage({
                 Der private Kundenbereich für den aktuellen Zynapse-Stand.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.04rem]">
-                Diese Demo zeigt den betreuten Review- und Übergabefluss in einer
-                schreibgeschützten Portalansicht.
+                Diese Demo zeigt den betreuten Review-, Übergabe- und
+                Creative-Flow in einer schreibgeschützten Portalansicht.
               </p>
             </div>
           </div>
@@ -90,7 +90,7 @@ export default async function DemoLoginPage({
               Geschlossener Demo-Zugang
             </h2>
             <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-              Das Demo-Konto führt direkt in den geschützten Markenbereich.
+              Je nach Demo-Account landest du direkt im Brand- oder Creative-Bereich.
             </p>
           </div>
 

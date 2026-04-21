@@ -15,6 +15,7 @@ export default async function CreativeWorkspaceLayout({
       organizationName={bootstrap.organization.name}
       displayName={bootstrap.creativeProfile?.displayName ?? "Creative Partner"}
       headline={bootstrap.creativeProfile?.headline ?? null}
+      demo={bootstrap.demo}
     >
       {children}
     </CreativeWorkspaceShell>

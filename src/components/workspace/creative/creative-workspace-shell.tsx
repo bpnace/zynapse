@@ -4,12 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FolderKanban, LayoutGrid, MessageSquareMore, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 import { creativeWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type CreativeWorkspaceShellProps = {
   organizationName: string;
   displayName: string;
   headline?: string | null;
+  demo?: WorkspaceDemoState;
   children: React.ReactNode;
 };
 
@@ -17,6 +19,7 @@ export function CreativeWorkspaceShell({
   organizationName,
   displayName,
   headline,
+  demo,
   children,
 }: CreativeWorkspaceShellProps) {
   const pathname = usePathname();
@@ -24,21 +27,20 @@ export function CreativeWorkspaceShell({
     {
       href: creativeWorkspaceRoutes.tasks(),
       label: "Today / Queue",
-      helper: "Heute fällige Arbeit und Fokus",
       icon: LayoutGrid,
       active: pathname === creativeWorkspaceRoutes.tasks(),
     },
     {
-      href: creativeWorkspaceRoutes.tasks(),
+      href: creativeWorkspaceRoutes.campaigns.index(),
       label: "Assigned campaigns",
-      helper: "Task rooms und aktive Delivery-Sprints",
       icon: FolderKanban,
-      active: pathname.startsWith("/creatives/campaigns/"),
+      active:
+        pathname === creativeWorkspaceRoutes.campaigns.index() ||
+        pathname.startsWith("/creatives/campaigns/"),
     },
     {
       href: creativeWorkspaceRoutes.feedback(),
       label: "Feedback",
-      helper: "Revisionen und offene Rückfragen",
       icon: MessageSquareMore,
       active: pathname === creativeWorkspaceRoutes.feedback(),
     },
@@ -47,11 +49,16 @@ export function CreativeWorkspaceShell({
   return (
     <div className="workspace-app min-h-screen text-[var(--workspace-copy-strong)]">
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px]">
-        <aside className="workspace-sidebar hidden w-[264px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
+        <aside className="workspace-sidebar hidden w-[248px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <p className="workspace-eyebrow">Creatives Workspace</p>
-            <div className="mt-3 space-y-1">
-              <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
+            <div className="flex flex-wrap items-center gap-2">
+              {demo?.isDemoWorkspace ? (
+                <span className="workspace-demo-badge">{demo.shellBadge}</span>
+              ) : null}
+              <span className="workspace-eyebrow">Creatives Workspace</span>
+            </div>
+            <div className="mt-4 space-y-1.5">
+              <p className="text-[1.02rem] font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
                 {displayName}
               </p>
               <p className="text-sm text-[var(--workspace-copy-muted)]">{organizationName}</p>
@@ -61,6 +68,10 @@ export function CreativeWorkspaceShell({
                 {headline}
               </p>
             ) : null}
+            <div className="mt-4 workspace-meta-row">
+              <span>Creative lane</span>
+              {demo?.isDemoWorkspace ? <span>Read-only Demo</span> : null}
+            </div>
           </div>
 
           <div className="mt-6">
@@ -81,12 +92,9 @@ export function CreativeWorkspaceShell({
                   <span className="workspace-nav-icon">
                     <Icon className="h-4 w-4" />
                   </span>
-                  <span className="space-y-0.5 min-w-0">
+                  <span className="min-w-0">
                     <span className="block text-sm font-semibold tracking-[-0.01em]">
                       {item.label}
-                    </span>
-                    <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                      {item.helper}
                     </span>
                   </span>
                 </Link>
@@ -94,12 +102,12 @@ export function CreativeWorkspaceShell({
             })}
           </nav>
 
-          <div className="mt-auto border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Managed-service guardrail</p>
-            <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Du arbeitest innerhalb eines kuratierten Delivery-Flows. Brands sehen
-              Entscheidungen und Outcomes — nicht interne Produktionsmechanik.
-            </p>
+          <div className="mt-auto px-1 pt-4">
+            <div className="workspace-minimal-divider pt-4">
+              <p className="text-sm leading-6 text-[var(--workspace-copy-muted)]">
+                Ein fokussierter Bereich für Ausführung, Revisionen und nächste Einreichungen.
+              </p>
+            </div>
           </div>
         </aside>
 

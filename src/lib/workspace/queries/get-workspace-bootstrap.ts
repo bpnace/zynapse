@@ -10,7 +10,7 @@ import { selectDefaultMembership, selectMembershipForWorkspace } from "@/lib/wor
 import {
   getDemoWorkspaceConfig,
   getWorkspaceDemoState,
-  isDemoWorkspaceEmail,
+  isPrimaryDemoWorkspaceEmail,
 } from "@/lib/workspace/demo";
 import type { WorkspaceType } from "@/lib/auth/roles";
 
@@ -28,7 +28,7 @@ async function getWorkspaceMemberships(user: WorkspaceBootstrapUser) {
   const demoConfig = getDemoWorkspaceConfig();
 
   const demoOrganization =
-    isDemoWorkspaceEmail(user.email) && demoConfig.isEnabled
+    isPrimaryDemoWorkspaceEmail(user.email) && demoConfig.isEnabled
       ? await supabase
           .from("organizations")
           .select("*")
@@ -53,7 +53,7 @@ async function getWorkspaceMemberships(user: WorkspaceBootstrapUser) {
 
   const memberships = (membershipRows ?? []).map(mapMembership);
   const isCanonicalDemoUser =
-    isDemoWorkspaceEmail(user.email) && demoConfig.isEnabled;
+    isPrimaryDemoWorkspaceEmail(user.email) && demoConfig.isEnabled;
 
   if (isCanonicalDemoUser && !demoOrganization) {
     return {

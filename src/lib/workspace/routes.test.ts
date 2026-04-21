@@ -27,6 +27,7 @@ describe("workspace routes", () => {
   it("supports creative and ops workspace paths alongside the brand namespace split", () => {
     expect(creativeWorkspaceRoutes.tasks()).toBe("/creatives/tasks");
     expect(creativeWorkspaceRoutes.feedback()).toBe("/creatives/feedback");
+    expect(creativeWorkspaceRoutes.campaigns.index()).toBe("/creatives/campaigns");
     expect(creativeWorkspaceRoutes.campaigns.detail("campaign-1")).toBe(
       "/creatives/campaigns/campaign-1",
     );
@@ -63,6 +64,7 @@ describe("workspace routes", () => {
     expect(isProtectedWorkspacePath("/app")).toBe(true);
     expect(isProtectedWorkspacePath("/brands/today")).toBe(true);
     expect(isProtectedWorkspacePath("/creatives/tasks")).toBe(true);
+    expect(isProtectedWorkspacePath("/creatives/campaigns")).toBe(true);
     expect(isProtectedWorkspacePath("/creatives/campaigns/campaign-1")).toBe(true);
     expect(isProtectedWorkspacePath("/creatives/feedback")).toBe(true);
     expect(isProtectedWorkspacePath("/ops")).toBe(true);
@@ -97,6 +99,7 @@ describe("workspace routes", () => {
     expect(resolveWorkspaceNextPath("/workspace", "/app")).toBe("/app");
     expect(resolveWorkspaceNextPath("/brands", "/app")).toBe("/app");
     expect(resolveWorkspaceNextPath("/creatives/tasks", "/app")).toBe("/creatives/tasks");
+    expect(resolveWorkspaceNextPath("/creatives/campaigns", "/app")).toBe("/creatives/campaigns");
     expect(resolveWorkspaceNextPath("/ops/delivery", "/app")).toBe("/ops/delivery");
     expect(resolveWorkspaceNextPath("/ops/commercial", "/app")).toBe("/ops/commercial");
     expect(resolveWorkspaceNextPath("/ops/review-readiness", "/app")).toBe(

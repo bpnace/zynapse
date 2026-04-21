@@ -5,7 +5,8 @@ import { enforceDemoLoginRateLimit } from "@/lib/auth/login-rate-limit";
 import { createServerSupabaseClient } from "@/lib/auth/server";
 import {
   getDemoWorkspaceConfig,
-  resolveDemoWorkspaceNextPath,
+  getDemoWorkspaceTypeForEmail,
+  resolveDemoWorkspaceNextPathForEmail,
 } from "@/lib/workspace/demo";
 import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
@@ -23,10 +24,12 @@ export async function submitDemoLogin(formData: FormData) {
     .trim()
     .toLowerCase();
   const password = String(formData.get("workspace-password") ?? "");
-  const next = resolveDemoWorkspaceNextPath(
+  const next = resolveDemoWorkspaceNextPathForEmail(
+    email,
     String(formData.get("next") ?? brandsWorkspaceRoutes.overview()),
   );
   const demoConfig = getDemoWorkspaceConfig();
+  const demoWorkspaceType = getDemoWorkspaceTypeForEmail(email);
 
   if (!demoConfig.isEnabled) {
     redirect("/login");
@@ -38,7 +41,7 @@ export async function submitDemoLogin(formData: FormData) {
     redirect(buildLoginRedirect("invalid_credentials", next));
   }
 
-  if (email !== demoConfig.canonicalEmail) {
+  if (!demoWorkspaceType) {
     redirect(buildLoginRedirect("invalid_credentials", next));
   }
 

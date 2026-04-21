@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { WorkspaceRole } from "@/lib/auth/roles";
 import { ensureMembershipForCurrentUser } from "@/lib/workspace/services/accept-invite";
-import { getDemoWorkspaceConfig, isDemoWorkspaceEmail } from "@/lib/workspace/demo";
+import { getDemoWorkspaceConfig, isPrimaryDemoWorkspaceEmail } from "@/lib/workspace/demo";
 import { requireServiceRoleClient } from "@/lib/workspace/data/service-role";
 
 vi.mock("@/lib/workspace/data/service-role", async () => {
@@ -24,7 +24,7 @@ vi.mock("@/lib/workspace/demo", async () => {
   return {
     ...actual,
     getDemoWorkspaceConfig: vi.fn(),
-    isDemoWorkspaceEmail: vi.fn(),
+    isPrimaryDemoWorkspaceEmail: vi.fn(),
   };
 });
 
@@ -189,6 +189,7 @@ describe("ensureMembershipForCurrentUser", () => {
     vi.clearAllMocks();
     vi.mocked(getDemoWorkspaceConfig).mockReturnValue({
       canonicalEmail: "demo@zynapse.eu",
+      creativeEmail: "demo+creative@zynapse.eu",
       organizationSlug: "zynapse-closed-demo",
       loginRoute: "/demo-login",
       isEnabled: true,
@@ -196,7 +197,7 @@ describe("ensureMembershipForCurrentUser", () => {
   });
 
   it("reuses the canonical demo membership even when a newer non-demo membership exists", async () => {
-    vi.mocked(isDemoWorkspaceEmail).mockReturnValue(true);
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(true);
 
     const { supabase, spies } = createAcceptInviteSupabaseMock({
       existingMemberships: [
@@ -232,7 +233,7 @@ describe("ensureMembershipForCurrentUser", () => {
   });
 
   it("accepts an active invite by creating membership state and marking the invite consumed", async () => {
-    vi.mocked(isDemoWorkspaceEmail).mockReturnValue(false);
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(false);
 
     const invite = makeInviteRow({
       id: "invite-1",

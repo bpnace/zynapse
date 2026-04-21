@@ -112,15 +112,18 @@ pnpm demo:reset -- --email "${E2E_WORKSPACE_EMAIL:-$DEMO_WORKSPACE_EMAIL}" --pas
      the same organization, so the brand, creative, and ops surfaces can all
      inspect one shared seeded campaign graph.
 
-4. Log in through `/demo-login` with the canonical demo credentials. The route
-   is only exposed when `DEMO_WORKSPACE_LOGIN_ENABLED=true`.
+4. Log in through `/demo-login` with the canonical **brand** demo credentials.
+   The same route also accepts the configured **creative** demo credentials and
+   routes them into `/creatives/tasks`. The route is only exposed when
+   `DEMO_WORKSPACE_LOGIN_ENABLED=true`.
 5. Walk the brand flow: `/brands/today` -> review -> handover.
-6. Log in through the standard `/login` route with the creative or ops demo
-   credentials when you need to inspect the seeded `/app`, `/creatives/*`, or
-   `/ops/*` surfaces.
-7. Use the creative and ops workspaces as verification surfaces for the same
+6. Use the same `/demo-login` route with the creative demo account when you
+   want to inspect the seeded `/creatives/*` surfaces.
+7. Log in through the standard `/login` route with the ops demo credentials
+   when you need to inspect the seeded `/ops/*` surfaces.
+8. Use the creative and ops workspaces as verification surfaces for the same
    seeded campaign, not as separate demo resets.
-8. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
+9. After a prospect demo, rerun `pnpm demo:reset` to restore the canonical
    seeded state before the next session.
 
 The current demo reuses public videos from `public/videos/*` and placeholder
@@ -134,9 +137,9 @@ and `assets.source` values remain aligned.
   `organization_id,user_id` membership uniqueness contract.
 - One reset must rebuild the brand review path plus seeded creative tasks,
   revisions, and ops workflow visibility for the same campaign.
-- The canonical `/demo-login` route remains brand-facing and read-only; creative
-  and ops verification should continue to use the standard authenticated login
-  flow.
+- The canonical `/demo-login` route remains read-only and now supports both the
+  brand and creative demo accounts; ops verification should continue to use the
+  standard authenticated login flow.
 
 ### Demo safety contract
 

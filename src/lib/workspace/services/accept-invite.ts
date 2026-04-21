@@ -9,7 +9,7 @@ import {
 } from "@/lib/workspace/data/service-role";
 import {
   getDemoWorkspaceConfig,
-  isDemoWorkspaceEmail,
+  isPrimaryDemoWorkspaceEmail,
 } from "@/lib/workspace/demo";
 
 export async function ensureMembershipForCurrentUser(user: User) {
@@ -27,7 +27,7 @@ export async function ensureMembershipForCurrentUser(user: User) {
   const existingMemberships = (existingMembershipRows ?? []).map(mapMembership);
 
   if (
-    isDemoWorkspaceEmail(user.email) &&
+    isPrimaryDemoWorkspaceEmail(user.email) &&
     demoConfig.isEnabled
   ) {
     const { data: demoOrganizationRow, error: demoOrganizationError } = await supabase

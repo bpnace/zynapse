@@ -4,7 +4,12 @@ import {
   getCreativeWorkspaceBootstrap,
   getWorkspaceBootstrap,
 } from "@/lib/workspace/queries/get-workspace-bootstrap";
-import { getDemoWorkspaceConfig, getWorkspaceDemoState, isDemoWorkspaceEmail } from "@/lib/workspace/demo";
+import {
+  getDemoWorkspaceConfig,
+  getWorkspaceDemoState,
+  isDemoWorkspaceEmail,
+  isPrimaryDemoWorkspaceEmail,
+} from "@/lib/workspace/demo";
 import { requireServiceRoleClient } from "@/lib/workspace/data/service-role";
 
 vi.mock("@/lib/workspace/data/service-role", async () => {
@@ -29,6 +34,7 @@ vi.mock("@/lib/workspace/demo", async () => {
     getDemoWorkspaceConfig: vi.fn(),
     getWorkspaceDemoState: vi.fn(),
     isDemoWorkspaceEmail: vi.fn(),
+    isPrimaryDemoWorkspaceEmail: vi.fn(),
   };
 });
 
@@ -165,10 +171,12 @@ describe("getWorkspaceBootstrap", () => {
     vi.clearAllMocks();
     vi.mocked(getDemoWorkspaceConfig).mockReturnValue({
       canonicalEmail: "demo@zynapse.eu",
+      creativeEmail: "demo+creative@zynapse.eu",
       organizationSlug: "zynapse-closed-demo",
       loginRoute: "/demo-login",
       isEnabled: true,
     });
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(true);
     vi.mocked(getWorkspaceDemoState).mockImplementation(({ userEmail, organizationSlug }) => ({
       canonicalEmail: "demo@zynapse.eu",
       organizationSlug: organizationSlug ?? "unknown",
@@ -184,6 +192,7 @@ describe("getWorkspaceBootstrap", () => {
 
   it("pins canonical demo users to the demo organization even when other memberships exist", async () => {
     vi.mocked(isDemoWorkspaceEmail).mockReturnValue(true);
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(true);
 
     vi.mocked(requireServiceRoleClient).mockReturnValue(
       createBootstrapSupabaseMock({
@@ -233,6 +242,7 @@ describe("getWorkspaceBootstrap", () => {
 
   it("falls back to the first membership for non-demo users", async () => {
     vi.mocked(isDemoWorkspaceEmail).mockReturnValue(false);
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(false);
 
     vi.mocked(requireServiceRoleClient).mockReturnValue(
       createBootstrapSupabaseMock({
@@ -269,6 +279,7 @@ describe("getWorkspaceBootstrap", () => {
 
   it("selects the ops membership when the bootstrap is requested for the ops control plane", async () => {
     vi.mocked(isDemoWorkspaceEmail).mockReturnValue(false);
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(false);
 
     vi.mocked(requireServiceRoleClient).mockReturnValue(
       createBootstrapSupabaseMock({
@@ -321,6 +332,7 @@ describe("getCreativeWorkspaceBootstrap", () => {
     vi.clearAllMocks();
     vi.mocked(getDemoWorkspaceConfig).mockReturnValue({
       canonicalEmail: "demo@zynapse.eu",
+      creativeEmail: "demo+creative@zynapse.eu",
       organizationSlug: "zynapse-closed-demo",
       loginRoute: "/demo-login",
       isEnabled: true,
@@ -340,6 +352,7 @@ describe("getCreativeWorkspaceBootstrap", () => {
 
   it("selects the creative membership and creative profile for creative workspace bootstraps", async () => {
     vi.mocked(isDemoWorkspaceEmail).mockReturnValue(false);
+    vi.mocked(isPrimaryDemoWorkspaceEmail).mockReturnValue(false);
 
     vi.mocked(requireServiceRoleClient).mockReturnValue(
       createBootstrapSupabaseMock({

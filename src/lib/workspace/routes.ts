@@ -48,6 +48,9 @@ export const creativeWorkspaceRoutes = {
     return "/creatives/feedback";
   },
   campaigns: {
+    index() {
+      return "/creatives/campaigns";
+    },
     detail(campaignId: string) {
       return `/creatives/campaigns/${campaignId}`;
     },
@@ -210,6 +213,7 @@ export function isProtectedWorkspacePath(pathname: string) {
   return (
     safePathname === creativeWorkspaceRoutes.tasks() ||
     safePathname === creativeWorkspaceRoutes.feedback() ||
+    safePathname === creativeWorkspaceRoutes.campaigns.index() ||
     safePathname.startsWith("/creatives/campaigns/")
   );
 }
