@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { OpsWorkspaceShell } from "@/components/workspace/ops/ops-workspace-shell";
+import { AdminWorkspaceShell } from "@/components/workspace/admin/admin-workspace-shell";
 
 const { pathnameState } = vi.hoisted(() => ({
   pathnameState: {
@@ -21,12 +21,12 @@ afterEach(() => {
   pathnameState.pathname = "/admin/requests";
 });
 
-describe("OpsWorkspaceShell", () => {
+describe("AdminWorkspaceShell", () => {
   it("renders the admin shell nav plus identity actions", () => {
     render(
-      <OpsWorkspaceShell organizationName="Zynapse" role="ops_admin">
+      <AdminWorkspaceShell organizationName="Zynapse" role="ops_admin">
         <div>Inhalt</div>
-      </OpsWorkspaceShell>,
+      </AdminWorkspaceShell>,
     );
 
     expect(screen.getByRole("navigation", { name: "Navigation im Admin Workspace" })).toBeInTheDocument();
@@ -76,9 +76,9 @@ describe("OpsWorkspaceShell", () => {
     pathnameState.pathname = "/ops";
 
     render(
-      <OpsWorkspaceShell organizationName="Zynapse" role="ops_admin">
+      <AdminWorkspaceShell organizationName="Zynapse" role="ops_admin">
         <div>Inhalt</div>
-      </OpsWorkspaceShell>,
+      </AdminWorkspaceShell>,
     );
 
     expect(screen.getByRole("link", { name: /Requests/i }).className).toContain(

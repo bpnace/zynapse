@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { OpsCampaignDetailScreen } from "@/components/workspace/ops/ops-campaign-detail-screen";
+import { AdminCampaignDetailScreen } from "@/components/workspace/admin/admin-campaign-detail-screen";
 import { requireAdminAccess } from "@/lib/auth/guards";
 import { getOpsCampaignDetail } from "@/lib/workspace/queries/get-ops-campaign-detail";
 
@@ -25,5 +25,5 @@ export default async function AdminCampaignDetailPage({
     notFound();
   }
 
-  return <OpsCampaignDetailScreen view={view} />;
+  return <AdminCampaignDetailScreen view={view} />;
 }

@@ -193,4 +193,6 @@ export const requireOpsWorkspaceAccess = cache(async () => {
   return bootstrap;
 });
 
+// Admin is the only internal UI surface. It currently rides on top of the
+// existing ops bootstrap until the AI-managed ops layer is extracted further.
 export const requireAdminAccess = cache(async () => requireOpsWorkspaceAccess());

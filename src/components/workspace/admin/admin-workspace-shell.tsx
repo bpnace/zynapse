@@ -21,7 +21,7 @@ import {
   WorkspaceLogoLockup,
 } from "@/components/workspace/shell/workspace-shell-primitives";
 
-type OpsWorkspaceShellProps = {
+type AdminWorkspaceShellProps = {
   organizationName: string;
   role: string;
   children: React.ReactNode;
@@ -78,11 +78,11 @@ function AdminNav({
   );
 }
 
-export function OpsWorkspaceShell({
+export function AdminWorkspaceShell({
   organizationName,
   role,
   children,
-}: OpsWorkspaceShellProps) {
+}: AdminWorkspaceShellProps) {
   const pathname = usePathname();
 
   const navigation: NavigationItem[] = [

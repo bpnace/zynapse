@@ -6,7 +6,7 @@ import { updateOpsWorkflow } from "@/lib/workspace/actions/ops-control-plane";
 import { Button } from "@/components/ui/button";
 import { Field, SelectInput, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 
-type OpsWorkflowFormProps = {
+type AdminWorkflowFormProps = {
   campaignId: string;
   initialValues: {
     workflowStatus?: string | null;
@@ -23,10 +23,10 @@ const reviewStatuses = ["not_ready", "in_review", "approved"] as const;
 const deliveryStatuses = ["not_ready", "preparing", "ready"] as const;
 const commercialStatuses = ["not_ready", "ready_for_pilot", "pilot_requested"] as const;
 
-export function OpsWorkflowForm({
+export function AdminWorkflowForm({
   campaignId,
   initialValues,
-}: OpsWorkflowFormProps) {
+}: AdminWorkflowFormProps) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);

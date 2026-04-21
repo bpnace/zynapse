@@ -1,4 +1,4 @@
-import { OpsWorkspaceShell } from "@/components/workspace/ops/ops-workspace-shell";
+import { AdminWorkspaceShell } from "@/components/workspace/admin/admin-workspace-shell";
 import { requireAdminAccess } from "@/lib/auth/guards";
 
 export const dynamic = "force-dynamic";
@@ -11,11 +11,11 @@ export default async function AdminWorkspaceLayout({
   const bootstrap = await requireAdminAccess();
 
   return (
-    <OpsWorkspaceShell
+    <AdminWorkspaceShell
       organizationName={bootstrap.organization.name}
       role={bootstrap.membership.role}
     >
       {children}
-    </OpsWorkspaceShell>
+    </AdminWorkspaceShell>
   );
 }

@@ -26,6 +26,8 @@ export function getWorkspaceLandingPath(workspaceType: WorkspaceType) {
   }
 
   if (workspaceType === "ops") {
+    // Ops remains the backend/internal orchestration layer; Admin is the
+    // canonical human-facing UI for internal intervention and exception handling.
     return adminWorkspaceRoutes.requests();
   }
 

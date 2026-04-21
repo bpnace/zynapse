@@ -1,4 +1,4 @@
-import { OpsControlPlaneScreen } from "@/components/workspace/ops/ops-control-plane-screen";
+import { AdminControlPanelScreen } from "@/components/workspace/admin/admin-control-panel-screen";
 import { requireAdminAccess } from "@/lib/auth/guards";
 import { getOpsOverview } from "@/lib/workspace/queries/get-ops-overview";
 
@@ -10,5 +10,5 @@ export default async function AdminRequestsPage() {
     organizationId: bootstrap.organization.id,
   });
 
-  return <OpsControlPlaneScreen view={view} mode="overview" />;
+  return <AdminControlPanelScreen view={view} mode="overview" />;
 }

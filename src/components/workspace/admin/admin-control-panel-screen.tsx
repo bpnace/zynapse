@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 import { formatWorkspaceDateTime } from "@/lib/workspace/formatting";
 import { adminWorkspaceRoutes, opsWorkspaceRoutes } from "@/lib/workspace/routes";
 import { Field, SelectInput } from "@/components/forms/form-primitives";
-import { OpsAssignmentForm } from "@/components/workspace/ops/ops-assignment-form";
-import { OpsWorkflowForm } from "@/components/workspace/ops/ops-workflow-form";
+import { AdminAssignmentForm } from "@/components/workspace/admin/admin-assignment-form";
+import { AdminWorkflowForm } from "@/components/workspace/admin/admin-workflow-form";
 import type { getOpsOverview } from "@/lib/workspace/queries/get-ops-overview";
 
-type OpsOverviewView = Awaited<ReturnType<typeof getOpsOverview>>;
-type OpsScreenMode = "overview" | "campaigns" | "assignments" | "review" | "commercial";
+type AdminOverviewView = Awaited<ReturnType<typeof getOpsOverview>>;
+type AdminScreenMode = "overview" | "campaigns" | "assignments" | "review" | "commercial";
 
 function renderSummaryCard(label: string, value: number, detail: string) {
   return (
@@ -23,12 +23,12 @@ function renderSummaryCard(label: string, value: number, detail: string) {
   );
 }
 
-export function OpsControlPlaneScreen({
+export function AdminControlPanelScreen({
   view,
   mode,
 }: {
-  view: OpsOverviewView;
-  mode: OpsScreenMode;
+  view: AdminOverviewView;
+  mode: AdminScreenMode;
 }) {
   const pathname = usePathname();
   const [selectedCampaignId, setSelectedCampaignId] = useState(
@@ -205,7 +205,7 @@ export function OpsControlPlaneScreen({
               </article>
             )}
 
-            <OpsAssignmentForm
+            <AdminAssignmentForm
               campaignId={selectedCampaign?.id ?? ""}
               creatives={view.availableCreatives}
             />
@@ -235,7 +235,7 @@ export function OpsControlPlaneScreen({
           </article>
 
           {selectedCampaign?.workflow ? (
-            <OpsWorkflowForm
+            <AdminWorkflowForm
               campaignId={selectedCampaign.id}
               initialValues={{
                 workflowStatus: selectedCampaign.workflow?.workflowStatus,

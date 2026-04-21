@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field, SelectInput, TextInput, TextareaInput } from "@/components/forms/form-primitives";
 import type { OpsCreativeOption } from "@/lib/workspace/ops-creative-options";
 
-type OpsAssignmentFormProps = {
+type AdminAssignmentFormProps = {
   campaignId: string;
   creatives: OpsCreativeOption[];
   initialValues?: {
@@ -37,11 +37,11 @@ const assignmentStatuses = [
   "completed",
 ] as const;
 
-export function OpsAssignmentForm({
+export function AdminAssignmentForm({
   campaignId,
   creatives,
   initialValues,
-}: OpsAssignmentFormProps) {
+}: AdminAssignmentFormProps) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);

@@ -1,14 +1,14 @@
 import { formatWorkspaceDateTime } from "@/lib/workspace/formatting";
-import { OpsAssignmentForm } from "@/components/workspace/ops/ops-assignment-form";
-import { OpsWorkflowForm } from "@/components/workspace/ops/ops-workflow-form";
+import { AdminAssignmentForm } from "@/components/workspace/admin/admin-assignment-form";
+import { AdminWorkflowForm } from "@/components/workspace/admin/admin-workflow-form";
 import type { getOpsCampaignDetail } from "@/lib/workspace/queries/get-ops-campaign-detail";
 
-type OpsCampaignDetailView = Awaited<ReturnType<typeof getOpsCampaignDetail>>;
+type AdminCampaignDetailView = Awaited<ReturnType<typeof getOpsCampaignDetail>>;
 
-export function OpsCampaignDetailScreen({
+export function AdminCampaignDetailScreen({
   view,
 }: {
-  view: NonNullable<OpsCampaignDetailView>;
+  view: NonNullable<AdminCampaignDetailView>;
 }) {
   return (
     <div className="grid gap-6">
@@ -54,7 +54,7 @@ export function OpsCampaignDetailScreen({
         </article>
 
         <div className="grid gap-4">
-          <OpsAssignmentForm
+          <AdminAssignmentForm
             campaignId={view.campaign.id}
             creatives={view.availableCreatives}
             initialValues={{
@@ -65,7 +65,7 @@ export function OpsCampaignDetailScreen({
               dueAt: view.assignments[0]?.dueAt?.toISOString() ?? null,
             }}
           />
-          <OpsWorkflowForm
+          <AdminWorkflowForm
             campaignId={view.campaign.id}
             initialValues={{
               workflowStatus: view.workflow?.workflowStatus,
