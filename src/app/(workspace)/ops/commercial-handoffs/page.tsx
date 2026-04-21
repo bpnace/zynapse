@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import { opsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { adminWorkspaceRoutes } from "@/lib/workspace/routes";
 
 export const dynamic = "force-dynamic";
 
-export default async function OpsCommercialHandoffsPage() {
-  redirect(opsWorkspaceRoutes.commercial());
+export default async function OpsCommercialHandoffsAliasPage() {
+  redirect(adminWorkspaceRoutes.delivery());
 }

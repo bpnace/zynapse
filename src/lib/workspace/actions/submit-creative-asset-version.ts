@@ -118,8 +118,10 @@ export async function submitCreativeAssetVersion(
 
   assertSupabaseResult(revisionUpdateError, "Failed to update revision queue");
 
+  revalidatePath(creativeWorkspaceRoutes.home());
   revalidatePath(creativeWorkspaceRoutes.tasks());
   revalidatePath(creativeWorkspaceRoutes.feedback());
+  revalidatePath(creativeWorkspaceRoutes.revisions.index());
   revalidatePath(creativeWorkspaceRoutes.campaigns.detail(parsed.data.campaignId));
 
   return {

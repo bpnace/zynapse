@@ -126,9 +126,19 @@ export function resolveDemoWorkspaceNextPathForEmail(
   if (workspaceType === "creative") {
     if (
       resolvedNext === creativeWorkspaceRoutes.landing() ||
+      resolvedNext === creativeWorkspaceRoutes.home() ||
       resolvedNext === creativeWorkspaceRoutes.tasks() ||
       resolvedNext === creativeWorkspaceRoutes.feedback() ||
+      resolvedNext === creativeWorkspaceRoutes.invitations.index() ||
+      resolvedNext === creativeWorkspaceRoutes.revisions.index() ||
+      resolvedNext === creativeWorkspaceRoutes.profile() ||
+      resolvedNext === creativeWorkspaceRoutes.availability() ||
+      resolvedNext === creativeWorkspaceRoutes.resources() ||
+      resolvedNext === creativeWorkspaceRoutes.payouts() ||
       resolvedNext === creativeWorkspaceRoutes.campaigns.index() ||
+      resolvedNext.startsWith("/creatives/tasks/") ||
+      resolvedNext.startsWith("/creatives/invitations/") ||
+      resolvedNext.startsWith("/creatives/revisions/") ||
       resolvedNext.startsWith("/creatives/campaigns/")
     ) {
       return resolvedNext;

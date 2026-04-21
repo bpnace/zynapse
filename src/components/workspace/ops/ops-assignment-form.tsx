@@ -54,7 +54,7 @@ export function OpsAssignmentForm({
   const [status, setStatus] = useState(initialValues?.status ?? "assigned");
   const [scopeSummary, setScopeSummary] = useState(
     initialValues?.scopeSummary ??
-      "Own the current delivery sprint, tighten submissions, and keep revision context explicit for ops.",
+      "Own the current delivery sprint, tighten submissions, and keep revision context explicit for the internal team.",
   );
   const [dueAt, setDueAt] = useState(initialValues?.dueAt?.slice(0, 10) ?? "");
 
@@ -68,7 +68,7 @@ export function OpsAssignmentForm({
       return "No creative memberships are available in this org yet.";
     }
 
-    return "Assignments update the shared campaign graph and revalidate /brands, /creatives, and /ops.";
+    return "Assignments update the shared campaign graph and revalidate the linked brand, creative, and admin views.";
   }, [campaignId, hasCreatives]);
 
   function submitAssignment() {

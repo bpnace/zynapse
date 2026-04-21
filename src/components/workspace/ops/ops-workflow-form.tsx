@@ -72,7 +72,7 @@ export function OpsWorkflowForm({
       <div className="space-y-1">
         <p className="workspace-section-label">Workflow control</p>
         <p className="text-sm leading-6 text-[var(--workspace-copy-muted)]">
-          Update explicit ops readiness instead of relying on heuristic transitions.
+          Update explicit internal readiness instead of relying on heuristic transitions.
         </p>
       </div>
 

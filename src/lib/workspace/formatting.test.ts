@@ -19,7 +19,8 @@ describe("workspace formatting helpers", () => {
     expect(formatWorkspaceAssetType("static")).toBe("Statisches Motiv");
     expect(formatWorkspaceRole("brand_admin")).toBe("Brand-Admin");
     expect(formatWorkspaceRole("brand_owner")).toBe("Brand Owner");
-    expect(formatWorkspaceRole("zynapse_ops")).toBe("Zynapse Service Team");
-    expect(formatWorkspaceRole("ops")).toBe("Zynapse Ops");
+    expect(formatWorkspaceRole("zynapse_ops")).toBe("Admin");
+    expect(formatWorkspaceRole("ops")).toBe("Admin");
+    expect(formatWorkspaceRole("ops_admin")).toBe("Admin");
   });
 });

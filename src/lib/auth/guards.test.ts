@@ -138,7 +138,7 @@ describe("guards", () => {
     );
     vi.mocked(getWorkspaceBootstrap).mockResolvedValueOnce(null as never);
 
-    await expect(requireWorkspaceResolverPath()).resolves.toBe("/creatives/tasks");
+    await expect(requireWorkspaceResolverPath()).resolves.toBe("/creatives/home");
   });
 
   it("routes users to the ops surface when ops is the strongest resolved workspace", async () => {
@@ -175,7 +175,7 @@ describe("guards", () => {
       },
     } as never);
 
-    await expect(requireWorkspaceResolverPath()).resolves.toBe("/ops");
+    await expect(requireWorkspaceResolverPath()).resolves.toBe("/admin/requests");
   });
 
   it("bootstraps the creative workspace before returning creative access", async () => {
@@ -214,10 +214,10 @@ describe("guards", () => {
     vi.mocked(getCreativeWorkspaceBootstrap).mockResolvedValue(null as never);
 
     await expect(requireCreativeWorkspaceAccess()).rejects.toThrow(
-      "NEXT_REDIRECT:/login?error=invite_required&next=%2Fcreatives%2Ftasks",
+      "NEXT_REDIRECT:/login?error=invite_required&next=%2Fcreatives%2Fhome",
     );
     expect(redirectMock).toHaveBeenCalledWith(
-      "/login?error=invite_required&next=%2Fcreatives%2Ftasks",
+      "/login?error=invite_required&next=%2Fcreatives%2Fhome",
     );
   });
 });

@@ -267,7 +267,7 @@ export function PilotRequestFlow({
                 router.push(
                   selectedCampaign
                     ? brandsWorkspaceRoutes.campaigns.handover(selectedCampaign.id)
-                    : brandsWorkspaceRoutes.overview(),
+                    : brandsWorkspaceRoutes.home(),
                 )
               }
             >

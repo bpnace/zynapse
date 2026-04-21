@@ -10,6 +10,7 @@ import {
   opsStageOrder,
 } from "@/lib/workspace/ops-workflow-state";
 import {
+  adminWorkspaceRoutes,
   brandsWorkspaceRoutes,
   creativeWorkspaceRoutes,
   opsWorkspaceRoutes,
@@ -100,6 +101,13 @@ async function getOpsMutationContext(campaignId: string): Promise<OpsMutationCon
 }
 
 function revalidateOpsSurface(campaignId: string) {
+  revalidatePath(adminWorkspaceRoutes.requests());
+  revalidatePath(adminWorkspaceRoutes.campaignDetail(campaignId));
+  revalidatePath(adminWorkspaceRoutes.assignments());
+  revalidatePath(adminWorkspaceRoutes.reviews());
+  revalidatePath(adminWorkspaceRoutes.delivery());
+  revalidatePath(adminWorkspaceRoutes.exceptions());
+
   revalidatePath(opsWorkspaceRoutes.overview());
   revalidatePath(opsWorkspaceRoutes.campaigns());
   revalidatePath(opsWorkspaceRoutes.campaignDetail(campaignId));
@@ -113,6 +121,7 @@ function revalidateOpsSurface(campaignId: string) {
     revalidatePath(path);
   }
 
+  revalidatePath(creativeWorkspaceRoutes.home());
   revalidatePath(creativeWorkspaceRoutes.tasks());
   revalidatePath(creativeWorkspaceRoutes.feedback());
   revalidatePath(creativeWorkspaceRoutes.campaigns.detail(campaignId));

@@ -8,7 +8,7 @@ import {
   getDemoWorkspaceTypeForEmail,
   resolveDemoWorkspaceNextPathForEmail,
 } from "@/lib/workspace/demo";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { getWorkspaceLandingPath } from "@/lib/auth/workspace-navigation";
 
 function buildLoginRedirect(errorCode: string, next: string) {
   const params = new URLSearchParams({
@@ -26,7 +26,7 @@ export async function submitDemoLogin(formData: FormData) {
   const password = String(formData.get("workspace-password") ?? "");
   const next = resolveDemoWorkspaceNextPathForEmail(
     email,
-    String(formData.get("next") ?? brandsWorkspaceRoutes.overview()),
+    String(formData.get("next") ?? getWorkspaceLandingPath("brand")),
   );
   const demoConfig = getDemoWorkspaceConfig();
   const demoWorkspaceType = getDemoWorkspaceTypeForEmail(email);

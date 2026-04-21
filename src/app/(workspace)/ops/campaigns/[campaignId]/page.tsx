@@ -1,29 +1,17 @@
-import { notFound } from "next/navigation";
-import { OpsCampaignDetailScreen } from "@/components/workspace/ops/ops-campaign-detail-screen";
-import { requireOpsWorkspaceAccess } from "@/lib/auth/guards";
-import { getOpsCampaignDetail } from "@/lib/workspace/queries/get-ops-campaign-detail";
+import { redirect } from "next/navigation";
+import { adminWorkspaceRoutes } from "@/lib/workspace/routes";
 
 export const dynamic = "force-dynamic";
 
-type OpsCampaignDetailPageProps = {
+type OpsCampaignDetailAliasPageProps = {
   params: Promise<{
     campaignId: string;
   }>;
 };
 
-export default async function OpsCampaignDetailPage({
+export default async function OpsCampaignDetailAliasPage({
   params,
-}: OpsCampaignDetailPageProps) {
-  const bootstrap = await requireOpsWorkspaceAccess();
+}: OpsCampaignDetailAliasPageProps) {
   const { campaignId } = await params;
-  const view = await getOpsCampaignDetail({
-    organizationId: bootstrap.organization.id,
-    campaignId,
-  });
-
-  if (!view) {
-    notFound();
-  }
-
-  return <OpsCampaignDetailScreen view={view} />;
+  redirect(adminWorkspaceRoutes.campaignDetail(campaignId));
 }

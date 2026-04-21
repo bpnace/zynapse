@@ -6,29 +6,10 @@ function getPathnameOnly(pathname: string) {
   return pathname.split(/[?#]/, 1)[0] ?? pathname;
 }
 
-function getBrandBasePath() {
-  return "/brands";
-}
-
-function buildBrandPath(
-  suffix: string,
-) {
-  return `${getBrandBasePath()}${suffix}`;
-}
-
-function getBrandProtectedPrefixes() {
-  return [
-    "/brands/today",
-    buildBrandPath("/onboarding"),
-    buildBrandPath("/briefs"),
-    buildBrandPath("/campaigns"),
-    buildBrandPath("/pilot-request"),
-  ];
-}
-
-function isBrandProtectedPath(pathname: string) {
+function hasMatchingPrefix(pathname: string, prefixes: string[]) {
   const safePathname = getPathnameOnly(pathname);
-  return getBrandProtectedPrefixes().some((prefix) => {
+
+  return prefixes.some((prefix) => {
     if (safePathname === prefix) {
       return true;
     }
@@ -37,15 +18,132 @@ function isBrandProtectedPath(pathname: string) {
   });
 }
 
+function getBrandBasePath() {
+  return "/brands";
+}
+
+function buildBrandPath(suffix: string) {
+  return `${getBrandBasePath()}${suffix}`;
+}
+
+function getBrandProtectedPrefixes() {
+  return [
+    "/brands/home",
+    "/brands/today",
+    buildBrandPath("/onboarding"),
+    buildBrandPath("/briefs"),
+    buildBrandPath("/campaigns"),
+    buildBrandPath("/reviews"),
+    buildBrandPath("/deliveries"),
+    buildBrandPath("/assets"),
+    buildBrandPath("/profile"),
+    buildBrandPath("/team"),
+    buildBrandPath("/billing"),
+    buildBrandPath("/pilot-request"),
+  ];
+}
+
+function isBrandProtectedPath(pathname: string) {
+  return hasMatchingPrefix(pathname, getBrandProtectedPrefixes());
+}
+
+function getCreativeProtectedPrefixes() {
+  return [
+    "/creatives/home",
+    "/creatives/tasks",
+    "/creatives/feedback",
+    "/creatives/campaigns",
+    "/creatives/invitations",
+    "/creatives/revisions",
+    "/creatives/profile",
+    "/creatives/availability",
+    "/creatives/resources",
+    "/creatives/payouts",
+  ];
+}
+
+function isCreativeProtectedPath(pathname: string) {
+  return hasMatchingPrefix(pathname, getCreativeProtectedPrefixes());
+}
+
+function getAdminProtectedPrefixes() {
+  return [
+    "/admin",
+    "/admin/requests",
+    "/admin/setups",
+    "/admin/matching",
+    "/admin/assignments",
+    "/admin/reviews",
+    "/admin/delivery",
+    "/admin/exceptions",
+    "/admin/audit",
+    "/admin/settings",
+  ];
+}
+
+function isAdminProtectedPath(pathname: string) {
+  return hasMatchingPrefix(pathname, getAdminProtectedPrefixes());
+}
+
+function getOpsProtectedPrefixes() {
+  return [
+    "/ops",
+    "/ops/campaigns",
+    "/ops/assignments",
+    "/ops/delivery",
+    "/ops/commercial",
+    "/ops/review-readiness",
+    "/ops/commercial-handoffs",
+  ];
+}
+
+function isOpsProtectedPath(pathname: string) {
+  return hasMatchingPrefix(pathname, getOpsProtectedPrefixes());
+}
+
 export const creativeWorkspaceRoutes = {
   landing() {
     return "/app";
   },
+  home() {
+    return "/creatives/home";
+  },
   tasks() {
     return "/creatives/tasks";
   },
+  taskDetail(taskId: string) {
+    return `/creatives/tasks/${taskId}`;
+  },
   feedback() {
     return "/creatives/feedback";
+  },
+  invitations: {
+    index() {
+      return "/creatives/invitations";
+    },
+    detail(invitationId: string) {
+      return `/creatives/invitations/${invitationId}`;
+    },
+  },
+  revisions: {
+    index() {
+      return "/creatives/revisions";
+    },
+    detail(revisionId: string) {
+      return `/creatives/revisions/${revisionId}`;
+    },
+  },
+  profile() {
+    return "/creatives/profile";
+  },
+  availability() {
+    return "/creatives/availability";
+  },
+  resources() {
+    return "/creatives/resources";
+  },
+  payouts() {
+    return "/creatives/payouts";
   },
   campaigns: {
     index() {
@@ -54,6 +152,48 @@ export const creativeWorkspaceRoutes = {
     detail(campaignId: string) {
       return `/creatives/campaigns/${campaignId}`;
     },
+  },
+  isKnownPath(pathname: string) {
+    return isCreativeProtectedPath(pathname);
+  },
+};
+
+export const adminWorkspaceRoutes = {
+  root() {
+    return "/admin";
+  },
+  campaignDetail(campaignId: string) {
+    return `/admin/requests/campaigns/${campaignId}`;
+  },
+  requests() {
+    return "/admin/requests";
+  },
+  setups() {
+    return "/admin/setups";
+  },
+  matching() {
+    return "/admin/matching";
+  },
+  assignments() {
+    return "/admin/assignments";
+  },
+  reviews() {
+    return "/admin/reviews";
+  },
+  delivery() {
+    return "/admin/delivery";
+  },
+  exceptions() {
+    return "/admin/exceptions";
+  },
+  audit() {
+    return "/admin/audit";
+  },
+  settings() {
+    return "/admin/settings";
+  },
+  isKnownPath(pathname: string) {
+    return isAdminProtectedPath(pathname);
   },
 };
 
@@ -83,24 +223,7 @@ export const opsWorkspaceRoutes = {
     return "/ops/commercial-handoffs";
   },
   isKnownPath(pathname: string) {
-    const safePathname = getPathnameOnly(pathname);
-    const prefixes = [
-      opsWorkspaceRoutes.overview(),
-      opsWorkspaceRoutes.campaigns(),
-      opsWorkspaceRoutes.assignments(),
-      opsWorkspaceRoutes.delivery(),
-      opsWorkspaceRoutes.commercial(),
-      opsWorkspaceRoutes.legacyReviewReadiness(),
-      opsWorkspaceRoutes.legacyCommercialHandoffs(),
-    ];
-
-    return prefixes.some((prefix) => {
-      if (safePathname === prefix) {
-        return true;
-      }
-
-      return safePathname.startsWith(`${prefix}/`);
-    });
+    return isOpsProtectedPath(pathname);
   },
 };
 
@@ -109,9 +232,29 @@ export const brandsWorkspaceRoutes = {
     void namespace;
     return "/brands/today";
   },
+  home(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+    void namespace;
+    return "/brands/home";
+  },
   onboarding(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
     void namespace;
     return buildBrandPath("/onboarding");
+  },
+  profile(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+    void namespace;
+    return buildBrandPath("/profile");
+  },
+  team(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+    void namespace;
+    return buildBrandPath("/team");
+  },
+  billing(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+    void namespace;
+    return buildBrandPath("/billing");
+  },
+  assets(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+    void namespace;
+    return buildBrandPath("/assets");
   },
   briefs: {
     new(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
@@ -124,6 +267,14 @@ export const brandsWorkspaceRoutes = {
     },
   },
   campaigns: {
+    index(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath("/campaigns");
+    },
+    new(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath("/campaigns/new");
+    },
     detail(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
       void namespace;
       return buildBrandPath(`/campaigns/${campaignId}`);
@@ -135,6 +286,26 @@ export const brandsWorkspaceRoutes = {
     handover(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
       void namespace;
       return buildBrandPath(`/campaigns/${campaignId}/handover`);
+    },
+  },
+  reviews: {
+    index(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath("/reviews");
+    },
+    detail(reviewId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath(`/reviews/${reviewId}`);
+    },
+  },
+  deliveries: {
+    index(namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath("/deliveries");
+    },
+    detail(deliveryId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath(`/deliveries/${deliveryId}`);
     },
   },
   pilotRequest(
@@ -164,7 +335,16 @@ export const brandsWorkspaceRoutes = {
         (() => {
           const paths = [
             brandsWorkspaceRoutes.overview(),
+            brandsWorkspaceRoutes.home(),
             brandsWorkspaceRoutes.onboarding(),
+            brandsWorkspaceRoutes.profile(),
+            brandsWorkspaceRoutes.assets(),
+            brandsWorkspaceRoutes.team(),
+            brandsWorkspaceRoutes.billing(),
+            brandsWorkspaceRoutes.campaigns.index(),
+            brandsWorkspaceRoutes.campaigns.new(),
+            brandsWorkspaceRoutes.reviews.index(),
+            brandsWorkspaceRoutes.deliveries.index(),
             brandsWorkspaceRoutes.briefs.new(),
             buildBrandPath("/pilot-request"),
           ];
@@ -191,46 +371,29 @@ export const brandsWorkspaceRoutes = {
     next: string | null | undefined,
     namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE,
   ) {
-    return resolveWorkspaceNextPath(next, brandsWorkspaceRoutes.overview(namespace));
+    return resolveWorkspaceNextPath(next, brandsWorkspaceRoutes.home(namespace));
   },
 };
 
 export function isProtectedWorkspacePath(pathname: string) {
   const safePathname = getPathnameOnly(pathname);
 
-  if (safePathname === creativeWorkspaceRoutes.landing()) {
-    return true;
-  }
-
-  if (brandsWorkspaceRoutes.isKnownPath(safePathname)) {
-    return true;
-  }
-
-  if (opsWorkspaceRoutes.isKnownPath(safePathname)) {
-    return true;
-  }
-
   return (
-    safePathname === creativeWorkspaceRoutes.tasks() ||
-    safePathname === creativeWorkspaceRoutes.feedback() ||
-    safePathname === creativeWorkspaceRoutes.campaigns.index() ||
-    safePathname.startsWith("/creatives/campaigns/")
+    safePathname === creativeWorkspaceRoutes.landing() ||
+    brandsWorkspaceRoutes.isKnownPath(safePathname) ||
+    creativeWorkspaceRoutes.isKnownPath(safePathname) ||
+    adminWorkspaceRoutes.isKnownPath(safePathname) ||
+    opsWorkspaceRoutes.isKnownPath(safePathname)
   );
 }
 
 export function resolveWorkspaceNextPath(
   next: string | null | undefined,
-  fallback: string = brandsWorkspaceRoutes.overview(),
+  fallback: string = brandsWorkspaceRoutes.home(),
 ) {
   const candidate = next?.trim() ?? "";
 
-  if (
-    candidate &&
-    !candidate.startsWith("//") &&
-    (isProtectedWorkspacePath(candidate) ||
-      brandsWorkspaceRoutes.isKnownPath(candidate) ||
-      opsWorkspaceRoutes.isKnownPath(candidate))
-  ) {
+  if (candidate && !candidate.startsWith("//") && isProtectedWorkspacePath(candidate)) {
     return candidate;
   }
 

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import { formatWorkspaceDateTime } from "@/lib/workspace/formatting";
-import { opsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { adminWorkspaceRoutes, opsWorkspaceRoutes } from "@/lib/workspace/routes";
 import { Field, SelectInput } from "@/components/forms/form-primitives";
 import { OpsAssignmentForm } from "@/components/workspace/ops/ops-assignment-form";
 import { OpsWorkflowForm } from "@/components/workspace/ops/ops-workflow-form";
@@ -29,6 +30,7 @@ export function OpsControlPlaneScreen({
   view: OpsOverviewView;
   mode: OpsScreenMode;
 }) {
+  const pathname = usePathname();
   const [selectedCampaignId, setSelectedCampaignId] = useState(
     view.campaigns[0]?.id ?? "",
   );
@@ -47,6 +49,10 @@ export function OpsControlPlaneScreen({
       : mode === "commercial"
         ? view.commercialQueue
         : view.campaigns;
+  const getCampaignHref = (campaignId: string) =>
+    pathname.startsWith("/admin/")
+      ? adminWorkspaceRoutes.campaignDetail(campaignId)
+      : opsWorkspaceRoutes.campaignDetail(campaignId);
 
   return (
     <div className="grid gap-6">
@@ -60,7 +66,7 @@ export function OpsControlPlaneScreen({
           renderSummaryCard(
             "In review",
             view.summary.campaignsInReview,
-            "Campaigns waiting on ops or brand review decisions.",
+            "Campaigns waiting on internal or brand review decisions.",
           ),
           renderSummaryCard(
             "Ready for handoff",
@@ -75,12 +81,12 @@ export function OpsControlPlaneScreen({
           renderSummaryCard(
             "Blocked assignments",
             view.summary.blockedAssignments,
-            "Assignments with explicit blockers that ops still needs to clear.",
+            "Assignments with explicit blockers that admins still need to clear.",
           ),
           renderSummaryCard(
-            "Pending ops review",
+            "Pending internal review",
             view.summary.pendingOpsReview,
-            "Submitted versions still waiting for ops review.",
+            "Submitted versions still waiting for internal review.",
           ),
         ]}
       </section>
@@ -106,7 +112,7 @@ export function OpsControlPlaneScreen({
                   </p>
                 </div>
                 <Link
-                  href={opsWorkspaceRoutes.campaignDetail(campaign.id)}
+                  href={getCampaignHref(campaign.id)}
                   className="workspace-button inline-flex items-center justify-center"
                 >
                   Open campaign
@@ -125,7 +131,7 @@ export function OpsControlPlaneScreen({
                   <p className="workspace-section-label">Review</p>
                   <p className="mt-2 text-2xl font-semibold">{campaign.unresolvedReviewCount}</p>
                   <p className="mt-2 text-sm text-[var(--workspace-copy-muted)]">
-                    {campaign.awaitingOpsReviewCount} for ops · {campaign.awaitingBrandReviewCount} for brand
+                    {campaign.awaitingOpsReviewCount} internal · {campaign.awaitingBrandReviewCount} brand
                   </p>
                 </div>
                 <div className="rounded-[1.2rem] border border-[var(--workspace-line)] px-4 py-4">
@@ -195,7 +201,7 @@ export function OpsControlPlaneScreen({
               </div>
             ) : (
               <article className="workspace-panel rounded-[1.6rem] p-6 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                Create the first campaign before assigning creative work from the ops surface.
+                Create the first campaign before assigning creative work from the admin panel.
               </article>
             )}
 

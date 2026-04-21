@@ -18,7 +18,8 @@ export function OpsCampaignDetailScreen({
           {view.campaign.name}
         </h1>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-          {view.campaign.campaignGoal ?? "Ops campaign detail for assignment, readiness, and delivery orchestration."}
+          {view.campaign.campaignGoal ??
+            "Campaign detail for internal assignment, readiness, and delivery management."}
         </p>
       </section>
 

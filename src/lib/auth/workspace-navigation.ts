@@ -1,5 +1,10 @@
 import type { WorkspaceType } from "@/lib/auth/roles";
-import { resolveWorkspaceNextPath } from "@/lib/workspace/routes";
+import {
+  adminWorkspaceRoutes,
+  brandsWorkspaceRoutes,
+  creativeWorkspaceRoutes,
+  resolveWorkspaceNextPath,
+} from "@/lib/workspace/routes";
 
 function getPathnameOnly(pathname: string) {
   return pathname.split(/[?#]/, 1)[0] ?? pathname;
@@ -10,16 +15,21 @@ export function isOpsWorkspacePath(pathname: string) {
   return safePathname === "/ops" || safePathname.startsWith("/ops/");
 }
 
+export function isAdminWorkspacePath(pathname: string) {
+  const safePathname = getPathnameOnly(pathname);
+  return safePathname === "/admin" || safePathname.startsWith("/admin/");
+}
+
 export function getWorkspaceLandingPath(workspaceType: WorkspaceType) {
   if (workspaceType === "creative") {
-    return "/creatives/tasks";
+    return creativeWorkspaceRoutes.home();
   }
 
   if (workspaceType === "ops") {
-    return "/ops";
+    return adminWorkspaceRoutes.requests();
   }
 
-  return "/brands/today";
+  return brandsWorkspaceRoutes.home();
 }
 
 export function resolveProtectedWorkspaceNextPath(
@@ -28,7 +38,11 @@ export function resolveProtectedWorkspaceNextPath(
 ) {
   const candidate = next?.trim() ?? "";
 
-  if (candidate && !candidate.startsWith("//") && isOpsWorkspacePath(candidate)) {
+  if (
+    candidate &&
+    !candidate.startsWith("//") &&
+    (isOpsWorkspacePath(candidate) || isAdminWorkspacePath(candidate))
+  ) {
     return candidate;
   }
 

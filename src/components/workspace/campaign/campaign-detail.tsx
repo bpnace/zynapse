@@ -103,7 +103,7 @@ export function CampaignDetail({
 
           <div className="grid gap-2 sm:grid-cols-2">
             <Link
-              href={brandsWorkspaceRoutes.overview()}
+              href={brandsWorkspaceRoutes.home()}
               className="workspace-button workspace-button-secondary"
             >
               Zur Übersicht

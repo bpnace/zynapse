@@ -158,7 +158,7 @@ export function OnboardingFlow({
             <button
               type="button"
               className="workspace-button workspace-button-primary"
-              onClick={() => router.push(brandsWorkspaceRoutes.overview())}
+              onClick={() => router.push(brandsWorkspaceRoutes.home())}
             >
               Zur Übersicht
             </button>

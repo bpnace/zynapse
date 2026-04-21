@@ -3,16 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  ArrowUpRight,
-  BriefcaseBusiness,
+  ClipboardList,
   FolderKanban,
-  Gauge,
+  GitCompareArrows,
+  ListChecks,
+  Radar,
+  Settings2,
+  ShieldAlert,
   ShieldCheck,
-  Workflow,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatWorkspaceRole } from "@/lib/workspace/formatting";
-import { opsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { adminWorkspaceRoutes, opsWorkspaceRoutes } from "@/lib/workspace/routes";
+import {
+  WorkspaceAvatarSlot,
+  WorkspaceIdentityActions,
+  WorkspaceLogoLockup,
+} from "@/components/workspace/shell/workspace-shell-primitives";
 
 type OpsWorkspaceShellProps = {
   organizationName: string;
@@ -20,128 +27,201 @@ type OpsWorkspaceShellProps = {
   children: React.ReactNode;
 };
 
+type NavigationItem = {
+  href: string;
+  label: string;
+  helper: string;
+  icon: typeof ClipboardList;
+  active: boolean;
+};
+
+function isAnyPath(pathname: string, candidates: string[]) {
+  return candidates.some(
+    (candidate) => pathname === candidate || pathname.startsWith(`${candidate}/`),
+  );
+}
+
+function AdminNav({
+  items,
+}: {
+  items: NavigationItem[];
+}) {
+  return (
+    <nav className="mt-3 space-y-1" aria-label="Navigation im Admin Workspace">
+      {items.map((item) => {
+        const Icon = item.icon;
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "workspace-nav-item",
+              item.active ? "workspace-nav-item-active" : "workspace-nav-item-muted",
+            )}
+          >
+            <span className="workspace-nav-icon">
+              <Icon className="h-4 w-4" />
+            </span>
+            <span className="min-w-0 space-y-0.5">
+              <span className="block text-sm font-semibold tracking-[-0.01em]">
+                {item.label}
+              </span>
+              <span className="block text-xs text-[var(--workspace-copy-muted)]">
+                {item.helper}
+              </span>
+            </span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export function OpsWorkspaceShell({
   organizationName,
   role,
   children,
 }: OpsWorkspaceShellProps) {
   const pathname = usePathname();
-  const navigation = [
+
+  const navigation: NavigationItem[] = [
     {
-      href: opsWorkspaceRoutes.overview(),
-      label: "Overview",
-      helper: "Control plane, queues, audit",
-      icon: Gauge,
-      active: pathname === opsWorkspaceRoutes.overview(),
-    },
-    {
-      href: opsWorkspaceRoutes.campaigns(),
-      label: "Campaigns",
-      helper: "Workflow owners and current state",
-      icon: FolderKanban,
+      href: adminWorkspaceRoutes.requests(),
+      label: "Requests",
+      helper: "Incoming campaign demand and intake",
+      icon: ClipboardList,
       active:
+        pathname === adminWorkspaceRoutes.root() ||
+        pathname === adminWorkspaceRoutes.requests() ||
+        pathname.startsWith(`${adminWorkspaceRoutes.requests()}/`) ||
+        pathname === opsWorkspaceRoutes.overview() ||
         pathname === opsWorkspaceRoutes.campaigns() ||
         pathname.startsWith(`${opsWorkspaceRoutes.campaigns()}/`),
     },
     {
-      href: opsWorkspaceRoutes.assignments(),
+      href: adminWorkspaceRoutes.setups(),
+      label: "Setups",
+      helper: "Packaging and approval staging",
+      icon: FolderKanban,
+      active: pathname === adminWorkspaceRoutes.setups(),
+    },
+    {
+      href: adminWorkspaceRoutes.matching(),
+      label: "Matching",
+      helper: "Creative fit and routing decisions",
+      icon: GitCompareArrows,
+      active: pathname === adminWorkspaceRoutes.matching(),
+    },
+    {
+      href: adminWorkspaceRoutes.assignments(),
       label: "Assignments",
-      helper: "Creative staffing and due dates",
-      icon: BriefcaseBusiness,
-      active: pathname === opsWorkspaceRoutes.assignments(),
+      helper: "Ownership, staffing, deadlines",
+      icon: ListChecks,
+      active: isAnyPath(pathname, [
+        adminWorkspaceRoutes.assignments(),
+        "/ops/assignments",
+      ]),
     },
     {
-      href: opsWorkspaceRoutes.delivery(),
-      label: "Delivery",
-      helper: "Review readiness, blockers, submission flow",
+      href: adminWorkspaceRoutes.reviews(),
+      label: "Reviews",
+      helper: "Readiness, approvals, change pressure",
       icon: ShieldCheck,
-      active:
-        pathname === opsWorkspaceRoutes.delivery() ||
-        pathname === opsWorkspaceRoutes.legacyReviewReadiness(),
+      active: isAnyPath(pathname, [
+        adminWorkspaceRoutes.reviews(),
+        "/ops/review-readiness",
+      ]),
     },
     {
-      href: opsWorkspaceRoutes.commercial(),
-      label: "Commercial",
-      helper: "Pilot readiness and handoff visibility",
-      icon: ArrowUpRight,
-      active:
-        pathname === opsWorkspaceRoutes.commercial() ||
-        pathname === opsWorkspaceRoutes.legacyCommercialHandoffs(),
+      href: adminWorkspaceRoutes.delivery(),
+      label: "Delivery",
+      helper: "Output movement and handoff state",
+      icon: Radar,
+      active: isAnyPath(pathname, [
+        adminWorkspaceRoutes.delivery(),
+        "/ops/delivery",
+        "/ops/commercial-handoffs",
+      ]),
+    },
+    {
+      href: adminWorkspaceRoutes.exceptions(),
+      label: "Exceptions",
+      helper: "Low-confidence or blocked cases",
+      icon: ShieldAlert,
+      active: isAnyPath(pathname, [
+        adminWorkspaceRoutes.exceptions(),
+        "/ops/commercial",
+      ]),
+    },
+    {
+      href: adminWorkspaceRoutes.audit(),
+      label: "Audit",
+      helper: "Operational history and traceability",
+      icon: Settings2,
+      active: isAnyPath(pathname, [adminWorkspaceRoutes.audit(), adminWorkspaceRoutes.settings()]),
     },
   ];
 
   return (
     <div className="workspace-app min-h-screen text-[var(--workspace-copy-strong)]">
       <div className="mx-auto flex min-h-screen w-full max-w-[1760px]">
-        <aside className="workspace-sidebar hidden w-[280px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
+        <aside className="workspace-sidebar hidden w-[300px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <p className="workspace-eyebrow">Ops Control Plane</p>
-            <div className="mt-3 space-y-1">
+            <div className="flex items-start justify-between gap-4">
+              <WorkspaceLogoLockup label="Zynapse Admin Panel" />
+              <WorkspaceAvatarSlot name={organizationName} />
+            </div>
+
+            <div className="mt-4 space-y-1">
               <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
               </p>
               <p className="text-sm text-[var(--workspace-copy-muted)]">{formatWorkspaceRole(role)}</p>
             </div>
+
             <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Assign creatives, tighten review readiness, and move delivery/commercial
-              transitions forward without leaking internal mechanics into /brands or /creatives.
+              A practical internal panel for overrides, QA, delivery blockers, content issues, and
+              exceptional cases while the ops layer continues to live behind the scenes.
             </p>
+
+            <div className="mt-4 workspace-meta-row">
+              <span>Admin</span>
+              <span>Internal only</span>
+            </div>
+
+            <div className="mt-5">
+              <WorkspaceIdentityActions settingsHref={adminWorkspaceRoutes.settings()} />
+            </div>
           </div>
 
           <div className="mt-6">
-            <p className="workspace-section-label">Orchestration</p>
+            <p className="workspace-section-label">Queues</p>
           </div>
-          <nav className="mt-3 space-y-1" aria-label="Navigation im Ops Workspace">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={cn(
-                    "workspace-nav-item",
-                    item.active ? "workspace-nav-item-active" : "workspace-nav-item-muted",
-                  )}
-                >
-                  <span className="workspace-nav-icon">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <span className="space-y-0.5 min-w-0">
-                    <span className="block text-sm font-semibold tracking-[-0.01em]">
-                      {item.label}
-                    </span>
-                    <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                      {item.helper}
-                    </span>
-                  </span>
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="mt-auto border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Guardrail</p>
-            <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Ops owns transitions and workload. Brand and creative surfaces consume the resulting
-              state, but they do not replace this control plane.
-            </p>
-          </div>
+          <AdminNav items={navigation} />
         </aside>
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
           <div className="border-b border-[var(--workspace-line)] bg-[var(--workspace-panel)] px-4 py-3 lg:hidden">
-            <div className="space-y-1">
-              <p className="workspace-eyebrow">Ops Workspace</p>
-              <p className="truncate text-sm font-semibold tracking-[-0.01em] text-[var(--workspace-copy-strong)]">
-                {organizationName}
-              </p>
-              <div className="workspace-meta-row">
-                <span>{formatWorkspaceRole(role)}</span>
-                <span className="inline-flex items-center gap-1">
-                  <Workflow className="h-3.5 w-3.5" />
-                  Control plane
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="space-y-1">
+                  <WorkspaceLogoLockup label="Zynapse Admin Panel" />
+                  <p className="truncate text-sm font-semibold tracking-[-0.01em] text-[var(--workspace-copy-strong)]">
+                    {organizationName}
+                  </p>
+                  <div className="workspace-meta-row">
+                    <span>{formatWorkspaceRole(role)}</span>
+                    <span>Admin</span>
+                  </div>
+                </div>
+                <WorkspaceAvatarSlot name={organizationName} className="mt-0.5" />
               </div>
+
+              <WorkspaceIdentityActions
+                settingsHref={adminWorkspaceRoutes.settings()}
+                compact
+              />
             </div>
           </div>
 

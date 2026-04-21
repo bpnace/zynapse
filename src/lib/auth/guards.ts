@@ -7,9 +7,6 @@ import {
   resolveProtectedWorkspaceNextPath,
 } from "@/lib/auth/workspace-navigation";
 import {
-  brandsWorkspaceRoutes,
-  creativeWorkspaceRoutes,
-  opsWorkspaceRoutes,
 } from "@/lib/workspace/routes";
 import { ensureMembershipForCurrentUser } from "@/lib/workspace/services/accept-invite";
 import {
@@ -80,27 +77,27 @@ export const requireWorkspaceResolverPath = cache(async () => {
 
   if (!defaultMembership) {
     if (creativeBootstrap) {
-      return creativeWorkspaceRoutes.tasks();
+      return getWorkspaceLandingPath("creative");
     }
 
     if (opsBootstrap) {
-      return opsWorkspaceRoutes.overview();
+      return getWorkspaceLandingPath("ops");
     }
 
-    return brandsWorkspaceRoutes.overview();
+    return getWorkspaceLandingPath("brand");
   }
 
   const workspaceType = getWorkspaceTypeForRole(defaultMembership.role);
 
   if (workspaceType === "creative") {
-    return creativeWorkspaceRoutes.tasks();
+    return getWorkspaceLandingPath("creative");
   }
 
   if (workspaceType === "ops") {
-    return opsWorkspaceRoutes.overview();
+    return getWorkspaceLandingPath("ops");
   }
 
-  return brandsWorkspaceRoutes.overview();
+  return getWorkspaceLandingPath("brand");
 });
 
 export const requireWorkspaceAccess = cache(async () => {
@@ -121,7 +118,7 @@ export const requireWorkspaceAccess = cache(async () => {
   if (!bootstrap) {
     redirect(
       `/login?error=invite_required&next=${encodeURIComponent(
-        resolveProtectedWorkspaceNextPath(brandsWorkspaceRoutes.overview()),
+        resolveProtectedWorkspaceNextPath(getWorkspaceLandingPath("brand")),
       )}`,
     );
   }
@@ -195,3 +192,5 @@ export const requireOpsWorkspaceAccess = cache(async () => {
 
   return bootstrap;
 });
+
+export const requireAdminAccess = cache(async () => requireOpsWorkspaceAccess());

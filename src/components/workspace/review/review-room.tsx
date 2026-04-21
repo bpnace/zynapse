@@ -361,7 +361,7 @@ export function ReviewRoom({
 
           <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
             <Link
-              href={brandsWorkspaceRoutes.overview()}
+              href={brandsWorkspaceRoutes.home()}
               className="workspace-button workspace-button-secondary"
             >
               Zurück zur Übersicht
