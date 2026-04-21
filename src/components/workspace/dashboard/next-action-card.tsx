@@ -6,6 +6,12 @@ type NextActionCardProps = {
   briefHref?: string;
   title: string;
   body: string;
+  onboardingCompletion?: {
+    completed: number;
+    total: number;
+    percent: number;
+    isComplete: boolean;
+  };
 };
 
 export function NextActionCard({
@@ -13,14 +19,24 @@ export function NextActionCard({
   briefHref,
   title,
   body,
+  onboardingCompletion,
 }: NextActionCardProps) {
   return (
     <section className="workspace-panel px-5 py-5">
-      <p className="workspace-section-label">Nächster sinnvoller Schritt</p>
-      <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+      <div className="space-y-2">
+        <p className="workspace-section-label">Nächster sinnvoller Schritt</p>
+        <div className="workspace-stat-strip">
+          {onboardingCompletion ? (
+            <span className="workspace-stat-chip">
+              Kontext {onboardingCompletion.percent}%
+            </span>
+          ) : null}
+        </div>
+      </div>
+      <h2 className="mt-4 font-display text-[1.8rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
         {title}
       </h2>
-      <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
+      <p className="mt-3 text-sm leading-7 text-[var(--workspace-copy-body)]">
         {body}
       </p>
       <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
@@ -39,10 +55,6 @@ export function NextActionCard({
           ) : null}
         </div>
       </div>
-      <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-        Den nächsten Auftrag stößt Zynapse erst an, wenn Freigabe und Übergabe
-        sauber vorbereitet sind.
-      </p>
     </section>
   );
 }

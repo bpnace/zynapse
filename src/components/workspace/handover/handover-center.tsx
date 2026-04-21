@@ -82,20 +82,33 @@ export function HandoverCenter({
   const commercialReady = !demo.isReadOnly && readiness.showCommercialStep;
 
   return (
-    <div className="grid gap-4">
-      <section className="workspace-topbar px-4 py-4 sm:px-5">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div className="space-y-3">
-            <p className="workspace-section-label">Übergabeprotokoll</p>
-            <div className="space-y-1">
-              <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+    <div className="workspace-page-stack">
+      <section className="workspace-topbar px-5 py-5 sm:px-6">
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="workspace-section-label">Übergabeprotokoll</span>
+              {demo.isDemoWorkspace ? (
+                <span className="workspace-demo-badge">{demo.shellBadge}</span>
+              ) : null}
+            </div>
+            <div className="space-y-2">
+              <h1 className="font-display text-[2.15rem] leading-[0.98] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
-              <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Diese Ansicht dokumentiert, was freigegeben ist, wie die
-                Varianten referenziert werden und ob der nächste
-                kommerzielle Schritt belastbar vorbereitet ist.
+              <p className="max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
+                Diese Seite bündelt die freigegebenen Deliverables, ihre Referenzen und die Hinweise,
+                die für eine sichere Übergabe relevant bleiben.
               </p>
+            </div>
+            <div className="workspace-stat-strip">
+              <span className="workspace-stat-chip">{formatWorkspaceLabel(campaign.packageTier)}</span>
+              <span className="workspace-stat-chip">
+                {approvedAssets.length} freigegebene Varianten
+              </span>
+              <span className="workspace-stat-chip">
+                {groupedAssets.length} Übergabegruppen
+              </span>
             </div>
           </div>
 
@@ -120,70 +133,19 @@ export function HandoverCenter({
             )}
           </div>
         </div>
-
-        <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
-          <div className="workspace-meta-row">
-            <span>{formatWorkspaceLabel(campaign.packageTier)}</span>
-            <span>{approvedAssets.length} freigegebene Varianten</span>
-            <span>{groupedAssets.length} Übergabegruppen</span>
-          </div>
-          <div className="mt-4 grid gap-3 md:grid-cols-4">
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Freigabegrad</p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                {approvedAssets.length}
-              </p>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Freigegebene Varianten
-              </p>
-            </div>
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Quellenlage</p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                {sourceCoverage}/{approvedAssets.length}
-              </p>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Varianten mit dokumentierter Herkunft
-              </p>
-            </div>
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Referenzen</p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                {storageCoverage}/{approvedAssets.length}
-              </p>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Speicherpfade für die Übergabe hinterlegt
-              </p>
-            </div>
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Pilot-Bereitschaft</p>
-              <div className="mt-2">
-                <StatusPill
-                  value={commercialReady ? "approved" : "pending"}
-                  tone="accent"
-                />
-              </div>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                {readiness.readinessSource === "workflow_state"
-                  ? "Abgeleitet aus Workflow-Zustand, Freigaben und offenen Reviews"
-                  : "Abgeleitet aus Freigaben und offenen Reviews"}
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.16fr)_minmax(320px,0.84fr)]">
         <div className="grid gap-4">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
               <p className="workspace-section-label">Freigegebene Varianten</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Übergabepaket nach Kanal und Format
+              <h2 className="font-display text-[1.85rem] leading-[1.04] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+                Übergabepaket
               </h2>
               <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                Jede Variante bleibt mit Quelle,
-                Referenzen und Hinweisen zur Übergabe sichtbar.
+                Die freigegebenen Varianten bleiben ruhig gruppiert, damit Übergabe, Rückfragen und
+                spätere Nutzung auf dieselben Nachweise verweisen.
               </p>
             </div>
 
@@ -194,8 +156,7 @@ export function HandoverCenter({
                     <div className="flex items-center justify-between gap-3">
                       <p className="workspace-section-label">{group.label}</p>
                       <p className="text-sm text-[var(--workspace-copy-muted)]">
-                        {group.items.length}{" "}
-                        {group.items.length === 1 ? "Eintrag" : "Einträge"}
+                        {group.items.length} {group.items.length === 1 ? "Eintrag" : "Einträge"}
                       </p>
                     </div>
                     <div className="mt-3 workspace-split-list">
@@ -203,7 +164,7 @@ export function HandoverCenter({
                         <article key={asset.id} className="py-4">
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex min-w-0 items-start gap-3">
-                              <div className="overflow-hidden border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)]">
+                              <div className="overflow-hidden rounded-[18px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)]">
                                 <WorkspaceAssetPreview
                                   data-testid={`handover-asset-preview-${asset.id}`}
                                   assetType={asset.assetType}
@@ -235,27 +196,25 @@ export function HandoverCenter({
                                   {asset.versionLabel ? <span>{asset.versionLabel}</span> : null}
                                 </div>
                                 <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                                  Freigabe liegt vor. Diese Variante bleibt
-                                  für Übergabe, Rückfragen und kommerzielle
-                                  Anschlussarbeit referenzierbar.
+                                  Diese Variante ist freigegeben und bleibt als verlässlicher Referenzpunkt
+                                  für Übergabe und Folgearbeit dokumentiert.
                                 </p>
                               </div>
                             </div>
                             <StatusPill value="approved" />
                           </div>
-                          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                            <div>
-                              <p className="workspace-section-label">Quelle</p>
-                              <p className="mt-2 text-sm text-[var(--workspace-copy-body)]">
-                                {asset.source ?? "Noch keine Quelle dokumentiert"}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="workspace-section-label">Speicherreferenz</p>
-                              <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
-                                {asset.storagePath ?? "Noch kein Pfad hinterlegt"}
-                              </p>
-                            </div>
+                          <div className="mt-4 workspace-stat-strip">
+                            <span className="workspace-stat-chip">
+                              {asset.source ? "Quelle erfasst" : "Quelle offen"}
+                            </span>
+                            <span className="workspace-stat-chip">
+                              {asset.storagePath ? "Storage erfasst" : "Storage offen"}
+                            </span>
+                            <span className="workspace-stat-chip">
+                              {asset.previewUrl || asset.posterUrl || asset.thumbnailPath
+                                ? "Preview erfasst"
+                                : "Preview offen"}
+                            </span>
                           </div>
                         </article>
                       ))}
@@ -280,17 +239,20 @@ export function HandoverCenter({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Referenzprotokoll</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+              <p className="workspace-section-label">Referenzanhang</p>
+              <h2 className="font-display text-[1.75rem] leading-[1.04] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 Storage-, Preview- und Quellenlage
               </h2>
+              <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
+                Dieser Anhang hält die Referenzen fest, auf die spätere Übergabe, QA oder Rückfragen verweisen.
+              </p>
             </div>
 
             <div className="mt-5 workspace-split-list">
               {approvedAssets.map((asset) => (
                 <article key={asset.id} className="py-4">
                   <div className="flex items-start gap-3">
-                    <div className="overflow-hidden border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)]">
+                    <div className="overflow-hidden rounded-[18px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)]">
                       <WorkspaceAssetPreview
                         assetType={asset.assetType}
                         title={asset.title}
@@ -312,9 +274,7 @@ export function HandoverCenter({
                         </p>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-body)]">
-                        Die Freigabe ist erteilt. Die Referenzen unten
-                        dokumentieren, worauf Übergabe und spätere Nutzung
-                        verweisen.
+                        Die Referenzen unten dokumentieren, worauf Übergabe und spätere Nutzung verweisen.
                       </p>
                     </div>
                   </div>
@@ -348,9 +308,7 @@ export function HandoverCenter({
               ))}
             </div>
             <p className="mt-5 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-              Live-Downloads bleiben bewusst außerhalb dieser Ansicht. Diese
-              Seite dokumentiert Referenzen und Nachweise, nicht
-              die finale Versandautomatisierung.
+              Diese Seite dokumentiert Referenzen und Nachweise, nicht die finale Versandautomatisierung.
             </p>
           </section>
         </div>
@@ -358,9 +316,9 @@ export function HandoverCenter({
         <div className="grid gap-4 xl:sticky xl:top-5 xl:self-start">
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Vertrauenscenter</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Nutzung, Rechte und Übergabe-Sicherheit
+              <p className="workspace-section-label">Übergabe-Readiness</p>
+              <h2 className="font-display text-[1.7rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+                Lieferhinweise und Sicherheit
               </h2>
             </div>
             <p className="mt-4 text-base font-semibold text-[var(--workspace-copy-strong)]">
@@ -436,8 +394,7 @@ export function HandoverCenter({
                 ))}
               </div>
               <p className="mt-3 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                {completedStages}/{stageItems.length} Stufen haben einen
-                belastbaren Arbeitsstand.
+                {completedStages}/{stageItems.length} Stufen haben einen belastbaren Arbeitsstand.
               </p>
             </div>
           </section>
@@ -445,7 +402,7 @@ export function HandoverCenter({
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
               <p className="workspace-section-label">Kommerzieller nächster Schritt</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+              <h2 className="font-display text-[1.7rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 Pilot-Bereitschaft
               </h2>
             </div>

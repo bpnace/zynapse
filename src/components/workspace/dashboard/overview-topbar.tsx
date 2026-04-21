@@ -1,5 +1,6 @@
 import { FolderKanban, MessageSquareText } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type OverviewTopBarProps = {
@@ -9,6 +10,7 @@ type OverviewTopBarProps = {
   currentStage: string | null;
   openReviewCount: number;
   approvedAssetCount: number;
+  demo?: WorkspaceDemoState;
 };
 
 export function OverviewTopBar({
@@ -18,21 +20,37 @@ export function OverviewTopBar({
   currentStage,
   openReviewCount,
   approvedAssetCount,
+  demo,
 }: OverviewTopBarProps) {
   return (
-    <section className="workspace-topbar px-4 py-4 sm:px-5">
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-        <div className="space-y-3">
-          <p className="workspace-section-label">Heute</p>
-          <div className="space-y-1">
-            <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
-              Was heute ansteht
+    <section className="workspace-topbar px-5 py-5 sm:px-6">
+      <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="workspace-section-label">Heute</span>
+            {demo?.isDemoWorkspace ? (
+              <span className="workspace-demo-badge">{demo.shellBadge}</span>
+            ) : null}
+            {currentStage ? <StatusPill value={currentStage} tone="accent" /> : null}
+          </div>
+          <div className="space-y-2">
+            <h1 className="font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
+              {campaignName ?? "Was heute ansteht"}
             </h1>
-            <p className="max-w-2xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-              Hier siehst du, wo heute Entscheidungen gebraucht werden, was
-              sich in der laufenden Kampagne verändert hat und was bereits
-              sauber für die Übergabe vorbereitet ist.
+            <p className="max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
+              Heute geht es darum, die laufende Kampagne sauber durch die
+              Freigabe zu führen und bereits vorbereitete Ergebnisse mit
+              genügend Sicherheit in die Übergabe mitzunehmen.
             </p>
+          </div>
+          <div className="workspace-stat-strip">
+            <span className="workspace-stat-chip">{organizationName}</span>
+            <span className="workspace-stat-chip">
+              {openReviewCount} offene {openReviewCount === 1 ? "Diskussion" : "Diskussionen"}
+            </span>
+            <span className="workspace-stat-chip">
+              {approvedAssetCount} freigegebene {approvedAssetCount === 1 ? "Variante" : "Varianten"}
+            </span>
           </div>
         </div>
 
@@ -52,29 +70,6 @@ export function OverviewTopBar({
             Freigabe öffnen
           </a>
         </div>
-      </div>
-
-      <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
-        <div className="workspace-meta-row">
-          <span>{organizationName}</span>
-          {campaignName ? (
-            <span className="inline-flex items-center gap-2">
-              <FolderKanban className="h-3.5 w-3.5" />
-              {campaignName}
-            </span>
-          ) : null}
-          <span>
-            {openReviewCount} offene {openReviewCount === 1 ? "Diskussion" : "Diskussionen"}
-          </span>
-          <span>
-            {approvedAssetCount} freigegebene {approvedAssetCount === 1 ? "Variante" : "Varianten"}
-          </span>
-        </div>
-        {campaignName ? (
-          <div className="mt-3">
-            {currentStage ? <StatusPill value={currentStage} tone="accent" /> : null}
-          </div>
-        ) : null}
       </div>
     </section>
   );

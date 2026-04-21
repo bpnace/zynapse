@@ -23,9 +23,9 @@ export function AssetGrid({ assets }: AssetGridProps) {
     <section className="workspace-panel px-5 py-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="workspace-section-label">Aktuelle Varianten</p>
-          <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-            Was gerade im Umlauf ist
+          <p className="workspace-section-label">Aktueller Stand</p>
+          <h2 className="font-display mt-2 text-[1.7rem] leading-[1.06] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+            Varianten im aktuellen Freigabefluss
           </h2>
         </div>
         <p className="text-sm text-[var(--workspace-copy-muted)]">

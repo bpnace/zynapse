@@ -75,9 +75,9 @@ describe("ReviewRoom copy", () => {
       />,
     );
 
-    expect(screen.getByText("Offene Diskussionen")).toBeInTheDocument();
-    expect(screen.getByText("Kampagnenstatus")).toBeInTheDocument();
-    expect(screen.getByText("Braucht Rückmeldung")).toBeInTheDocument();
+    expect(screen.getByText("Entscheidungsqueue")).toBeInTheDocument();
+    expect(screen.getByText("Ausgewählte Variante")).toBeInTheDocument();
+    expect(screen.getByText("Verlauf")).toBeInTheDocument();
     expect(screen.getByText(/Diskussion von/i)).toBeInTheDocument();
     expect(screen.getByText(/1 offene Diskussionen?, 0 gelöste Diskussionen/i)).toBeInTheDocument();
   });

@@ -62,28 +62,24 @@ export function WorkspaceShell({
     {
       href: brandsWorkspaceRoutes.overview(),
       label: "Heute",
-      helper: "Status, Entscheidungen, Freigabereife",
       icon: LayoutGrid,
       active: pathname === brandsWorkspaceRoutes.overview(),
     },
     {
       href: activeCampaignDetailPath,
       label: "Kampagne",
-      helper: "Ziel, Phase und Varianten",
       icon: FolderKanban,
       active: Boolean(activeCampaignDetailPath) && pathname === activeCampaignDetailPath,
     },
     {
       href: activeCampaignReviewPath,
       label: "Freigabe",
-      helper: "Feedback, Änderungen, Freigaben",
       icon: ShieldCheck,
       active: pathname.includes("/review"),
     },
     {
       href: activeCampaignHandoverPath,
       label: "Übergabe",
-      helper: "Freigegebene Varianten und Nachweise",
       icon: Rocket,
       active: pathname.includes("/handover"),
     },
@@ -92,14 +88,12 @@ export function WorkspaceShell({
     {
       href: brandsWorkspaceRoutes.onboarding(),
       label: "Markenkontext",
-      helper: "Kanäle, Leitplanken, Freigabe",
       icon: Settings2,
       active: pathname === brandsWorkspaceRoutes.onboarding(),
     },
     {
       href: brandsWorkspaceRoutes.briefs.new(),
       label: "Briefings",
-      helper: "Strukturierte Anfragen und Erstaufnahme",
       icon: ClipboardList,
       active: pathname.includes("/briefs/"),
     },
@@ -111,7 +105,6 @@ export function WorkspaceShell({
             campaignId: activeCampaignId,
           }),
           label: "Pilotanfrage",
-          helper: "Nächster Auftrag und Übergabe",
           icon: ArrowUpRight,
           active: pathname === brandsWorkspaceRoutes.pilotRequest(),
         },
@@ -121,11 +114,16 @@ export function WorkspaceShell({
   return (
     <div className="workspace-app min-h-screen text-[var(--workspace-copy-strong)]">
       <div className="mx-auto flex min-h-screen w-full max-w-[1680px]">
-        <aside className="workspace-sidebar hidden w-[264px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
+        <aside className="workspace-sidebar hidden w-[248px] shrink-0 flex-col border-r border-[var(--workspace-line)] px-5 py-5 lg:flex">
           <div className="workspace-brand-card">
-            <p className="workspace-eyebrow">Betreuter Kampagnenbereich</p>
-            <div className="mt-3 space-y-1">
-              <p className="text-base font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
+            <div className="flex flex-wrap items-center gap-2">
+              {demo?.isDemoWorkspace ? (
+                <span className="workspace-demo-badge">{demo.shellBadge}</span>
+              ) : null}
+              <span className="workspace-eyebrow">Client Portal</span>
+            </div>
+            <div className="mt-4 space-y-1.5">
+              <p className="text-[1.02rem] font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
                 {organizationName}
               </p>
               {website ? (
@@ -134,32 +132,19 @@ export function WorkspaceShell({
                 </p>
               ) : null}
             </div>
-            <div className="mt-4 space-y-1 text-sm text-[var(--workspace-copy-muted)]">
-              <p>{demo?.isDemoWorkspace ? demo.shellBadge : formatWorkspaceRole(role)}</p>
-              <p>
-                {showCommercialStep
-                  ? "Zynapse bereitet den nächsten Schritt vor"
-                  : "Zynapse begleitet die Übergabe"}
-              </p>
+            <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-muted)]">
+              {showCommercialStep
+                ? "Freigabe, Übergabe und nächster Schritt in einer ruhigen Kundenansicht."
+                : "Freigabe und Übergabe in einer ruhigen Kundenansicht."}
+            </p>
+            <div className="mt-4 workspace-meta-row">
+              <span>{formatWorkspaceRole(role)}</span>
+              <span>{showCommercialStep ? "Pilot bereit" : "Review aktiv"}</span>
             </div>
           </div>
 
-          {demo?.isDemoWorkspace ? (
-            <div className="mt-4 border border-[var(--workspace-line)] bg-[var(--workspace-panel-muted)] px-4 py-4">
-              <p className="workspace-eyebrow">
-                {demo.shellBadge}
-              </p>
-              <p className="mt-2 text-sm font-semibold tracking-[-0.02em] text-[var(--workspace-copy-strong)]">
-                Schreibgeschützte Demo-Ansicht
-              </p>
-              <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                {demo.shellDescription}
-              </p>
-            </div>
-          ) : null}
-
           <div className="mt-6">
-            <p className="workspace-section-label">Kernbereiche</p>
+            <p className="workspace-section-label">Workspace</p>
           </div>
           <nav className="mt-3 space-y-1" aria-label="Navigation im betreuten Kampagnenbereich">
             {primaryNavigation.map((item) => {
@@ -176,12 +161,9 @@ export function WorkspaceShell({
                     <span className="workspace-nav-icon">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span className="space-y-0.5">
+                    <span className="min-w-0">
                       <span className="block text-sm font-semibold tracking-[-0.01em]">
                         {item.label}
-                      </span>
-                      <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                        {item.helper}
                       </span>
                     </span>
                   </div>
@@ -193,12 +175,9 @@ export function WorkspaceShell({
                   <span className="workspace-nav-icon">
                     <Icon className="h-4 w-4" />
                   </span>
-                  <span className="space-y-0.5 min-w-0">
+                  <span className="min-w-0">
                     <span className="block text-sm font-semibold tracking-[-0.01em]">
                       {item.label}
-                    </span>
-                    <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                      {item.helper}
                     </span>
                   </span>
                 </Link>
@@ -207,7 +186,7 @@ export function WorkspaceShell({
           </nav>
 
           <div className="mt-8">
-            <p className="workspace-section-label">Kontext</p>
+            <p className="workspace-section-label">Vorbereitung</p>
           </div>
           <nav className="mt-3 space-y-1">
             {[...secondaryNavigation, ...commercialNavigation].map((item) => {
@@ -224,12 +203,9 @@ export function WorkspaceShell({
                     <span className="workspace-nav-icon">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span className="space-y-0.5 min-w-0">
+                    <span className="min-w-0">
                       <span className="block text-sm font-semibold tracking-[-0.01em]">
                         {item.label}
-                      </span>
-                      <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                        {item.helper}
                       </span>
                     </span>
                   </div>
@@ -241,27 +217,15 @@ export function WorkspaceShell({
                   <span className="workspace-nav-icon">
                     <Icon className="h-4 w-4" />
                   </span>
-                  <span className="space-y-0.5 min-w-0">
+                  <span className="min-w-0">
                     <span className="block text-sm font-semibold tracking-[-0.01em]">
                       {item.label}
-                    </span>
-                    <span className="block text-xs text-[var(--workspace-copy-muted)]">
-                      {item.helper}
                     </span>
                   </span>
                 </Link>
               );
             })}
           </nav>
-
-          <div className="mt-auto border-t border-[var(--workspace-line)] pt-4">
-            <p className="workspace-section-label">Leitlinie</p>
-            <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              Arbeite entlang der Kampagne, kläre Freigaben sauber und nutze
-              die Übergabe als verlässliche Basis für Nachweise, Freigaben und
-              die nächsten Schritte.
-            </p>
-          </div>
         </aside>
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">

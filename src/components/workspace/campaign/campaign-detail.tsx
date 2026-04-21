@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, FileImage, FileVideo, FolderKanban } from "lucide-react";
 import { StatusPill } from "@/components/workspace/dashboard/status-pill";
 import { formatWorkspaceAssetType, formatWorkspaceLabel } from "@/lib/workspace/formatting";
+import type { WorkspaceDemoState } from "@/lib/workspace/demo";
 import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
 type CampaignDetailProps = {
@@ -52,6 +53,7 @@ type CampaignDetailProps = {
     reviewStatus: string;
     threadCount: number;
   }>;
+  demo: WorkspaceDemoState;
 };
 
 export function CampaignDetail({
@@ -63,21 +65,39 @@ export function CampaignDetail({
   reviewDeadline,
   packageRecommendation,
   latestAssets,
+  demo,
 }: CampaignDetailProps) {
   return (
-    <div className="grid gap-4">
-      <section className="workspace-topbar px-4 py-4 sm:px-5">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div className="space-y-3">
-            <p className="workspace-section-label">Kampagne</p>
-            <div className="space-y-1">
-              <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+    <div className="workspace-page-stack">
+      <section className="workspace-topbar px-5 py-5 sm:px-6">
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="workspace-section-label">Kampagne</span>
+              {demo.isDemoWorkspace ? (
+                <span className="workspace-demo-badge">{demo.shellBadge}</span>
+              ) : null}
+              <StatusPill value={campaign.currentStage} tone="accent" />
+            </div>
+            <div className="space-y-2">
+              <h1 className="font-display text-[2.2rem] leading-[0.98] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
-              <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Hier bündelst du Zielbild, aktive Ansätze, Übergabepaket und
-                Freigabestatus der laufenden Kampagne an einem Ort.
+              <p className="max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
+                Hier verdichtet sich die Kampagne auf Zielbild, führende
+                Richtungen und die Punkte, die die laufende Freigabe noch
+                beeinflussen.
               </p>
+            </div>
+            <div className="workspace-stat-strip">
+              <span className="workspace-stat-chip">{formatWorkspaceLabel(campaign.packageTier)}</span>
+              <span className="workspace-stat-chip">{deliverableSummary.total} Varianten</span>
+              <span className="workspace-stat-chip">
+                {reviewReadiness.openThreads} offene Diskussionen
+              </span>
+              <span className="workspace-stat-chip">
+                {reviewReadiness.assetsNeedingChanges} mit Änderungsbedarf
+              </span>
             </div>
           </div>
 
@@ -105,27 +125,13 @@ export function CampaignDetail({
             </div>
           </div>
         </div>
-
-        <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
-          <div className="workspace-meta-row">
-            <span>{formatWorkspaceLabel(campaign.packageTier)}</span>
-            <span>{deliverableSummary.total} Varianten</span>
-            <span>
-              {reviewReadiness.openThreads} offene {reviewReadiness.openThreads === 1 ? "Diskussion" : "Diskussionen"}
-            </span>
-            <span>{reviewReadiness.assetsNeedingChanges} mit Änderungsbedarf</span>
-          </div>
-          <div className="mt-3">
-            <StatusPill value={campaign.currentStage} tone="accent" />
-          </div>
-        </div>
       </section>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.18fr)_minmax(320px,0.82fr)]">
         <div className="grid gap-4">
           <section className="workspace-panel px-5 py-5">
             <p className="workspace-section-label">Ziel</p>
-            <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+            <h2 className="mt-3 font-display text-[1.95rem] leading-[1.04] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
               {campaign.campaignGoal ?? "Für diese Kampagne ist noch kein Ziel hinterlegt."}
             </h2>
 
@@ -142,8 +148,8 @@ export function CampaignDetail({
 
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
-              <p className="workspace-section-label">Ansätze</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+              <p className="workspace-section-label">Führende Richtungen</p>
+              <h2 className="font-display text-[1.75rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 Führende Richtungen
               </h2>
             </div>
@@ -170,8 +176,8 @@ export function CampaignDetail({
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
               <p className="workspace-section-label">Varianten-Mix</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Aktuelles Übergabepaket
+              <h2 className="font-display text-[1.75rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+                Aktueller Stand der Varianten
               </h2>
             </div>
 
@@ -243,7 +249,7 @@ export function CampaignDetail({
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
               <p className="workspace-section-label">Workflow-Status</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+              <h2 className="font-display text-[1.7rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 Aktueller Workflow-Stand
               </h2>
             </div>
@@ -266,7 +272,7 @@ export function CampaignDetail({
           <section className="workspace-panel px-5 py-5">
             <div className="space-y-2">
               <p className="workspace-section-label">Freigabereife</p>
-              <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+              <h2 className="font-display text-[1.7rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
                 Was in der Freigabe noch offen ist
               </h2>
             </div>

@@ -52,79 +52,99 @@ export default async function DemoLoginPage({
   const errorMessage = getErrorMessage(readStringParam(params, "error"));
 
   return (
-    <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 pt-15 pb-16 sm:px-8">
-      <div className="max-w-3xl space-y-4">
-        <p className="workspace-section-label">Geschlossene Demo</p>
-        <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
-          Demo-Login für den Zynapse-Arbeitsbereich.
-        </h1>
-        <p className="text-base text-[color:var(--copy-body)] sm:text-[1.0625rem]">
-          Dieser Zugang ist für eine kuratierte, schreibgeschützte Produktdemo
-          vorgesehen. Inhalte werden für Demos zurückgesetzt und dienen nur zur
-          Ansicht des aktuellen Produktstands.
-        </p>
+    <section className="mx-auto flex min-h-[calc(100vh-7rem)] w-full max-w-5xl items-center px-6 py-12 sm:px-8">
+      <div className="grid w-full gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.85fr)]">
+        <div className="workspace-panel flex flex-col justify-between px-7 py-7 sm:px-8 sm:py-8">
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="workspace-demo-badge">Geschlossene Demo</span>
+              <span className="workspace-section-label">Privater Zugang</span>
+            </div>
+            <div className="space-y-3">
+              <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
+                Der private Kundenbereich für den aktuellen Zynapse-Stand.
+              </h1>
+              <p className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.04rem]">
+                Diese Demo zeigt den betreuten Review- und Übergabefluss in einer
+                schreibgeschützten Portalansicht.
+              </p>
+            </div>
+          </div>
+
+          <div className="workspace-minimal-divider mt-10 pt-5">
+            <div className="workspace-stat-strip">
+              <span className="workspace-stat-chip">Review</span>
+              <span className="workspace-stat-chip">Übergabe</span>
+              <span className="workspace-stat-chip">Read-only Demo</span>
+            </div>
+          </div>
+        </div>
+
+        <form
+          action={submitDemoLogin}
+          className="workspace-panel flex flex-col justify-between px-6 py-6 text-left sm:px-7 sm:py-7"
+        >
+          <div className="space-y-2">
+            <p className="workspace-section-label">Anmelden</p>
+            <h2 className="font-display text-[2rem] leading-[1.02] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+              Geschlossener Demo-Zugang
+            </h2>
+            <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+              Das Demo-Konto führt direkt in den geschützten Markenbereich.
+            </p>
+          </div>
+
+          <input type="hidden" name="next" value={next} />
+
+          <div className="mt-6 space-y-4">
+            <div className="space-y-2">
+              <label
+                htmlFor="workspace-email"
+                className="text-sm font-medium text-[var(--copy-strong)]"
+              >
+                Geschäftliche E-Mail
+              </label>
+              <input
+                id="workspace-email"
+                name="workspace-email"
+                type="email"
+                autoComplete="email"
+                className="field-input"
+                placeholder="team@brand.com"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="workspace-password"
+                className="text-sm font-medium text-[var(--copy-strong)]"
+              >
+                Passwort
+              </label>
+              <input
+                id="workspace-password"
+                name="workspace-password"
+                type="password"
+                autoComplete="current-password"
+                className="field-input"
+                placeholder="Demo-Passwort"
+                required
+              />
+            </div>
+
+            {errorMessage ? (
+              <p className="text-sm text-[var(--danger)]">{errorMessage}</p>
+            ) : null}
+          </div>
+
+          <div className="workspace-minimal-divider mt-8 pt-5">
+            <button type="submit" className="workspace-button workspace-button-primary w-full">
+              Mit Passwort anmelden
+            </button>
+          </div>
+        </form>
       </div>
-
-      <form
-        action={submitDemoLogin}
-        className="space-y-4 rounded-[1.7rem] border border-[color:var(--line)] bg-white/75 p-6 text-left"
-      >
-        <div className="space-y-2">
-          <h2 className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-            Geschlossener Demo-Zugang
-          </h2>
-          <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-            Das Demo-Konto landet direkt in einem schreibgeschützten
-            Demo-Bereich.
-          </p>
-        </div>
-
-        <input type="hidden" name="next" value={next} />
-
-        <div className="space-y-2">
-          <label
-            htmlFor="workspace-email"
-            className="text-sm font-medium text-[var(--copy-strong)]"
-          >
-            Geschäftliche E-Mail
-          </label>
-          <input
-            id="workspace-email"
-            name="workspace-email"
-            type="email"
-            autoComplete="email"
-            className="field-input"
-            placeholder="team@brand.com"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label
-            htmlFor="workspace-password"
-            className="text-sm font-medium text-[var(--copy-strong)]"
-          >
-            Passwort
-          </label>
-          <input
-            id="workspace-password"
-            name="workspace-password"
-            type="password"
-            autoComplete="current-password"
-            className="field-input"
-            placeholder="Demo-Passwort"
-            required
-          />
-        </div>
-
-        {errorMessage ? (
-          <p className="text-sm text-[var(--danger)]">{errorMessage}</p>
-        ) : null}
-
-        <button type="submit" className="workspace-button workspace-button-primary">
-          Mit Passwort anmelden
-        </button>
-      </form>
     </section>
   );
 }

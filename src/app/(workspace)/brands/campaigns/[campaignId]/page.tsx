@@ -32,6 +32,7 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
       reviewDeadline={campaignDetail.reviewDeadline}
       packageRecommendation={campaignDetail.packageRecommendation}
       latestAssets={campaignDetail.latestAssets}
+      demo={bootstrap.demo}
     />
   );
 }

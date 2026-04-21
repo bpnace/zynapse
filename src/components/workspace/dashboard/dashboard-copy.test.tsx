@@ -42,9 +42,7 @@ describe("workspace dashboard copy", () => {
     expect(
       screen.getByRole("link", { name: "Briefing erstellen" }),
     ).toHaveAttribute("href", "/brands/briefs/new");
-    expect(
-      screen.getByText(/Den nächsten Auftrag stößt Zynapse erst an/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Nächster sinnvoller Schritt")).toBeInTheDocument();
   });
 
   it("renders seeded next-step copy without mixed-language workspace wording", () => {

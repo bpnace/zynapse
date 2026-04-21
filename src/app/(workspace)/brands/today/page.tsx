@@ -1,9 +1,7 @@
 import { AssetGrid } from "@/components/workspace/dashboard/asset-grid";
 import { CampaignSummary } from "@/components/workspace/dashboard/campaign-summary";
-import { DashboardOverview } from "@/components/workspace/dashboard/dashboard-overview";
 import { NextActionCard } from "@/components/workspace/dashboard/next-action-card";
 import { OverviewTopBar } from "@/components/workspace/dashboard/overview-topbar";
-import { PreparedBlocks } from "@/components/workspace/dashboard/prepared-blocks";
 import { ReviewThreadsPreview } from "@/components/workspace/dashboard/review-threads-preview";
 import { StageTracker } from "@/components/workspace/dashboard/stage-tracker";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
@@ -26,7 +24,7 @@ export default async function WorkspacePage() {
   const onboardingCompletion = getBrandProfileCompletion(bootstrap.brandProfile);
 
   return (
-    <div className="grid gap-4">
+    <div className="workspace-page-stack">
       <OverviewTopBar
         organizationName={bootstrap.organization.name}
         campaignId={dashboard.latestCampaign?.id ?? null}
@@ -34,16 +32,9 @@ export default async function WorkspacePage() {
         currentStage={dashboard.latestCampaign?.currentStage ?? null}
         openReviewCount={readiness.openReviewCount}
         approvedAssetCount={readiness.approvedAssetCount}
+        demo={bootstrap.demo}
       />
-      <DashboardOverview
-        organizationName={bootstrap.organization.name}
-        audience={dashboard.profile?.targetAudience ?? null}
-        primaryChannels={dashboard.profile?.primaryChannels ?? null}
-        openReviewCount={readiness.openReviewCount}
-        approvedAssetCount={readiness.approvedAssetCount}
-        onboardingCompletion={onboardingCompletion}
-      />
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.95fr)]">
+      <div className="workspace-story-grid">
         <div className="grid gap-4">
           {dashboard.latestCampaign ? (
             <CampaignSummary
@@ -51,20 +42,14 @@ export default async function WorkspacePage() {
               campaignGoal={dashboard.latestCampaign.campaignGoal ?? ""}
               packageTier={dashboard.latestCampaign.packageTier}
               currentStage={dashboard.latestCampaign.currentStage}
+              audience={dashboard.profile?.targetAudience ?? null}
+              primaryChannels={dashboard.profile?.primaryChannels ?? null}
+              openReviewCount={readiness.openReviewCount}
+              approvedAssetCount={readiness.approvedAssetCount}
             />
           ) : null}
-          {dashboard.template ? (
-            <PreparedBlocks
-              prepared={dashboard.template.preparedBlocks.prepared}
-              review={dashboard.template.preparedBlocks.review}
-              output={dashboard.template.preparedBlocks.output}
-              nextStep={dashboard.template.preparedBlocks.nextStep}
-            />
-          ) : null}
-          <div className="grid gap-4 2xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]">
-            <AssetGrid assets={dashboard.latestAssets} />
-            <ReviewThreadsPreview threads={dashboard.reviewThreads} />
-          </div>
+          <ReviewThreadsPreview threads={dashboard.reviewThreads} />
+          <AssetGrid assets={dashboard.latestAssets} />
         </div>
 
         <div className="grid gap-4 xl:sticky xl:top-5 xl:self-start">
@@ -83,6 +68,7 @@ export default async function WorkspacePage() {
               dashboard.template?.nextAction.body ??
               "Der geschützte Bereich ist bereit für die nächste Freigaberunde."
             }
+            onboardingCompletion={onboardingCompletion}
           />
         </div>
       </div>

@@ -21,11 +21,11 @@ export function ReviewThreadsPreview({
   threads,
 }: ReviewThreadsPreviewProps) {
   return (
-    <section id="review-queue" className="workspace-panel px-5 py-5">
+      <section id="review-queue" className="workspace-panel px-5 py-5">
       <div className="space-y-2">
-        <p className="workspace-section-label">Freigabeübersicht</p>
-        <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-          Neueste Rückmeldungen
+        <p className="workspace-section-label">Heute relevant</p>
+        <h2 className="font-display text-[1.7rem] leading-[1.06] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+          Rückmeldungen, die die Freigabe gerade bewegen
         </h2>
       </div>
 
@@ -58,7 +58,7 @@ export function ReviewThreadsPreview({
                   </div>
                   <StatusPill value={latestComment?.commentType ?? "comment"} />
                 </div>
-                <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
+                <p className="mt-4 text-sm leading-7 text-[var(--workspace-copy-body)]">
                   {latestComment?.body}
                 </p>
               </article>

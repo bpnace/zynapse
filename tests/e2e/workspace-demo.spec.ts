@@ -25,7 +25,7 @@ test("closed demo login reaches the seeded review and handover workflow", async 
 
   await expect(
     page.getByRole("heading", {
-      name: /demo-login für den zynapse-arbeitsbereich/i,
+      name: /der private kundenbereich für den aktuellen zynapse-stand/i,
     }),
   ).toBeVisible();
 
@@ -37,7 +37,7 @@ test("closed demo login reaches the seeded review and handover workflow", async 
     .toMatch(/\/brands\/today(?:\?.*)?$/);
 
   await expect(
-    page.getByRole("heading", { name: /was heute ansteht/i }),
+    page.getByRole("heading", { name: /daily glow serum · kampagnenstart/i }).first(),
   ).toBeVisible();
   await expect(page.getByText(/geschlossene demo/i).first()).toBeVisible();
   await expect(page.getByRole("link", { name: /kampagne öffnen/i })).toBeVisible();

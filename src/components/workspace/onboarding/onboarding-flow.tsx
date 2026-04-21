@@ -124,23 +124,32 @@ export function OnboardingFlow({
 
   if (isComplete) {
     return (
-      <div className="grid gap-4">
-        <section className="workspace-topbar px-4 py-4 sm:px-5">
-          <p className="workspace-section-label">Markenkontext vollständig</p>
-          <h1 className="mt-3 text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+      <div className="workspace-page-stack">
+        <section className="workspace-topbar px-5 py-5 sm:px-6">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="workspace-section-label">Markenkontext vollständig</span>
+            {demo.isDemoWorkspace ? (
+              <span className="workspace-demo-badge">{demo.shellBadge}</span>
+            ) : null}
+          </div>
+          <h1 className="mt-3 font-display text-[2.15rem] leading-[1.02] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
             {organizationName} ist bereit für Freigabe und Übergabe
           </h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
+          <p className="mt-2 max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
             Der zentrale Markenkontext steht. Damit bauen Freigabe, Übergabe
             und der nächste kommerzielle Schritt auf denselben Annahmen auf.
           </p>
         </section>
 
         <section className="workspace-panel px-5 py-5">
-          <p className="workspace-section-label">Status</p>
-          <div className="mt-4 workspace-meta-row">
-            <span>{completion.completed} von {completion.total} Feldern erfasst</span>
-            <span>{completion.percent}% vollständig</span>
+          <div className="space-y-3">
+            <p className="workspace-section-label">Status</p>
+            <div className="workspace-stat-strip">
+              <span className="workspace-stat-chip">
+                {completion.completed} von {completion.total} Feldern erfasst
+              </span>
+              <span className="workspace-stat-chip">{completion.percent}% vollständig</span>
+            </div>
           </div>
           <p className="mt-4 text-sm leading-6 text-[var(--workspace-copy-body)]">
             {statusMessage}
@@ -170,14 +179,19 @@ export function OnboardingFlow({
   }
 
   return (
-    <div className="grid gap-4">
-      <section className="workspace-topbar px-4 py-4 sm:px-5">
+    <div className="workspace-page-stack">
+      <section className="workspace-topbar px-5 py-5 sm:px-6">
         <div className="space-y-3">
-          <p className="workspace-section-label">Markenkontext</p>
-          <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="workspace-section-label">Markenkontext</span>
+            {demo.isDemoWorkspace ? (
+              <span className="workspace-demo-badge">{demo.shellBadge}</span>
+            ) : null}
+          </div>
+          <h1 className="font-display text-[2.15rem] leading-[1.02] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
             Operativer Rahmen
           </h1>
-          <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
+          <p className="max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
             Halte den Kontext fest, den der Arbeitsbereich für Freigabe,
             Übergabe und Pilotanfrage braucht, ohne ihn in jeder Route neu
             erklären zu müssen.
@@ -185,10 +199,12 @@ export function OnboardingFlow({
         </div>
 
         <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
-          <div className="workspace-meta-row">
-            <span>{stepTitle}</span>
-            <span>{completion.completed} von {completion.total} Feldern erfasst</span>
-            <span>{completion.percent}% vollständig</span>
+          <div className="workspace-stat-strip">
+            <span className="workspace-stat-chip">{stepTitle}</span>
+            <span className="workspace-stat-chip">
+              {completion.completed} von {completion.total} Feldern erfasst
+            </span>
+            <span className="workspace-stat-chip">{completion.percent}% vollständig</span>
           </div>
           {demo.isDemoWorkspace ? (
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
@@ -200,14 +216,18 @@ export function OnboardingFlow({
 
       <div className="grid gap-4 xl:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)]">
         <section className="workspace-panel px-5 py-5">
-            <div className="space-y-3">
+          <div className="space-y-3">
             <p className="workspace-section-label">Bereiche</p>
             <div className="workspace-split-list">
               {steps.map((item, index) => (
                 <button
                   key={item.key}
                   type="button"
-                  className={index === stepIndex ? "flex w-full items-start justify-between gap-3 border-l-2 border-[var(--workspace-copy-strong)] py-4 pl-3 text-left" : "flex w-full items-start justify-between gap-3 border-l-2 border-transparent py-4 pl-3 text-left"}
+                  className={
+                    index === stepIndex
+                      ? "flex w-full items-start justify-between gap-3 rounded-[18px] border border-[var(--workspace-line)] bg-[rgba(255,255,255,0.72)] px-4 py-4 text-left shadow-[var(--workspace-shadow-soft)]"
+                      : "flex w-full items-start justify-between gap-3 rounded-[18px] border border-transparent px-4 py-4 text-left"
+                  }
                   onClick={() => setStepIndex(index)}
                 >
                   <div>
@@ -227,7 +247,7 @@ export function OnboardingFlow({
         <section className="workspace-panel px-5 py-5">
           <div className="space-y-2">
             <p className="workspace-section-label">{stepTitle}</p>
-            <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
+            <h2 className="font-display text-[1.75rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
               {step.label}
             </h2>
             <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">

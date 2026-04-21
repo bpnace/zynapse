@@ -86,9 +86,6 @@ export function ReviewRoom({
   demo,
 }: ReviewRoomProps) {
   const attentionCount = assets.filter((asset) => asset.reviewStatus !== "approved").length;
-  const changeRequestedCount = assets.filter(
-    (asset) => asset.reviewStatus === "changes_requested",
-  ).length;
   const approvedCount = assets.filter((asset) => asset.reviewStatus === "approved").length;
   const openThreadCount =
     selectedAsset?.threads.filter((thread) => !thread.resolvedAt).length ?? 0;
@@ -98,20 +95,36 @@ export function ReviewRoom({
     selectedAsset?.threads.reduce((sum, thread) => sum + thread.comments.length, 0) ?? 0;
 
   return (
-    <div className="grid gap-4">
-      <section className="workspace-topbar px-4 py-4 sm:px-5">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div className="space-y-3">
-            <p className="workspace-section-label">Freigaberaum</p>
-            <div className="space-y-1">
-              <h1 className="text-[1.85rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+    <div className="workspace-page-stack">
+      <section className="workspace-topbar px-5 py-5 sm:px-6">
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="workspace-section-label">Freigaberaum</span>
+              {demo.isDemoWorkspace ? (
+                <span className="workspace-demo-badge">{demo.shellBadge}</span>
+              ) : null}
+              <StatusPill value={campaign.currentStage} tone="accent" />
+            </div>
+            <div className="space-y-2">
+              <h1 className="font-display text-[2.2rem] leading-[0.98] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
                 {campaign.name}
               </h1>
-              <p className="max-w-3xl text-sm leading-6 text-[var(--workspace-copy-body)]">
-                Diese Ansicht zeigt, was heute entschieden werden muss, welche
-                Diskussionen offen sind und welche Variante bereits belastbar für die
-                Übergabe ist.
+              <p className="max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
+                Hier wird entschieden, welche Variante tragfähig genug für die
+                Übergabe ist und wo noch Präzision oder Korrektur nötig bleibt.
               </p>
+            </div>
+            <div className="workspace-stat-strip">
+              <span className="workspace-stat-chip">
+                {attentionCount} offen
+              </span>
+              <span className="workspace-stat-chip">
+                {approvedCount} freigegeben
+              </span>
+              <span className="workspace-stat-chip">
+                {openThreadCount} Diskussion{openThreadCount === 1 ? "" : "en"} aktiv
+              </span>
             </div>
           </div>
 
@@ -130,76 +143,16 @@ export function ReviewRoom({
             </Link>
           </div>
         </div>
-
-        <div className="mt-4 border-t border-[var(--workspace-line)] pt-4">
-          <div className="workspace-meta-row">
-            <span>{formatWorkspaceLabel(campaign.packageTier)}</span>
-            <span>
-              {assets.length} {assets.length === 1 ? "Variante" : "Varianten"} in der laufenden Freigabe
-            </span>
-            <span>
-              {changeRequestedCount} mit angeforderten Änderungen
-            </span>
-            {demo.isDemoWorkspace ? <span>{demo.shellBadge}</span> : null}
-          </div>
-          <div className="mt-4 grid gap-3 md:grid-cols-4">
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Braucht Rückmeldung</p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                {attentionCount}
-              </p>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Varianten ohne finale Freigabe
-              </p>
-            </div>
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Freigegeben</p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                {approvedCount}
-              </p>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Bereits für die Übergabe markiert
-              </p>
-            </div>
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Offene Diskussionen</p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                {openThreadCount}
-              </p>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                In der aktuell ausgewählten Variante
-              </p>
-            </div>
-            <div className="border border-[var(--workspace-line)] px-3 py-3">
-              <p className="workspace-section-label">Kampagnenstatus</p>
-              <div className="mt-2">
-                <StatusPill value={campaign.currentStage} tone="accent" />
-              </div>
-              <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                Spiegelt die Freigabereife der Kampagne
-              </p>
-            </div>
-          </div>
-          {demo.isDemoWorkspace ? (
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-              {demo.mutationMessage}
-            </p>
-          ) : null}
-        </div>
       </section>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(280px,0.88fr)_minmax(0,1.12fr)_minmax(340px,0.95fr)]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.18fr)_minmax(320px,0.86fr)]">
         <section className="workspace-panel px-5 py-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="workspace-section-label">Freigabeübersicht</p>
+              <p className="workspace-section-label">Entscheidungsqueue</p>
               <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
-                Varianten mit Entscheidungsbedarf
+                Varianten im Fokus
               </h2>
-              <p className="mt-2 max-w-md text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                Diese Übersicht priorisiert Änderungsbedarf vor offenen
-                Freigaben und zeigt je Variante den letzten belastbaren Signaltyp.
-              </p>
             </div>
             <p className="text-sm text-[var(--workspace-copy-muted)]">
               {assets.length} {assets.length === 1 ? "Eintrag" : "Einträge"}
@@ -237,10 +190,10 @@ export function ReviewRoom({
                     <span>{describeAssetQueueState(asset.reviewStatus, asset.threadCount)}</span>
                     {asset.latestCommentType ? (
                       <span className="truncate">
-                        Letztes Signal: {formatWorkspaceLabel(asset.latestCommentType)}
+                        {formatWorkspaceLabel(asset.latestCommentType)}
                       </span>
                     ) : (
-                      <span>Kein protokolliertes Signal</span>
+                      <span>Ohne Signal</span>
                     )}
                   </div>
                 </Link>
@@ -254,10 +207,10 @@ export function ReviewRoom({
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-3">
-                  <p className="workspace-section-label">Nachweis & Entscheidung</p>
+                  <p className="workspace-section-label">Ausgewählte Variante</p>
                   <StatusPill value={selectedAsset.reviewStatus} />
                 </div>
-                <h2 className="text-[1.65rem] font-semibold tracking-[-0.04em] text-[var(--workspace-copy-strong)]">
+                <h2 className="font-display text-[1.95rem] leading-[1.02] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
                   {selectedAsset.title}
                 </h2>
                 <div className="workspace-meta-row">
@@ -268,40 +221,22 @@ export function ReviewRoom({
                 </div>
               </div>
 
-              <div className="grid gap-3 md:grid-cols-2">
-                <div className="border border-[var(--workspace-line)] px-3 py-3">
-                  <p className="workspace-section-label">Diskussionsstand</p>
-                  <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                    {selectedAsset.threads.length}
-                  </p>
-                  <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                    {openThreadCount} offen, {resolvedThreadCount} geschlossen
-                  </p>
-                </div>
-                <div className="border border-[var(--workspace-line)] px-3 py-3">
-                  <p className="workspace-section-label">Kommentarspur</p>
-                  <p className="mt-2 text-2xl font-semibold text-[var(--workspace-copy-strong)]">
-                    {totalCommentCount}
-                  </p>
-                  <p className="mt-1 text-xs leading-5 text-[var(--workspace-copy-muted)]">
-                    Sichtbar für Freigabe und Übergabe
-                  </p>
-                </div>
-                <div className="border border-[var(--workspace-line)] px-3 py-3">
-                  <p className="workspace-section-label">Speicherreferenz</p>
-                  <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
-                    {selectedAsset.storagePath ?? "Noch keine Speicherreferenz hinterlegt"}
-                  </p>
-                </div>
-                <div className="border border-[var(--workspace-line)] px-3 py-3">
-                  <p className="workspace-section-label">Thumbnail-Referenz</p>
-                  <p className="mt-2 text-sm break-all text-[var(--workspace-copy-body)]">
-                    {selectedAsset.thumbnailPath ?? "Noch keine Thumbnail-Referenz hinterlegt"}
-                  </p>
-                </div>
+              <div className="workspace-stat-strip">
+                <span className="workspace-stat-chip">
+                  {selectedAsset.threads.length} Threads
+                </span>
+                <span className="workspace-stat-chip">
+                  {totalCommentCount} Kommentare
+                </span>
+                {selectedAsset.storagePath ? (
+                  <span className="workspace-stat-chip">Storage erfasst</span>
+                ) : null}
+                {selectedAsset.thumbnailPath ? (
+                  <span className="workspace-stat-chip">Thumbnail erfasst</span>
+                ) : null}
               </div>
 
-              <div className="border border-[var(--workspace-line)] px-4 py-4">
+              <div className="workspace-panel-muted px-4 py-4">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-[var(--workspace-copy-muted)]">
                     {selectedAsset.assetType.includes("video") ? (
@@ -325,10 +260,8 @@ export function ReviewRoom({
                     fallbackClassName="flex aspect-[16/10] items-center justify-center border border-dashed border-[var(--workspace-line)] bg-[rgba(255,255,255,0.35)] px-5 py-5 text-center"
                   />
                   <p className="max-w-xl text-sm leading-6 text-[var(--workspace-copy-muted)]">
-                    Die Vorschau bleibt neben der Entscheidungsspur sichtbar,
-                    damit Freigabe-Kommentare und Übergabe-Referenzen auf
-                    dieselbe
-                    Variante verweisen.
+                    Vorschau, Entscheidung und Verlauf bleiben an derselben
+                    Variante verankert.
                   </p>
                 </div>
               </div>
@@ -349,7 +282,7 @@ export function ReviewRoom({
             </div>
           ) : (
             <div className="space-y-3">
-              <p className="workspace-section-label">Nachweis & Entscheidung</p>
+              <p className="workspace-section-label">Ausgewählte Variante</p>
               <p className="text-sm leading-6 text-[var(--workspace-copy-body)]">
                 Aktuell steht noch keine Variante für die Freigabe bereit.
               </p>
@@ -359,7 +292,7 @@ export function ReviewRoom({
 
         <section className="workspace-panel px-5 py-5">
           <div className="space-y-2">
-            <p className="workspace-section-label">Entscheidungsprotokoll</p>
+            <p className="workspace-section-label">Verlauf</p>
             <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--workspace-copy-strong)]">
               Verlauf und Nachweise
             </h2>
