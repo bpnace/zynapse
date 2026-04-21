@@ -34,22 +34,32 @@ type StepDefinition = {
 
 const steps: StepDefinition[] = [
   {
-    key: "brand-basics",
-    label: "Grundlage",
-    description: "Halte Website und Angebotskontext fest, damit die Kampagne auf einer klaren operativen Basis startet.",
+    key: "business-context",
+    label: "Angebot und Kontext",
+    description:
+      "Lege Website und Angebotskontext fest, damit jede Kampagnenanfrage auf derselben Basis startet.",
     fields: ["website", "offerSummary"],
   },
   {
-    key: "audience-and-tone",
+    key: "audience-and-channels",
     label: "Zielgruppe und Kanäle",
-    description: "Lege fest, wen die Arbeit erreichen soll, wo sie läuft und wie die Marke in der Umsetzung wirken muss.",
-    fields: ["targetAudience", "primaryChannels", "brandTone"],
+    description:
+      "Definiere, wen die Arbeit erreichen soll und welche Kanäle für die nächste Kampagnenrunde führend sind.",
+    fields: ["targetAudience", "primaryChannels"],
   },
   {
-    key: "review-and-guardrails",
-    label: "Freigaberegeln",
-    description: "Dokumentiere Freigebende, Aussagen und Grenzen, damit Freigabe und Übergabe verlässlich bleiben.",
-    fields: ["reviewNotes", "claimGuardrails"],
+    key: "brand-direction",
+    label: "Markenton und Guardrails",
+    description:
+      "Halte fest, wie die Marke klingen muss und welche Claims, Aussagen oder No-gos nicht verletzt werden dürfen.",
+    fields: ["brandTone", "claimGuardrails"],
+  },
+  {
+    key: "approval-operating-model",
+    label: "Freigabe und Entscheidungskreis",
+    description:
+      "Dokumentiere den Freigabekontext, damit Setup, Review und Delivery nicht von Route zu Route neu erklärt werden müssen.",
+    fields: ["reviewNotes"],
   },
 ];
 
@@ -189,12 +199,11 @@ export function OnboardingFlow({
             ) : null}
           </div>
           <h1 className="font-display text-[2.15rem] leading-[1.02] font-semibold tracking-[-0.05em] text-[var(--workspace-copy-strong)]">
-            Operativer Rahmen
+            Brand Setup
           </h1>
           <p className="max-w-3xl text-[0.98rem] leading-7 text-[var(--workspace-copy-body)]">
-            Halte den Kontext fest, den der Arbeitsbereich für Freigabe,
-            Übergabe und Pilotanfrage braucht, ohne ihn in jeder Route neu
-            erklären zu müssen.
+            Halte den Markenkontext fest, der die Kampagnenanfrage, den Setup-Vorschlag und spätere
+            Reviews zusammenhält, ohne ihn in jeder Route neu zu erklären.
           </p>
         </div>
 

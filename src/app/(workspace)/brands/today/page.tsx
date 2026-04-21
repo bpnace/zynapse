@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { AssetGrid } from "@/components/workspace/dashboard/asset-grid";
 import { CampaignSummary } from "@/components/workspace/dashboard/campaign-summary";
 import { NextActionCard } from "@/components/workspace/dashboard/next-action-card";
@@ -6,7 +7,10 @@ import { ReviewThreadsPreview } from "@/components/workspace/dashboard/review-th
 import { StageTracker } from "@/components/workspace/dashboard/stage-tracker";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
 import { getDashboardView } from "@/lib/workspace/queries/get-dashboard-view";
-import { getBrandProfileCompletion } from "@/lib/workspace/profile-completion";
+import {
+  getBrandProfileCompletion,
+  shouldGateBrandHome,
+} from "@/lib/workspace/profile-completion";
 import { getBrandWorkspaceReadiness } from "@/lib/workspace/readiness";
 import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
@@ -22,6 +26,18 @@ export default async function WorkspacePage() {
     workflowState: dashboard.latestCampaignWorkflow,
   });
   const onboardingCompletion = getBrandProfileCompletion(bootstrap.brandProfile);
+
+  if (shouldGateBrandHome(bootstrap.brandProfile)) {
+    redirect(brandsWorkspaceRoutes.onboarding());
+  }
+
+  const nextActionTitle = dashboard.latestCampaign
+    ? dashboard.template?.nextAction.title ?? "Bereit für den Setup-Check"
+    : "Neue Kampagne im Builder anlegen";
+  const nextActionBody = dashboard.latestCampaign
+    ? dashboard.template?.nextAction.body ??
+      "Die aktuelle Kampagne ist bereit für den nächsten Entscheidungs- oder Setup-Schritt."
+    : "Der Markenkontext ist vollständig. Jetzt kann das nächste Kampagnen-Setup als klarer Request statt als loses Briefing vorbereitet werden.";
 
   return (
     <div className="workspace-page-stack">
@@ -62,12 +78,10 @@ export default async function WorkspacePage() {
           />
           <NextActionCard
             campaignId={dashboard.latestCampaign?.id ?? null}
-            briefHref={brandsWorkspaceRoutes.briefs.new()}
-            title={dashboard.template?.nextAction.title ?? "Bereit für die Freigabe"}
-            body={
-              dashboard.template?.nextAction.body ??
-              "Der geschützte Bereich ist bereit für die nächste Freigaberunde."
-            }
+            builderHref={brandsWorkspaceRoutes.campaigns.new()}
+            builderLabel="Weitere Kampagne anlegen"
+            title={nextActionTitle}
+            body={nextActionBody}
             onboardingCompletion={onboardingCompletion}
           />
         </div>

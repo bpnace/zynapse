@@ -33,3 +33,7 @@ export function getBrandProfileCompletion(profile: ProfileCompletionInput) {
     isComplete: completed === total,
   };
 }
+
+export function shouldGateBrandHome(profile: ProfileCompletionInput) {
+  return !getBrandProfileCompletion(profile).isComplete;
+}

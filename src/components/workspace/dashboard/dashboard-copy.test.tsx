@@ -1,7 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import { DashboardOverview } from "@/components/workspace/dashboard/dashboard-overview";
 import { NextActionCard } from "@/components/workspace/dashboard/next-action-card";
+
+afterEach(() => {
+  cleanup();
+});
 
 describe("workspace dashboard copy", () => {
   it("renders the localized onboarding CTA in the overview card", () => {
@@ -30,7 +34,7 @@ describe("workspace dashboard copy", () => {
     render(
       <NextActionCard
         campaignId="campaign-1"
-        briefHref="/brands/briefs/new"
+        builderHref="/brands/campaigns/new"
         title="Bereit für die Freigabe"
         body="Der geschützte Bereich ist bereit für die nächste Freigaberunde."
       />,
@@ -40,9 +44,24 @@ describe("workspace dashboard copy", () => {
       screen.getByRole("link", { name: /Kampagnenstand ansehen/i }),
     ).toHaveAttribute("href", "/brands/campaigns/campaign-1");
     expect(
-      screen.getByRole("link", { name: "Briefing erstellen" }),
-    ).toHaveAttribute("href", "/brands/briefs/new");
+      screen.getByRole("link", { name: "Kampagne erstellen" }),
+    ).toHaveAttribute("href", "/brands/campaigns/new");
     expect(screen.getByText("Nächster sinnvoller Schritt")).toBeInTheDocument();
+  });
+
+  it("uses the campaign builder as the primary CTA when no campaign exists yet", () => {
+    render(
+      <NextActionCard
+        campaignId={null}
+        builderHref="/brands/campaigns/new"
+        title="Neue Kampagne anlegen"
+        body="Sobald der Markenkontext steht, kann die nächste Kampagne direkt im Builder vorbereitet werden."
+      />,
+    );
+
+    expect(
+      screen.getByRole("link", { name: "Kampagne erstellen" }),
+    ).toHaveAttribute("href", "/brands/campaigns/new");
   });
 
   it("renders seeded next-step copy without mixed-language workspace wording", () => {

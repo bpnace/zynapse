@@ -24,6 +24,9 @@ describe("workspace routes", () => {
     expect(brandsWorkspaceRoutes.campaigns.detail("campaign-1")).toBe(
       "/brands/campaigns/campaign-1",
     );
+    expect(brandsWorkspaceRoutes.campaigns.setup("campaign-1")).toBe(
+      "/brands/campaigns/campaign-1/setup",
+    );
     expect(brandsWorkspaceRoutes.campaigns.review("campaign-1")).toBe(
       "/brands/campaigns/campaign-1/review",
     );
@@ -109,6 +112,7 @@ describe("workspace routes", () => {
       "/brands/pilot-request",
       "/brands/briefs/brief-1",
       "/brands/campaigns/campaign-1",
+      "/brands/campaigns/campaign-1/setup",
       "/brands/campaigns/campaign-1/review",
       "/brands/campaigns/campaign-1/handover",
     ]);

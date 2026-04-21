@@ -279,6 +279,10 @@ export const brandsWorkspaceRoutes = {
       void namespace;
       return buildBrandPath(`/campaigns/${campaignId}`);
     },
+    setup(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
+      void namespace;
+      return buildBrandPath(`/campaigns/${campaignId}/setup`);
+    },
     review(campaignId: string, namespace: BrandsWorkspaceNamespace = DEFAULT_NAMESPACE) {
       void namespace;
       return buildBrandPath(`/campaigns/${campaignId}/review`);
@@ -355,6 +359,7 @@ export const brandsWorkspaceRoutes = {
 
           if (options.campaignId) {
             paths.push(brandsWorkspaceRoutes.campaigns.detail(options.campaignId));
+            paths.push(brandsWorkspaceRoutes.campaigns.setup(options.campaignId));
             paths.push(brandsWorkspaceRoutes.campaigns.review(options.campaignId));
             paths.push(brandsWorkspaceRoutes.campaigns.handover(options.campaignId));
           }

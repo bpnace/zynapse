@@ -108,7 +108,13 @@ export function CampaignDetail({
             >
               Zur Übersicht
             </Link>
-            <div className="grid gap-2 sm:grid-cols-2 sm:col-span-2">
+            <div className="grid gap-2 sm:grid-cols-3 sm:col-span-2">
+              <Link
+                href={brandsWorkspaceRoutes.campaigns.setup(campaign.id)}
+                className="workspace-button workspace-button-secondary"
+              >
+                Setup öffnen
+              </Link>
               <Link
                 href={brandsWorkspaceRoutes.campaigns.review(campaign.id)}
                 className="workspace-button workspace-button-primary"
