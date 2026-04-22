@@ -10,7 +10,6 @@ function BenefitColumn({
   cta,
   tone,
   glyph,
-  ctaInnerAlign,
 }: {
   title: string;
   headline: React.ReactNode;
@@ -20,7 +19,6 @@ function BenefitColumn({
   cta: string;
   tone: "paper" | "warm";
   glyph: string;
-  ctaInnerAlign: "left" | "right";
 }) {
   const isWarm = tone === "warm";
 
@@ -43,13 +41,11 @@ function BenefitColumn({
   const benefitItemClass = isWarm
     ? "rounded-[0.55rem] border border-[rgba(224,94,67,0.16)] bg-[rgba(255,240,232,0.55)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]"
     : "rounded-[0.55rem] border border-[rgba(185,178,255,0.22)] bg-[rgba(240,238,255,0.45)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]";
-  const ctaRowAlignment = ctaInnerAlign === "right" ? "sm:justify-end" : "sm:justify-start";
 
   return (
     <article
       className={`section-card group relative flex h-full overflow-hidden rounded-[var(--radius-card)] p-5 transition-[box-shadow] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-7 ${surfaceClass} ${borderAccent}`}
     >
-      {/* Decorative corner glyph */}
       <span
         className={`pointer-events-none absolute -top-4 -right-2 select-none font-display text-[10rem] leading-none font-bold ${glyphColor}`}
         aria-hidden="true"
@@ -82,7 +78,7 @@ function BenefitColumn({
             </li>
           ))}
         </ul>
-        <div className={`mt-auto flex w-full justify-center pt-6 sm:pt-8 ${ctaRowAlignment}`}>
+        <div className="mt-auto flex w-full justify-start pt-6 sm:pt-8">
           <ButtonLink href={href} variant="primary" size="lg" className="w-full justify-center sm:w-auto">
             {cta}
           </ButtonLink>
@@ -95,40 +91,38 @@ function BenefitColumn({
 export function SplitBenefits() {
   return (
     <section
-      className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-14 sm:px-8 lg:grid-cols-2 lg:px-10"
+      className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] lg:px-10"
       data-reveal-section
     >
       <BenefitColumn
-        title="Für Brands"
+        title="Für Marketing Teams"
         headline={
           <>
-            Das passende <span className="title-accent">Setup</span> statt neuem{" "}
-            <span data-animate-word>Koordinationschaos</span>
+            Mehr <span className="title-accent">testbare Creatives</span>, weniger{" "}
+            <span data-animate-word>Koordination</span>
           </>
         }
-        copy="Ihr kauft hier keinen Tool-Zugang und kein loses Creator-Sourcing, sondern ein kuratiertes Kampagnen-Setup vom Briefing bis zum markenfähigen Output."
+        copy="Zynapse hilft euch, aus einem Briefing mehrere klare Richtungen und geprüfte Varianten zu bekommen. Ohne Freelancer-Suche, ohne Tool-Chaos und ohne endlose Abstimmungen."
         benefits={brandBenefits}
         href="/brands"
-        cta="Mehr für Brands"
-        tone="paper"
+        cta="Mehr für Marketing Teams"
+        tone="warm"
         glyph="◇"
-        ctaInnerAlign="right"
       />
       <BenefitColumn
-        title="Für Kreative"
+        title="Für AI Creatives"
         headline={
           <>
-            Teil eines <span className="title-accent">kuratierten Netzwerks</span>, nicht
-            eines offenen <span data-animate-word>Marktplatzes</span>
+            Klare <span className="title-accent">Aufgaben</span> statt neuer{" "}
+            <span data-animate-word>Briefing-Verwirrung</span>
           </>
         }
-        copy="Zynapse verbindet dich mit Brand-Anfragen, in denen deine Spezialisierung Teil eines echten Kampagnen-Setups wird, mit klarem Briefing, klaren Übergaben und sichtbarer Relevanz für das Ergebnis."
+        copy="Du arbeitest nicht in losen Einzelanfragen, sondern in klaren Kampagnen mit sauberem Briefing, definierten Aufgaben und sichtbarem Beitrag zum finalen Output."
         benefits={creativeBenefits}
         href="/creatives"
-        cta="Mehr für Kreative"
-        tone="warm"
+        cta="Als Creative bewerben"
+        tone="paper"
         glyph="◎"
-        ctaInnerAlign="left"
       />
     </section>
   );

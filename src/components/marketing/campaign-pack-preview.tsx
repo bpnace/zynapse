@@ -1,34 +1,50 @@
 import { SectionHeading } from "@/components/ui/section-heading";
 import { campaignAngles } from "@/lib/mock-data/studio";
 
-const angleColors = ["var(--accent)", "var(--gold)", "var(--lavender)"] as const;
+const quickSignals = [
+  {
+    label: "Briefing-Qualität",
+    value: "82 Prozent vollständig",
+    note: "Für bessere Routen fehlt noch die wichtigste Kaufbarriere.",
+  },
+  {
+    label: "Empfohlenes Creative Team",
+    value: "Creative Strategist, AI Producer, Prompt Specialist, Editor",
+    note: "Passend für Paid Social, Reels und Short Form.",
+  },
+  {
+    label: "Quality Check",
+    value: "3 Varianten bereit für Review",
+    note: "2 Varianten brauchen Anpassung.",
+  },
+];
 
 export function CampaignPackPreview() {
   return (
     <section
-      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:px-10"
+      id="workspace-preview"
+      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Kuratiertes Setup zuerst"
+          eyebrow="Workspace Preview"
           title={
             <>
-              Nicht das einzelne Asset macht den{" "}
-              <span data-animate-word>Unterschied.</span> Sondern das{" "}
-              <span className="title-accent">Setup dahinter</span>.
+              Zynapse Core macht die <span data-animate-word>Intelligenz</span>{" "}
+              im Prozess <span className="title-accent">sichtbar</span>.
             </>
           }
-          copy="Bevor produziert wird, werden Rollen, Hooks, CTA-Routen, Formate und Freigaben zusammengeführt. So wird aus einer Anfrage kein loses Asset-Bundle, sondern ein Kampagnen-Setup, das Varianten nicht dem Zufall überlässt."
+          copy="Im Workspace sieht euer Team nicht nur Dateien. Ihr seht Briefing-Qualität, empfohlene Kreativrouten, den Quality Check, die nächste Aktion und den Status des fertigen Media Packs."
         />
         <ul className="grid gap-2.5">
           {[
-            "Kernbriefing mit Ziel, Offer und Guardrails",
-            "Passende Rollen für Strategie, Prompting, Produktion und Review",
-            "Hooks, CTA-Routen und Formatlogik pro Setup",
-            "Klare Freigabepunkte statt offener Slack-Schleifen",
-            "Varianten, Versionen und Handover in einem Fluss",
+            "Briefing-Qualität mit klaren Hinweisen auf fehlende Infos",
+            "Empfohlene Kreativrouten wie Problem Hook, Product Proof und Offer Push",
+            "Passendes Creative Team für Strategie, Prompting, Produktion und Schnitt",
+            "Quality Check vor dem Review statt blindem Varianten-Export",
+            "Media Pack Status mit Hooks, Formaten und Download-Stand",
           ].map((item) => (
             <li
               key={item}
@@ -44,13 +60,11 @@ export function CampaignPackPreview() {
         </ul>
       </div>
 
-      {/* ── SaaS window frame ── */}
       <div
         className="relative mt-4 lg:mt-6"
         data-parallax-window
         style={{ perspective: "1200px" }}
       >
-        {/* Ambient glow */}
         <div
           className="pointer-events-none absolute -inset-6 -z-10 rounded-[var(--radius-panel)]"
           aria-hidden="true"
@@ -61,23 +75,21 @@ export function CampaignPackPreview() {
           }}
         />
 
-        {/* Window chrome */}
         <div
           className="relative overflow-hidden rounded-[var(--radius-panel)] border border-[rgba(56,67,84,0.15)] shadow-[0_40px_90px_rgba(31,36,48,0.16),0_8px_24px_rgba(31,36,48,0.08),inset_0_1px_0_rgba(255,255,255,0.9)]"
           style={{ transform: "rotateX(1.5deg) rotateY(-1deg)" }}
         >
-          {/* ── Title bar ── */}
           <div className="flex h-10 shrink-0 items-center gap-3 border-b border-[rgba(56,67,84,0.1)] bg-[linear-gradient(180deg,rgba(252,252,250,0.99),rgba(244,242,238,0.98))] px-4">
             <div className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="block h-3 w-3 rounded-full" style={{ background: "#ff5f57" }} />
-              <span className="block h-3 w-3 rounded-full" style={{ background: "#febc2e" }} />
-              <span className="block h-3 w-3 rounded-full" style={{ background: "#28c840" }} />
+              <span className="block h-3 w-3 rounded-full bg-[#ff5f57]" />
+              <span className="block h-3 w-3 rounded-full bg-[#febc2e]" />
+              <span className="block h-3 w-3 rounded-full bg-[#28c840]" />
             </div>
-              <div className="flex flex-1 items-center justify-center">
-                <p className="font-mono text-[11px] tracking-[0.08em] text-[color:var(--copy-soft)]">
-                Zynapse — Kampagnen-Setup
-                </p>
-              </div>
+            <div className="flex flex-1 items-center justify-center">
+              <p className="font-mono text-[11px] tracking-[0.08em] text-[color:var(--copy-soft)]">
+                Zynapse — Creative Flow
+              </p>
+            </div>
             <span
               className="font-mono text-[11px] text-[color:var(--copy-soft)] opacity-40"
               aria-hidden="true"
@@ -86,211 +98,108 @@ export function CampaignPackPreview() {
             </span>
           </div>
 
-          {/* ── App shell ── */}
-          <div className="flex" style={{ height: "460px" }}>
-            {/* ── Sidebar ── */}
-            <aside
-              className="hidden w-40 shrink-0 flex-col border-r border-[rgba(56,67,84,0.1)] bg-[linear-gradient(180deg,rgba(249,247,244,0.99),rgba(241,239,234,0.98))] pt-3 pb-4 sm:flex"
-              aria-hidden="true"
-            >
-              {/* Workspace */}
-              <div className="px-2 pb-2">
-                <div className="flex items-center gap-2 rounded-[var(--radius-chip)] bg-[rgba(246,107,76,0.09)] px-2 py-1.5">
-                  <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-[var(--accent)] text-[8px] font-bold leading-none text-white">
-                    Z
-                  </span>
-                  <span className="truncate font-mono text-[10px] font-semibold tracking-[0.1em] uppercase text-[var(--copy-strong)]">
-                    Zynapse
-                  </span>
-                </div>
-              </div>
-
-              {/* Nav */}
-              <nav className="mt-1 flex flex-col gap-0.5 px-2">
-                {[
-                  { label: "Übersicht", glyph: "▦", active: false },
-                  { label: "Briefing", glyph: "◈", active: false },
-                  { label: "Setups", glyph: "◻", active: true },
-                  { label: "Produktion", glyph: "◎", active: false },
-                  { label: "Review", glyph: "✓", active: false },
-                ].map(({ label, glyph, active }) => (
-                  <div
-                    key={label}
-                    className={`flex items-center gap-2 rounded-[var(--radius-chip)] px-2 py-[5px] text-[11px] ${
-                      active
-                        ? "bg-[rgba(246,107,76,0.11)] font-semibold text-[var(--accent-strong)]"
-                        : "text-[color:var(--copy-soft)]"
-                    }`}
-                  >
-                    <span className="w-3 shrink-0 text-center text-[10px] opacity-50">
-                      {glyph}
-                    </span>
-                    <span className="truncate">{label}</span>
-                  </div>
-                ))}
-              </nav>
-
-              <div className="mx-3 my-3 h-px bg-[rgba(56,67,84,0.1)]" />
-
-              {/* Pack list */}
-              <div className="px-2">
-                <p className="mb-1.5 px-2 font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50">
-                  Routen
-                </p>
-                {campaignAngles.map((a, i) => (
-                  <div
-                    key={a.title}
-                    className="flex items-center gap-2 rounded-[var(--radius-chip)] px-2 py-[5px] text-[10px] text-[color:var(--copy-soft)]"
-                  >
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full opacity-70"
-                      style={{ background: angleColors[i] }}
-                    />
-                    <span className="truncate">{a.angle}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* User */}
-              <div className="mt-auto px-3 pt-3">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--gold)] text-[8px] font-bold leading-none text-[var(--ink-strong)]">
-                    C
-                  </span>
-                  <span className="truncate font-mono text-[10px] text-[color:var(--copy-soft)]">
-                    Kuratiertes Setup
-                  </span>
-                </div>
-              </div>
-            </aside>
-
-            {/* ── Main panel ── */}
-            <div className="relative flex min-w-0 flex-1 flex-col bg-[var(--surface-paper)]">
-              {/* Toolbar */}
-              <div className="flex h-[38px] shrink-0 items-center justify-between gap-3 border-b border-[rgba(56,67,84,0.09)] bg-[rgba(255,252,248,0.99)] px-4">
-                <div className="flex items-center gap-1.5 font-mono text-[10px] text-[color:var(--copy-soft)]">
-                  <span className="opacity-60">Setups</span>
-                  <span className="opacity-30">/</span>
-                  <span className="font-semibold text-[var(--copy-strong)]">
-                    Brand-Kampagnen-Setup
-                  </span>
-                </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.12em] text-[#236851]">
-                    Reviewbereit
-                  </span>
-                  <span className="hidden font-mono text-[10px] text-[color:var(--copy-soft)] opacity-50 sm:inline">
-                    3 Routen
-                  </span>
-                </div>
-              </div>
-
-              {/* Column headers */}
-              <div className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-b border-[rgba(56,67,84,0.07)] px-4 py-2">
-                <span className="font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50">
-                  Route · Hook-Richtungen
-                </span>
-                <span className="font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50 text-right">
-                  Längen
-                </span>
-                <span className="w-14 font-mono text-[9px] tracking-[0.16em] uppercase text-[color:var(--copy-soft)] opacity-50 text-right">
-                  Status
-                </span>
-              </div>
-
-              {/* Angle rows */}
-              <div className="flex-1 overflow-hidden">
-                {campaignAngles.map((angle, index) => (
-                  <div
-                    key={angle.title}
-                    className="grid grid-cols-[1fr_auto_auto] items-start gap-3 border-b border-[rgba(56,67,84,0.07)] px-4 py-3"
-                  >
-                    {/* Angle + hooks */}
-                    <div>
-                      <div className="mb-1.5 flex items-center gap-2">
-                        <span
-                          className="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
-                          aria-hidden="true"
-                          style={{ background: angleColors[index] }}
-                        />
-                        <span className="font-mono text-[9px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
-                          {angle.title}
-                        </span>
-                      </div>
-                      <p className="mb-2 font-display text-[0.88rem] font-semibold leading-tight tracking-[-0.025em] text-[var(--copy-strong)]">
-                        {angle.angle}
-                      </p>
-                      <div className="flex flex-col gap-1">
-                        {angle.hooks.slice(0, 2).map((hook) => (
-                          <div
-                            key={hook}
-                            className="flex items-start gap-1.5 rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.09)] bg-white px-2.5 py-1 text-[10px] leading-snug text-[color:var(--copy-body)]"
-                          >
-                            <span className="mt-px shrink-0 text-[8px] opacity-25">
-                              ↳
-                            </span>
-                            {hook}
-                          </div>
-                        ))}
-                        {angle.hooks.length > 2 && (
-                          <span className="pl-1 font-mono text-[9px] text-[color:var(--copy-soft)] opacity-50">
-                            +{angle.hooks.length - 2} weitere
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Lengths */}
-                    <div className="flex flex-col items-end gap-1 pt-0.5">
-                      {angle.lengths.map((len) => (
-                        <span
-                          key={len}
-                          className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.12)] bg-white px-2 py-0.5 font-mono text-[10px] text-[color:var(--copy-soft)]"
-                        >
-                          {len}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Status */}
-                    <div className="flex w-14 flex-col items-end gap-1.5 pt-0.5">
-                      <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-[#236851]">
-                        Bereit
-                      </span>
-                      <div className="h-1 w-full overflow-hidden rounded-full bg-[rgba(56,67,84,0.1)]">
-                        <div className="h-full w-full rounded-full bg-[var(--mint)]" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Ghost row — peek at more content */}
-                <div
-                  className="grid grid-cols-[1fr_auto_auto] items-start gap-3 px-4 py-3 opacity-30"
-                  aria-hidden="true"
+          <div className="grid gap-3 bg-[var(--surface-paper)] p-4 sm:p-5">
+            <div className="grid gap-3 lg:grid-cols-3">
+              {quickSignals.map((signal, index) => (
+                <article
+                  key={signal.label}
+                  className={`rounded-[var(--radius-card)] border p-4 ${
+                    index === 1
+                      ? "section-surface-warm border-[rgba(191,106,83,0.14)]"
+                      : "section-surface-paper border-[rgba(56,67,84,0.12)]"
+                  }`}
                 >
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                    {signal.label}
+                  </p>
+                  <p className="mt-2 font-display text-[1.3rem] leading-[1.05] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
+                    {signal.value}
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-[color:var(--copy-body)]">
+                    {signal.note}
+                  </p>
+                </article>
+              ))}
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)]">
+              <div className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
+                <div className="flex items-center justify-between gap-3">
                   <div>
-                    <div className="mb-1.5 flex items-center gap-2">
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[rgba(56,67,84,0.3)]" />
-                      <div className="h-2 w-12 rounded bg-[rgba(56,67,84,0.15)]" />
-                    </div>
-                    <div className="mb-2 h-3 w-28 rounded bg-[rgba(56,67,84,0.15)]" />
-                    <div className="h-5 w-40 rounded bg-[rgba(56,67,84,0.1)]" />
+                    <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                      Empfohlene Kreativrouten
+                    </p>
+                    <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                      Problem Hook, Product Proof, Offer Push
+                    </h3>
                   </div>
-                  <div className="h-4 w-8 rounded bg-[rgba(56,67,84,0.1)]" />
-                  <div className="h-4 w-12 rounded bg-[rgba(156,244,215,0.3)]" />
+                  <span className="rounded-[var(--radius-chip)] border border-[rgba(49,125,101,0.16)] bg-[rgba(156,244,215,0.18)] px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.12em] text-[#236851]">
+                    priorisiert
+                  </span>
+                </div>
+
+                <div className="mt-4 grid gap-3">
+                  {campaignAngles.map((angle, index) => (
+                    <article
+                      key={angle.title}
+                      className={`rounded-[var(--radius-subcard)] border p-3 ${
+                        index === 1
+                          ? "border-[rgba(224,94,67,0.18)] bg-[rgba(255,240,232,0.56)]"
+                          : "border-[rgba(56,67,84,0.1)] bg-[rgba(248,249,251,0.78)]"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="font-mono text-[9px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                            {angle.title}
+                          </p>
+                          <p className="mt-1 font-display text-[1.05rem] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
+                            {angle.angle}
+                          </p>
+                        </div>
+                        <span className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.12)] bg-white px-2 py-0.5 font-mono text-[9px] text-[var(--copy-soft)]">
+                          {angle.lengths[0]}
+                        </span>
+                      </div>
+                      <ul className="mt-3 grid gap-1.5">
+                        {angle.hooks.slice(0, 2).map((hook) => (
+                          <li
+                            key={hook}
+                            className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.08)] bg-white px-2.5 py-1.5 text-[11px] leading-5 text-[color:var(--copy-body)]"
+                          >
+                            {hook}
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
                 </div>
               </div>
 
-              {/* Bottom fade — "Ausschnitt" crop effect */}
-              <div
-                className="pointer-events-none absolute right-0 bottom-0 left-0 h-28"
-                aria-hidden="true"
-                style={{
-                  background:
-                    "linear-gradient(to bottom, transparent 0%, rgba(255,252,248,0.85) 60%, rgba(255,252,248,0.99) 100%)",
-                }}
-              />
+              <div className="grid gap-3">
+                <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                    Nächste Aktion
+                  </p>
+                  <p className="mt-2 font-display text-[1.35rem] leading-[1.05] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
+                    Bitte Route 2 freigeben
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-[color:var(--copy-body)]">
+                    Danach werden die Product-Proof-Varianten direkt ins zentrale Review geschoben.
+                  </p>
+                </article>
+                <article className="rounded-[var(--radius-card)] border border-[rgba(191,106,83,0.14)] bg-[rgba(255,244,236,0.82)] p-4">
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                    Media Pack Status
+                  </p>
+                  <p className="mt-2 font-display text-[1.35rem] leading-[1.05] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
+                    12 Assets bereit. 4 Formate. 3 Hooks.
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-[color:var(--copy-body)]">
+                    1 Download Pack ist vorbereitet und direkt nutzbar für die Ausspielung.
+                  </p>
+                </article>
+              </div>
             </div>
           </div>
         </div>

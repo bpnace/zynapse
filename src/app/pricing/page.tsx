@@ -13,9 +13,9 @@ import {
 import Link from "next/link";
 
 const pageSeo = {
-  title: "Preise – Starter, Growth, Enterprise | Zynapse",
+  title: "Preise – Pilot, Growth Flow, Scale | Zynapse",
   description:
-    "Brands-first Pricing für kuratierte AI-Kampagnensysteme: Starter für den Pilot, Growth für den laufenden Rhythmus und Enterprise für komplexere Brand-Setups.",
+    "Wähle den Creative Flow, der zu eurem Team passt: Pilot für den ersten Test, Growth Flow für laufende Kampagnen und Scale für mehrere Workstreams.",
   path: "/pricing",
 } as const;
 
@@ -38,28 +38,28 @@ const serviceComparisons = [
   {
     label: "Einzelproduktion",
     zynapse:
-      "Nicht nur ein Asset-Paket, sondern ein kuratiertes Setup mit Briefing-Logik, zentralem Review und klarer Anschlussfähigkeit an die nächste Kampagnenrunde.",
+      "Nicht nur ein Asset-Paket, sondern ein Creative Flow mit Briefing-Analyse, zentralem Review und klarer Anschlussfähigkeit an die nächste Kampagnenrunde.",
     traditional:
-      "Ein einzelner Sprint oder ein einzelnes Video löst den Moment. Beim nächsten Briefing beginnt Planung, Abstimmung und Produktionslogik oft wieder von vorn.",
+      "Ein einzelner Sprint oder ein einzelnes Video löst den Moment. Beim nächsten Briefing beginnen Planung, Abstimmung und Produktionslogik oft wieder von vorn.",
   },
   {
     label: "Offener Creator-Marktplatz",
     zynapse:
-      "Zynapse kuratiert nicht nur einzelne Talente, sondern ein zusammenhängendes Kampagnensystem mit konsistentem Output, klaren Übergaben und laufender Priorisierung.",
+      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Creative Flow mit konsistentem Output, klaren Übergaben und laufender Priorisierung.",
     traditional:
-      "Der Schwerpunkt liegt auf Sourcing. Ohne übergeordnetes Setup streuen Qualität, Messaging und Learnings zwischen einzelnen Creator-Lieferungen.",
+      "Der Schwerpunkt liegt auf Sourcing. Ohne übergeordneten Flow streuen Qualität, Messaging und Learnings zwischen einzelnen Creator-Lieferungen.",
   },
   {
     label: "Inhouse-Aufbau",
     zynapse:
-      "Brands bekommen schneller das passende Setup, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
+      "Teams bekommen schneller den passenden Creative Flow, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
     traditional:
       "Volle Kontrolle, aber hoher Vorlauf. Bevor das erste System sauber läuft, müssen Rollen besetzt, Prozesse definiert und Produktionsstandards erst aufgebaut werden.",
   },
   {
     label: "Freelancer-Stack",
     zynapse:
-      "Ein zentral kuratiertes Setup hält Verantwortlichkeiten, Freigaben und Varianten in einem Fluss. Das senkt Reibung zwischen Briefing, Review und Export.",
+      "Ein zentral geführter Flow hält Verantwortlichkeiten, Freigaben und Varianten in einem System zusammen. Das senkt Reibung zwischen Briefing, Review und Export.",
     traditional:
       "Mehrere Freelancer bedeuten oft mehrere Arbeitsweisen, verstreutes Feedback und wenig Kontinuität zwischen zwei Kampagnen- oder Review-Schleifen.",
   },
@@ -71,27 +71,27 @@ export default function PricingPage() {
     breadcrumbs: buildBreadcrumbs("Preise", pageSeo.path),
     primaryEntity: buildServiceJsonLd({
       path: pageSeo.path,
-      name: "Pricing für kuratierte AI-Kampagnensysteme",
+      name: "Pricing für Zynapse Creative Flows",
       description: pageSeo.description,
-      serviceType: "AI-Kampagnen-Setups und Pricing für Brands",
-      audience: "Brands und Teams mit laufendem Kampagnenbedarf",
+      serviceType: "Creative-Flow-Pricing für Marketing-Teams",
+      audience: "Marketing-Teams mit laufendem Kampagnenbedarf",
       offers: buildOfferJsonLd([
         {
-          name: "Starter",
+          name: pricingPlans[0].name,
           description: pricingPlans[0].description,
           minPrice: 2499,
           priceCurrency: "EUR",
           priceNote: "einmalig",
         },
         {
-          name: "Growth",
+          name: pricingPlans[1].name,
           description: pricingPlans[1].description,
           minPrice: 5999,
           priceCurrency: "EUR",
           priceNote: "pro Monat",
         },
         {
-          name: "Enterprise",
+          name: pricingPlans[2].name,
           description: pricingPlans[2].description,
           priceNote: "Individuell",
         },
@@ -112,18 +112,16 @@ export default function PricingPage() {
             className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
             data-animate-heading
           >
-            Drei Setups für Brands. Vom ersten Test zum laufenden{" "}
-            <span className="title-accent">AI-Kampagnensystem</span>.
+            Wähle den <span className="title-accent">Creative Flow</span>, der
+            zu eurem Team passt.
           </h1>
           <p
             className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
             data-animate-copy
           >
-            Zynapse kuratiert das passende Spezialist:innen-Setup für die
-            Phase, in der eure Brand gerade steht: erster Pilot, laufender
-            Kampagnenrhythmus oder komplexeres Setup. Ihr bringt Briefing und
-            Ziel mit, wir orchestrieren daraus einen leanen Produktionsfluss
-            mit kampagnenfähigem Output.
+            Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core plant
+            den passenden Kreativprozess, wählt die richtigen AI Creatives aus
+            und führt euch bis zum fertigen Kampagnenpaket.
           </p>
         </div>
       </section>
@@ -273,7 +271,7 @@ export default function PricingPage() {
                 className="mt-3 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[2.4rem]"
                 data-animate-heading
               >
-                Welches Modell hält{" "}
+                Welcher Ansatz hält{" "}
                 <span className="title-accent">Kampagnen wirklich in Bewegung</span>?
               </h2>
             </div>
@@ -282,8 +280,8 @@ export default function PricingPage() {
               data-animate-copy
             >
               Nicht jede Alternative löst dasselbe Problem. Entscheidend ist,
-              wie gut ein Setup Briefing, kuratierte Orchestrierung und
-              laufende Kampagnenkontinuität zusammenhält.
+              wie gut ein Flow Briefing, Review, Delivery und laufende
+              Kampagnenkontinuität zusammenhält.
             </p>
           </div>
 
@@ -436,20 +434,20 @@ export default function PricingPage() {
                 data-animate-heading
               >
                 <span data-animate-word>Bereit</span> für das passende{" "}
-                <span className="title-accent">Setup</span>?
+                <span className="title-accent">Creative Flow</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
                 Wenn ihr eure aktuelle Phase schon kennt, startet direkt mit
-                einer Anfrage. Wenn nicht, klären wir gemeinsam, ob Starter,
-                Growth oder Enterprise gerade zu eurem Bedarf passt.
+                einer Anfrage. Wenn nicht, klären wir gemeinsam, ob Pilot,
+                Growth Flow oder Scale gerade zu eurem Bedarf passt.
               </p>
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/request" size="lg">
-                Paket anfragen
+                Kampagne anfragen
               </ButtonLink>
             </div>
           </div>

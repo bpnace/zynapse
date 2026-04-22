@@ -8,7 +8,7 @@ const cardAccentClasses = [
 ] as const;
 
 const matrixRainText =
-  "Nicht mehr Tools lösen das Problem. Sondern das passende Setup.";
+  "Gute Ideen scheitern oft nicht an der Idee. Sondern an zu viel Abstimmung.";
 
 function MatrixRainText() {
   return (
@@ -42,19 +42,20 @@ function MatrixRainText() {
 export function ProblemCards() {
   return (
     <section
+      id="problem"
       className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
     >
       <SectionHeading
-        eyebrow="Wo Brands heute Reibung verlieren"
+        eyebrow="Der eigentliche Engpass"
         title={
           <>
-            Nicht das Briefing ist das <span data-animate-word>Problem</span>.
-            Es ist das <span className="title-accent">passende Setup</span>{" "}
-            dazwischen.
+            Gute Ideen scheitern oft nicht an der{" "}
+            <span data-animate-word>Idee</span>. Sondern an{" "}
+            <span className="title-accent">zu viel Abstimmung</span>.
           </>
         }
-        copy="Zynapse nimmt die drei typischen Bremsen aus dem Weg: falsche Rollenbesetzung, zu viele Koordinationsschleifen und Kampagnen, die jedes Mal wieder organisatorisch bei null starten."
+        copy="Euer Team weiß, welches Produkt beworben werden soll. Trotzdem dauert es zu lange, bis starke Creatives live gehen. Briefings, Feedback, Dateien und Freigaben verteilen sich über zu viele Tools und zu viele Personen."
       />
       <div className="grid gap-5 lg:grid-cols-3">
         {problemCards.map((card, index) => (
@@ -70,11 +71,6 @@ export function ProblemCards() {
             </p>
           </article>
         ))}
-      </div>
-      <div
-        className="px-6 py-4 text-center text-sm font-display leading-7 text-[color:var(--copy-strong)] sm:text-lg"
-      >
-        <MatrixRainText />
       </div>
     </section>
   );

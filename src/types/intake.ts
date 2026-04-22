@@ -2,9 +2,13 @@ export type BrandInquiry = {
   industry: string;
   productUrl: string;
   goal: string;
+  targetAudience?: string;
+  keyBarrier?: string;
   channels: string[];
   budgetRange: string;
+  styleDirection?: string;
   timeline: string;
+  reviewContext?: string;
   notes: string;
   contactName: string;
   workEmail: string;

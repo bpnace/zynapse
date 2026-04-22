@@ -1,5 +1,6 @@
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { CampaignPackPreview } from "@/components/marketing/campaign-pack-preview";
+import { CoreSection } from "@/components/marketing/core-section";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { Hero } from "@/components/marketing/hero";
 import { ProblemCards } from "@/components/marketing/problem-cards";
@@ -11,9 +12,9 @@ import { HomeMotion } from "@/components/animation/home-motion";
 import { buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
 
 const homePageSeo = {
-  title: "Kuratiertes AI-Kampagnensystem für Brands | Zynapse",
+  title: "Bessere Video Creatives für Marketing-Teams | Zynapse",
   description:
-    "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in lean koordinierte Kampagnen-Setups, markenfähige Varianten und klare Handover.",
+    "Zynapse hilft Marketing-Teams, schneller bessere Video Creatives zu bekommen. Zynapse Core plant Kreativrouten, wählt passende AI Creatives aus und liefert geprüfte Creative Packs für Paid Social und Short Form.",
   path: "/",
 } as const;
 
@@ -37,6 +38,7 @@ export default function HomePage() {
       <HomeMotion>
         <Hero />
         <ProblemCards />
+        <CoreSection />
         <ProcessStepper />
         <CampaignPackPreview />
         <VideoOutputGrid />

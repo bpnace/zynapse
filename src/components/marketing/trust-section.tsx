@@ -12,12 +12,11 @@ export function TrustSection() {
         eyebrow="Vertrauen & Kontrolle"
         title={
           <>
-            Kuratiertes AI-Marketing braucht{" "}
-            <span className="title-accent">klare Verantwortung</span>, nicht{" "}
-            <span data-animate-word>blinden Output.</span>
+            KI Creatives, die <span className="title-accent">kontrollierbar</span>{" "}
+            bleiben.
           </>
         }
-        copy="Je mehr Spezialist:innen, Modelle und Varianten zusammenspielen, desto wichtiger werden Rechte, Review, Brand Safety und saubere Handover."
+        copy="Zynapse ist darauf ausgelegt, dass euer Team nicht nur mehr Output bekommt, sondern auch sieht, was freigegeben wurde, welche Regeln gelten und welche Dateien wirklich final sind."
       />
       <div className="grid gap-4 md:grid-cols-2">
         {trustSignals.map((signal) => (
@@ -34,14 +33,10 @@ export function TrustSection() {
           </article>
         ))}
       </div>
-      <div
-        className="section-surface-contrast flex flex-wrap items-center justify-between gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] px-6 py-5"
-      >
+      <div className="section-surface-contrast flex flex-wrap items-center justify-between gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] px-6 py-5">
         <p className="max-w-2xl text-sm leading-6 text-[color:var(--copy-body)]">
-          Rechtliche Details müssen vor dem Launch fachlich geprüft werden. Das
-          System ist aber bereits auf minimale Datenerhebung, klare
-          Verantwortlichkeiten und nachvollziehbare Review- und Handover-Schritte
-          ausgelegt.
+          Datenschutz, Rechte und Prozessdetails bleiben dokumentiert, ohne die
+          Verkaufsseite mit juristischer Schwere zu überladen.
         </p>
         <ButtonLink href="/legal/privacy" variant="secondary">
           Datenschutz ansehen

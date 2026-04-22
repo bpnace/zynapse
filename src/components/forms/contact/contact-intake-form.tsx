@@ -187,8 +187,8 @@ export function ContactIntakeForm() {
             Erzähl uns kurz, worum es geht.
           </h2>
           <p className="text-base leading-7 text-[color:var(--copy-body)]">
-            Wenn du schon aus den Preisen kommst, ist das passende Paket hier
-            bereits vorausgewählt. Wenn nicht, ist das auch okay. Ein paar
+            Wenn du schon aus den Preisen kommst, ist der passende Creative
+            Flow hier bereits vorausgewählt. Wenn nicht, ist das auch okay. Ein paar
             Stichpunkte reichen völlig.
           </p>
 

@@ -12,9 +12,9 @@ import {
 import Image from "next/image";
 
 const pageSeo = {
-  title: "Für Brands – Videoproduktion für Performance-Teams | Zynapse",
+  title: "Für Marketing-Teams – mehr testbare Video Ads | Zynapse",
   description:
-    "Skalierbare Videoproduktion für Brand- und Growth-Teams. Vom Briefing zum testbaren Kampagnen-Pack in 72 Stunden – mit klarer Freigabelogik und strukturierter Zusammenarbeit.",
+    "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Kreativrouten, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
   path: "/brands",
 } as const;
 
@@ -22,59 +22,59 @@ export const metadata = buildMetadata(pageSeo);
 
 const painPoints = [
   {
-    title: "Zu viele Schleifen, zu wenig Output",
+    title: "Creative Fatigue kommt schneller als neue Varianten",
     description:
-      "Jedes Video kostet drei Abstimmungsrunden, zwei Überarbeitungen und mindestens eine Woche. Für systematisches Kreativ-Testing bleibt keine Kapazität.",
+      "Bestehende Ads verlieren Wirkung, aber neue Assets dauern zu lange. Genau dadurch bleiben Tests kleiner als euer Werbedruck.",
   },
   {
-    title: "Briefings ohne Produktionslogik",
+    title: "Feedback bremst den Output",
     description:
-      "Das Team liefert Brand-Kontext, aber was daraus entsteht, ist Zufall statt System. Angles, Hooks und Varianten werden nicht strukturiert geplant.",
+      "Zu viele Personen kommentieren an zu vielen Orten. Entscheidungen werden langsam, unklar und am Ende unnötig teuer.",
   },
   {
-    title: "Freigaben ohne Übersicht",
+    title: "KI-Tools allein lösen das Problem nicht",
     description:
-      "Feedback verteilt sich über E-Mail, Slack und geteilte Ordner. Wer was wann freigegeben hat, ist nach zwei Wochen nicht mehr nachvollziehbar.",
+      "Ohne Plan, Review und Markenregeln entstehen viele Dateien, aber wenig nutzbarer Kampagnen-Output für echte Media-Teams.",
   },
 ];
 
 const howItWorks = [
   {
     step: "01",
-    title: "Brand-Anfrage",
+    title: "Briefing geben",
     description:
-      "Das Team gibt Produkt, Zielgruppe, Stil, Budget und Freigabeprozess vor. In wenigen Minuten entsteht ein strukturiertes Briefing.",
+      "Ihr beschreibt Produkt, Zielgruppe, Kanal, Timing und wichtige Markenregeln. Mehr braucht Zynapse Core nicht für den Start.",
   },
   {
     step: "02",
-    title: "Kampagnenplanung",
+    title: "Kreativplan erhalten",
     description:
-      "Der Creative Lead baut daraus Angles, Hooks, CTA-Logik und Testprioritäten – abgestimmt auf die Performance-Ziele des Teams.",
+      "Zynapse Core schlägt Routen, Hooks, Formate und passende AI Creatives vor – abgestimmt auf euer Kampagnenziel.",
   },
   {
     step: "03",
-    title: "Produktion & Review",
+    title: "Varianten reviewen und nutzen",
     description:
-      "Das Studio produziert Varianten in allen Formaten und Längen. Das Team reviewt und gibt frei – zentral, nachvollziehbar, ohne offene Schleifen.",
+      "Euer Team prüft zentral, gibt Feedback und bekommt ein fertiges Creative Pack für Paid Social und Short Form.",
   },
 ];
 
 const results = [
-  { value: "72h", label: "Ø vom Briefing zur Freigabe" },
-  { value: "18+", label: "Testbare Varianten pro Pack" },
-  { value: "1×", label: "Briefing statt Endlosschleifen" },
+  { value: "72h", label: "bis zum ersten Kreativplan" },
+  { value: "12-36", label: "Varianten je nach Paket" },
+  { value: "1", label: "zentraler Review statt Feedback-Chaos" },
 ];
 
 export default function BrandsPage() {
   const brandsJsonLd = buildPageJsonLd({
     ...pageSeo,
-    breadcrumbs: buildBreadcrumbs("Für Brands", pageSeo.path),
+    breadcrumbs: buildBreadcrumbs("Für Marketing Teams", pageSeo.path),
     primaryEntity: buildServiceJsonLd({
       path: pageSeo.path,
-      name: "AI-Kampagnen-Setups für Brands",
+      name: "Video-Creative-Flows für Marketing-Teams",
       description: pageSeo.description,
-      serviceType: "Kuratiertes AI-Kampagnensystem für Brands",
-      audience: "Brand-, Growth- und Performance-Teams",
+      serviceType: "Video-Creative-Flow für Marketing- und Performance-Teams",
+      audience: "Marketing-, Growth- und Performance-Teams",
     }),
   });
 
@@ -93,23 +93,26 @@ export default function BrandsPage() {
               className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
               data-animate-heading
             >
-              Skalierbare <span data-animate-word>Videoproduktion</span> ohne{" "}
-              <span className="title-accent">Produktionschaos</span>.
+              Mehr <span data-animate-word>testbare Video Ads</span>. Weniger{" "}
+              <span className="title-accent">Abstimmung</span>.
             </h1>
             <p
               className="max-w-4xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Euer Team gibt Richtung, Kontext und Freigaben vor. Zynapse
-              übersetzt das in testbare Kampagnen-Packs mit 18+ Varianten pro
-              Briefing – strukturiert, planbar und ohne Abstimmungsschleifen.
+              Euer Team gibt Ziel, Produkt und Markenregeln vor. Zynapse Core
+              plant die passenden Kreativrouten, führt die Produktion und
+              liefert geprüfte Varianten für Paid Social und Short Form.
             </p>
-            <div className="flex flex-wrap justify-center gap-3 sm:justify-start" data-animate-copy>
+            <div
+              className="flex flex-wrap justify-center gap-3 sm:justify-start"
+              data-animate-copy
+            >
               <ButtonLink href="/request" size="lg">
-                Anfrage starten
+                Kampagne anfragen
               </ButtonLink>
               <ButtonLink href="/pricing" variant="secondary" size="lg">
-                Pläne & Preise
+                Preise ansehen
               </ButtonLink>
             </div>
           </div>
@@ -137,12 +140,12 @@ export default function BrandsPage() {
           eyebrow="Typische Engpässe"
           title={
             <>
-              Kreativproduktion <span data-animate-word>frisst Zeit</span>,
-              die für <span className="title-accent">Testing und Optimierung</span>{" "}
-              fehlt.
+              Euer Media Team braucht neue Creatives. Euer{" "}
+              <span data-animate-word>Prozess</span> ist{" "}
+              <span className="title-accent">zu langsam</span>.
             </>
           }
-          copy="Brand- und Growth-Teams stecken in einem Kreislauf aus Briefings, Feedback-Schleifen und manueller Koordination. Der eigentliche Hebel – systematisches Kreativ-Testing – bleibt liegen."
+          copy="Performance wächst nicht nur durch mehr Budget. Sie wächst durch bessere Tests. Dafür braucht ihr regelmäßig neue Hooks, neue Formate und neue Varianten, ohne jedes Mal eine Produktion von null zu starten."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {painPoints.map((point, index) => (
@@ -177,11 +180,11 @@ export default function BrandsPage() {
           eyebrow="So funktioniert es"
           title={
             <>
-              Vom <span data-animate-word>Briefing</span> zum fertigen
-              Kampagnen-Pack in <span className="title-accent">drei Schritten</span>.
+              Drei <span data-animate-word>Schritte</span> bis zum nächsten{" "}
+              <span className="title-accent">Creative Pack</span>.
             </>
           }
-          copy="Klare Rollen, klare Übergaben. Euer Team muss nicht zum Produktionsexperten werden – Kontext und Freigaben reichen, den Rest übernehmen Kreative und Studio."
+          copy="Ihr bringt Ziel, Marke und Timing mit. Zynapse Core übersetzt das in einen klaren Kreativplan, geführte Produktion und einen zentralen Review."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {howItWorks.map((step) => (
@@ -218,15 +221,15 @@ export default function BrandsPage() {
                 className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                 data-animate-heading
               >
-                Weniger <span data-animate-word>Aufwand</span>, mehr{" "}
-                <span className="title-accent">testbare Kreativvarianten</span>.
+                Mehr <span data-animate-word>Output</span>, klarere{" "}
+                <span className="title-accent">Lernschleifen</span>.
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
                 data-animate-copy
               >
-                Teams, die mit Zynapse arbeiten, produzieren schneller, testen
-                systematischer und verlieren weniger Zeit in Koordination.
+                Teams, die mit Zynapse arbeiten, kommen schneller von der Idee
+                zum Test und verlieren weniger Zeit in Abstimmungsschleifen.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -255,13 +258,14 @@ export default function BrandsPage() {
       >
         <div className="space-y-5">
           <SectionHeading
-            eyebrow="Brand-Vorteile"
+            eyebrow="Für Marketing Teams"
             title={
               <>
-                Was sich für euer Team <span className="title-accent">konkret ändert</span>.
+                Was sich für euer Team{" "}
+                <span className="title-accent">konkret verbessert</span>.
               </>
             }
-            copy="Kein diffuser Tool-Zugang, sondern ein strukturierter Weg vom Briefing zu testbaren Kreativvarianten mit klarer Freigabelogik."
+            copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein klarer Weg vom Briefing zum fertigen Creative Pack."
           />
         </div>
         <div className="section-card section-surface-paper rounded-[var(--radius-card)] p-6">
@@ -293,20 +297,19 @@ export default function BrandsPage() {
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
               <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl" data-animate-heading>
-                <span data-animate-word>Bereit</span> für eine erste{" "}
-                <span className="title-accent">Brand-Anfrage</span>?
+                <span data-animate-word>Bereit</span> für euer nächstes{" "}
+                <span className="title-accent">Kreativbriefing</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Der Anfrage-Flow braucht nur wenige Minuten. Produkt, Ziel,
-                Budget und Freigabeprozess – mehr braucht es nicht, um zu
-                starten.
+                Produkt, Ziel, Kanäle und Timing reichen, damit Zynapse Core
+                einen ersten Kreativplan vorschlagen kann.
               </p>
             </div>
             <ButtonLink href="/request" size="lg" data-animate-item>
-              Anfrage starten
+              Kampagne anfragen
             </ButtonLink>
           </div>
         </div>

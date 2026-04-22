@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import { startTransition, useState } from "react";
+import { startTransition, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { createBrandInquiryDefaults } from "@/lib/forms/storage";
@@ -21,52 +21,95 @@ import {
 
 const steps = [
   {
-    title: "Ausgangslage",
-    copy: "Welche Kategorie, welches Produkt und welche Ausgangslage bringt das Team mit?",
-    fields: ["industry"] as const,
+    title: "Produkt und Ziel",
+    copy: "Was soll beworben werden und was soll die Kampagne erreichen?",
+    fields: ["productUrl", "goal", "budgetRange"] as const,
   },
   {
-    title: "Produktlink",
-    copy: "Ein Link reicht. Entscheidend ist ein sauberer Ausgangspunkt für Briefing und Kreativ-Richtung.",
-    fields: ["productUrl"] as const,
+    title: "Zielgruppe",
+    copy: "Wen wollt ihr erreichen und was ist die wichtigste Kaufbarriere?",
+    fields: ["targetAudience", "keyBarrier"] as const,
   },
   {
-    title: "Ziel & Kanal",
-    copy: "Worauf soll die kreative Route zuerst optimieren und wo wird sie als Erstes ausgespielt?",
-    fields: ["goal", "channels"] as const,
+    title: "Kanäle und Formate",
+    copy: "Wo sollen die Creatives laufen und welche Ausspielungen stehen zuerst an?",
+    fields: ["channels"] as const,
   },
   {
-    title: "Budget & Timing",
-    copy: "Damit Kampagnen-Pack, Umfang und Priorität realistisch eingeordnet werden können.",
-    fields: ["budgetRange", "timeline"] as const,
+    title: "Stil und Beispiele",
+    copy: "Welche Richtung passt zu eurer Marke und welche Hinweise sollten wir früh sehen?",
+    fields: ["industry", "styleDirection", "notes"] as const,
   },
   {
-    title: "Freitext",
-    copy: "Optionaler Kontext zu Stil, Offer, Creator-Referenzen, Claims oder Restriktionen.",
-    fields: ["notes"] as const,
+    title: "Timing und Review",
+    copy: "Wann braucht ihr den Output und wie laufen Review und Freigabe aktuell?",
+    fields: ["timeline", "reviewContext"] as const,
   },
   {
-    title: "Überprüfung",
-    copy: "Zum Schluss fehlen nur noch die Kontaktdaten für die Übergabe.",
+    title: "Zusammenfassung",
+    copy: "Zynapse Core zeigt, was vorhanden ist und was für den ersten Kreativplan noch hilfreich wäre.",
     fields: ["contactName", "workEmail", "company"] as const,
   },
-];
+] as const;
 
 const timelineOptions = [
   "Sofort / diese Woche",
   "In den nächsten 2 Wochen",
   "Diesen Monat",
   "Noch in Planung",
-];
+] as const;
 
 const channelOptions = [
   "TikTok",
   "Instagram Reels",
   "YouTube Shorts",
   "Meta Ads",
-  "LinkedIn Video",
+  "LinkedIn Ads",
   "Pinterest",
-];
+] as const;
+
+const requiredBriefingChecks = [
+  "productUrl",
+  "goal",
+  "budgetRange",
+  "targetAudience",
+  "keyBarrier",
+  "channels",
+  "industry",
+  "timeline",
+  "reviewContext",
+] as const;
+
+function normalizeText(value: string | undefined) {
+  return value?.trim() ?? "";
+}
+
+function buildRouteSuggestions(values: BrandInquiryInput) {
+  const goal = normalizeText(values.goal).toLowerCase();
+  const channels = values.channels.join(" ").toLowerCase();
+
+  if (goal.includes("launch") || goal.includes("aktion") || goal.includes("offer")) {
+    return ["Offer Push", "Product Proof", "Founder or Expert"];
+  }
+
+  if (channels.includes("tiktok") || channels.includes("reels") || channels.includes("shorts")) {
+    return ["Problem Hook", "UGC Style", "Product Proof"];
+  }
+
+  return ["Problem Hook", "Product Proof", "Offer Push"];
+}
+
+function buildFormatSuggestions(channels: string[]) {
+  if (channels.some((channel) => /tiktok|reels|shorts/i.test(channel))) {
+    return ["9:16 Short Form", "4:5 Paid Social", "1:1 Feed Cut"];
+  }
+
+  if (channels.some((channel) => /linkedin/i.test(channel))) {
+    return ["1:1 Feed Video", "16:9 Explainer", "4:5 Social Cut"];
+  }
+
+  return ["9:16 Vertical", "1:1 Square", "16:9 Wide"];
+}
 
 export function BrandInquiryWizard() {
   const [stepIndex, setStepIndex] = useState(0);
@@ -88,8 +131,78 @@ export function BrandInquiryWizard() {
     mode: "onChange",
   });
 
-  const selectedChannels = watch("channels");
-  const isPrivacyAccepted = watch("datenschutzAccepted");
+  const values = watch();
+  const selectedChannels = values.channels ?? [];
+  const isPrivacyAccepted = values.datenschutzAccepted;
+
+  const briefingQuality = useMemo(() => {
+    const completed = requiredBriefingChecks.filter((field) => {
+      const value = values[field];
+
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      }
+
+      return normalizeText(value).length > 0;
+    }).length;
+
+    return Math.round((completed / requiredBriefingChecks.length) * 100);
+  }, [values]);
+
+  const missingInfo = useMemo(() => {
+    const candidates = [
+      {
+        label: "Wichtigste Kaufbarriere",
+        missing: normalizeText(values.keyBarrier).length === 0,
+        step: 1,
+      },
+      {
+        label: "Zielgruppe",
+        missing: normalizeText(values.targetAudience).length === 0,
+        step: 1,
+      },
+      {
+        label: "Review-Setup",
+        missing: normalizeText(values.reviewContext).length === 0,
+        step: 4,
+      },
+      {
+        label: "Stilrichtung oder Referenzen",
+        missing:
+          normalizeText(values.styleDirection).length === 0 &&
+          normalizeText(values.notes).length === 0,
+        step: 3,
+      },
+    ];
+
+    return candidates.filter((candidate) => candidate.missing);
+  }, [values]);
+
+  const routeSuggestions = useMemo(() => buildRouteSuggestions(values), [values]);
+  const formatSuggestions = useMemo(
+    () => buildFormatSuggestions(values.channels ?? []),
+    [values.channels],
+  );
+
+  const riskSignals = useMemo(() => {
+    const risks: string[] = [];
+
+    if (!normalizeText(values.keyBarrier)) {
+      risks.push("Die wichtigste Kaufbarriere fehlt noch für bessere Hooks.");
+    }
+
+    if (!normalizeText(values.reviewContext)) {
+      risks.push("Freigabeweg ist unklar. Review kann später unnötig bremsen.");
+    }
+
+    if (!values.channels?.length) {
+      risks.push("Ohne Kanal ist die Formatpriorisierung noch zu offen.");
+    }
+
+    return risks.length
+      ? risks
+      : ["Keine offensichtlichen Risiken. Briefing ist bereit für den ersten Kreativplan."];
+  }, [values]);
 
   async function goToNextStep() {
     const currentStep = steps[stepIndex];
@@ -102,6 +215,40 @@ export function BrandInquiryWizard() {
 
   function goToPreviousStep() {
     setStepIndex((current) => Math.max(current - 1, 0));
+  }
+
+  function goToMissingInfo() {
+    const firstMissing = missingInfo[0];
+
+    if (firstMissing) {
+      setStepIndex(firstMissing.step);
+    }
+  }
+
+  function applyCoreSuggestion() {
+    if (!normalizeText(getValues("styleDirection"))) {
+      setValue(
+        "styleDirection",
+        `${routeSuggestions[0]}, ${routeSuggestions[1]} und ${routeSuggestions[2]} als erste Kreativrouten`,
+        { shouldDirty: true },
+      );
+    }
+
+    if (!normalizeText(getValues("reviewContext"))) {
+      setValue(
+        "reviewContext",
+        "Zentraler Review mit einer finalen Freigabe durch Marketing oder Brand Lead",
+        { shouldDirty: true },
+      );
+    }
+
+    if (stepIndex < 3) {
+      setStepIndex(3);
+    }
+  }
+
+  function jumpToSummary() {
+    setStepIndex(steps.length - 1);
   }
 
   function toggleChannel(channel: string) {
@@ -124,63 +271,102 @@ export function BrandInquiryWizard() {
   function renderStep() {
     if (stepIndex === 0) {
       return (
-        <Field label="Branche" error={errors.industry?.message}>
-          <TextInput
-            {...register("industry")}
-            placeholder="z. B. D2C Wellness, Beauty, Food, B2B SaaS"
-          />
-        </Field>
-      );
-    }
-
-    if (stepIndex === 1) {
-      return (
-        <Field label="Produktlink" error={errors.productUrl?.message}>
-          <TextInput {...register("productUrl")} placeholder="https://example.com" />
-        </Field>
-      );
-    }
-
-    if (stepIndex === 2) {
-      return (
         <div className="grid gap-5 md:grid-cols-2">
+          <Field label="Produktlink" error={errors.productUrl?.message}>
+            <TextInput {...register("productUrl")} placeholder="https://example.com" />
+          </Field>
           <Field label="Ziel" error={errors.goal?.message}>
             <TextInput
               {...register("goal")}
-              placeholder="z. B. Conversion-Testing, Launch, Awareness"
+              placeholder="z. B. mehr testbare Creatives für Conversion-Tests"
             />
           </Field>
-          <Field
-            label="Kanäle"
-            error={errors.channels?.message}
-            hint="Mehrfachauswahl möglich"
-          >
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {channelOptions.map((option) => (
-                <CheckboxPill
-                  key={option}
-                  checked={selectedChannels.includes(option)}
-                  onClick={() => toggleChannel(option)}
-                >
-                  {option}
-                </CheckboxPill>
-              ))}
-            </div>
+          <Field label="Budgetrahmen" error={errors.budgetRange?.message} hint="Hilft beim Paket- und Scope-Fit">
+            <TextInput
+              {...register("budgetRange")}
+              placeholder="z. B. Pilot, 5k bis 8k monatlich, laufender Creative Flow"
+            />
           </Field>
         </div>
       );
     }
 
-    if (stepIndex === 3) {
+    if (stepIndex === 1) {
       return (
         <div className="grid gap-5 md:grid-cols-2">
-          <Field label="Budgetrahmen" error={errors.budgetRange?.message}>
-            <TextInput
-              {...register("budgetRange")}
-              placeholder="z. B. 3k bis 8k pro Monat"
+          <Field label="Zielgruppe" error={errors.targetAudience?.message}>
+            <TextareaInput
+              {...register("targetAudience")}
+              placeholder="z. B. DTC Käufer:innen, SaaS Marketing Leads, Performance Teams in wachsenden Brands"
             />
           </Field>
-          <Field label="Zeitplan" error={errors.timeline?.message}>
+          <Field label="Wichtigste Kaufbarriere" error={errors.keyBarrier?.message}>
+            <TextareaInput
+              {...register("keyBarrier")}
+              placeholder="z. B. zu teuer, zu wenig Vertrauen, Produktnutzen noch nicht klar"
+            />
+          </Field>
+        </div>
+      );
+    }
+
+    if (stepIndex === 2) {
+      return (
+        <Field
+          label="Kanäle"
+          error={errors.channels?.message}
+          hint="Mehrfachauswahl möglich"
+        >
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {channelOptions.map((option) => (
+              <CheckboxPill
+                key={option}
+                checked={selectedChannels.includes(option)}
+                onClick={() => toggleChannel(option)}
+              >
+                {option}
+              </CheckboxPill>
+            ))}
+          </div>
+        </Field>
+      );
+    }
+
+    if (stepIndex === 3) {
+      return (
+        <div className="grid gap-5">
+          <div className="grid gap-5 md:grid-cols-2">
+            <Field label="Branche" error={errors.industry?.message}>
+              <TextInput
+                {...register("industry")}
+                placeholder="z. B. DTC Wellness, Beauty, Food, B2B SaaS"
+              />
+            </Field>
+            <Field label="Stilrichtung" error={errors.styleDirection?.message}>
+              <TextInput
+                {...register("styleDirection")}
+                placeholder="z. B. Premium Look, UGC Style, Product Proof, Founder Clip"
+              />
+            </Field>
+          </div>
+          <Field
+            label="Beispiele und Hinweise"
+            error={errors.notes?.message}
+            hint="Optional: Claims, Referenzen, No-Gos oder rechtliche Hinweise."
+          >
+            <TextareaInput
+              {...register("notes")}
+              placeholder="Was sollte das Creative Pack tonal, visuell oder rechtlich unbedingt berücksichtigen?"
+            />
+          </Field>
+        </div>
+      );
+    }
+
+    if (stepIndex === 4) {
+      return (
+        <div className="grid gap-5 md:grid-cols-2">
+          <Field label="Timing" error={errors.timeline?.message}>
             <SelectInput {...register("timeline")} defaultValue="">
               <option value="" disabled>
                 Bitte auswählen
@@ -192,22 +378,17 @@ export function BrandInquiryWizard() {
               ))}
             </SelectInput>
           </Field>
+          <Field
+            label="Review und Freigabe"
+            error={errors.reviewContext?.message}
+            hint="Optional, aber hilfreich"
+          >
+            <TextareaInput
+              {...register("reviewContext")}
+              placeholder="z. B. Marketing Lead reviewt zuerst, Founder gibt finale Claims frei"
+            />
+          </Field>
         </div>
-      );
-    }
-
-    if (stepIndex === 4) {
-      return (
-        <Field
-          label="Zusätzlicher Kontext"
-          error={errors.notes?.message}
-          hint="Optional: Offer, Stilreferenzen, besondere Claims, Ausschlüsse."
-        >
-          <TextareaInput
-            {...register("notes")}
-            placeholder="Was sollte das Kampagnen-Pack inhaltlich, tonal oder rechtlich unbedingt berücksichtigen?"
-          />
-        </Field>
       );
     }
 
@@ -226,16 +407,20 @@ export function BrandInquiryWizard() {
         </div>
         <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-black/5 p-5">
           <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
-            Überprüfung
+            Zusammenfassung
           </p>
           <dl className="mt-4 grid gap-4 md:grid-cols-2">
             {[
-              ["Branche", getValues("industry")],
-              ["Produktlink", getValues("productUrl")],
+              ["Produkt", getValues("productUrl")],
               ["Ziel", getValues("goal")],
-              ["Kanäle", getValues("channels").join(", ")],
               ["Budget", getValues("budgetRange")],
-              ["Zeitplan", getValues("timeline")],
+              ["Zielgruppe", getValues("targetAudience")],
+              ["Kaufbarriere", getValues("keyBarrier")],
+              ["Kanäle", getValues("channels").join(", ")],
+              ["Branche", getValues("industry")],
+              ["Stilrichtung", getValues("styleDirection")],
+              ["Timing", getValues("timeline")],
+              ["Review", getValues("reviewContext")],
             ].map(([label, value]) => (
               <div key={label}>
                 <dt className="text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
@@ -308,27 +493,26 @@ export function BrandInquiryWizard() {
     return (
       <div className="section-card relative overflow-hidden rounded-[2rem] p-8 md:grid md:grid-cols-[minmax(0,0.74fr)_minmax(0,0.26fr)] md:items-end md:gap-8">
         <div className="relative z-10">
-          <span className="eyebrow">Anfrage erhalten</span>
+          <span className="eyebrow">Briefing erhalten</span>
           <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-            Danke, deine Anfrage ist eingegangen.
+            Danke, dein Kreativbriefing ist eingegangen.
           </h2>
           <p className="mt-4 max-w-3xl text-[color:var(--copy-muted)]">
-            Wir prüfen deine Angaben und priorisieren passende Setups im Rahmen
-            des Launch-Rollouts. Sobald wir den nächsten passenden Slot
-            freigeben, melden wir uns direkt bei dir.
+            Wir prüfen deine Angaben und melden uns mit dem passenden nächsten
+            Schritt für euren Creative Flow. Wenn noch etwas für den ersten
+            Kreativplan fehlt, sagen wir es konkret.
           </p>
           <div className="mt-8 flex gap-3">
             <ButtonLink href="/" variant="secondary">
               Zur Startseite
             </ButtonLink>
-            <ButtonLink href="/pricing#referenzen">Leistungen vergleichen</ButtonLink>
+            <ButtonLink href="/pricing">Creative Flows ansehen</ButtonLink>
           </div>
         </div>
         <div
           aria-hidden="true"
           className="pointer-events-none relative hidden min-h-[11rem] md:block"
         >
-          <div className="absolute inset-y-0 right-0 w-full" />
           <Image
             src="/logo/LogoSimple.png"
             alt=""
@@ -342,67 +526,154 @@ export function BrandInquiryWizard() {
   }
 
   return (
-    <div className="section-card rounded-[2rem] p-6 sm:p-8">
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
-          <span className="eyebrow">Brand-Anfrage</span>
-          <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em]">
-            Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
-          </h2>
-          <p className="mt-3 max-w-2xl text-[color:var(--copy-muted)]">
-            {currentStep.copy}
-          </p>
-        </div>
-        <div className="w-full max-w-xs">
-          <div className="mb-3 flex justify-between text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
-            <span>Fortschritt</span>
-            <span>{Math.round(((stepIndex + 1) / steps.length) * 100)}%</span>
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)]">
+      <div className="section-card rounded-[2rem] p-6 sm:p-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <span className="eyebrow">Kreativbriefing</span>
+            <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em]">
+              Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
+            </h2>
+            <p className="mt-3 max-w-2xl text-[color:var(--copy-muted)]">
+              {currentStep.copy}
+            </p>
           </div>
-          <div className="h-2 rounded-full bg-white/[0.06]">
-            <div
-              className="h-2 rounded-full bg-[var(--accent)]"
-              style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
-            />
+          <div className="w-full max-w-xs">
+            <div className="mb-3 flex justify-between text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
+              <span>Fortschritt</span>
+              <span>{Math.round(((stepIndex + 1) / steps.length) * 100)}%</span>
+            </div>
+            <div className="h-2 rounded-full bg-white/[0.06]">
+              <div
+                className="h-2 rounded-full bg-[var(--accent)]"
+                style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <form className="mt-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
-        <input type="hidden" {...register("startedAt", { valueAsNumber: true })} />
-        <input type="text" {...register("website")} className="hidden" tabIndex={-1} autoComplete="off" />
-        {renderStep()}
-        {submitError ? (
-          <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
-            {submitError}
-          </p>
-        ) : null}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex gap-3">
-            <Button
-              variant="ghost"
-              onClick={goToPreviousStep}
-              disabled={stepIndex === 0}
-              className="border border-[color:var(--line)] disabled:opacity-50"
-            >
-              Zurück
-            </Button>
-            {stepIndex < steps.length - 1 ? (
-              <Button variant="secondary" onClick={goToNextStep}>
-                Weiter
+        <form className="mt-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+          <input type="hidden" {...register("startedAt", { valueAsNumber: true })} />
+          <input
+            type="text"
+            {...register("website")}
+            className="hidden"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+          {renderStep()}
+          {submitError ? (
+            <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
+              {submitError}
+            </p>
+          ) : null}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex gap-3">
+              <Button
+                variant="ghost"
+                onClick={goToPreviousStep}
+                disabled={stepIndex === 0}
+                className="border border-[color:var(--line)] disabled:opacity-50"
+              >
+                Zurück
+              </Button>
+              {stepIndex < steps.length - 1 ? (
+                <Button variant="secondary" onClick={goToNextStep}>
+                  Weiter
+                </Button>
+              ) : null}
+            </div>
+            {stepIndex === steps.length - 1 ? (
+              <Button
+                type="submit"
+                disabled={isPending || !isPrivacyAccepted}
+                size="lg"
+                className="disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
+              >
+                {isPending ? "Sende Briefing..." : "Kampagne anfragen"}
               </Button>
             ) : null}
           </div>
-          {stepIndex === steps.length - 1 ? (
-            <Button
-              type="submit"
-              disabled={isPending || !isPrivacyAccepted}
-              size="lg"
-              className="disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
-            >
-              {isPending ? "Sende Anfrage..." : "Brand-Anfrage absenden"}
-            </Button>
-          ) : null}
+        </form>
+      </div>
+
+      <aside className="section-card section-surface-paper h-fit rounded-[2rem] p-6 sm:p-8">
+        <span className="eyebrow">Zynapse Core prüft mit</span>
+        <div className="mt-5 grid gap-4">
+          <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+              Briefing-Qualität
+            </p>
+            <p className="mt-2 font-display text-[1.9rem] leading-none font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+              {briefingQuality}%
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
+              {missingInfo.length
+                ? `Für bessere Routen fehlen noch ${missingInfo
+                    .slice(0, 2)
+                    .map((item) => item.label)
+                    .join(" und ")}.`
+                : "Das Briefing ist stark genug für den ersten Kreativplan."}
+            </p>
+          </article>
+
+          <article className="rounded-[var(--radius-card)] border border-[rgba(191,106,83,0.16)] bg-[rgba(255,244,236,0.76)] p-4">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+              Mögliche Kreativrouten
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {routeSuggestions.map((route) => (
+                <span
+                  key={route}
+                  className="rounded-full border border-[rgba(191,106,83,0.16)] bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.14em] text-[var(--copy-soft)]"
+                >
+                  {route}
+                </span>
+              ))}
+            </div>
+          </article>
+
+          <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+              Empfohlene Formate
+            </p>
+            <ul className="mt-3 grid gap-2">
+              {formatSuggestions.map((format) => (
+                <li
+                  key={format}
+                  className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.1)] bg-[rgba(248,249,251,0.78)] px-3 py-2 text-sm text-[color:var(--copy-body)]"
+                >
+                  {format}
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+              Mögliche Risiken
+            </p>
+            <ul className="mt-3 grid gap-2">
+              {riskSignals.map((risk) => (
+                <li key={risk} className="text-sm leading-6 text-[color:var(--copy-body)]">
+                  • {risk}
+                </li>
+              ))}
+            </ul>
+          </article>
         </div>
-      </form>
+
+        <div className="mt-6 grid gap-3">
+          <Button variant="secondary" className="justify-center" onClick={applyCoreSuggestion}>
+            Vorschlag übernehmen
+          </Button>
+          <Button variant="ghost" className="justify-center border border-[color:var(--line)]" onClick={goToMissingInfo}>
+            Fehlende Info ergänzen
+          </Button>
+          <Button variant="ghost" className="justify-center border border-[color:var(--line)]" onClick={jumpToSummary}>
+            Trotzdem absenden
+          </Button>
+        </div>
+      </aside>
     </div>
   );
 }

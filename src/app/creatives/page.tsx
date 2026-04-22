@@ -7,9 +7,9 @@ import { buildBreadcrumbs, buildMetadata, buildPageJsonLd, buildServiceJsonLd } 
 import Image from "next/image";
 
 const pageSeo = {
-  title: "Für Kreative – AI-Netzwerk für Kampagnen | Zynapse",
+  title: "Für AI Creatives – klare Aufgaben statt Briefing-Chaos | Zynapse",
   description:
-    "Zynapse für Kreative: Prompt Engineering, Creative Direction, Prompt Design, AI Production, AI Engineering und AI Strategy in einem skalierbaren Kampagnenfluss.",
+    "Zynapse für AI Creatives: klare Aufgaben, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
   path: "/creatives",
 } as const;
 
@@ -17,40 +17,40 @@ export const metadata = buildMetadata(pageSeo);
 
 const painPoints = [
   {
-    title: "Kreativrollen arbeiten zu oft isoliert",
+    title: "Briefings sind oft zu unklar",
     description:
-      "Prompt, Strategie, Produktion und Testing laufen getrennt. Dadurch geht Geschwindigkeit verloren, obwohl starke Ideen vorhanden sind.",
+      "Du musst erst herausfinden, was wirklich gebraucht wird, bevor du überhaupt kreativ arbeiten kannst.",
   },
   {
-    title: "Wert verschwindet in operativer Koordination",
+    title: "Feedback ist zu verstreut",
     description:
-      "Statt an Hooks, Angles und Varianten zu arbeiten, fließt Zeit in Übergaben, Nachfragen und manuelle Produktionsschleifen.",
+      "Kommentare kommen aus Calls, Chats und Dokumenten, aber selten als klare Aufgabe mit Richtung und Priorität.",
   },
   {
-    title: "AI-Output bleibt ohne System unscharf",
+    title: "Dein Beitrag wird nicht sauber eingebettet",
     description:
-      "Wenn Prompts, Creative Direction und Freigaben nicht zusammengeführt werden, entstehen Assets ohne klare Testlogik.",
+      "Gute Prompts, Richtungen oder Varianten verlieren Wirkung, wenn sie nicht Teil eines klaren Kampagnenplans sind.",
   },
 ];
 
 const howItWorks = [
   {
     step: "01",
-    title: "Kreativ-Architektur",
+    title: "Briefing verstehen",
     description:
-      "Du übersetzt das Brand-Briefing in Angles, Prompt-Routen, CTA-Logik und Testprioritäten. Das ist die Steuerung für alles, was folgt.",
+      "Zynapse Core verdichtet Produkt, Ziel, Zielgruppe und Markenregeln zu einer Zusammenfassung für deine konkrete Rolle.",
   },
   {
     step: "02",
-    title: "Rollenbasierte Umsetzung",
+    title: "Klare Aufgabe übernehmen",
     description:
-      "Prompt Engineering, Creative Direction, Prompt Design, AI Production, AI Engineering und AI Strategy greifen in einem klaren Ablauf ineinander.",
+      "Du arbeitest mit klaren Qualitätskriterien, sichtbaren No-Gos und einem konkreten Beitrag zum Kampagnenziel.",
   },
   {
     step: "03",
-    title: "Produktion & Export",
+    title: "Feedback sauber weitergeben",
     description:
-      "Das Studio baut Varianten in allen Formaten und Längen. Du reviewst strukturiert und gibst nur das frei, was zur Teststrategie passt.",
+      "Feedback wird nicht zum Slack-Chaos, sondern zu klaren nächsten Aufgaben zwischen Strategie, Prompting, Produktion und Review.",
   },
 ];
 
@@ -58,52 +58,52 @@ const roleExamples = [
   {
     role: "Prompt Engineering",
     example:
-      "Baut Prompt-Stacks pro Angle, damit ein Offer in mehreren Hook-Varianten konsistent ausgegeben wird.",
+      "Du entwickelst klare KI-Anweisungen für unterschiedliche Hooks, Looks und Formate.",
     output: "Mehr testbare Hooks ohne Qualitätsbruch zwischen Iterationen.",
   },
   {
     role: "Creative Direction",
     example:
-      "Definiert Leitidee, visuelle Leitplanken und Tonalität pro Kampagne statt pro Einzelasset.",
+      "Du sorgst dafür, dass aus vielen Varianten eine erkennbare Markenrichtung wird.",
     output: "Ein kohärenter Look über alle Varianten hinweg.",
   },
   {
     role: "Prompt Design",
     example:
-      "Strukturiert Inputs für unterschiedliche Formate wie Reels, Shorts und Ads-Varianten.",
+      "Du strukturierst Inputs so, dass sie wiederholbar gute Ergebnisse liefern.",
     output: "Formatgerechte Assets mit klarer Wiederholbarkeit.",
   },
   {
     role: "AI Production",
     example:
-      "Orchestriert Rendering, Versionierung und Übergabe der Kreativ-Packs in produktionsfähiger Qualität.",
+      "Du bringst Varianten in die richtige Qualität, Länge und Form.",
     output: "Schnellerer Turnaround bei gleichbleibender Produktionsqualität.",
   },
   {
     role: "AI Engineering",
     example:
-      "Automatisiert Workflows für Prompting, Asset-Checks und Exportlogik.",
+      "Du baust Workflows, die kreative Produktion schneller und sauberer machen.",
     output: "Weniger manuelle Schleifen im Daily-Betrieb.",
   },
   {
     role: "AI Strategy",
     example:
-      "Priorisiert Kreativrouten anhand von Zielgruppe, Offer und Testhypothesen.",
+      "Du priorisierst, welche Richtung für Zielgruppe, Angebot und Testing am sinnvollsten ist.",
     output: "Bessere Lernzyklen pro Kampagne statt reiner Output-Menge.",
   },
 ];
 
 const profileFits = [
-  "Du arbeitest in einer oder mehreren AI-Rollen und willst sie in einem System verbinden",
-  "Du kannst Kampagnenlogik, Prompt-Qualität und Testing-Richtung zusammenführen",
-  "Du willst nicht mehr in isolierten Einzelproduktionen arbeiten",
-  "Du suchst ein Setup, das mit mehreren Brands und Sprints skalieren kann",
+  "Du willst an echten Brand-Kampagnen arbeiten statt an losem Creator-Sourcing",
+  "Du denkst nicht nur in Einzelassets, sondern in Hooks, Richtungen und Testlogik",
+  "Du willst mit klaren Aufgaben und sauberen Übergaben arbeiten",
+  "Du suchst ein Umfeld, in dem Strategie, Prompting und Produktion sauber zusammenspielen",
 ];
 
 const results = [
-  { value: "3×", label: "Mehr Output pro Sprint" },
-  { value: "70%", label: "Weniger operative Schleifen" },
-  { value: "6", label: "Rollen in einem klaren Flow" },
+  { value: "1", label: "klare Aufgabe pro Rolle" },
+  { value: "6", label: "Rollen in einem sichtbaren Flow" },
+  { value: "100%", label: "Feedback mit nachvollziehbarem Kontext" },
 ];
 
 export default function CreativesPage() {
@@ -115,8 +115,8 @@ export default function CreativesPage() {
       path: pageSeo.path,
       name: "AI-Netzwerk für Kreative",
       description: pageSeo.description,
-      serviceType: "AI-Kampagnen-Setups für Kreative",
-      audience: "Kreative und AI-Spezialist:innen",
+      serviceType: "AI-Creative-Flow für Kampagnenarbeit",
+      audience: "AI Creatives und kreative Spezialist:innen",
     }),
   });
 
@@ -134,26 +134,26 @@ export default function CreativesPage() {
               className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
               data-animate-heading
             >
-              Ein Track für alle{" "}
-              <span className="title-accent" data-animate-word>
-                AI-Kreativrollen
+              Arbeite an starken <span className="title-accent" data-animate-word>
+                Brand Creatives
               </span>
-              .
+              , nicht an chaotischen Briefings.
             </h1>
             <p
               className="max-w-2xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Zynapse vereint kreative Köpfe in einem strukturierten Kampagnenfluss:
-              von Prompt Engineering bis AI Strategy. Du führst die Kreativ-Logik,
-              das Studio skaliert die Ausführung.
+              Zynapse verbindet dich mit echten Kampagnen, klaren Aufgaben und
+              AI-gestützten Workflows. Zynapse Core hilft dabei, Briefings zu
+              strukturieren, Markenregeln sichtbar zu machen und Feedback in
+              klare nächste Schritte zu übersetzen.
             </p>
             <div className="flex flex-wrap justify-center gap-3 sm:justify-start" data-animate-item>
               <ButtonLink href="/apply" size="lg">
-                Jetzt bewerben
+                Als AI Creative bewerben
               </ButtonLink>
-              <ButtonLink href="/pricing" variant="secondary" size="lg">
-                Pläne & Preise
+              <ButtonLink href="/#rollen" variant="secondary" size="lg">
+                Rollen ansehen
               </ButtonLink>
             </div>
           </div>
@@ -180,14 +180,14 @@ export default function CreativesPage() {
           eyebrow="Bekannte Probleme"
           title={
             <>
-              Starke Kreative verlieren Zeit in{" "}
+              Gute Kreative verlieren Zeit in{" "}
               <span className="title-accent" data-animate-word>
-                schwachen Prozessen
+                schlechter Koordination
               </span>
               .
             </>
           }
-          copy="Viele Teams haben Talent, aber keinen durchgehenden Ablauf von Strategie über Prompting bis Produktion. Zynapse schließt diese Lücke mit klarer Rollenlogik."
+          copy="Viele Teams haben Talent, aber keinen sauberen Ablauf von Strategie über Prompting bis Produktion. Genau dort setzt Zynapse Core an."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {painPoints.map((point, index) => (
@@ -213,6 +213,7 @@ export default function CreativesPage() {
       </section>
 
       <section
+        id="rollen"
         className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
         data-stagger="dense"
@@ -221,15 +222,12 @@ export default function CreativesPage() {
           eyebrow="Dein Workflow"
           title={
             <>
-              Vom{" "}
-              <span data-animate-word>
-                Brand-Briefing
-              </span>{" "}
-              zur <span className="title-accent">Kreativ-Maschine</span> in drei
-              Schritten.
+              Drei Schritte von der{" "}
+              <span data-animate-word>klaren Aufgabe</span> zum{" "}
+              <span className="title-accent">sauberen Beitrag</span>.
             </>
           }
-          copy="Du konzentrierst dich auf Strategie, Prompting und Kreativ-Steuerung. Die operative Umsetzung läuft entlang eines klaren Produktionssystems."
+          copy="Du konzentrierst dich auf Strategie, Prompting und Kreativ-Steuerung. Der operative Rahmen ist so gebaut, dass dein Beitrag nicht im Prozess verschwindet."
         />
         <div className="grid gap-5 lg:grid-cols-3">
           {howItWorks.map((step) => (
@@ -256,14 +254,14 @@ export default function CreativesPage() {
         data-reveal-section
       >
         <SectionHeading
-          eyebrow="Kreativ-Beispiele"
+          eyebrow="Rollen"
           title={
             <>
               <span data-animate-word>Sechs Rollen</span>. Ein gemeinsamer{" "}
-              <span className="title-accent">Kampagnen-Output</span>.
+              <span className="title-accent">Kampagnenbeitrag</span>.
             </>
           }
-          copy="So kann dein Beitrag in Zynapse konkret aussehen, wenn mehrere AI-Disziplinen sauber zusammenspielen."
+          copy="Die Rollen können bleiben. Die Sprache wird klarer: Was du tust und warum es für die Kampagne zählt."
         />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {roleExamples.map((entry) => (
@@ -286,6 +284,45 @@ export default function CreativesPage() {
       </section>
 
       <section
+        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+        data-reveal-section
+      >
+        <SectionHeading
+          eyebrow="Zynapse Core für Creatives"
+          title={
+            <>
+              Zynapse Core gibt dir <span data-animate-word>klare Aufgaben</span>{" "}
+              statt unklarer <span className="title-accent">Briefings</span>.
+            </>
+          }
+          copy="Die KI ersetzt dich nicht. Sie sorgt dafür, dass Briefing, Markenregeln, Feedback und Übergaben so strukturiert sind, dass deine Arbeit besser greifen kann."
+        />
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {[
+            "Briefing-Zusammenfassung für deine Rolle",
+            "Sichtbare Markenregeln und No-Gos",
+            "Klare Anforderungen für deine Abgabe",
+            "Check vor dem Einreichen",
+            "Feedback als konkrete Aufgaben",
+            "Bessere Übergaben zwischen Strategie, Prompting und Produktion",
+          ].map((item, index) => (
+            <article
+              key={item}
+              className={`section-card rounded-[var(--radius-card)] p-6 ${
+                index === 1 || index === 4
+                  ? "section-surface-warm"
+                  : "section-surface-paper"
+              }`}
+            >
+              <p className="font-display text-[1.2rem] leading-[1.08] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
+                {item}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
         className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
@@ -299,7 +336,7 @@ export default function CreativesPage() {
                 className="pb-[0.40em] font-display text-4xl leading-[1.20] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                 data-animate-heading
               >
-                Mehr Varianten, mehr Klarheit,{" "}
+                Bessere Bedingungen, mehr Klarheit,{" "}
                 <span className="title-accent" data-animate-word>
                   weniger Reibung
                 </span>
@@ -309,8 +346,9 @@ export default function CreativesPage() {
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
                 data-animate-copy
               >
-                Kreative, die mit Zynapse arbeiten, bringen Strategie und Produktion
-                in einen messbaren Rhythmus statt in lose Einzelprojekte.
+                Kreative, die mit Zynapse arbeiten, verlieren weniger Zeit im
+                Prozess und mehr Zeit in Arbeit, die für die Kampagne wirklich
+                zählt.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -341,14 +379,14 @@ export default function CreativesPage() {
             eyebrow="Profil für Kreative"
             title={
               <>
-                Für wen der{" "}
+                Für wen das{" "}
                 <span className="title-accent" data-animate-word>
-                  Track für Kreative
+                  Creative Setup
                 </span>{" "}
                 passt.
               </>
             }
-            copy="Wenn du kreative Arbeit strategisch strukturieren kannst und in einem skalierbaren Setup statt in Einzelchaos arbeiten willst."
+            copy="Wenn du kreative Arbeit strategisch strukturieren kannst und lieber in klaren Kampagnen als in Briefing-Chaos arbeitest."
           />
         </div>
         <div
@@ -377,16 +415,16 @@ export default function CreativesPage() {
         className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <SectionHeading
-          eyebrow="Deine Vorteile"
-          title={
-              <>
-                Was sich für dich{" "}
-                <span className="title-accent" data-animate-word>
-                  konkret ändert
-                </span>
-                .
-              </>
+          <SectionHeading
+            eyebrow="Deine Vorteile"
+            title={
+            <>
+              Was sich für dich{" "}
+              <span className="title-accent" data-animate-word>
+                konkret verbessert
+              </span>
+              .
+            </>
           }
           copy="Zynapse nimmt dir operative Komplexität ab, ohne dir die kreative Kontrolle zu entziehen."
         />
@@ -416,18 +454,18 @@ export default function CreativesPage() {
                 data-animate-heading
               >
                 <span data-animate-word>Bewirb dich</span> für den{" "}
-                <span className="title-accent">Track für Kreative</span>.
+                <span className="title-accent">Creative Flow</span>.
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
                 Portfolio, Fokusbereiche und Cases: Der Bewerbungs-Flow ist auf
-                echte Qualifizierung gebaut, nicht auf generische Leads.
+                echte Kampagnenarbeit gebaut, nicht auf generische Leads.
               </p>
             </div>
             <ButtonLink href="/apply" size="lg" data-animate-item>
-              Bewerbung starten
+              Als AI Creative bewerben
             </ButtonLink>
           </div>
         </div>

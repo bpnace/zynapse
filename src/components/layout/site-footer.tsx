@@ -24,11 +24,12 @@ export function SiteFooter() {
             />
           </div>
           <h2 className="font-display text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
-            Von der einfachen Idee zum kuratierten Kampagnen-Setup, das sofort einsatzbereit ist.
+            Von der Kampagnenidee zum Creative Pack, das euer Media Team sofort nutzen kann.
           </h2>
           <p className="max-w-md text-[color:var(--surface-paper)]">
-            Zynapse verbindet Brands mit passenden AI-Spezialist:innen und
-            übersetzt Briefings in klare Setups, Varianten und Handover.
+            Zynapse Core versteht Marke, Ziel und Zielgruppe, plant passende
+            Kreativrouten und bringt geprüfte Varianten in einen klaren Review-
+            und Delivery-Flow.
           </p>
         </div>
         {footerGroups.map((group) => (

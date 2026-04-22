@@ -44,10 +44,10 @@ export default function ContactPage() {
               className="max-w-4xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Egal ob du eine Brand-Anfrage hast, wissen willst, welches Paket
-              gerade passt, oder ein operatives Thema klären möchtest: Deine
-              Nachricht landet direkt beim richtigen Kontakt. Du musst nichts
-              perfekt vorbereiten, ein paar klare Sätze reichen.
+              Egal ob du eine Kampagne anfragen willst, wissen möchtest, welcher
+              Creative Flow gerade passt, oder ein operatives Thema klären
+              musst: Deine Nachricht landet direkt beim richtigen Kontakt. Du
+              musst nichts perfekt vorbereiten, ein paar klare Sätze reichen.
             </p>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/contact#kontaktformular" size="lg">

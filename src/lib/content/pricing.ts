@@ -3,44 +3,46 @@ import type { PricingPlan } from "@/types/site";
 export const pricingPlans: PricingPlan[] = [
   {
     id: "starter",
-    name: "Starter",
+    name: "Pilot",
     price: "ab 2.499€",
     cadence: "einmalig",
     description:
-      "Für Brands, die ein erstes AI-Kampagnen-Setup mit klarem Scope und leanem Start aufsetzen wollen.",
+      "Für Teams, die eine erste Kampagne testen und schnell zu einem sauberen Kreativplan kommen wollen.",
     audience:
-      "Für Brands mit einem klaren Offer und dem Bedarf, schnell ins erste Testfenster zu kommen.",
-    highlights: ["Pilot-Setup", "kuratiertes Setup", "schneller Start"],
-    fit: "Ideal, wenn ihr ein neues Produkt, ein neues Messaging oder eine erste Kampagnenidee sauber testen wollt, ohne direkt einen laufenden Produktionsmodus aufzubauen.",
+      "Für Marketing-Teams mit einem klaren Produkt, einem ersten Kampagnenziel und dem Bedarf, schnell ins Testfenster zu kommen.",
+    highlights: ["Zynapse Core enthalten", "schneller Start", "erstes Creative Pack"],
+    fit: "Ideal, wenn ihr ein neues Produkt, ein neues Messaging oder eine erste Kampagnenidee testen wollt, ohne direkt einen laufenden Produktionsmodus aufzubauen.",
     collaboration:
-      "Kompaktes Briefing, passende Setup-Empfehlung und ein klarer Review-Pfad bis zum ersten kampagnenfähigen Output.",
+      "Briefing-Analyse, Kreativrouten, Auswahl passender AI Creatives, Qualitätscheck, zentraler Review und Delivery Pack.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für euer Starter Paket. Wir möchten ein erstes AI-Kampagnen-Setup für ein klar umrissenes Offer aufsetzen und verstehen, welches Setup, Timing und welche Freigabelogik ihr dafür empfehlt.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für euren Pilot Flow. Wir möchten eine erste Kampagne testen und verstehen, welchen Kreativplan, welches Timing und welche Review-Struktur ihr dafür empfehlt.\n\nViele Grüße",
     deliverables: [
-      "Kuratiertes Setup für 1 Pilot-Kampagne",
+      "Zynapse Core enthalten",
+      "Kreativplan für 1 Pilot-Kampagne",
       "12 Video-Varianten in 2 Formaten",
       "1 zentrale Review-Runde",
-      "Exportfertige Assets für Paid Social",
+      "Delivery Pack für Paid Social",
     ],
   },
   {
     id: "growth",
-    name: "Growth",
+    name: "Growth Flow",
     price: "ab 5.999€",
     cadence: "pro Monat",
     description:
-      "Der laufende Modus für Brands, die AI-Kampagnen systematisch weiterführen und nicht jedes Mal neu aufsetzen wollen.",
+      "Der laufende Modus für Teams, die jeden Monat neue Creatives brauchen und dabei nicht jedes Mal neu koordinieren wollen.",
     audience:
-      "Für Brands mit laufendem Kampagnenbedarf und dem Wunsch nach einem verlässlichen Kreativ-Rhythmus.",
+      "Für Marketing-Teams mit laufendem Kampagnenbedarf und dem Wunsch nach einem verlässlichen Creative-Rhythmus.",
     featured: true,
-    highlights: ["laufender Rhythmus", "priorisierte Iteration", "sichtbare Learnings"],
-    fit: "Ideal, wenn aus einzelnen Tests ein monatlicher Kampagnenfluss werden soll und ihr dafür ein verlässliches Setup statt neuer Ad-hoc-Besetzungen braucht.",
+    highlights: ["Zynapse Core enthalten", "laufender Rhythmus", "sichtbare Learnings"],
+    fit: "Ideal, wenn aus einzelnen Tests ein monatlicher Creative Flow werden soll und ihr dafür einen verlässlichen Prozess statt neuer Ad-hoc-Besetzungen braucht.",
     collaboration:
-      "Wiederkehrende Planung, kuratierte Setup-Anpassung je Sprint und klare Übergaben zwischen Review, Iteration und Export.",
+      "Briefing-Analyse, Kreativrouten, Auswahl passender AI Creatives, Qualitätscheck, zentraler Review und Delivery Pack in laufender Kadenz.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für das Growth Paket. Wir suchen einen laufenden Modus für wiederkehrende AI-Kampagnen und möchten verstehen, wie ihr Planung, Iteration und das passende Setup über mehrere Sprints organisiert.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für euren Growth Flow. Wir suchen einen laufenden Modus für wiederkehrende Kampagnen und möchten verstehen, wie ihr Kreativplan, Iteration und Delivery über mehrere Sprints organisiert.\n\nViele Grüße",
     deliverables: [
-      "Laufendes Kampagnen-Setup für mehrere Messaging-Routen",
+      "Zynapse Core enthalten",
+      "Laufender Kreativplan für mehrere Messaging-Routen",
       "24 bis 36 Video-Varianten",
       "Priorisierte Review- und Iterations-Slots",
       "Monatliche Learnings für den nächsten Sprint",
@@ -48,23 +50,24 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: "pro",
-    name: "Enterprise",
+    name: "Scale",
     price: "Individuell",
-    cadence: "skalierendes Setup",
+    cadence: "skalierender Flow",
     description:
-      "Für größere Brand-Setups, die mehrere Kampagnenstränge dauerhaft in einem System koordinieren müssen.",
+      "Für Teams mit mehreren Kampagnen, Märkten oder Stakeholdern, die einen skalierenden Creative Flow brauchen.",
     audience:
-      "Für größere Brand-Setups mit mehreren Workstreams, Märkten oder Freigabepfaden.",
-    highlights: ["mehrere Workstreams", "skalierbare Freigaben", "zentral koordiniert"],
-    fit: "Ideal, wenn mehrere Brands, Märkte oder interne Stakeholder parallel laufen und Zynapse das Setup dauerhaft koordinieren soll.",
+      "Für größere Marketing-Setups mit mehreren Workstreams, Märkten oder Freigabepfaden.",
+    highlights: ["Zynapse Core enthalten", "mehrere Workstreams", "skalierbare Freigaben"],
+    fit: "Ideal, wenn mehrere Kampagnen, Märkte oder interne Stakeholder parallel laufen und Zynapse den Creative Flow dauerhaft koordinieren soll.",
     collaboration:
-      "Gemeinsame Planungsrituale, skalierbare Freigaben und ein zentrales System für Priorisierung, Review und Export.",
+      "Briefing-Analyse, Kreativrouten, Auswahl passender AI Creatives, Qualitätscheck, zentraler Review und Delivery Pack für komplexe Setups.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für euer Enterprise Paket. Wir planen ein komplexeres Setup mit mehreren Brands, Märkten oder parallelen Workstreams und möchten besprechen, wie ihr Struktur, Freigaben und die laufende Orchestrierung dafür aufsetzt.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für euren Scale Flow. Wir planen mehrere Kampagnen oder Märkte parallel und möchten besprechen, wie ihr Struktur, Freigaben und Delivery dafür aufsetzt.\n\nViele Grüße",
     deliverables: [
+      "Zynapse Core enthalten",
       "Mehrere Kampagnen-Workstreams",
       "Skalierbare Review- und Freigabelogik",
-      "Zentrale Priorisierung über mehrere Setups",
+      "Zentrale Priorisierung über mehrere Kampagnen",
       "Flexible Export- und Rechte-Logik",
     ],
   },
