@@ -10,7 +10,16 @@ const workspaceHighlights = [
   "Review und Media Pack bleiben in einem klaren Flow zusammen.",
 ];
 
-const workspaceStats = [
+type WorkspaceStat = {
+  label: string;
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  title: string;
+  detail: string;
+};
+
+const workspaceStats: WorkspaceStat[] = [
   {
     label: "Briefing-Qualität",
     value: 88,
@@ -32,7 +41,7 @@ const workspaceStats = [
     title: "bereit",
     detail: "3 offene Review-Threads, klare Delivery für das Media Team.",
   },
-] as const;
+];
 
 export function CampaignPackPreview() {
   return (

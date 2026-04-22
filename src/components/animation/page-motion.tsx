@@ -21,6 +21,7 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
     () => {
       const container = scope.current;
       if (!container) return;
+      const cleanupCallbacks: Array<() => void> = [];
 
       if (
         !window.matchMedia("(prefers-reduced-motion: no-preference)").matches
@@ -51,6 +52,10 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
             once: true,
           },
         });
+        const ownedTrigger = timeline.scrollTrigger;
+        if (ownedTrigger) {
+          cleanupCallbacks.push(() => ownedTrigger.kill());
+        }
 
         if (heading.length) {
           timeline.from(heading, {
@@ -105,6 +110,10 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
           );
         }
       });
+
+      return () => {
+        cleanupCallbacks.forEach((callback) => callback());
+      };
     },
     { scope },
   );
