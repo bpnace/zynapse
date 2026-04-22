@@ -17,6 +17,10 @@ export default async function BrandDeliveriesPage() {
   const dashboard = await getDashboardView(bootstrap.organization.id);
   const latestCampaign = dashboard.latestCampaign;
   const approvedAssets = dashboard.latestAssets.filter((asset) => asset.reviewStatus === "approved");
+  const activeDeliveryId = dashboard.latestCampaignWorkflow?.id ?? latestCampaign?.id ?? null;
+  const activeDeliveryHref = activeDeliveryId
+    ? brandsWorkspaceRoutes.deliveries.detail(activeDeliveryId)
+    : brandsWorkspaceRoutes.campaigns.new();
 
   return (
     <div className="workspace-page-stack">
@@ -39,9 +43,12 @@ export default async function BrandDeliveriesPage() {
             <div className="mt-4 workspace-split-list">
               {approvedAssets.map((asset) => (
                 <div key={asset.id} className="py-4">
-                  <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
+                  <Link
+                    href={activeDeliveryHref}
+                    className="text-sm font-semibold text-[var(--workspace-copy-strong)] underline decoration-[color:var(--workspace-border-strong)] underline-offset-4 transition hover:text-[var(--workspace-accent-strong)]"
+                  >
                     {asset.title}
-                  </p>
+                  </Link>
                   <p className="mt-1 text-sm leading-6 text-[var(--workspace-copy-muted)]">
                     {asset.format ?? "Format folgt"} · {asset.versionLabel ?? "Aktuelle Version"}
                   </p>
@@ -66,14 +73,7 @@ export default async function BrandDeliveriesPage() {
               : "Sobald eine Kampagne Outputs freigibt, erscheint hier der direkte Einstieg in den Delivery-Bereich."}
           </p>
           <div className="mt-5">
-            <Link
-              href={
-                latestCampaign
-                  ? brandsWorkspaceRoutes.campaigns.handover(latestCampaign.id)
-                  : brandsWorkspaceRoutes.campaigns.new()
-              }
-              className="workspace-button workspace-button-primary"
-            >
+            <Link href={activeDeliveryHref} className="workspace-button workspace-button-primary">
               {latestCampaign ? "Delivery öffnen" : "Kampagne anlegen"}
             </Link>
           </div>

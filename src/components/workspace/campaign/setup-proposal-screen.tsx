@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { approveCampaignSetup } from "@/lib/workspace/actions/approve-campaign-setup";
 import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 import { formatWorkspaceLabel } from "@/lib/workspace/formatting";
 
@@ -25,6 +26,7 @@ type SetupProposalScreenProps = {
     heading: string;
     body: string;
   };
+  canApproveSetup: boolean;
   stageItems: Array<{
     stageKey: string;
     status: string;
@@ -35,8 +37,12 @@ export function SetupProposalScreen({
   campaign,
   brief,
   proposal,
+  canApproveSetup,
   stageItems,
 }: SetupProposalScreenProps) {
+  const approveSetupAction = approveCampaignSetup.bind(null, campaign.id);
+  const showApproveSetup = canApproveSetup && campaign.currentStage === "setup_planned";
+
   return (
     <div className="workspace-page-stack">
       <section className="workspace-topbar px-5 py-5 sm:px-6">
@@ -172,6 +178,26 @@ export function SetupProposalScreen({
                 </p>
               </div>
             </div>
+
+            {showApproveSetup ? (
+              <div className="mt-4 rounded-[18px] border border-[var(--workspace-line)] bg-[var(--workspace-surface)] px-4 py-4">
+                <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
+                  Passt die Richtung, kann das Setup jetzt freigegeben werden.
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[var(--workspace-copy-muted)]">
+                  Der Schritt schiebt die Kampagne in <strong>Production Ready</strong> und hält
+                  den Brand-Flow ohne Ops-Oberfläche in Bewegung.
+                </p>
+                <form action={approveSetupAction} className="mt-4">
+                  <button
+                    type="submit"
+                    className="workspace-button workspace-button-primary w-full sm:w-auto"
+                  >
+                    Setup freigeben
+                  </button>
+                </form>
+              </div>
+            ) : null}
           </div>
         </section>
       </div>

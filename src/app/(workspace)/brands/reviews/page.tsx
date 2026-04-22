@@ -16,6 +16,12 @@ export default async function BrandReviewsPage() {
 
   const dashboard = await getDashboardView(bootstrap.organization.id);
   const latestCampaign = dashboard.latestCampaign;
+  const latestReviewThread = dashboard.reviewThreads[0] ?? null;
+  const activeReviewHref = latestReviewThread
+    ? brandsWorkspaceRoutes.reviews.detail(latestReviewThread.threadId)
+    : latestCampaign
+      ? brandsWorkspaceRoutes.campaigns.review(latestCampaign.id)
+      : brandsWorkspaceRoutes.campaigns.new();
 
   return (
     <div className="workspace-page-stack">
@@ -39,9 +45,12 @@ export default async function BrandReviewsPage() {
             <div className="mt-4 workspace-split-list">
               {dashboard.reviewThreads.map((thread) => (
                 <div key={thread.threadId} className="py-4">
-                  <p className="text-sm font-semibold text-[var(--workspace-copy-strong)]">
+                  <Link
+                    href={brandsWorkspaceRoutes.reviews.detail(thread.threadId)}
+                    className="text-sm font-semibold text-[var(--workspace-copy-strong)] underline decoration-[color:var(--workspace-border-strong)] underline-offset-4 transition hover:text-[var(--workspace-accent-strong)]"
+                  >
                     {thread.assetTitle}
-                  </p>
+                  </Link>
                   <p className="mt-1 text-sm leading-6 text-[var(--workspace-copy-muted)]">
                     {thread.comments[0]?.body ?? "Keine Kommentarvorschau verfügbar."}
                   </p>
@@ -66,14 +75,7 @@ export default async function BrandReviewsPage() {
               : "Sobald eine Kampagne angelegt ist, erscheint hier der schnellste Einstieg in den Freigabeprozess."}
           </p>
           <div className="mt-5">
-            <Link
-              href={
-                latestCampaign
-                  ? brandsWorkspaceRoutes.campaigns.review(latestCampaign.id)
-                  : brandsWorkspaceRoutes.campaigns.new()
-              }
-              className="workspace-button workspace-button-primary"
-            >
+            <Link href={activeReviewHref} className="workspace-button workspace-button-primary">
               {latestCampaign ? "Review öffnen" : "Kampagne anlegen"}
             </Link>
           </div>

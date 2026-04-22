@@ -1,5 +1,6 @@
-import { WorkspaceRoutePlaceholder } from "@/components/workspace/shared/workspace-route-placeholder";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { notFound, redirect } from "next/navigation";
+import { requireWorkspaceAccess } from "@/lib/auth/guards";
+import { resolveBrandReviewDetailHref } from "@/lib/workspace/queries/resolve-brand-detail-route";
 
 type BrandReviewDetailPageProps = {
   params: Promise<{
@@ -10,18 +11,16 @@ type BrandReviewDetailPageProps = {
 export default async function BrandReviewDetailPage({
   params,
 }: BrandReviewDetailPageProps) {
+  const bootstrap = await requireWorkspaceAccess();
   const { reviewId } = await params;
+  const targetHref = await resolveBrandReviewDetailHref({
+    organizationId: bootstrap.organization.id,
+    reviewId,
+  });
 
-  return (
-    <WorkspaceRoutePlaceholder
-      eyebrow="Brands / Review Detail"
-      title={`Review ${reviewId} now has a dedicated protected route.`}
-      description="The queue-level review route can now safely deepen into per-review screens without changing the workspace navigation contract."
-      checkpoints={[
-        "Phase 2 review-room improvements can land here.",
-      ]}
-      ctaHref={brandsWorkspaceRoutes.reviews.index()}
-      ctaLabel="Back to reviews"
-    />
-  );
+  if (!targetHref) {
+    notFound();
+  }
+
+  redirect(targetHref);
 }

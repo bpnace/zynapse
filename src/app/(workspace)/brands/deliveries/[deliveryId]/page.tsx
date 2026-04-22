@@ -1,5 +1,6 @@
-import { WorkspaceRoutePlaceholder } from "@/components/workspace/shared/workspace-route-placeholder";
-import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
+import { notFound, redirect } from "next/navigation";
+import { requireWorkspaceAccess } from "@/lib/auth/guards";
+import { resolveBrandDeliveryDetailHref } from "@/lib/workspace/queries/resolve-brand-detail-route";
 
 type BrandDeliveryDetailPageProps = {
   params: Promise<{
@@ -10,18 +11,16 @@ type BrandDeliveryDetailPageProps = {
 export default async function BrandDeliveryDetailPage({
   params,
 }: BrandDeliveryDetailPageProps) {
+  const bootstrap = await requireWorkspaceAccess();
   const { deliveryId } = await params;
+  const targetHref = await resolveBrandDeliveryDetailHref({
+    organizationId: bootstrap.organization.id,
+    deliveryId,
+  });
 
-  return (
-    <WorkspaceRoutePlaceholder
-      eyebrow="Brands / Delivery Detail"
-      title={`Delivery pack ${deliveryId} now resolves cleanly.`}
-      description="Delivery pack detail routes are now scaffolded so future pack projections and download views do not 404 when linked from the refreshed workspace."
-      checkpoints={[
-        "Phase 2 delivery pack v1 can be implemented on this route.",
-      ]}
-      ctaHref={brandsWorkspaceRoutes.deliveries.index()}
-      ctaLabel="Back to deliveries"
-    />
-  );
+  if (!targetHref) {
+    notFound();
+  }
+
+  redirect(targetHref);
 }

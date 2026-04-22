@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { SetupProposalScreen } from "@/components/workspace/campaign/setup-proposal-screen";
 import { requireWorkspaceAccess } from "@/lib/auth/guards";
+import { getWorkspaceCapabilities } from "@/lib/auth/roles";
 import { getBriefView } from "@/lib/workspace/queries/get-brief-view";
 import { getCampaignDetailView } from "@/lib/workspace/queries/get-campaign-detail-view";
 
@@ -33,6 +34,11 @@ export default async function CampaignSetupPage({
     <SetupProposalScreen
       campaign={campaignDetail.campaign}
       proposal={campaignDetail.packageRecommendation}
+      canApproveSetup={
+        getWorkspaceCapabilities(bootstrap.membership.role, {
+          isReadOnly: bootstrap.demo.isReadOnly,
+        }).canCreateBriefs
+      }
       stageItems={campaignDetail.stageItems}
       brief={briefView?.values ?? null}
     />
