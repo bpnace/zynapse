@@ -12,8 +12,8 @@ export function TrustSection() {
         eyebrow="Vertrauen & Kontrolle"
         title={
           <>
-            KI Creatives, die <span className="title-accent">kontrollierbar</span>{" "}
-            bleiben.
+            KI Output, der <span className="title-accent">kontrollierbar</span>{" "}
+            bleibt.
           </>
         }
         copy="Zynapse ist darauf ausgelegt, dass euer Team nicht nur mehr Output bekommt, sondern auch sieht, was freigegeben wurde, welche Regeln gelten und welche Dateien wirklich final sind."

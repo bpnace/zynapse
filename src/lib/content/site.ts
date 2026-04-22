@@ -1,7 +1,7 @@
 import type { NavItem } from "@/types/site";
 
 export const siteNav: NavItem[] = [
-  { href: "/brands", label: "Für Marketing Teams" },
+  { href: "/brands", label: "Für Brands" },
   { href: "/#beispiele", label: "Beispiele" },
   { href: "/pricing", label: "Preise" },
   { href: "/creatives", label: "Für Kreative" },
@@ -109,7 +109,7 @@ export const trustSignals = [
 ];
 
 export const studioPrinciples = [
-  "Marketing Teams geben Ziel, Marke und Kanal vor, Zynapse Core baut daraus den Kreativplan",
+  "Brands geben Ziel, Marke und Kanal vor, Zynapse Core baut daraus den Kreativplan",
   "Jede Anfrage führt zu testbaren Creative Packs statt zu losen Einzelassets",
   "Review, Freigaben und Delivery bleiben in einem klaren Flow zusammen",
 ];

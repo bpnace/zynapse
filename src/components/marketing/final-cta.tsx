@@ -58,14 +58,14 @@ export function FinalCta() {
               data-animate-heading
             >
               Starte mit einem <span data-animate-word>kurzen</span>{" "}
-              <span className="title-accent">Kreativbriefing</span>.
+              <span className="title-accent">Briefing</span>.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
               Zeig uns Produkt, Ziel, Kanäle und Timing. Zynapse Core schlägt
-              dir daraus den passenden Kreativplan vor.
+              dir daraus den passenden Kampagnenplan vor.
             </p>
             <p
               className="max-w-xl text-sm leading-6 text-[color:var(--copy-soft)]"

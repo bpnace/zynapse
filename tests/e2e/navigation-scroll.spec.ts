@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const navLinks = [
   { label: "Zynapse", path: "/" },
-  { label: "Für Marketing Teams", path: "/brands" },
+  { label: "Für Brands", path: "/brands" },
   { label: "Beispiele", path: "/#beispiele" },
   { label: "Preise", path: "/pricing" },
   { label: "Für Kreative", path: "/creatives" },

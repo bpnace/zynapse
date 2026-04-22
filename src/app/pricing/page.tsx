@@ -73,8 +73,8 @@ export default function PricingPage() {
       path: pageSeo.path,
       name: "Pricing für Zynapse Creative Flows",
       description: pageSeo.description,
-      serviceType: "Creative-Flow-Pricing für Marketing-Teams",
-      audience: "Marketing-Teams mit laufendem Kampagnenbedarf",
+      serviceType: "Creative-Flow-Pricing für Brands",
+      audience: "Brands mit laufendem Kampagnenbedarf",
       offers: buildOfferJsonLd([
         {
           name: pricingPlans[0].name,
@@ -109,10 +109,10 @@ export default function PricingPage() {
       >
         <div className="space-y-6">
           <h1
-            className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
+            className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] overflow-visible pr-[0.2rem] text-balance sm:text-7xl"
             data-animate-heading
           >
-            Wähle den <span className="title-accent">Creative Flow</span>, der
+            Wähle den <span className="title-accent pr-[0.2rem]">Creative Flow</span>, der
             zu eurem Team passt.
           </h1>
           <p
@@ -166,6 +166,9 @@ export default function PricingPage() {
                     >
                       {plan.cadence}
                     </p>
+                    <span className="rounded-full border border-[rgba(56,67,84,0.12)] bg-white/72 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--copy-soft)]">
+                      {plan.featured ? "Empfohlen" : "Flow"}
+                    </span>
                   </div>
 
                   <h2
@@ -189,11 +192,24 @@ export default function PricingPage() {
                   >
                     {plan.description}
                   </p>
+                  <p className="mx-auto mt-4 max-w-[18rem] text-center text-xs leading-5 text-[color:var(--copy-soft)]">
+                    {plan.audience}
+                  </p>
+                  <div className="mt-4 flex flex-wrap justify-center gap-2">
+                    {plan.highlights.map((highlight) => (
+                      <span
+                        key={highlight}
+                        className="rounded-full border border-[rgba(56,67,84,0.12)] bg-white/72 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-[var(--copy-soft)]"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex flex-1 flex-col px-6 py-5 sm:px-7">
                   <div className="grid gap-3">
-                    {plan.deliverables.slice(0, 3).map((deliverable, index) => (
+                    {plan.deliverables.map((deliverable, index) => (
                       <div
                         key={deliverable}
                         className="flex items-start gap-3 text-sm leading-6 text-[color:var(--copy-body)]"
@@ -207,6 +223,15 @@ export default function PricingPage() {
                         </span>
                       </div>
                     ))}
+                  </div>
+
+                  <div className="mt-5 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.1)] bg-white/70 p-4">
+                    <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                      Zynapse Core enthält
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
+                      {plan.collaboration}
+                    </p>
                   </div>
 
                   <div
@@ -252,7 +277,7 @@ export default function PricingPage() {
                         plan.featured ? "text-[color:var(--copy-muted)]" : "text-[color:var(--copy-muted)]"
                       }`}
                     >
-                      Paket wird im Kontaktformular direkt vorausgewählt.
+                      Flow wird im Kontaktformular direkt vorausgewählt.
                     </p>
                   </div>
                 </div>

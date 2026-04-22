@@ -12,9 +12,9 @@ import { HomeMotion } from "@/components/animation/home-motion";
 import { buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
 
 const homePageSeo = {
-  title: "Bessere Video Creatives für Marketing-Teams | Zynapse",
+  title: "Bessere Video Creatives für Brands | Zynapse",
   description:
-    "Zynapse hilft Marketing-Teams, schneller bessere Video Creatives zu bekommen. Zynapse Core plant Kreativrouten, wählt passende AI Creatives aus und liefert geprüfte Creative Packs für Paid Social und Short Form.",
+    "Zynapse hilft Brands, schneller bessere Video Creatives zu bekommen. Zynapse Core plant Kreativrouten, wählt passende AI Creatives aus und liefert geprüfte Creative Packs für Paid Social und Short Form.",
   path: "/",
 } as const;
 

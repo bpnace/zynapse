@@ -5,9 +5,9 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 
 const pageSeo = {
-  title: "Studio – Kuratiertes AI-Campaign-System für Brands und Kreative | Zynapse",
+  title: "Über Zynapse – wie Zynapse Core Teams und Creatives verbindet | Zynapse",
   description:
-    "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in markenfähige Kampagnen-Setups, Video-Varianten und klare Produktionsabläufe.",
+    "Zynapse verbindet Brands und AI Creatives in einem klaren Creative Flow. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
   path: "/about",
 } as const;
 
@@ -16,15 +16,15 @@ export const metadata = buildMetadata(pageSeo);
 const heroSignals = [
   {
     label: "Für Brands",
-    value: "Ein Ansprechpartner, passende AI-Spezialist:innen und ein klarer Kampagnenfluss.",
+    value: "Ein klarer Creative Flow statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
   },
   {
-    label: "Für Kreative",
-    value: "Kuratiertes Matching statt Kaltakquise, mit Rollen, in denen Strategie und Ausführung zusammenpassen.",
+    label: "Für AI Creatives",
+    value: "Klare Aufgaben statt Briefing-Chaos, mit Rollen, in denen Strategie und Umsetzung sauber zusammenpassen.",
   },
   {
     label: "Ergebnis",
-    value: "AI-Marketingkampagnen mit Varianten, Review-Struktur und sauberer Übergabe an Paid Social oder Content Teams.",
+    value: "Geprüfte Creative Packs mit Varianten, Review-Struktur und sauberer Delivery an Paid Social oder Content Teams.",
   },
 ];
 
@@ -65,7 +65,7 @@ const specialistRoles = [
     title: "AI Engineering",
     icon: "aiEngineering" as const,
     description:
-      "Verbindet Workflows, Automationen und Modell-Setups so, dass Qualität und Geschwindigkeit nicht gegeneinander arbeiten.",
+      "Verbindet Workflows, Automationen und Modelle so, dass Qualität und Geschwindigkeit nicht gegeneinander arbeiten.",
   },
   {
     title: "AI Strategy",
@@ -77,9 +77,9 @@ const specialistRoles = [
 
 const deliverables = [
   {
-    title: "Kampagnen-Setups statt Einzelfiles",
+    title: "Creative Packs statt lose Einzelfiles",
     description:
-      "Brands erhalten keine lose Sammlung an Videos, sondern ein durchdachtes Setup mit Creative Direction, Varianten-Logik und klaren Freigabepunkten.",
+      "Teams erhalten keine lose Sammlung an Videos, sondern einen durchdachten Flow mit Varianten-Logik, klaren Freigabepunkten und nutzbarer Delivery.",
   },
   {
     title: "AI-Video mit System",
@@ -87,7 +87,7 @@ const deliverables = [
       "Je nach Briefing entstehen markenfähige Visuals, Sequenzen und Ads aus einem abgestimmten Modellmix, statt aus zufälligen Einzelversuchen.",
   },
   {
-    title: "Handover für echte Teams",
+    title: "Delivery für echte Teams",
     description:
       "Paid Social, Content und Brand Teams bekommen Assets, Versionen und Kontext so übergeben, dass direkt weitergearbeitet werden kann.",
   },
@@ -102,7 +102,7 @@ const valueCards = [
   {
     title: "Kuratiert statt beliebig",
     description:
-      "Nicht jeder Auftrag braucht dasselbe Setup. Das Matching sorgt dafür, dass Brands nicht selbst erst herausfinden müssen, welche Spezialist:innen fehlen.",
+      "Nicht jede Kampagne braucht dieselben Rollen. Zynapse wählt die passende Kombination, damit Teams nicht selbst erst herausfinden müssen, was fehlt.",
   },
   {
     title: "Wiederholbar statt improvisiert",
@@ -287,7 +287,7 @@ export default function AboutPage() {
   const aboutJsonLd = buildPageJsonLd({
     ...pageSeo,
     pageType: "AboutPage",
-    breadcrumbs: buildBreadcrumbs("Studio", pageSeo.path),
+    breadcrumbs: buildBreadcrumbs("Über Zynapse", pageSeo.path),
   });
 
   return (
@@ -304,19 +304,19 @@ export default function AboutPage() {
               className="max-w-4xl font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
               data-animate-heading
             >
-              Die <span className="title-accent">kuratierte Verbindung</span>{" "}
-              zwischen Brands, AI-Spezialist:innen und markenfähiger{" "}
-              <span data-animate-word>Kampagnenproduktion.</span>
+              So verbindet <span className="title-accent">Zynapse Core</span>{" "}
+              Brands, AI Creatives und bessere{" "}
+              <span data-animate-word>Video Creatives</span>.
             </h1>
             <p
               className="max-w-3xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
               Zynapse ist kein klassisches Studio und kein offener
-              Creator-Marktplatz. Wir bringen Brands mit ausgewählten
-              Spezialist:innen aus Prompt Engineering, Creative Direction,
-              Prompt Design, AI Production, AI Engineering und AI Strategy
-              zusammen und führen daraus einen belastbaren Kampagnenfluss.
+              Creator-Marktplatz. Wir verbinden Brands mit den
+              passenden AI Creatives und strukturieren Briefing, Rollen,
+              Qualitätscheck, Review und Delivery in einem klaren Creative
+              Flow.
             </p>
             <p
               className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
@@ -324,15 +324,14 @@ export default function AboutPage() {
             >
               So entsteht professionelle AI-Marketingproduktion mit klaren
               Rollen, kontrollierten Reviews und Varianten, die nicht nur gut
-              aussehen, sondern in echten Marketing-Setups weiterverwendet,
-              getestet und ausgesteuert werden können.
+              aussehen, sondern im echten Testing schneller nutzbar werden.
             </p>
             <div className="flex flex-wrap gap-3" data-animate-item>
               <ButtonLink href="/request" size="lg">
-                Brand-Anfrage
+                Kampagne anfragen
               </ButtonLink>
               <ButtonLink href="/apply" variant="secondary" size="lg">
-                Bewerbung für Kreative
+                Als Creative bewerben
               </ButtonLink>
             </div>
           </div>
@@ -367,13 +366,13 @@ export default function AboutPage() {
       >
         <div className="grid gap-4 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
           <SectionHeading
-            eyebrow="Kuratiertes Netzwerk"
+            eyebrow="Die Rollen im Flow"
             title={
               <>
                 Die Rollen hinter starker <span className="title-accent">AI-Kreativarbeit</span>.
               </>
             }
-            copy="Brands sollen nicht erst selbst Teams zusammenpuzzeln. Zynapse baut die passende Kombination aus Spezialist:innen rund um die Aufgabe, die Marke und den gewünschten Kampagnenrhythmus."
+            copy="Brands sollen nicht erst selbst Rollen zusammenpuzzeln. Zynapse baut die passende Kombination rund um Aufgabe, Marke und Kampagnenziel."
           />
           <div className="grid gap-3 sm:grid-cols-2">
             {specialistRoles.map((role) => (
@@ -403,21 +402,21 @@ export default function AboutPage() {
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:items-start">
             <div className="space-y-5">
               <span className="eyebrow" data-animate-heading>
-                Was Brands am Ende bekommen
+                Was Teams am Ende bekommen
               </span>
               <h2
                 className="max-w-3xl font-display text-4xl leading-[0.94] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                 data-animate-heading
               >
-                Aus Matching wird <span data-animate-word>Output</span> mit{" "}
+                Aus Briefing wird <span data-animate-word>Output</span> mit{" "}
                 <span className="title-accent">Kampagnenrelevanz</span>.
               </h2>
               <p
                 className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
                 data-animate-copy
               >
-                Zynapse übersetzt das Know-how der beteiligten Spezialist:innen
-                in Assets, Varianten und Entscheidungsgrundlagen, die mit dem
+                Zynapse übersetzt das Know-how der beteiligten Rollen in
+                Assets, Varianten und Entscheidungsgrundlagen, die mit dem
                 restlichen Marketing-Team funktionieren. Nicht nur im Pitch,
                 sondern im operativen Alltag.
               </p>
@@ -456,7 +455,7 @@ export default function AboutPage() {
               <span className="title-accent">bewegliche Zusammenarbeit</span>.
             </>
           }
-          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in sauberer Orchestrierung. Das hält Produktionen näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
+          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in klarer Struktur. Das hält Produktion näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
         />
         <div className="grid gap-4 lg:grid-cols-3">
           {valueCards.map((item, index) => (
@@ -499,17 +498,17 @@ export default function AboutPage() {
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Ob als Brand oder Kreative:r: Der Einstieg bleibt kompakt. Ihr
-                bringt Briefing oder Profil mit, Zynapse prüft Match und
-                Produktionsfit.
+                Ob als Marketing-Team oder AI Creative: Der Einstieg bleibt
+                kompakt. Ihr bringt Briefing oder Profil mit, Zynapse prüft
+                Match und Creative Fit.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href="/request" size="lg">
-                Brand-Anfrage
+                Kampagne anfragen
               </ButtonLink>
               <ButtonLink href="/apply" variant="secondary" size="lg">
-                Bewerbung für Kreative
+                Als Creative bewerben
               </ButtonLink>
             </div>
           </div>

@@ -50,10 +50,10 @@ export function VideoOutputGrid() {
         title={
           <>
             Unterschiedliche <span className="title-accent">Looks</span> für{" "}
-            <span data-animate-word>echte Creative Tests</span>.
+            <span data-animate-word>unendliche marketing Tests</span>.
           </>
         }
-        copy="Zynapse erstellt nicht einfach schöne Einzelvideos. Jede Richtung erfüllt eine Aufgabe im Testing: Aufmerksamkeit, Vertrauen, Produktverständnis oder Conversion."
+        copy="Jede kreative Richtung ist bewusst darauf ausgelegt, etwas anderes zu leisten wie etwa Aufmerksamkeit zu gewinnen, Vertrauen aufzubauen, das Produkt greifbarer zu machen oder den nächsten Klick auszulösen."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {videoVariants.map((variant, index) => {

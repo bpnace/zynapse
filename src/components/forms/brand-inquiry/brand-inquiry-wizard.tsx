@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import { startTransition, useMemo, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { createBrandInquiryDefaults } from "@/lib/forms/storage";
@@ -68,6 +68,15 @@ const channelOptions = [
   "Pinterest",
 ] as const;
 
+const requiredStepLabels: Record<number, string[]> = {
+  0: ["Produktlink", "Ziel", "Budgetrahmen"],
+  1: ["Zielgruppe", "wichtigste Kaufbarriere"],
+  2: ["mindestens ein Kanal"],
+  3: ["Branche"],
+  4: ["Timing"],
+  5: ["Name", "geschäftliche E-Mail", "Firma", "Datenschutzerklärung"],
+};
+
 const requiredBriefingChecks = [
   "productUrl",
   "goal",
@@ -89,7 +98,7 @@ function buildRouteSuggestions(values: BrandInquiryInput) {
   const channels = values.channels.join(" ").toLowerCase();
 
   if (goal.includes("launch") || goal.includes("aktion") || goal.includes("offer")) {
-    return ["Offer Push", "Product Proof", "Founder or Expert"];
+    return ["Offer Push", "Product Proof", "Founder oder Expert Style"];
   }
 
   if (channels.includes("tiktok") || channels.includes("reels") || channels.includes("shorts")) {
@@ -114,6 +123,7 @@ function buildFormatSuggestions(channels: string[]) {
 export function BrandInquiryWizard() {
   const [stepIndex, setStepIndex] = useState(0);
   const [submitError, setSubmitError] = useState("");
+  const [stepAlert, setStepAlert] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
@@ -124,6 +134,7 @@ export function BrandInquiryWizard() {
     trigger,
     setValue,
     getValues,
+    setFocus,
     formState: { errors },
   } = useForm<BrandInquiryInput>({
     resolver: zodResolver(brandInquirySchema),
@@ -162,7 +173,7 @@ export function BrandInquiryWizard() {
         step: 1,
       },
       {
-        label: "Review-Setup",
+        label: "Review- und Freigabeweg",
         missing: normalizeText(values.reviewContext).length === 0,
         step: 4,
       },
@@ -204,16 +215,33 @@ export function BrandInquiryWizard() {
       : ["Keine offensichtlichen Risiken. Briefing ist bereit für den ersten Kreativplan."];
   }, [values]);
 
+  useEffect(() => {
+    setStepAlert("");
+  }, [stepIndex]);
+
   async function goToNextStep() {
     const currentStep = steps[stepIndex];
-    const valid = await trigger([...currentStep.fields]);
+    const valid = await trigger([...currentStep.fields], { shouldFocus: true });
 
     if (valid) {
+      setStepAlert("");
       setStepIndex((current) => Math.min(current + 1, steps.length - 1));
+      return;
+    }
+
+    const labels = requiredStepLabels[stepIndex] ?? ["die fehlenden Angaben"];
+    setStepAlert(
+      `Bitte ergänze ${labels.join(", ")}, damit Zynapse Core den nächsten Schritt sinnvoll vorbereiten kann.`,
+    );
+
+    const firstField = currentStep.fields[0];
+    if (firstField) {
+      setFocus(firstField);
     }
   }
 
   function goToPreviousStep() {
+    setStepAlert("");
     setStepIndex((current) => Math.max(current - 1, 0));
   }
 
@@ -221,6 +249,7 @@ export function BrandInquiryWizard() {
     const firstMissing = missingInfo[0];
 
     if (firstMissing) {
+      setStepAlert("");
       setStepIndex(firstMissing.step);
     }
   }
@@ -245,9 +274,12 @@ export function BrandInquiryWizard() {
     if (stepIndex < 3) {
       setStepIndex(3);
     }
+
+    setStepAlert("");
   }
 
   function jumpToSummary() {
+    setStepAlert("");
     setStepIndex(steps.length - 1);
   }
 
@@ -560,6 +592,16 @@ export function BrandInquiryWizard() {
             tabIndex={-1}
             autoComplete="off"
           />
+          <div className="grid gap-2">
+            <p className="text-sm leading-6 text-[color:var(--copy-soft)]">
+              Pflicht in diesem Schritt: {requiredStepLabels[stepIndex]?.join(", ")}.
+            </p>
+            {stepAlert ? (
+              <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
+                {stepAlert}
+              </p>
+            ) : null}
+          </div>
           {renderStep()}
           {submitError ? (
             <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
@@ -610,7 +652,7 @@ export function BrandInquiryWizard() {
               {missingInfo.length
                 ? `Für bessere Routen fehlen noch ${missingInfo
                     .slice(0, 2)
-                    .map((item) => item.label)
+                    .map((item) => item.label.toLowerCase())
                     .join(" und ")}.`
                 : "Das Briefing ist stark genug für den ersten Kreativplan."}
             </p>

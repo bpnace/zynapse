@@ -76,7 +76,7 @@ export function Hero() {
               className="mx-auto max-w-2xl text-sm leading-6 text-[color:var(--copy-soft)] lg:mx-0 lg:max-w-none lg:text-left"
               data-animate-copy
             >
-              Für Marketing-Teams, die mehr testen wollen, ohne jede Produktion
+              Für Brands, die mehr testen wollen, ohne jede Produktion
               neu aufzusetzen.
             </p>
           </div>

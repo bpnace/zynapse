@@ -24,14 +24,14 @@ describe("buildMetadata", () => {
   it("builds indexable metadata with canonical, locale, and preview directives", () => {
     const metadata = buildMetadata({
       title: "Startseite | Zynapse",
-      description: "Bessere Video Creatives für Marketing-Teams.",
+      description: "Bessere Video Creatives für Brands.",
       path: "/",
     });
 
     expect(metadata.alternates?.canonical).toBe("/");
     expect(metadata.openGraph).toMatchObject({
       title: "Startseite | Zynapse",
-      description: "Bessere Video Creatives für Marketing-Teams.",
+      description: "Bessere Video Creatives für Brands.",
       url: absoluteUrl("/"),
       locale: siteConfig.locale,
       siteName: siteConfig.name,
@@ -39,7 +39,7 @@ describe("buildMetadata", () => {
     expect(metadata.twitter).toMatchObject({
       card: "summary_large_image",
       title: "Startseite | Zynapse",
-      description: "Bessere Video Creatives für Marketing-Teams.",
+      description: "Bessere Video Creatives für Brands.",
     });
     expect(metadata.robots).toMatchObject({
       index: true,
@@ -81,16 +81,16 @@ describe("buildPageJsonLd", () => {
   it("connects page, service, and breadcrumbs in one graph", () => {
     const service = buildServiceJsonLd({
       path: "/brands",
-      name: "Video-Creative-Flows für Marketing-Teams",
-      description: "Creative Flow für Marketing-Teams.",
+      name: "Video-Creative-Flows für Brands",
+      description: "Creative Flow für Brands.",
       serviceType: "Video-Creative-Flow für Marketing- und Performance-Teams",
       audience: "Marketing- und Performance-Teams",
     });
     const jsonLd = buildPageJsonLd({
-      title: "Für Marketing-Teams | Zynapse",
-      description: "Creative Flow für Marketing-Teams.",
+      title: "Für Brands | Zynapse",
+      description: "Creative Flow für Brands.",
       path: "/brands",
-      breadcrumbs: buildBreadcrumbs("Für Marketing Teams", "/brands"),
+      breadcrumbs: buildBreadcrumbs("Für Brands", "/brands"),
       primaryEntity: service,
     });
     const graph = jsonLd["@graph"] as Array<Record<string, unknown>>;
@@ -117,7 +117,7 @@ describe("buildPageJsonLd", () => {
     });
     expect(breadcrumbItems[1]).toMatchObject({
       position: 2,
-      name: "Für Marketing Teams",
+      name: "Für Brands",
       item: absoluteUrl("/brands"),
     });
   });

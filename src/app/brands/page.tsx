@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 
 const pageSeo = {
-  title: "Für Marketing-Teams – mehr testbare Video Ads | Zynapse",
+  title: "Für Brands – mehr testbare Video Ads | Zynapse",
   description:
     "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Kreativrouten, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
   path: "/brands",
@@ -68,10 +68,10 @@ const results = [
 export default function BrandsPage() {
   const brandsJsonLd = buildPageJsonLd({
     ...pageSeo,
-    breadcrumbs: buildBreadcrumbs("Für Marketing Teams", pageSeo.path),
+    breadcrumbs: buildBreadcrumbs("Für Brands", pageSeo.path),
     primaryEntity: buildServiceJsonLd({
       path: pageSeo.path,
-      name: "Video-Creative-Flows für Marketing-Teams",
+      name: "Video-Creative-Flows für Brands",
       description: pageSeo.description,
       serviceType: "Video-Creative-Flow für Marketing- und Performance-Teams",
       audience: "Marketing-, Growth- und Performance-Teams",
@@ -90,10 +90,10 @@ export default function BrandsPage() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-start">
           <div className="space-y-6">
             <h1
-              className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
+              className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-7xl"
               data-animate-heading
             >
-              Mehr <span data-animate-word>testbare Video Ads</span>. Weniger{" "}
+              Mehr <span data-animate-word>testbare Video Ads.</span> Weniger{" "}
               <span className="title-accent">Abstimmung</span>.
             </h1>
             <p
@@ -116,7 +116,7 @@ export default function BrandsPage() {
               </ButtonLink>
             </div>
           </div>
-          <div className="hidden lg:flex lg:absolute lg:top-20 lg:right-12 lg:z-10">
+          <div className="hidden lg:flex lg:absolute lg:top-5 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[38rem] lg:w-[22rem]">
               <Image
                 src="/brand/peep-standing-16.png"
@@ -258,7 +258,7 @@ export default function BrandsPage() {
       >
         <div className="space-y-5">
           <SectionHeading
-            eyebrow="Für Marketing Teams"
+            eyebrow="Für Brands"
             title={
               <>
                 Was sich für euer Team{" "}

@@ -22,7 +22,7 @@ export function ProcessStepper() {
         title={
           <>
             Vom <span data-animate-word>Kampagnenziel</span> zum fertigen{" "}
-            <span className="title-accent">Creative Pack</span>.
+            <span className="title-accent">kreativen Output</span>.
           </>
         }
         copy="Ihr gebt Ziel, Produkt, Zielgruppe und Markenregeln vor. Zynapse Core macht daraus einen klaren Kreativplan und führt den Prozess bis zu geprüften Varianten für euer Media Team."

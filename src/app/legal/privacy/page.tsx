@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         Nachfolgend informieren wir dich über Art, Umfang und Zwecke der
         Verarbeitung personenbezogener Daten im Zusammenhang mit dem
         Webauftritt von Zynapse, den Kontaktmöglichkeiten auf der Website sowie
-        den Formularen für Brand-Anfragen und Bewerbungen für Kreative.
+        den Formularen für Kreativbriefings und Bewerbungen als AI Creative.
       </p>
 
       <LegalSection title="1. Verantwortlicher">
@@ -119,18 +119,18 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="4. Brand-Anfrage">
+      <LegalSection title="4. Kreativbriefing">
         <p>
-          Wenn du eine Brand-Anfrage übermittelst, verarbeiten wir die von dir
+          Wenn du ein Kreativbriefing übermittelst, verarbeiten wir die von dir
           eingegebenen Daten, um die Anfrage einzuordnen, intern zu prüfen und
-          ein passendes Setup oder einen nächsten Schritt abzuleiten.
+          einen passenden nächsten Schritt oder Creative Flow abzuleiten.
         </p>
         <p>Hierzu gehören insbesondere:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>Branche</li>
           <li>Produktlink</li>
-          <li>Ziel, Kanal, Budgetrahmen und Zeitplan</li>
-          <li>optionale Zusatzinformationen</li>
+          <li>Ziel, Zielgruppe, Kaufbarriere, Kanäle, Budgetrahmen und Zeitplan</li>
+          <li>optionale Zusatzinformationen wie Stilrichtung, Review-Hinweise oder Referenzen</li>
           <li>Kontaktname, geschäftliche E-Mail und Firma</li>
           <li>technische Anti-Spam-Angaben wie Zeitstempel und Honeypot-Feld</li>
         </ul>
@@ -141,11 +141,11 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="5. Bewerbung für Kreative">
+      <LegalSection title="5. Bewerbung als AI Creative">
         <p>
-          Wenn du dich als Kreative oder Spezialist:in bewirbst, verarbeiten wir
-          deine Angaben zur Prüfung der Passung für das kuratierte Netzwerk und
-          für die Anbahnung einer möglichen Zusammenarbeit.
+          Wenn du dich als Kreative:r oder Spezialist:in bewirbst, verarbeiten
+          wir deine Angaben zur Prüfung der Passung für zukünftige
+          Kampagnenarbeit und für die Anbahnung einer möglichen Zusammenarbeit.
         </p>
         <p>Hierzu gehören insbesondere:</p>
         <ul className="list-disc space-y-2 pl-5">
@@ -166,7 +166,7 @@ export default function PrivacyPage() {
 
       <LegalSection title="6. Lokale Zwischenspeicherung im Browser">
         <p>
-          Für die Brand-Anfrage und die Bewerbung für Kreative werden
+          Für das Kreativbriefing und die Bewerbung als AI Creative werden
           Formulareingaben im Browser zwischengespeichert, damit begonnene
           Eingaben nach einem Reload oder Seitenwechsel nicht verloren gehen.
         </p>

@@ -1,4 +1,3 @@
-import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const coreSteps = [
@@ -29,6 +28,34 @@ const coreSteps = [
   },
 ];
 
+const coreCardStyles = [
+  {
+    borderColor: "rgba(56,67,84,0.18)",
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(236,240,246,0.9)), radial-gradient(circle at top left, rgba(47,55,69,0.16), transparent 54%)",
+  },
+  {
+    borderColor: "rgba(92,89,100,0.18)",
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(239,235,239,0.9)), radial-gradient(circle at top left, rgba(96,88,96,0.14), transparent 54%)",
+  },
+  {
+    borderColor: "rgba(191,106,83,0.2)",
+    background:
+      "linear-gradient(180deg, rgba(255,252,248,0.96), rgba(251,235,228,0.9)), radial-gradient(circle at top left, rgba(224,94,67,0.2), transparent 56%)",
+  },
+  {
+    borderColor: "rgba(212,125,77,0.2)",
+    background:
+      "linear-gradient(180deg, rgba(255,252,246,0.96), rgba(250,238,224,0.9)), radial-gradient(circle at top left, rgba(232,132,79,0.2), transparent 56%)",
+  },
+  {
+    borderColor: "rgba(228,156,74,0.22)",
+    background:
+      "linear-gradient(180deg, rgba(255,252,244,0.96), rgba(251,242,222,0.91)), radial-gradient(circle at top left, rgba(240,168,77,0.22), transparent 58%)",
+  },
+] as const;
+
 export function CoreSection() {
   return (
     <section
@@ -41,27 +68,29 @@ export function CoreSection() {
         eyebrow="Zynapse Core"
         title={
           <>
-            Zynapse Core führt euer <span data-animate-word>Briefing</span> zum{" "}
-            fertigen <span className="title-accent">Creative Pack</span>.
+            Zynapse Core bringt die richtigen{" "}
+            <span data-animate-word>AI Creatives</span> für euer Briefing{" "}
+            <span className="title-accent">zusammen</span>.
           </>
         }
         copy="Unsere KI plant nicht einfach mehr Output. Sie hilft dabei, aus eurem Ziel den richtigen Kreativplan zu bauen, passende AI Creatives auszuwählen, Qualität zu prüfen und Feedback in klare nächste Schritte zu übersetzen."
       />
-      <div className="grid gap-4 lg:grid-cols-5">
+      <div className="relative">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 h-[72%] -translate-y-1/2 rounded-[calc(var(--radius-panel)+0.25rem)] blur-3xl"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(47,55,69,0.08) 0%, rgba(83,88,100,0.08) 22%, rgba(224,94,67,0.14) 56%, rgba(240,168,77,0.16) 100%)",
+          }}
+        />
+        <div className="grid gap-4 lg:grid-cols-5">
         {coreSteps.map((step, index) => (
           <article
             key={step.title}
-            className={`section-card rounded-[var(--radius-card)] p-5 ${
-              index === 0 || index === 3
-                ? "section-surface-paper"
-                : index === 1 || index === 4
-                  ? "section-surface-contrast"
-                  : "section-surface-warm"
-            }`}
+            className="section-card relative overflow-hidden rounded-[var(--radius-card)] p-5"
+            style={coreCardStyles[index]}
           >
-            <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-              0{index + 1}
-            </span>
             <h3 className="mt-4 font-display text-[1.35rem] leading-[1.05] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
               {step.title}
             </h3>
@@ -71,10 +100,6 @@ export function CoreSection() {
           </article>
         ))}
       </div>
-      <div className="flex justify-start">
-        <ButtonLink href="/#ablauf" variant="secondary" size="lg">
-          So arbeitet Zynapse Core
-        </ButtonLink>
       </div>
     </section>
   );

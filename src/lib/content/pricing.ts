@@ -9,7 +9,7 @@ export const pricingPlans: PricingPlan[] = [
     description:
       "Für Teams, die eine erste Kampagne testen und schnell zu einem sauberen Kreativplan kommen wollen.",
     audience:
-      "Für Marketing-Teams mit einem klaren Produkt, einem ersten Kampagnenziel und dem Bedarf, schnell ins Testfenster zu kommen.",
+      "Für Brands mit einem klaren Produkt, einem ersten Kampagnenziel und dem Bedarf, schnell ins Testfenster zu kommen.",
     highlights: ["Zynapse Core enthalten", "schneller Start", "erstes Creative Pack"],
     fit: "Ideal, wenn ihr ein neues Produkt, ein neues Messaging oder eine erste Kampagnenidee testen wollt, ohne direkt einen laufenden Produktionsmodus aufzubauen.",
     collaboration:
@@ -32,7 +32,7 @@ export const pricingPlans: PricingPlan[] = [
     description:
       "Der laufende Modus für Teams, die jeden Monat neue Creatives brauchen und dabei nicht jedes Mal neu koordinieren wollen.",
     audience:
-      "Für Marketing-Teams mit laufendem Kampagnenbedarf und dem Wunsch nach einem verlässlichen Creative-Rhythmus.",
+      "Für Brands mit laufendem Kampagnenbedarf und dem Wunsch nach einem verlässlichen Creative-Rhythmus.",
     featured: true,
     highlights: ["Zynapse Core enthalten", "laufender Rhythmus", "sichtbare Learnings"],
     fit: "Ideal, wenn aus einzelnen Tests ein monatlicher Creative Flow werden soll und ihr dafür einen verlässlichen Prozess statt neuer Ad-hoc-Besetzungen braucht.",

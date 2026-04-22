@@ -131,7 +131,7 @@ export default function CreativesPage() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(0,0.32fr)] lg:items-start">
           <div className="space-y-6">
             <h1
-              className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-6xl"
+              className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-7xl"
               data-animate-heading
             >
               Arbeite an starken <span className="title-accent" data-animate-word>
