@@ -40,13 +40,20 @@ test("closed demo login reaches the seeded review and handover workflow", async 
   await page.getByRole("button", { name: /mit passwort anmelden/i }).click();
   await expect
     .poll(() => page.url(), { timeout: 30_000 })
-    .toMatch(/\/brands\/today(?:\?.*)?$/);
+    .toMatch(/\/brands\/home(?:\?.*)?$/);
+  await dismissCookieBanner(page);
 
   await expect(
     page.getByRole("heading", { name: /daily glow serum · kampagnenstart/i }).first(),
   ).toBeVisible();
   await expect(page.getByText(/geschlossene demo/i).first()).toBeVisible();
   await expect(page.getByRole("link", { name: /kampagne öffnen/i })).toBeVisible();
+
+  await page.getByRole("link", { name: /kampagne öffnen/i }).scrollIntoViewIfNeeded();
+  await page.getByRole("link", { name: /kampagne öffnen/i }).click();
+  await expect
+    .poll(() => page.url(), { timeout: 30_000 })
+    .toMatch(/\/brands\/campaigns\/[^/]+(?:\?.*)?$/);
 
   await page.getByRole("link", { name: /freigabe öffnen/i }).click();
   await expect
@@ -97,7 +104,8 @@ test("closed demo login also routes the creative demo account into the creative 
 
   await expect
     .poll(() => page.url(), { timeout: 30_000 })
-    .toMatch(/\/creatives\/tasks(?:\?.*)?$/);
+    .toMatch(/\/creatives\/home(?:\?.*)?$/);
+  await dismissCookieBanner(page);
 
   await expect(page.getByText(/creatives workspace/i).first()).toBeVisible();
   await expect(
@@ -105,18 +113,19 @@ test("closed demo login also routes the creative demo account into the creative 
   ).toBeVisible();
   await expect(page.getByText(/rolle creative_lead/i)).toBeVisible();
 
-  await page.getByRole("link", { name: /assigned campaigns/i }).click();
+  await page.getByRole("link", { name: /task-raum öffnen/i }).scrollIntoViewIfNeeded();
+  await page.getByRole("link", { name: /task-raum öffnen/i }).click();
   await expect
     .poll(() => page.url(), { timeout: 30_000 })
-    .toMatch(/\/creatives\/campaigns(?:\?.*)?$/);
+    .toMatch(/\/creatives\/campaigns\/[^/]+(?:\?.*)?$/);
   await expect(
-    page.getByRole("heading", { name: /aktive kampagnen und task-räume/i }),
+    page.getByRole("heading", { name: /daily glow serum · kampagnenstart/i }),
   ).toBeVisible();
 
-  await page.getByRole("link", { name: /feedback/i }).click();
+  await page.goto("/creatives/revisions");
   await expect
     .poll(() => page.url(), { timeout: 30_000 })
-    .toMatch(/\/creatives\/feedback(?:\?.*)?$/);
+    .toMatch(/\/creatives\/revisions(?:\?.*)?$/);
   await expect(
     page.getByRole("heading", { name: /offene revisionen und rückfragen/i }),
   ).toBeVisible();

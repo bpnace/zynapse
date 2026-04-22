@@ -1,18 +1,15 @@
-import { WorkspaceRoutePlaceholder } from "@/components/workspace/shared/workspace-route-placeholder";
-import { creativeWorkspaceRoutes } from "@/lib/workspace/routes";
+import { CreativeTaskBoard } from "@/components/workspace/creative/creative-task-board";
+import { requireCreativeWorkspaceAccess } from "@/lib/auth/guards";
+import { getCreativeTasksView } from "@/lib/workspace/queries/get-creative-tasks-view";
 
-export default function CreativeHomePage() {
-  return (
-    <WorkspaceRoutePlaceholder
-      eyebrow="Creatives / Home"
-      title="Creative home is scaffolded for the new workspace."
-      description="This route will become the summary layer for readiness, invitations, revisions, and active assignments while the current task board remains the working surface."
-      checkpoints={[
-        "Snapshot of workload, revisions, and readiness.",
-        "Keeps task execution separate from overview context.",
-      ]}
-      ctaHref={creativeWorkspaceRoutes.tasks()}
-      ctaLabel="Open current task board"
-    />
-  );
+export const dynamic = "force-dynamic";
+
+export default async function CreativeHomePage() {
+  const bootstrap = await requireCreativeWorkspaceAccess();
+  const view = await getCreativeTasksView({
+    organizationId: bootstrap.organization.id,
+    userId: bootstrap.membership.userId,
+  });
+
+  return <CreativeTaskBoard assignments={view.assignments} summary={view.summary} />;
 }

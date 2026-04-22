@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { brandsWorkspaceRoutes } from "@/lib/workspace/routes";
 
@@ -48,14 +49,14 @@ export function NextActionCard({
       </p>
       <div className="mt-5 border-t border-[var(--workspace-line)] pt-4">
         <div className="grid gap-3">
-          <a href={primaryHref} className="workspace-button workspace-button-primary">
+          <Link href={primaryHref} className="workspace-button workspace-button-primary">
             {primaryLabel}
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </Link>
           {campaignId && builderHref ? (
-            <a href={builderHref} className="workspace-button workspace-button-secondary">
+            <Link href={builderHref} className="workspace-button workspace-button-secondary">
               {builderLabel}
-            </a>
+            </Link>
           ) : null}
         </div>
       </div>

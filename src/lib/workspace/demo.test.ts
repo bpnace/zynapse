@@ -11,8 +11,8 @@ describe("resolveDemoWorkspaceNextPath", () => {
   });
 
   it("preserves safe canonical brand routes", () => {
-    expect(resolveDemoWorkspaceNextPath("/brands/today?view=home")).toBe(
-      "/brands/today?view=home",
+    expect(resolveDemoWorkspaceNextPath("/brands/home?view=overview")).toBe(
+      "/brands/home?view=overview",
     );
     expect(resolveDemoWorkspaceNextPath("/brands/campaigns/campaign-1")).toBe(
       "/brands/campaigns/campaign-1",
@@ -20,14 +20,14 @@ describe("resolveDemoWorkspaceNextPath", () => {
   });
 
   it("falls back for unsafe or unrelated paths", () => {
-    expect(resolveDemoWorkspaceNextPath("/workspace")).toBe("/brands/today");
+    expect(resolveDemoWorkspaceNextPath("/workspace")).toBe("/brands/home");
     expect(resolveDemoWorkspaceNextPath("/workspace/campaigns/campaign-1/review")).toBe(
-      "/brands/today",
+      "/brands/home",
     );
-    expect(resolveDemoWorkspaceNextPath("//workspace")).toBe("/brands/today");
-    expect(resolveDemoWorkspaceNextPath("/workspace-brand")).toBe("/brands/today");
-    expect(resolveDemoWorkspaceNextPath("")).toBe("/brands/today");
-    expect(resolveDemoWorkspaceNextPath(null)).toBe("/brands/today");
+    expect(resolveDemoWorkspaceNextPath("//workspace")).toBe("/brands/home");
+    expect(resolveDemoWorkspaceNextPath("/workspace-brand")).toBe("/brands/home");
+    expect(resolveDemoWorkspaceNextPath("")).toBe("/brands/home");
+    expect(resolveDemoWorkspaceNextPath(null)).toBe("/brands/home");
   });
 });
 
@@ -44,9 +44,9 @@ describe("demo workspace account routing", () => {
   });
 
   it("uses the matching workspace landing path when no explicit next path is provided", () => {
-    expect(resolveDemoWorkspaceNextPathForEmail("demo@zynapse.eu", null)).toBe("/brands/today");
+    expect(resolveDemoWorkspaceNextPathForEmail("demo@zynapse.eu", null)).toBe("/brands/home");
     expect(resolveDemoWorkspaceNextPathForEmail("demo+creative@zynapse.eu", null)).toBe(
-      "/creatives/tasks",
+      "/creatives/home",
     );
   });
 
@@ -62,12 +62,12 @@ describe("demo workspace account routing", () => {
         "demo+creative@zynapse.eu",
         "/workspace",
       ),
-    ).toBe("/creatives/tasks");
+    ).toBe("/creatives/home");
     expect(
       resolveDemoWorkspaceNextPathForEmail(
         "demo+creative@zynapse.eu",
-        "/brands/today",
+        "/brands/home",
       ),
-    ).toBe("/creatives/tasks");
+    ).toBe("/creatives/home");
   });
 });
