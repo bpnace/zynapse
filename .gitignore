@@ -13,6 +13,8 @@
 /public/*
 !/public/brand/
 !/public/brand/**
+!/public/marketing/
+!/public/marketing/**
 !/public/logo/
 /public/logo/*
 !/public/logo/Wortmarke1.png
