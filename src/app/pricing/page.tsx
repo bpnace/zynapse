@@ -26,13 +26,13 @@ function buildContactHref(planId: string) {
 }
 
 const pricingTileButtonBaseClassName =
-  "inline-flex min-h-12 w-full items-center justify-center gap-2 px-6 py-3.5 text-base font-semibold tracking-[-0.02em] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]";
+  "inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[0.45rem] px-4 py-3 text-sm font-semibold tracking-[0.01em] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]";
 
 const pricingTileFeaturedButtonClassName =
-  "rounded-[var(--radius-panel)] border border-[rgba(255,255,255,0.18)] bg-[linear-gradient(135deg,var(--accent-strong),#f07a57)] text-white shadow-[0_18px_38px_rgba(224,94,67,0.26)] hover:bg-[linear-gradient(135deg,#cf543c,#eb7854)] focus-visible:ring-[rgba(224,94,67,0.25)]";
+  "border border-[rgba(191,106,83,0.24)] bg-[var(--accent-strong)] text-white shadow-[0_10px_18px_rgba(224,94,67,0.14)] hover:bg-[var(--accent)] focus-visible:ring-[rgba(224,94,67,0.22)]";
 
 const pricingTileDefaultButtonClassName =
-  "rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.24)] bg-white text-[var(--copy-strong)] shadow-[0_10px_22px_rgba(31,36,48,0.05)] hover:border-[rgba(56,67,84,0.3)] hover:bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(250,246,240,0.98))] focus-visible:ring-[rgba(56,67,84,0.12)]";
+  "border border-[rgba(56,67,84,0.18)] bg-transparent text-[var(--copy-strong)] hover:border-[rgba(56,67,84,0.3)] hover:bg-[rgba(249,245,239,0.76)] focus-visible:ring-[rgba(56,67,84,0.12)]";
 
 const serviceComparisons = [
   {
@@ -130,160 +130,135 @@ export default function PricingPage() {
         className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-10 sm:px-8 lg:px-10"
         data-reveal-section
       >
+        <div className="grid gap-4 xl:grid-cols-3">
+          {pricingPlans.map((plan) => {
+            const isFeatured = Boolean(plan.featured);
+            const focusLine = plan.highlights.join(" / ");
 
-
-        <div className="grid gap-5 xl:grid-cols-3">
-          {pricingPlans.map((plan) => (
-            <article
-              key={plan.id}
-              className={`section-card group relative overflow-hidden rounded-[calc(var(--radius-card)+0.15rem)] border p-0 ${
-                plan.featured
-                  ? "border-[rgba(191,106,83,0.24)] bg-[linear-gradient(180deg,rgba(255,248,241,0.98),rgba(249,236,223,0.96))] text-[var(--copy-strong)] shadow-[0_28px_60px_rgba(191,106,83,0.16)]"
-                  : "section-surface-paper border-[rgba(56,67,84,0.18)] shadow-[0_18px_42px_rgba(31,36,48,0.08)]"
-              }`}
-            >
-              <div
-                className={`pointer-events-none absolute inset-x-0 top-0 h-32 transition-transform duration-500 group-hover:scale-105 ${
-                  plan.featured
-                    ? "bg-[radial-gradient(circle_at_top,rgba(246,107,76,0.2),transparent_72%)]"
-                    : "bg-[linear-gradient(180deg,rgba(246,107,76,0.08),transparent)]"
-                }`}
-              />
-
-              <div className="relative flex h-full flex-col">
+            return (
+              <article
+                key={plan.id}
+                className={cn(
+                  "relative flex h-full flex-col overflow-hidden rounded-[0.55rem] border bg-[rgba(255,252,248,0.98)] shadow-[0_12px_24px_rgba(31,36,48,0.05)]",
+                  isFeatured
+                    ? "border-[rgba(191,106,83,0.2)] bg-[rgba(252,245,237,0.98)]"
+                    : "border-[rgba(56,67,84,0.14)]",
+                )}
+                data-animate-item
+              >
                 <div
-                  className={`border-b px-6 pt-6 pb-5 text-center sm:px-7 ${
-                    plan.featured
-                      ? "border-[rgba(191,106,83,0.16)]"
-                      : "border-[rgba(56,67,84,0.12)]"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-3 text-left">
-                    <p
-                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${
-                        plan.featured ? "text-[var(--accent-soft)]" : "text-[var(--accent-soft)]"
-                      }`}
-                    >
-                      {plan.cadence}
-                    </p>
-                    <span className="rounded-full border border-[rgba(56,67,84,0.12)] bg-white/72 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--copy-soft)]">
-                      {plan.featured ? "Empfohlen" : "Flow"}
-                    </span>
-                  </div>
+                  className={cn(
+                    "pointer-events-none absolute inset-y-0 left-0 w-[3px]",
+                    isFeatured
+                      ? "bg-[var(--accent)]"
+                      : "bg-[rgba(56,67,84,0.14)]",
+                  )}
+                />
 
-                  <h2
-                    className={`mt-7 text-center font-display text-[2.5rem] leading-[0.9] font-semibold tracking-[-0.06em] ${
-                      plan.featured ? "text-[var(--copy-strong)]" : "text-[var(--copy-strong)]"
-                    }`}
-                  >
-                    {plan.name}
-                  </h2>
-                  <p
-                    className={`mt-6 text-center font-display text-3xl leading-none font-semibold tracking-[-0.08em] ${
-                      plan.featured ? "text-[var(--copy-strong)]" : "text-[var(--copy-strong)]"
-                    }`}
-                  >
-                    {plan.price}
-                  </p>
-                  <p
-                    className={`mx-auto mt-4 max-w-[18rem] text-center text-sm leading-6 ${
-                      plan.featured ? "text-[color:var(--copy-body)]" : "text-[color:var(--copy-body)]"
-                    }`}
-                  >
-                    {plan.description}
-                  </p>
-                  <p className="mx-auto mt-4 max-w-[18rem] text-center text-xs leading-5 text-[color:var(--copy-soft)]">
-                    {plan.audience}
-                  </p>
-                  <div className="mt-4 flex flex-wrap justify-center gap-2">
-                    {plan.highlights.map((highlight) => (
-                      <span
-                        key={highlight}
-                        className="rounded-full border border-[rgba(56,67,84,0.12)] bg-white/72 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-[var(--copy-soft)]"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-1 flex-col px-6 py-5 sm:px-7">
-                  <div className="grid gap-3">
-                    {plan.deliverables.map((deliverable, index) => (
-                      <div
-                        key={deliverable}
-                        className="flex items-start gap-3 text-sm leading-6 text-[color:var(--copy-body)]"
-                      >
-                        <span className="relative mt-[0.62rem] block h-1.5 w-1.5 shrink-0">
-                          <span className="absolute -inset-1.5 rounded-full bg-[rgba(224,94,67,0.14)] blur-[8px]" />
-                          <span className="absolute inset-0 rounded-full bg-[var(--accent)]" />
-                        </span>
-                        <span className={index === 0 ? "text-[color:var(--copy-strong)]" : ""}>
-                          {deliverable}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.1)] bg-white/70 p-4">
-                    <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-                      Zynapse Core enthält
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {plan.collaboration}
-                    </p>
-                  </div>
-
+                <div className="relative flex h-full flex-col">
                   <div
-                    className={`mt-5 border-l-[3px] pl-4 ${
-                      plan.featured
-                        ? "border-[rgba(246,107,76,0.7)]"
-                        : "border-[rgba(246,107,76,0.4)]"
-                    }`}
+                    className={cn(
+                      "border-b px-5 pt-5 pb-4 sm:px-6",
+                      isFeatured
+                        ? "border-[rgba(191,106,83,0.16)]"
+                        : "border-[rgba(56,67,84,0.12)]",
+                    )}
                   >
-                    <p
-                      className={`font-mono text-[11px] tracking-[0.16em] uppercase ${
-                        plan.featured ? "text-[var(--copy-soft)]" : "text-[var(--copy-soft)]"
-                      }`}
-                    >
-                      Passt wenn
-                    </p>
-                    <p
-                      className={`mt-2 text-sm leading-6 ${
-                        plan.featured ? "text-[color:var(--copy-body)]" : "text-[color:var(--copy-body)]"
-                      }`}
-                    >
-                      {plan.fit}
-                    </p>
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
+                        {plan.cadence}
+                      </p>
+                      {isFeatured ? (
+                        <span className="border border-[rgba(191,106,83,0.18)] px-2 py-1 text-[10px] leading-none uppercase tracking-[0.16em] text-[var(--accent-soft)]">
+                          Empfohlen
+                        </span>
+                      ) : null}
+                    </div>
+
+                    <div className="mt-4 grid gap-4">
+                      <div className="grid gap-1.5">
+                        <h2 className="font-display text-[2.1rem] leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+                          {plan.name}
+                        </h2>
+                        <p className="max-w-[18rem] text-sm leading-5 text-[color:var(--copy-body)]">
+                          {plan.description}
+                        </p>
+                      </div>
+                      <div className="grid gap-1 border-t border-[rgba(56,67,84,0.1)] pt-3">
+                        <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                          Preis
+                        </p>
+                        <p className="font-display text-[2.35rem] leading-none font-semibold tracking-[-0.07em] text-[var(--copy-strong)]">
+                          {plan.price}
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="mt-6 flex-1" />
+                  <div className="flex flex-1 flex-col px-5 py-4 sm:px-6">
+                    <dl className="grid gap-0 border-t border-[rgba(56,67,84,0.12)]">
+                      <div className="grid gap-1 border-b border-[rgba(56,67,84,0.1)] py-3">
+                        <dt className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                          Schwerpunkte
+                        </dt>
+                        <dd className="text-sm leading-5 text-[color:var(--copy-body)]">
+                          {focusLine}
+                        </dd>
+                      </div>
 
-                  <div className="space-y-3 text-center">
-                    <Link
-                      href={buildContactHref(plan.id)}
-                      className={cn(
-                        pricingTileButtonBaseClassName,
-                        plan.featured
-                          ? pricingTileFeaturedButtonClassName
-                          : pricingTileDefaultButtonClassName,
-                      )}
-                      data-animate-item
-                    >
-                      {plan.name} anfragen
-                    </Link>
-                    <p
-                      className={`text-center text-xs leading-5 ${
-                        plan.featured ? "text-[color:var(--copy-muted)]" : "text-[color:var(--copy-muted)]"
-                      }`}
-                    >
-                      Flow wird im Kontaktformular direkt vorausgewählt.
-                    </p>
+                      <div className="grid gap-2 border-b border-[rgba(56,67,84,0.1)] py-3">
+                        <dt className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                          Im Flow
+                        </dt>
+                        <dd>
+                          <ol className="grid gap-2">
+                            {plan.deliverables.map((deliverable, index) => (
+                              <li
+                                key={deliverable}
+                                className="grid grid-cols-[1.4rem_minmax(0,1fr)] gap-2"
+                              >
+                                <span className="font-mono text-[10px] leading-5 tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                                  {String(index + 1).padStart(2, "0")}
+                                </span>
+                                <span className="text-sm leading-5 text-[color:var(--copy-body)]">
+                                  {deliverable}
+                                </span>
+                              </li>
+                            ))}
+                          </ol>
+                        </dd>
+                      </div>
+
+                      <div className="grid gap-1 py-3">
+                        <dt className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                          Zusammenarbeit
+                        </dt>
+                        <dd className="text-sm leading-5 text-[color:var(--copy-body)]">
+                          {plan.collaboration}
+                        </dd>
+                      </div>
+                    </dl>
+
+                    <div className="mt-5 flex-1" />
+
+                    <div className="border-t border-[rgba(56,67,84,0.12)] pt-4 text-left">
+                      <Link
+                        href={buildContactHref(plan.id)}
+                        className={cn(
+                          pricingTileButtonBaseClassName,
+                          isFeatured
+                            ? pricingTileFeaturedButtonClassName
+                            : pricingTileDefaultButtonClassName,
+                        )}
+                      >
+                        {plan.name} anfragen
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
         <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.14)] p-6 sm:p-8">

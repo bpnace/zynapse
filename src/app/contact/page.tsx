@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
-import { ButtonLink } from "@/components/ui/button";
 import { contactChannels } from "@/lib/content/site";
 import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 
@@ -49,16 +48,8 @@ export default function ContactPage() {
               musst: Deine Nachricht landet direkt beim richtigen Kontakt. Du
               musst nichts perfekt vorbereiten, ein paar klare Sätze reichen.
             </p>
-            <div className="flex flex-wrap gap-3" data-animate-item>
-              <ButtonLink href="/contact#kontaktformular" size="lg">
-                Nachricht schicken
-              </ButtonLink>
-              <ButtonLink href="/pricing" variant="secondary" size="lg">
-                Preise ansehen
-              </ButtonLink>
-            </div>
           </div>
-          <div className="hidden lg:flex lg:absolute lg:top-15 lg:right-12 lg:z-10">
+          <div className="hidden lg:flex lg:absolute lg:top-7 lg:right-12 lg:z-10">
             <div className="relative h-[20rem] w-[16rem] sm:h-[24rem] sm:w-[18rem] lg:h-[20rem] lg:w-[23rem]">
               <Image
                 src="/brand/peep-sitting-2.png"

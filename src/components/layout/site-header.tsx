@@ -9,6 +9,7 @@ import appIcon from "@/app/apple-touch-icon.png";
 import { primaryCta, siteNav } from "@/lib/content/site";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { SiteNavLink } from "@/components/layout/site-nav-link";
 import { Wordmark } from "@/components/layout/wordmark";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 import { usePastHero } from "@/hooks/use-past-hero";
@@ -70,9 +71,10 @@ export function SiteHeader() {
               const active = pathname === item.href;
 
               return (
-                <Link
+                <SiteNavLink
                   key={item.href}
                   href={item.href}
+                  onNavigate={closeMenu}
                   className={cn(
                     "group relative px-4 py-2 text-sm text-[color:var(--copy-muted)] transition-colors duration-200 hover:text-[var(--foreground)]",
                     active && "text-[var(--foreground)]",
@@ -86,7 +88,7 @@ export function SiteHeader() {
                       active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
                     )}
                   />
-                </Link>
+                </SiteNavLink>
               );
             })}
           </nav>

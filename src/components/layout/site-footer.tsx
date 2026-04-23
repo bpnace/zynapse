@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { footerGroups } from "@/lib/content/site";
-import Link from "next/link";
+import { SiteNavLink } from "@/components/layout/site-nav-link";
 import { Wordmark } from "@/components/layout/wordmark";
 
 export function SiteFooter() {
@@ -40,12 +40,12 @@ export function SiteFooter() {
             <ul className="space-y-3">
               {group.links.map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <SiteNavLink
                     href={link.href}
                     className="text-sm text-[color:var(--surface-paper)] transition-opacity duration-200 hover:opacity-80"
                   >
                     {link.label}
-                  </Link>
+                  </SiteNavLink>
                 </li>
               ))}
             </ul>

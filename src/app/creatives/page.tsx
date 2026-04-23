@@ -93,6 +93,39 @@ const roleExamples = [
   },
 ];
 
+const creativeCoreSupports = [
+  {
+    title: "Briefing-Zusammenfassung für deine Rolle",
+    copy:
+      "Produkt, Ziel, Zielgruppe und Markenrahmen werden so verdichtet, dass dein konkreter Beitrag sofort klar ist.",
+  },
+  {
+    title: "Sichtbare Markenregeln und No-Gos",
+    copy:
+      "Look, Tonalität und Grenzen bleiben im Flow sichtbar, statt nur einmal im Briefing-Dokument aufzutauchen.",
+  },
+  {
+    title: "Klare Anforderungen für deine Abgabe",
+    copy:
+      "Format, Qualitätsziel und Erwartung an deinen Output stehen vor dem Start fest und nicht erst nach der ersten Schleife.",
+  },
+  {
+    title: "Check vor dem Einreichen",
+    copy:
+      "Vor der Übergabe siehst du, ob Beitrag, Richtung und Qualitätskriterien wirklich zum Kampagnenziel passen.",
+  },
+  {
+    title: "Feedback als konkrete Aufgaben",
+    copy:
+      "Kommentare werden in priorisierte nächste Schritte übersetzt statt in lose Rückmeldungen aus Calls, Chats und Docs.",
+  },
+  {
+    title: "Bessere Übergaben zwischen Strategie, Prompting und Produktion",
+    copy:
+      "Der Beitrag jeder Rolle bleibt anschlussfähig, sodass beim nächsten Schritt keine Richtung oder Lernlogik verloren geht.",
+  },
+] as const;
+
 const profileFits = [
   "Du willst an echten Brand-Kampagnen arbeiten statt an losem Creator-Sourcing",
   "Du denkst nicht nur in Einzelassets, sondern in Hooks, Richtungen und Testlogik",
@@ -152,7 +185,7 @@ export default function CreativesPage() {
               <ButtonLink href="/apply" size="lg">
                 Als AI Creative bewerben
               </ButtonLink>
-              <ButtonLink href="/#rollen" variant="secondary" size="lg">
+              <ButtonLink href="/creatives#rollen" variant="secondary" size="lg">
                 Rollen ansehen
               </ButtonLink>
             </div>
@@ -193,7 +226,7 @@ export default function CreativesPage() {
           {painPoints.map((point, index) => (
             <article
               key={point.title}
-              className={`section-card section-surface-paper rounded-[var(--radius-card)] border-t-[3px] p-6 ${
+              className={`section-card section-surface-mute border-t-[3px] p-6 ${
                 index === 0
                   ? "border-t-[rgba(224,94,67,0.24)]"
                   : index === 1
@@ -269,7 +302,7 @@ export default function CreativesPage() {
               key={entry.role}
               className="section-card section-surface-paper rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] p-6"
             >
-              <p className="font-mono text-xs tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+              <p className="font-mono text-xs font-bold tracking-[0.16em] uppercase text-[var(--accent-soft)]">
                 {entry.role}
               </p>
               <p className="mt-4 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
@@ -287,38 +320,67 @@ export default function CreativesPage() {
         className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <SectionHeading
-          eyebrow="Zynapse Core für Creatives"
-          title={
-            <>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:items-start">
+          <div className="space-y-4 lg:pr-6">
+            <p
+              className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent-soft)]"
+              data-animate-heading
+            >
+              Zynapse Core für Creatives
+            </p>
+            <h2
+              className="max-w-3xl font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[3rem]"
+              data-animate-heading
+            >
               Zynapse Core gibt dir <span data-animate-word>klare Aufgaben</span>{" "}
               statt unklarer <span className="title-accent">Briefings</span>.
-            </>
-          }
-          copy="Die KI ersetzt dich nicht. Sie sorgt dafür, dass Briefing, Markenregeln, Feedback und Übergaben so strukturiert sind, dass deine Arbeit besser greifen kann."
-        />
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {[
-            "Briefing-Zusammenfassung für deine Rolle",
-            "Sichtbare Markenregeln und No-Gos",
-            "Klare Anforderungen für deine Abgabe",
-            "Check vor dem Einreichen",
-            "Feedback als konkrete Aufgaben",
-            "Bessere Übergaben zwischen Strategie, Prompting und Produktion",
-          ].map((item, index) => (
-            <article
-              key={item}
-              className={`section-card rounded-[var(--radius-card)] p-6 ${
-                index === 1 || index === 4
-                  ? "section-surface-warm"
-                  : "section-surface-paper"
-              }`}
+            </h2>
+            <p
+              className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
+              data-animate-copy
             >
-              <p className="font-display text-[1.2rem] leading-[1.08] font-semibold tracking-[-0.03em] text-[var(--copy-strong)]">
-                {item}
+              Die KI ersetzt dich nicht. Sie strukturiert Briefing, Markenregeln,
+              Feedback und Übergaben so, dass dein Beitrag schneller greift und
+              im Kampagnenfluss nicht verloren geht.
+            </p>
+            <div className="border-t border-[rgba(56,67,84,0.1)] pt-4">
+              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                Im Flow sichtbar
               </p>
-            </article>
-          ))}
+              <p className="mt-2 max-w-md text-sm leading-6 text-[color:var(--copy-body)]">
+                Rolle, Qualitätsziel, No-Gos und nächste Schritte bleiben an
+                einer Stelle lesbar, statt über mehrere Tools verteilt zu sein.
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="relative overflow-hidden rounded-[0.7rem] border border-[rgba(56,67,84,0.14)] bg-[rgba(248,250,252,0.92)] shadow-[0_14px_28px_rgba(31,36,48,0.05)]"
+            data-animate-item
+          >
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[var(--accent)]" />
+            <div className="relative grid divide-y divide-[rgba(56,67,84,0.1)]">
+              {creativeCoreSupports.map((item, index) => (
+                <article
+                  key={item.title}
+                  className="grid gap-3 px-5 py-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-4 sm:px-6"
+                  data-animate-item
+                >
+                  <span className="font-mono text-[10px] leading-6 tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className="grid gap-1.5">
+                    <h3 className="text-[1rem] leading-6 font-semibold tracking-[-0.02em] text-[var(--copy-strong)]">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+                      {item.copy}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

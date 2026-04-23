@@ -117,3 +117,32 @@ test("navbar navigation resets to top and stays free of known scroll errors", as
   expect(knownWarnings).toEqual([]);
   expect(knownScrollErrors).toEqual([]);
 });
+
+test("beispiele nav link does not duplicate hashes and reaches the section reliably", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const header = page.locator("header").first();
+  const examplesLink = header.locator('a[href="/#beispiele"]').first();
+
+  await examplesLink.click();
+  await expect(page).toHaveURL(/\/#beispiele$/);
+
+  await examplesLink.click();
+  await expect(page).toHaveURL(/\/#beispiele$/);
+
+  await page.goto("/brands");
+  const brandsHeader = page.locator("header").first();
+  await brandsHeader.locator('a[href="/#beispiele"]').first().click();
+  await expect(page).toHaveURL(/\/#beispiele$/);
+  await expect
+    .poll(async () => {
+      return page.evaluate(() => {
+        const target = document.getElementById("beispiele");
+        if (!target) return null;
+        return Math.round(target.getBoundingClientRect().top);
+      });
+    })
+    .toBeLessThan(80);
+});
