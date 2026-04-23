@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PageMotion } from "@/components/animation/page-motion";
 import { AnimatedMetric } from "@/components/marketing/animated-metric";
+import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -219,29 +220,7 @@ export default function BrandsPage() {
             copy="Performance wächst nicht nur durch mehr Budget. Sie wächst durch bessere Tests. Dafür braucht ihr regelmäßig neue Hooks, neue Formate und neue Varianten, ohne jedes Mal eine Produktion von null zu starten."
           />
 
-          <div className="mt-8 section-card section-surface-contrast overflow-hidden border-[rgba(56,67,84,0.14)]">
-            {painPoints.map((point, index) => (
-              <article
-                key={point.title}
-                className={`grid gap-4 px-6 py-6 sm:px-8 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-6 ${
-                  index > 0 ? "border-t border-[rgba(56,67,84,0.12)]" : ""
-                }`}
-                data-animate-item
-              >
-                <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div className="space-y-3">
-                  <h3 className="font-display text-[1.65rem] leading-[0.96] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                    {point.title}
-                  </h3>
-                  <p className="max-w-4xl text-[1rem] leading-7 text-[color:var(--copy-body)]">
-                    {point.description}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
+          <ProblemCardGrid cards={painPoints} className="mt-8" />
         </section>
 
         <section

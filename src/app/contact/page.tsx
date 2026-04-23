@@ -72,19 +72,55 @@ export default function ContactPage() {
           <ContactIntakeForm />
         </Suspense>
       </section>
-      <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
-        {contactChannels.map((channel) => (
-          <article key={channel.label} className="section-card rounded-[1.9rem] p-6">
-            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-              {channel.label}
-            </p>
-            <h2 className="mt-4 font-display text-2xl font-semibold">{channel.value}</h2>
-            <p className="mt-4 text-[color:var(--copy-muted)]">{channel.copy}</p>
-          </article>
-        ))}
-      </section>
+        <section className="mx-auto grid w-full max-w-7xl gap-5 px-6 py-10 sm:px-8 lg:grid-cols-3 lg:px-10">
+          {contactChannels.map((channel) => (
+            <ContactChannelCard key={channel.label} channel={channel} />
+          ))}
+        </section>
       </PageMotion>
     </>
+  );
+}
+
+function ContactChannelCard({
+  channel,
+}: {
+  channel: (typeof contactChannels)[number];
+}) {
+  const { localPart, domain } = splitEmailAddress(channel.value);
+
+  return (
+    <article className="section-card section-surface-paper rounded-[1.9rem] border-[rgba(56,67,84,0.14)] p-6 sm:p-7">
+      <div className="flex items-start justify-between gap-4">
+        <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
+          {channel.label}
+        </p>
+        <span className="rounded-full border border-[rgba(56,67,84,0.12)] bg-[rgba(255,255,255,0.62)] px-2.5 py-1 font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--copy-soft)]">
+          Direkt
+        </span>
+      </div>
+
+      <a
+        href={`mailto:${channel.value}`}
+        className="group mt-5 block rounded-[1.35rem] border border-[rgba(56,67,84,0.14)] bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(244,240,234,0.88))] px-5 py-5 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[rgba(56,67,84,0.22)] hover:shadow-[0_18px_40px_rgba(31,36,48,0.08)]"
+      >
+        <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+          E-Mail
+        </span>
+        <span className="mt-3 block">
+          <span className="block font-display text-[2rem] leading-[0.9] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] [overflow-wrap:anywhere] sm:text-[2.25rem]">
+            {localPart}
+          </span>
+          <span className="mt-2 block font-mono text-[0.78rem] leading-5 tracking-[0.14em] text-[var(--accent-strong)] [overflow-wrap:anywhere]">
+            @{domain}
+          </span>
+        </span>
+      </a>
+
+      <p className="mt-5 text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
+        {channel.copy}
+      </p>
+    </article>
   );
 }
 
@@ -97,4 +133,13 @@ function ContactFormFallback() {
       </p>
     </div>
   );
+}
+
+function splitEmailAddress(email: string) {
+  const [localPart, ...domainParts] = email.split("@");
+
+  return {
+    localPart,
+    domain: domainParts.join("@"),
+  };
 }

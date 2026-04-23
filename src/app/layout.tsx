@@ -5,6 +5,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { SiteAnalytics } from "@/components/layout/site-analytics";
 import { RouteScrollReset } from "@/components/layout/route-scroll-reset";
 import { JsonLdScript } from "@/components/seo/json-ld";
+import { getEnv } from "@/lib/env";
 import { buildRootJsonLd, buildSiteMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildSiteMetadata();
@@ -15,6 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const siteJsonLd = buildRootJsonLd();
+  const { analyticsId } = getEnv();
 
   return (
     <html lang="de" suppressHydrationWarning data-scroll-behavior="smooth">
@@ -29,7 +31,7 @@ export default function RootLayout({
         <JsonLdScript data={siteJsonLd} />
         <RouteScrollReset />
         <AppShell>{children}</AppShell>
-        <SiteAnalytics />
+        <SiteAnalytics analyticsId={analyticsId} />
       </body>
     </html>
   );

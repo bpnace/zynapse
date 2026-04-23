@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PageMotion } from "@/components/animation/page-motion";
+import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { creativeBenefits } from "@/lib/content/site";
 import { buildBreadcrumbs, buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
@@ -222,27 +223,7 @@ export default function CreativesPage() {
           }
           copy="Viele Teams haben Talent, aber keinen sauberen Ablauf von Strategie über Prompting bis Produktion. Genau dort setzt Zynapse Core an."
         />
-        <div className="grid gap-4 md:grid-cols-3">
-          {painPoints.map((point, index) => (
-            <article
-              key={point.title}
-              className={`section-card section-surface-mute border-t-[3px] p-6 ${
-                index === 0
-                  ? "border-t-[rgba(224,94,67,0.24)]"
-                  : index === 1
-                    ? "border-t-[rgba(249,197,106,0.3)]"
-                    : "border-t-[rgba(56,67,84,0.2)]"
-              }`}
-            >
-              <h3 className="font-display text-[1.5rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                {point.title}
-              </h3>
-              <p className="mt-4 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
-                {point.description}
-              </p>
-            </article>
-          ))}
-        </div>
+        <ProblemCardGrid cards={painPoints} />
       </section>
 
       <section

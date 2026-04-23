@@ -1,3 +1,4 @@
+import { getEnv } from "@/lib/env";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -28,6 +29,8 @@ function LegalSection({
 }
 
 export default function PrivacyPage() {
+  const { analyticsId } = getEnv();
+
   return (
     <section className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 pt-15 pb-16 sm:px-8">
       <h1 className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)]">
@@ -209,7 +212,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="8. Consent-Management mit CCM19">
+      <LegalSection title="8. Consent-Management, Cookies und Widerruf">
         <p>
           Wir verwenden auf dieser Website das Consent-Management-Tool CCM19,
           um Einwilligungen für einwilligungspflichtige Technologien
@@ -230,6 +233,19 @@ export default function PrivacyPage() {
           nachweisbar einzuholen und Widerrufe zu verwalten.
         </p>
         <p>
+          Nicht technisch erforderliche Cookies und vergleichbare Technologien
+          werden erst nach einer entsprechenden Auswahl im Consent-Dialog
+          gesetzt oder ausgelesen. Über die Cookie-Einstellungen im Footer oder
+          das eingeblendete CCM19-Widget kannst du deine Auswahl jederzeit
+          erneut öffnen und ändern.
+        </p>
+        <p>
+          In der jeweiligen Detailansicht des Consent-Tools stellen wir die
+          wesentlichen Informationen zu den eingesetzten Diensten bereit,
+          insbesondere zu Anbieter, Zweck, eingesetzten Cookies oder ähnlichen
+          Technologien, Speicherdauer sowie einem möglichen Drittlandbezug.
+        </p>
+        <p>
           Rechtsgrundlage ist Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit den
           jeweils anwendbaren Anforderungen an das Setzen und Auslesen nicht
           technisch erforderlicher Technologien auf Endgeräten.
@@ -238,13 +254,21 @@ export default function PrivacyPage() {
 
       <LegalSection title="9. Google Analytics 4">
         <p>
-          Wir setzen Google Analytics 4 zur Reichweitenmessung und Analyse der
-          Nutzung der Website ein. Die aktuelle Mess-ID lautet
-          <span className="font-medium text-[var(--copy-strong)]">
-            {" "}
-            G-H08K2Z3F23
-          </span>
-          .
+          Soweit Google Analytics 4 technisch aktiviert ist, setzen wir den
+          Dienst zur Reichweitenmessung und Analyse der Nutzung der Website ein.
+          {analyticsId ? (
+            <>
+              {" "}
+              Die aktuell konfigurierte Mess-ID lautet
+              <span className="font-medium text-[var(--copy-strong)]">
+                {" "}
+                {analyticsId}
+              </span>
+              .
+            </>
+          ) : (
+            <> In der aktuellen Konfiguration ist Google Analytics 4 derzeit nicht aktiv.</>
+          )}
         </p>
         <p>
           Dabei können insbesondere Informationen über Seitenaufrufe,
@@ -254,8 +278,8 @@ export default function PrivacyPage() {
         </p>
         <p>
           Google Analytics wird erst nach deiner Einwilligung über das
-          vorgeschaltete Consent-Management mit CCM19 geladen. Ohne
-          Einwilligung bleibt der Google-Tag blockiert.
+          vorgeschaltete Consent-Management mit CCM19 geladen. Ohne eine
+          entsprechende Auswahl im Consent-Tool bleibt der Google-Tag blockiert.
         </p>
         <p>
           Rechtsgrundlage für den Einsatz von Google Analytics ist Art. 6 Abs.
@@ -273,7 +297,9 @@ export default function PrivacyPage() {
         </p>
         <p>
           Deine Einwilligung kannst du jederzeit mit Wirkung für die Zukunft
-          über die Einstellungen des Consent-Banners widerrufen oder anpassen.
+          über die Cookie-Einstellungen im Footer, das eingeblendete
+          Consent-Widget oder die Einstellungen des Consent-Banners widerrufen
+          oder anpassen.
         </p>
       </LegalSection>
 
@@ -324,7 +350,7 @@ export default function PrivacyPage() {
           <li>Papoo Software &amp; Media GmbH als Anbieter von CCM19</li>
           <li>die selbst betriebene n8n-Instanz zur Formularweiterleitung</li>
           <li>Google Sheets zur Lead- und Anfrageverwaltung</li>
-          <li>Google Analytics 4, sofern eingewilligt wurde</li>
+          {analyticsId ? <li>Google Analytics 4, sofern eingewilligt wurde</li> : null}
         </ul>
         <p>
           Bei der Nutzung von Google-Diensten kann eine Übermittlung in
