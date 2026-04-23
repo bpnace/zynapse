@@ -18,6 +18,7 @@ type WorkspaceShellProps = {
   role: string;
   website?: string | null;
   activeCampaignId?: string | null;
+  pathnameOverride?: string;
   children: React.ReactNode;
 };
 
@@ -38,9 +39,11 @@ export function WorkspaceShell({
   role,
   website,
   activeCampaignId,
+  pathnameOverride,
   children,
 }: WorkspaceShellProps) {
-  const pathname = usePathname();
+  const pathnameFromRouter = usePathname();
+  const pathname = pathnameOverride ?? pathnameFromRouter;
   const mobileLocationLabel = pathname.includes("/review")
     ? "Review room"
     : pathname.includes("/handover")

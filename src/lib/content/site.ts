@@ -2,116 +2,116 @@ import type { NavItem } from "@/types/site";
 
 export const siteNav: NavItem[] = [
   { href: "/brands", label: "Für Brands" },
-  { href: "/creatives", label: "Für Kreative" },
-  { href: "/about", label: "Studio" },
+  { href: "/#beispiele", label: "Beispiele" },
   { href: "/pricing", label: "Preise" },
+  { href: "/creatives", label: "Für Kreative" },
   { href: "/contact", label: "Kontakt" },
 ];
 
 export const primaryCta: NavItem = {
   href: "/request",
-  label: "Brand-Anfrage",
+  label: "Kampagne anfragen",
   kind: "cta",
 };
 
 export const heroMetrics = [
-  { value: "72h", label: "bis zum ersten kuratierten Setup" },
-  { value: "6", label: "Kernrollen im Netzwerk" },
-  { value: "18+", label: "Varianten pro Kampagnen-Setup" },
+  { value: "72h", label: "bis zum ersten Kreativplan" },
+  { value: "12-36", label: "Varianten je nach Paket" },
+  { value: "1", label: "zentraler Review statt Feedback-Chaos" },
 ];
 
 export const problemCards = [
   {
-    title: "Das Briefing ist da, das passende Setup fehlt",
+    title: "Zu wenig neue Varianten",
     description:
-      "Die Brand kennt Ziel, Produkt und Kanal. Was oft fehlt, ist die richtige Kombination aus Strategie, Prompting, Produktion und Review.",
+      "Euer Media Team braucht frische Creatives für Tests, aber jede neue Runde kostet wieder Zeit, Abstimmung und Energie.",
   },
   {
-    title: "Zu viele Schleifen zwischen Brand, Spezialist:innen und Freigaben",
+    title: "Zu viel Feedback-Chaos",
     description:
-      "Wenn Rollen, Feedback und Zuständigkeiten nicht geklärt sind, verliert jede Kampagne Tempo, noch bevor die erste Variante sichtbar wird.",
+      "Kommentare liegen in Slack, E-Mails, Calls und Ordnern. Am Ende ist unklar, welche Version wirklich freigegeben ist.",
   },
   {
-    title: "Jede Runde startet organisatorisch wieder bei null",
+    title: "Zu wenig System im Creative Testing",
     description:
-      "Statt auf einem funktionierenden Setup aufzubauen, werden People, Prozesse und Deliverables für jede neue Anfrage neu sortiert.",
+      "Hooks, Formate und Botschaften werden oft einzeln gedacht. Dadurch entstehen Assets, aber keine klare Lernkurve für die nächste Runde.",
   },
 ];
 
 export const processSteps = [
   {
-    title: "Brand-Anfrage",
-    owner: "Brand / Team",
+    title: "Briefing starten",
+    owner: "Marketing Team",
     description:
-      "Die Brand gibt Ziel, Produkt, Kanal, Budget und Guardrails vor. Daraus entsteht ein Briefing, mit dem das Setup sauber arbeiten kann.",
+      "Ihr gebt Produkt, Ziel, Kanäle, Timing und Markenregeln vor. Mehr braucht Zynapse Core nicht für den ersten sauberen Start.",
   },
   {
-    title: "Kuratiertes Matching",
-    owner: "Zynapse",
+    title: "Kreativplan erhalten",
+    owner: "Zynapse Core",
     description:
-      "Zynapse stellt die passenden Spezialist:innen für Strategie, Prompting, Produktion und Review zusammen.",
+      "Aus Ziel, Zielgruppe und Angebot entstehen klare Kreativrouten, Formate und Testschwerpunkte statt lose Einzelideen.",
   },
   {
-    title: "Kampagnen-Setup",
-    owner: "Setup",
+    title: "AI Creatives arbeiten geführt daran",
+    owner: "Creative Team",
     description:
-      "Hooks, Botschaften, Formatlogik, Freigabepunkte und Produktionsplan werden in einen belastbaren Ablauf übersetzt.",
+      "Die passenden Rollen bekommen klare Aufgaben, Qualitätskriterien und einen gemeinsamen Fokus auf Hooks, Botschaften und Formate.",
   },
   {
-    title: "Produktion & Review",
-    owner: "Netzwerk",
+    title: "Varianten werden geprüft",
+    owner: "Zynapse Core",
     description:
-      "Das kuratierte Setup produziert Varianten, stimmt Modellmix und Ausführung ab und führt die Brand durch einen klaren Review-Prozess.",
+      "Bevor euer Team reviewt, prüft Zynapse Core Markenfit, Format, Verständlichkeit, Wiederholung und mögliche Risiken.",
   },
   {
-    title: "Handover",
-    owner: "Brand / Media",
+    title: "Creative Pack geht live",
+    owner: "Media Team",
     description:
-      "Am Ende stehen kampagnenfähige Assets, Versionen und Kontext für Paid Social, Content oder die nächste Iteration.",
+      "Euer Team reviewt zentral und bekommt fertige Assets, Versionen und Empfehlungen direkt nutzbar für Paid Social und Short Form.",
   },
 ];
 
 export const brandBenefits = [
-  "Passendes Spezialist:innen-Setup statt eigener Rollenpuzzles",
-  "Ein Kampagnenfluss von Briefing bis Handover",
-  "Mehr Varianten ohne klassischen Agentur-Overhead",
-  "Klare Reviews, Freigaben und Verantwortlichkeiten",
+  "Mehr Varianten für Paid Social, Reels und Short Form",
+  "Kreativrouten statt einzelner Ad-Ideen",
+  "Zentraler Review mit klaren Freigaben",
+  "Fertiges Creative Pack für euer Media Team",
 ];
 
 export const creativeBenefits = [
-  "Teil eines kuratierten Netzwerks statt Kaltakquise",
-  "Anfragen, in denen deine Spezialisierung Teil eines klaren Setups wird",
-  "Klare Briefings, Reviews und planbare Übergaben pro Anfrage",
-  "Brand-Anfragen mit echtem Kampagnenbedarf statt losem Creator-Sourcing",
+  "Klare Aufgaben statt chaotischer Briefings",
+  "Markenregeln, No-Gos und Ziel klar sichtbar",
+  "Feedback als konkrete nächste Aufgabe statt verstreuter Kommentare",
+  "Echte Kampagnen mit sauberem Beitrag zum finalen Output",
 ];
 
 export const trustSignals = [
   {
-    title: "Rechte & Nutzung",
+    title: "Markenregeln bleiben sichtbar",
     description:
-      "Jedes Setup ist so gedacht, dass Nutzungslogik, Asset-Grenzen und spätere Vertragserweiterungen sauber anschlussfähig bleiben.",
+      "Claims, No-Gos und Stilvorgaben laufen durch den gesamten Prozess mit und verschwinden nicht zwischen zwei Freigaberunden.",
   },
   {
-    title: "Brand Safety",
+    title: "Reviews laufen an einem Ort",
     description:
-      "Hooks, Claims, Bilderwelten und Freigaben bleiben prüfbar. Vor dem Export ist sichtbar, was freigegeben wurde und was nicht.",
+      "Kommentare, Entscheidungen und Freigaben bleiben nachvollziehbar, damit euer Team jederzeit weiß, was final ist.",
   },
   {
-    title: "Review & Freigaben",
+    title: "Rechte und Nutzung werden dokumentiert",
     description:
-      "Keine Variante geht blind live. Zynapse hält Review-Schritte, Zuständigkeiten und Entscheidungen nachvollziehbar zusammen.",
+      "Finale Assets kommen mit klaren Hinweisen zur Nutzung, damit Übergabe und Weiterarbeit nicht in Rückfragen hängen bleiben.",
   },
   {
-    title: "Datenschutz & Prozesse",
+    title: "Datenschutz bleibt schlank",
     description:
-      "Die v1 ist auf geringe Datenerhebung, klare Verantwortlichkeiten und nachvollziehbare Übergaben ausgelegt.",
+      "Zynapse fragt nur die Informationen ab, die für Briefing, Produktion, Review und die nächsten sauberen Schritte wirklich nötig sind.",
   },
 ];
 
 export const studioPrinciples = [
-  "Brands bringen Ziel und Briefing, Zynapse kuratiert das passende Setup",
-  "Jede Anfrage führt zu einem Kampagnen-Setup statt zu losen Einzelassets",
-  "Spezialist:innen und Brand arbeiten in einem gemeinsamen Review- und Handover-Fluss",
+  "Brands geben Ziel, Marke und Kanal vor, Zynapse Core baut daraus den Kreativplan",
+  "Jede Anfrage führt zu testbaren Creative Packs statt zu losen Einzelassets",
+  "Review, Freigaben und Delivery bleiben in einem klaren Flow zusammen",
 ];
 
 export const footerGroups = [
@@ -122,8 +122,8 @@ export const footerGroups = [
   {
     title: "Ressourcen",
     links: [
-      { href: "/request", label: "Brand-Anfrage" },
-      { href: "/apply", label: "Bewerbung für Kreative" },
+      { href: "/request", label: "Kampagne anfragen" },
+      { href: "/apply", label: "Als Creative bewerben" },
       { href: "/contact", label: "Kontakt" },
     ],
   },
@@ -138,18 +138,18 @@ export const footerGroups = [
 
 export const contactChannels = [
   {
-    label: "Vertrieb",
+    label: "Allgemein",
     value: "hello@zynapse.eu",
-    copy: "Wenn du über eine Brand-Anfrage, Pakete oder den richtigen Einstieg sprechen willst.",
+    copy: "Wenn du eine Kampagne anfragen oder herausfinden willst, welcher Creative Flow zu eurem Team passt.",
   },
   {
     label: "Netzwerk für Kreative",
     value: "network@zynapse.eu",
-    copy: "Wenn du dich als Kreative:r, Spezialist:in oder Partner:in bei uns melden möchtest.",
+    copy: "Wenn du dich als AI Creative, Spezialist:in oder Produktionspartner:in bei uns melden möchtest.",
   },
   {
     label: "Betrieb",
     value: "ops@zynapse.eu",
-    copy: "Wenn du Fragen zu Rechten, Datenschutz oder Abläufen hast.",
+    copy: "Wenn du Fragen zu Rechten, Datenschutz, Review oder operativen Abläufen hast.",
   },
 ];

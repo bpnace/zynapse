@@ -2,7 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { BRAND_INQUIRY_STORAGE_KEY, createBrandInquiryDefaults } from "@/lib/forms/storage";
+import {
+  BRAND_INQUIRY_STORAGE_KEY,
+  createBrandInquiryDefaults,
+} from "@/lib/forms/storage";
 import { Button } from "@/components/ui/button";
 
 const initialFields = createBrandInquiryDefaults();
@@ -48,22 +51,28 @@ export function FinalCta() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
           <div className="space-y-5">
             <span className="eyebrow" data-animate-heading>
-              Jetzt starten
+              Finaler Startpunkt
             </span>
             <h2
               className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance text-[var(--copy-strong)] sm:text-5xl"
               data-animate-heading
             >
-              Der nächste <span data-animate-word>Schritt</span> ist ein{" "}
-              <span className="title-accent">kompaktes Brand-Briefing</span>.
+              Starte mit einem <span data-animate-word>kurzen</span>{" "}
+              <span className="title-accent">Briefing</span>.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              Wenige Angaben reichen, damit Zynapse das passende Setup einordnen
-              und die nächsten Spezialist:innen, Schritte und Deliverables
-              ableiten kann.
+              Zeig uns Produkt, Ziel, Kanäle und Timing. Zynapse Core schlägt
+              dir daraus den passenden Kampagnenplan vor.
+            </p>
+            <p
+              className="max-w-xl text-sm leading-6 text-[color:var(--copy-soft)]"
+              data-animate-copy
+            >
+              Keine lange Vorbereitung nötig. Ein erster Überblick reicht, um
+              den passenden nächsten Schritt zu planen.
             </p>
           </div>
           <form
@@ -82,7 +91,7 @@ export function FinalCta() {
                     industry: event.target.value,
                   }))
                 }
-                placeholder="z. B. D2C Wellness"
+                placeholder="z. B. DTC Wellness"
               />
             </label>
             <label className="field-shell">
@@ -112,7 +121,7 @@ export function FinalCta() {
                     goal: event.target.value,
                   }))
                 }
-                placeholder="z. B. erster Pilot, laufender Rhythmus, neue Kampagnenrichtung"
+                placeholder="z. B. mehr Creatives für Conversion-Tests"
               />
             </label>
             <label className="field-shell">
@@ -130,7 +139,7 @@ export function FinalCta() {
                       .filter(Boolean),
                   }))
                 }
-                placeholder="TikTok, Reels, Paid Social"
+                placeholder="Meta Ads, TikTok, Reels"
               />
             </label>
             <label className="field-shell md:col-span-2">
@@ -145,7 +154,7 @@ export function FinalCta() {
                     budgetRange: event.target.value,
                   }))
                 }
-                placeholder="z. B. Starter, Growth oder individueller Rahmen"
+                placeholder="z. B. Pilot, laufender Creative Flow oder individueller Rahmen"
               />
             </label>
             <label className="hidden" aria-hidden="true">
@@ -167,7 +176,7 @@ export function FinalCta() {
               size="lg"
               className="justify-self-start md:col-span-2"
             >
-              Anfrage starten
+              Kampagne anfragen
             </Button>
           </form>
         </div>

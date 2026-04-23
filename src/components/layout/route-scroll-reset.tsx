@@ -7,6 +7,10 @@ export function RouteScrollReset() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (window.location.hash) {
+      return;
+    }
+
     const frame = window.requestAnimationFrame(() => {
       window.scrollTo({ left: 0, top: 0, behavior: "auto" });
     });

@@ -1,15 +1,23 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { pricingPlans } from "@/lib/content/pricing";
 import { createContactInquiryDefaults } from "@/lib/forms/storage";
-import { contactInquirySchema, type ContactInquiryInput } from "@/lib/validation/contact-inquiry";
-import { Field, SelectInput, TextareaInput, TextInput } from "@/components/forms/form-primitives";
+import {
+  contactInquirySchema,
+  type ContactInquiryInput,
+} from "@/lib/validation/contact-inquiry";
+import {
+  Field,
+  SelectInput,
+  TextareaInput,
+  TextInput,
+} from "@/components/forms/form-primitives";
 import type { PricingPlan } from "@/types/site";
 
 const planByName = new Map(pricingPlans.map((plan) => [plan.name, plan]));
@@ -25,9 +33,7 @@ const topicOptions = [
   { value: "Operatives Thema", label: "Operatives Thema" },
 ];
 
-function resolvePlanFromQuery(
-  tier: string | null,
-): PricingPlan | null {
+function resolvePlanFromQuery(tier: string | null): PricingPlan | null {
   if (!tier) {
     return null;
   }
@@ -59,6 +65,40 @@ export function ContactIntakeForm() {
 
   const topicField = register("topic");
 
+  const briefingRows = useMemo(() => {
+    if (!activePlan) {
+      return [
+        {
+          label: "Routing",
+          value: "Wir sortieren Brands, Preise und operative Themen direkt an den passenden Kontakt.",
+        },
+        {
+          label: "Start ohne Paket",
+          value: "Du kannst auch einfach kurz schreiben, was gerade ansteht oder welche Frage du klären willst.",
+        },
+        {
+          label: "Was reicht",
+          value: "Ein paar klare Sätze zu Team, Thema und Ziel reichen für den ersten Schritt.",
+        },
+      ];
+    }
+
+    return [
+      {
+        label: "Creative Flow",
+        value: activePlan.name,
+      },
+      {
+        label: "Passt wenn",
+        value: activePlan.fit,
+      },
+      {
+        label: "Schwerpunkte",
+        value: activePlan.highlights.join(" / "),
+      },
+    ];
+  }, [activePlan]);
+
   useEffect(() => {
     const plan = resolvePlanFromQuery(searchParams.get("tier"));
 
@@ -87,7 +127,8 @@ export function ContactIntakeForm() {
     }
 
     const arrivedFromPricing =
-      window.location.hash === "#kontaktformular" || Boolean(searchParams.get("tier"));
+      window.location.hash === "#kontaktformular" ||
+      Boolean(searchParams.get("tier"));
 
     if (!arrivedFromPricing || !formContainerRef.current) {
       return;
@@ -110,7 +151,10 @@ export function ContactIntakeForm() {
     setActivePlan(plan);
 
     if (!plan) {
-      if (previousPlan && getValues("teamContext") === previousPlan.audience) {
+      if (
+        previousPlan &&
+        getValues("teamContext") === previousPlan.audience
+      ) {
         setValue("teamContext", "", { shouldDirty: true });
       }
 
@@ -143,7 +187,10 @@ export function ContactIntakeForm() {
 
         if (!response.ok) {
           const payload = (await response.json()) as { error?: string };
-          throw new Error(payload.error ?? "Deine Nachricht konnte gerade nicht gesendet werden.");
+          throw new Error(
+            payload.error ??
+              "Deine Nachricht konnte gerade nicht gesendet werden.",
+          );
         }
 
         setIsSuccess(true);
@@ -161,15 +208,43 @@ export function ContactIntakeForm() {
 
   if (isSuccess) {
     return (
-      <div className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-7 sm:p-8">
-        <span className="eyebrow">Nachricht gesendet</span>
-        <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-          Danke, wir haben deine Nachricht.
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--copy-body)]">
-          Wir haben alles übernommen und melden uns in der Regel innerhalb von
-          24 Stunden mit einem konkreten nächsten Schritt bei dir.
-        </p>
+      <div className="relative overflow-hidden rounded-[0.7rem] border border-[rgba(56,67,84,0.16)] bg-[rgba(255,252,248,0.98)] shadow-[0_14px_28px_rgba(31,36,48,0.05)]">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[var(--accent)]" />
+        <div className="relative grid gap-6 px-7 py-7 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]">
+          <div className="space-y-4">
+            <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
+              Nachricht gesendet
+            </p>
+            <h2 className="font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+              Danke, wir haben deine Nachricht.
+            </h2>
+            <p className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]">
+              Wir haben alles übernommen und melden uns in der Regel innerhalb
+              von 24 Stunden mit einem konkreten nächsten Schritt bei dir.
+            </p>
+          </div>
+
+          <div className="grid divide-y divide-[rgba(56,67,84,0.1)] rounded-[0.6rem] border border-[rgba(56,67,84,0.12)] bg-[rgba(247,249,252,0.76)]">
+            <div className="grid gap-1 px-5 py-4">
+              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                Antwort
+              </p>
+              <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+                Falls nichts Dringendes dazwischenkommt, hörst du innerhalb von
+                24 Stunden von uns.
+              </p>
+            </div>
+            <div className="grid gap-1 px-5 py-4">
+              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                Nächster Schritt
+              </p>
+              <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+                Wir melden uns nicht nur mit einer Bestätigung, sondern mit
+                einem konkreten Vorschlag oder einer Rückfrage.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -178,54 +253,47 @@ export function ContactIntakeForm() {
     <div
       id="kontaktformular"
       ref={formContainerRef}
-      className="section-card section-surface-paper rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.16)] p-6 sm:p-8"
+      className="relative overflow-hidden rounded-[0.7rem] border border-[rgba(56,67,84,0.16)] bg-[rgba(255,252,248,0.98)] shadow-[0_14px_28px_rgba(31,36,48,0.05)]"
     >
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)]">
-        <div className="space-y-5">
-          <span className="eyebrow">Kontaktformular</span>
-          <h2 className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-            Erzähl uns kurz, worum es geht.
-          </h2>
-          <p className="text-base leading-7 text-[color:var(--copy-body)]">
-            Wenn du schon aus den Preisen kommst, ist das passende Paket hier
-            bereits vorausgewählt. Wenn nicht, ist das auch okay. Ein paar
-            Stichpunkte reichen völlig.
-          </p>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[var(--accent)]" />
 
-          <div className="section-surface-warm rounded-[var(--radius-card)] border border-[rgba(191,106,83,0.16)] p-5">
-            <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-              {activePlan ? "Schon vorausgewählt" : "Du kannst auch ohne Paket starten"}
-            </p>
-            {activePlan ? (
-              <>
-                <h3 className="mt-3 font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-                  {activePlan.name}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-                  {activePlan.fit}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {activePlan.highlights.map((highlight) => (
-                    <span
-                      key={highlight}
-                      className="rounded-full border border-[rgba(191,106,83,0.16)] bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.16em] text-[var(--copy-soft)]"
-                    >
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <p className="mt-3 text-sm leading-6 text-[color:var(--copy-body)]">
-                Schreib einfach kurz, wobei du Unterstützung suchst oder welche
-                Frage du mit uns klären möchtest.
+      <div className="relative grid gap-0 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)]">
+        <aside className="border-b border-[rgba(56,67,84,0.1)] px-6 py-6 sm:px-8 sm:py-8 lg:border-r lg:border-b-0">
+          <div className="space-y-5">
+            <div className="space-y-3">
+              <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
+                Kontaktformular
               </p>
-            )}
-          </div>
-        </div>
+              <h2 className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+                Erzähl uns kurz, worum es geht.
+              </h2>
+              <p className="text-base leading-7 text-[color:var(--copy-body)]">
+                Wenn du schon aus den Preisen kommst, ist der passende Creative
+                Flow hier bereits vorausgewählt. Wenn nicht, ist das auch okay.
+                Ein paar Stichpunkte reichen völlig.
+              </p>
+            </div>
 
-        <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
-          <input type="hidden" {...register("startedAt", { valueAsNumber: true })} />
+            <div className="grid divide-y divide-[rgba(56,67,84,0.1)] border-y border-[rgba(56,67,84,0.1)]">
+              {briefingRows.map((row) => (
+                <div key={row.label} className="grid gap-1 py-4">
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                    {row.label}
+                  </p>
+                  <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+                    {row.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
+
+        <form className="grid gap-0" onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="hidden"
+            {...register("startedAt", { valueAsNumber: true })}
+          />
           <input
             type="text"
             {...register("website")}
@@ -234,18 +302,31 @@ export function ContactIntakeForm() {
             autoComplete="off"
           />
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <section className="grid gap-5 border-b border-[rgba(56,67,84,0.1)] px-6 py-6 sm:px-8 md:grid-cols-2">
+            <div className="md:col-span-2">
+              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                Kontakt
+              </p>
+            </div>
             <Field label="Name" error={errors.name?.message}>
               <TextInput {...register("name")} placeholder="Max Mustermann" />
             </Field>
             <Field label="E-Mail" error={errors.email?.message}>
               <TextInput {...register("email")} placeholder="team@brand.de" />
             </Field>
-          </div>
+          </section>
 
-          <div className="grid gap-5 md:grid-cols-2 md:items-start">
+          <section className="grid gap-5 border-b border-[rgba(56,67,84,0.1)] px-6 py-6 sm:px-8 md:grid-cols-2">
+            <div className="md:col-span-2">
+              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                Kontext
+              </p>
+            </div>
             <Field label="Team / Firma" error={errors.company?.message}>
-              <TextInput {...register("company")} placeholder="Beispiel GmbH" />
+              <TextInput
+                {...register("company")}
+                placeholder="Beispiel GmbH"
+              />
             </Field>
             <Field label="Worum geht's?" error={errors.topic?.message}>
               <SelectInput
@@ -262,67 +343,85 @@ export function ContactIntakeForm() {
                 ))}
               </SelectInput>
             </Field>
-          </div>
+            <div className="md:col-span-2">
+              <Field
+                label="Teamkontext"
+                error={errors.teamContext?.message}
+                hint="Ein kurzer Satz reicht: Teamgröße, Anzahl Brands oder was gerade ansteht."
+              >
+                <TextInput
+                  {...register("teamContext")}
+                  placeholder="z. B. kleines Brand-Team mit Produktlaunch und Bedarf an laufenden Creatives"
+                />
+              </Field>
+            </div>
+          </section>
 
-          <Field
-            label="Teamkontext"
-            error={errors.teamContext?.message}
-            hint="Ein kurzer Satz reicht: Teamgröße, Anzahl Brands oder was gerade ansteht."
-          >
-            <TextInput
-              {...register("teamContext")}
-              placeholder="z. B. kleines Brand-Team mit Produktlaunch und Bedarf an laufenden Creatives"
-            />
-          </Field>
-
-          <Field
-            label="Nachricht"
-            error={errors.message?.message}
-            hint="Wenn du über ein Paket kommst, ist hier schon ein Entwurf drin. Du kannst ihn direkt anpassen."
-          >
-            <TextareaInput
-              {...register("message")}
-              placeholder="Worum geht es gerade, was willst du erreichen und was sollen wir zuerst mit dir klären?"
-            />
-          </Field>
-
-          <label className="grid gap-2">
-            <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
-              <input
-                type="checkbox"
-                {...register("datenschutzAccepted")}
-                className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
-              />
-              <span>
-                Ich akzeptiere die{" "}
-                <Link
-                  href="/legal/privacy"
-                  className="underline decoration-[color:var(--accent-soft)] underline-offset-4 hover:text-[var(--copy-strong)]"
-                >
-                  Datenschutzerklärung
-                </Link>
-                .
-              </span>
-            </span>
-            {errors.datenschutzAccepted ? (
-              <span className="field-error">{errors.datenschutzAccepted.message}</span>
-            ) : null}
-          </label>
-
-          {submitError ? (
-            <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
-              {submitError}
+          <section className="grid gap-5 px-6 py-6 sm:px-8">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+              Nachricht
             </p>
-          ) : null}
+            <Field
+              label="Nachricht"
+              error={errors.message?.message}
+              hint="Wenn du über ein Paket kommst, ist hier schon ein Entwurf drin. Du kannst ihn direkt anpassen."
+            >
+              <TextareaInput
+                {...register("message")}
+                placeholder="Worum geht es gerade, was willst du erreichen und was sollen wir zuerst mit dir klären?"
+                className="min-h-40"
+              />
+            </Field>
 
-          <Button
-            type="submit"
-            disabled={isPending}
-            size="lg"
-            className="w-full disabled:cursor-wait"
-          >
-            {isPending ? "Nachricht wird gesendet..." : "Nachricht senden"}
-          </Button>
+            <label className="grid gap-2">
+              <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+                <input
+                  type="checkbox"
+                  {...register("datenschutzAccepted")}
+                  className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+                />
+                <span>
+                  Ich akzeptiere die{" "}
+                  <Link
+                    href="/legal/privacy"
+                    className="underline decoration-[color:var(--accent-soft)] underline-offset-4 hover:text-[var(--copy-strong)]"
+                  >
+                    Datenschutzerklärung
+                  </Link>
+                  .
+                </span>
+              </span>
+              {errors.datenschutzAccepted ? (
+                <span className="field-error">
+                  {errors.datenschutzAccepted.message}
+                </span>
+              ) : null}
+            </label>
+
+            {submitError ? (
+              <p className="rounded-[0.45rem] border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
+                {submitError}
+              </p>
+            ) : null}
+
+            <div className="flex flex-wrap items-start gap-4">
+              <Button
+                type="submit"
+                disabled={isPending}
+                size="md"
+                variant="ghost"
+                className="w-[15rem] max-w-full justify-center rounded-[0.45rem] border border-[rgba(191,106,83,0.22)] bg-[var(--accent-strong)] px-4 py-2.5 text-sm font-semibold tracking-[0.01em] text-white shadow-[0_10px_18px_rgba(224,94,67,0.14)] hover:bg-[var(--accent)] hover:text-white disabled:cursor-wait"
+              >
+                {isPending
+                  ? "Nachricht wird gesendet..."
+                  : "Nachricht senden"}
+              </Button>
+              <p className="max-w-sm text-xs leading-5 text-[color:var(--copy-muted)]">
+                Wenn etwas unklar ist, melden wir uns zuerst mit einer
+                Rückfrage statt mit einer generischen Standardantwort.
+              </p>
+            </div>
+          </section>
         </form>
       </div>
     </div>

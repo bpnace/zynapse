@@ -3,8 +3,8 @@ import { FlickeringGrid } from "@/components/ui/flickering-grid-hero";
 
 export function Hero() {
   const heroCtaClassName = "w-full justify-center sm:w-[16rem]";
-  const heroBrandCtaClassName =
-    "w-full justify-center border border-[rgba(62, 62, 62, 0.67)] bg-[var(--copy-strong)] text-white shadow-[0_10px_22px_rgba(31,36,48,0.05)] hover:border-[rgba(98, 100, 103, 0.59)] hover:text-[var(--copy-strong)] focus-visible:border-[rgba(56,67,84,0.2)] focus-visible:text-[var(--copy-strong)] sm:w-[16rem]";
+  const heroPrimaryCtaClassName =
+    "w-full justify-center border border-[rgba(62,62,62,0.67)] bg-[var(--copy-strong)] text-white shadow-[0_10px_22px_rgba(31,36,48,0.05)] hover:border-[rgba(98,100,103,0.59)] hover:text-[var(--copy-strong)] focus-visible:border-[rgba(56,67,84,0.2)] focus-visible:text-[var(--copy-strong)] sm:w-[16rem]";
   const gridMask =
     "radial-gradient(circle at 50% 42%, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.9) 34%, rgba(0,0,0,0.46) 60%, transparent 82%)";
 
@@ -37,7 +37,7 @@ export function Hero() {
             gridGap={8}
             flickerChance={0.28}
             color="rgb(224, 94, 67)"
-            maxOpacity={0.30}
+            maxOpacity={0.3}
           />
         </div>
         <div
@@ -54,28 +54,32 @@ export function Hero() {
         data-hero-intro
       >
         <h1
-          className="font-display text-[clamp(3.15rem,9vw,5.85rem)] leading-[0.88] font-semibold tracking-[-0.055em] pt-15 text-balance sm:px-[0.1em] sm:pr-[0.16em] lg:px-[0.12em]"
+          className="font-display text-[clamp(3.15rem,9vw,5.85rem)] leading-[0.88] pt-15 font-semibold tracking-[-0.055em] text-balance sm:px-[0.1em] sm:pr-[0.16em] lg:px-[0.12em]"
           data-animate-heading
         >
-          Wie aus einer{" "}
-          <span data-animate-word>Brand-Anfrage</span>{" "}
-          ein{" "}
-          <span className="text-gradient">kuratiertes Kampagnen-Setup</span>
-          {" "}
-          <span data-animate-word>wird.</span>
+          Bessere <span data-animate-word>Video Ads, </span>ohne dass dein Team{" "}
+          <span className="text-gradient">mehr koordinieren</span> muss.
         </h1>
 
-        <div className="mt-28 w-full max-w-5xl lg:grid lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)] lg:items-start lg:gap-8">
-          <p
-            className="mx-auto max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-lg sm:leading-8 lg:mx-0 lg:max-w-none lg:text-left"
-            data-animate-copy
-          >
-            Brands kommen mit Ziel, Offer, Stil und Budget. Zynapse
-            kuratiert das passende Spezialist:innen-Setup und
-            orchestriert daraus Kampagnenlogik, Produktion, Review und
-            markenfähige Varianten für Paid Social, Reels und weitere
-            Short-Form-Formate.
-          </p>
+        <div className="mt-24 w-full max-w-5xl lg:grid lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)] lg:items-start lg:gap-8">
+          <div className="space-y-6">
+            <p
+              className="mx-auto max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-lg sm:leading-8 lg:mx-0 lg:max-w-none lg:text-left"
+              data-animate-copy
+            >
+                  Von Thema, Zielgruppe und Angebot bis zur Auswahl der
+                  passenden AI Creatives hilft Zynapse Core dabei, dass jede
+                  Kampagne mit dem richtigen kreativen Fit startet und nicht erst
+                  in der Produktion sortiert werden muss.
+            </p>
+            <p
+              className="mx-auto max-w-2xl text-sm leading-6 text-[color:var(--copy-soft)] lg:mx-0 lg:max-w-none lg:text-left"
+              data-animate-copy
+            >
+              Für Brands, die mehr testen wollen, ohne jede Produktion
+              neu aufzusetzen.
+            </p>
+          </div>
 
           <div
             className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:flex-col lg:items-start lg:justify-self-end"
@@ -84,18 +88,18 @@ export function Hero() {
             <ButtonLink
               href="/request"
               size="lg"
-              className={heroBrandCtaClassName}
+              className={heroPrimaryCtaClassName}
               primaryFillClassName="bg-white"
             >
-              Als Brand starten
+              Kampagne anfragen
             </ButtonLink>
             <ButtonLink
-              href="/apply"
+              href="/#ablauf"
               variant="secondary"
               size="lg"
               className={heroCtaClassName}
             >
-              Als Kreative bewerben
+              Ablauf ansehen
             </ButtonLink>
           </div>
         </div>

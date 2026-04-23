@@ -3,9 +3,9 @@ import { expect, test } from "@playwright/test";
 const navLinks = [
   { label: "Zynapse", path: "/" },
   { label: "Für Brands", path: "/brands" },
-  { label: "Für Kreative", path: "/creatives" },
-  { label: "Studio", path: "/about" },
+  { label: "Beispiele", path: "/#beispiele" },
   { label: "Preise", path: "/pricing" },
+  { label: "Für Kreative", path: "/creatives" },
   { label: "Kontakt", path: "/contact" },
 ] as const;
 
@@ -33,12 +33,12 @@ test("homepage output preview renders six looping videos", async ({ page }) => {
   );
 
   const expectedSources = [
-    "/videos/video22.mp4",
-    "/videos/m2-res_640p.mp4",
-    "/videos/m2-res_712p.mp4",
-    "/videos/m2-res_716p.mp4",
-    "/videos/m2-res_85422p.mp4",
-    "/videos/m2-res_854p.mp4",
+    "/videos/11.mp4",
+    "/videos/22.mp4",
+    "/videos/33.mp4",
+    "/videos/44.mp4",
+    "/videos/55.mp4",
+    "/videos/66.mp4",
   ];
 
   expect(configs.map((config) => config.src)).toEqual(expectedSources);
@@ -87,12 +87,18 @@ test("navbar navigation resets to top and stays free of known scroll errors", as
       await expect(navTarget).toBeVisible();
       await navTarget.click();
 
-      await expect(page).toHaveURL(new RegExp(`${link.path === "/" ? "/$" : `${link.path}$`}`));
-      await expect
-        .poll(async () => page.evaluate(() => window.scrollY), {
-          timeout: 5000,
-        })
-        .toBeLessThan(2);
+      await expect(page).toHaveURL(
+        link.path === "/#beispiele"
+          ? /\/(#beispiele)?$/
+          : new RegExp(`${link.path === "/" ? "/$" : `${link.path}$`}`),
+      );
+      if (link.path !== "/#beispiele") {
+        await expect
+          .poll(async () => page.evaluate(() => window.scrollY), {
+            timeout: 5000,
+          })
+          .toBeLessThan(2);
+      }
     }
   }
 
@@ -110,4 +116,33 @@ test("navbar navigation resets to top and stays free of known scroll errors", as
 
   expect(knownWarnings).toEqual([]);
   expect(knownScrollErrors).toEqual([]);
+});
+
+test("beispiele nav link does not duplicate hashes and reaches the section reliably", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const header = page.locator("header").first();
+  const examplesLink = header.locator('a[href="/#beispiele"]').first();
+
+  await examplesLink.click();
+  await expect(page).toHaveURL(/\/#beispiele$/);
+
+  await examplesLink.click();
+  await expect(page).toHaveURL(/\/#beispiele$/);
+
+  await page.goto("/brands");
+  const brandsHeader = page.locator("header").first();
+  await brandsHeader.locator('a[href="/#beispiele"]').first().click();
+  await expect(page).toHaveURL(/\/#beispiele$/);
+  await expect
+    .poll(async () => {
+      return page.evaluate(() => {
+        const target = document.getElementById("beispiele");
+        if (!target) return null;
+        return Math.round(target.getBoundingClientRect().top);
+      });
+    })
+    .toBeLessThan(80);
 });

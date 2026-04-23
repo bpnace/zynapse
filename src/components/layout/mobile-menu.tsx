@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { siteNav } from "@/lib/content/site";
+import { SiteNavLink } from "@/components/layout/site-nav-link";
 import { Wordmark } from "@/components/layout/wordmark";
 import { cn } from "@/lib/utils";
 
@@ -88,7 +89,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             const active = pathname === item.href;
             return (
               <li key={item.href}>
-                <Link
+                <SiteNavLink
                   href={item.href}
                   onClick={onClose}
                   className={cn(
@@ -98,7 +99,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   )}
                 >
                   {item.label}
-                </Link>
+                </SiteNavLink>
               </li>
             );
           })}

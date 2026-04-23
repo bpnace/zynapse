@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "Zynapse",
   legalContextName: "Codariq",
   description:
-    "Zynapse verbindet Brands mit kuratierten AI-Spezialist:innen und übersetzt Briefings in lean koordinierte Kampagnen-Setups, markenfähige Varianten und klare Handover.",
+    "Zynapse hilft Brands, schneller bessere Video Creatives zu bekommen. Zynapse Core versteht Marke, Ziel und Zielgruppe, plant passende Kreativrouten und liefert geprüfte Creative Packs für Paid Social und Short Form.",
   url: env.siteUrl,
   language: "de",
   languageTag: "de",
@@ -220,59 +220,32 @@ export function buildRootJsonLd() {
   };
 }
 
-export function buildPageJsonLd({
-  title,
-  description,
-  path,
-  pageType = "WebPage",
-  breadcrumbs = [],
-  primaryEntity,
-}: PageJsonLdInput) {
-  const graph: SchemaNode[] = [];
-  const pageId = absoluteUrl(`${path}#webpage`);
-  const breadcrumbId = absoluteUrl(`${path}#breadcrumb`);
+export function buildBreadcrumbs(name: string, path: string): BreadcrumbItem[] {
+  return [
+    { name: "Startseite", path: "/" },
+    { name, path },
+  ];
+}
 
-  graph.push({
-    "@type": pageType,
-    "@id": pageId,
-    url: absoluteUrl(path),
-    name: title,
-    description,
-    inLanguage: siteConfig.languageTag,
-    isPartOf: {
-      "@id": absoluteUrl("/#website"),
-    },
-    publisher: {
-      "@id": absoluteUrl("/#organization"),
-    },
-    ...(breadcrumbs.length > 0
-      ? {
-          breadcrumb: {
-            "@id": breadcrumbId,
-          },
-        }
-      : {}),
-    ...(primaryEntity
-      ? {
-          mainEntity: {
-            "@id": String(primaryEntity["@id"]),
-          },
-        }
-      : {}),
-  });
-
-  if (primaryEntity) {
-    graph.push(primaryEntity);
-  }
-
-  if (breadcrumbs.length > 0) {
-    graph.push(buildBreadcrumbJsonLd(path, breadcrumbs));
-  }
-
-  return {
-    "@context": "https://schema.org",
-    "@graph": graph,
-  };
+export function buildOfferJsonLd(
+  offers: Array<{
+    name: string;
+    description: string;
+    minPrice?: number;
+    priceCurrency?: string;
+    priceNote?: string;
+  }>,
+) {
+  return offers.map((offer) => ({
+    "@type": "Offer",
+    name: offer.name,
+    description: offer.description,
+    ...(offer.minPrice !== undefined ? { price: offer.minPrice.toString() } : {}),
+    ...(offer.priceCurrency ? { priceCurrency: offer.priceCurrency } : {}),
+    ...(offer.priceNote ? { priceSpecification: { "@type": "PriceSpecification", description: offer.priceNote } } : {}),
+    availability: "https://schema.org/InStock",
+    url: absoluteUrl("/pricing"),
+  }));
 }
 
 export function buildServiceJsonLd({
@@ -292,66 +265,60 @@ export function buildServiceJsonLd({
     provider: {
       "@id": absoluteUrl("/#organization"),
     },
-    areaServed: { "@type": "Country", name: "Germany" },
+    areaServed: "DE",
     availableLanguage: [siteConfig.languageTag],
-    ...(audience
-      ? {
-          audience: {
-            "@type": "Audience",
-            audienceType: audience,
-          },
-        }
-      : {}),
+    url: absoluteUrl(path),
+    ...(audience ? { audience: { "@type": "Audience", audienceType: audience } } : {}),
     ...(offers ? { offers } : {}),
   };
 }
 
-type OfferInput = {
-  name: string;
-  description: string;
-  minPrice?: number;
-  priceCurrency?: string;
-  priceNote?: string;
-};
-
-export function buildOfferJsonLd(offers: OfferInput[]) {
-  return offers.map((offer) => ({
-    "@type": "Offer",
-    name: offer.name,
-    description: offer.description,
-    ...(offer.minPrice != null
-      ? {
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            minPrice: offer.minPrice,
-            priceCurrency: offer.priceCurrency ?? "EUR",
-          },
-        }
-      : {}),
-    ...(offer.priceNote ? { disambiguatingDescription: offer.priceNote } : {}),
-  }));
-}
-
-export function buildBreadcrumbs(currentPageName: string, currentPath: string) {
-  return [
-    { name: "Startseite", path: "/" },
-    { name: currentPageName, path: currentPath },
+export function buildPageJsonLd({
+  title,
+  description,
+  path,
+  pageType = "WebPage",
+  breadcrumbs,
+  primaryEntity,
+}: PageJsonLdInput) {
+  const graph: SchemaNode[] = [
+    {
+      "@type": pageType,
+      "@id": absoluteUrl(`${path}#webpage`),
+      url: absoluteUrl(path),
+      name: title,
+      description,
+      inLanguage: siteConfig.languageTag,
+      isPartOf: {
+        "@id": absoluteUrl("/#website"),
+      },
+      ...(primaryEntity ? { mainEntity: { "@id": (primaryEntity["@id"] as string) ?? undefined } } : {}),
+    },
   ];
-}
 
-export function serializeJsonLd(jsonLd: Record<string, unknown>) {
-  return JSON.stringify(jsonLd).replace(/</g, "\\u003c");
-}
+  if (primaryEntity) {
+    graph.push(primaryEntity);
+  }
 
-function buildBreadcrumbJsonLd(path: string, breadcrumbs: BreadcrumbItem[]) {
+  if (breadcrumbs?.length) {
+    graph.push({
+      "@type": "BreadcrumbList",
+      "@id": absoluteUrl(`${path}#breadcrumbs`),
+      itemListElement: breadcrumbs.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        item: absoluteUrl(item.path),
+      })),
+    });
+  }
+
   return {
-    "@type": "BreadcrumbList",
-    "@id": absoluteUrl(`${path}#breadcrumb`),
-    itemListElement: breadcrumbs.map((breadcrumb, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: breadcrumb.name,
-      item: absoluteUrl(breadcrumb.path),
-    })),
+    "@context": "https://schema.org",
+    "@graph": graph,
   };
+}
+
+export function serializeJsonLd(data: Record<string, unknown>) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
 }

@@ -29,6 +29,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
   useGSAP(
     () => {
       const container = scope.current;
+      const cleanupCallbacks: Array<() => void> = [];
 
       if (!container) {
         return;
@@ -165,7 +166,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
       );
 
       parallaxWindows.forEach((el) => {
-        gsap.fromTo(
+        const tween = gsap.fromTo(
           el,
           { yPercent: 8 },
           {
@@ -179,6 +180,10 @@ export function HomeMotion({ children }: HomeMotionProps) {
             },
           },
         );
+        cleanupCallbacks.push(() => {
+          tween.scrollTrigger?.kill();
+          tween.kill();
+        });
       });
 
       sections.forEach((section) => {
@@ -203,6 +208,10 @@ export function HomeMotion({ children }: HomeMotionProps) {
             once: true,
           },
         });
+        const ownedTrigger = timeline.scrollTrigger;
+        if (ownedTrigger) {
+          cleanupCallbacks.push(() => ownedTrigger.kill());
+        }
 
         if (heading.length) {
           timeline.from(heading, {
@@ -277,6 +286,10 @@ export function HomeMotion({ children }: HomeMotionProps) {
           });
         }
       });
+
+      return () => {
+        cleanupCallbacks.forEach((callback) => callback());
+      };
 
     },
     { scope },

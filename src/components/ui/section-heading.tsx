@@ -1,4 +1,5 @@
 export function SectionHeading({
+  eyebrow,
   title,
   copy,
   align = "left",
@@ -27,6 +28,9 @@ export function SectionHeading({
 
   return (
     <div className={`max-w-5xl space-y-4 ${alignment}`}>
+      <span className="eyebrow" data-animate-heading>
+        {eyebrow}
+      </span>
       <h2
         className="font-display text-3xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-[3.2rem]"
         data-animate-heading

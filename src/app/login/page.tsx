@@ -32,7 +32,8 @@ export default function LoginPage() {
         <p className="mt-3 max-w-3xl text-sm leading-7 text-[color:var(--copy-body)] sm:text-base">
           Solange der Workspace noch nicht allgemein freigeschaltet ist, bleibt
           die Waitlist der richtige Weg für neue Teams. Wir melden uns direkt,
-          sobald wir den nächsten Zugang oder ein passendes Setup freigeben.
+          sobald wir den nächsten Zugang oder einen passenden Startpunkt
+          freigeben.
         </p>
         <div className="mt-6 max-w-3xl">
           <LoginWaitlistForm />

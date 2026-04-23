@@ -34,9 +34,17 @@ export default function ImprintPage() {
         Anbieterkennzeichnung
       </h1>
       <p className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]">
-        Zynapse ist ein Angebot von Codariq. Verantwortlicher Anbieter dieser
-        Website im Sinne von § 5 DDG und § 18 Abs. 2 MStV ist
-        Tarik Arthur Marshall, handelnd unter Codariq.
+        Zynapse ist ein Angebot von{" "}
+        <a
+          href="https://codariq.de"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-[var(--copy-strong)] underline decoration-[rgba(224,94,67,0.35)] underline-offset-4 transition-colors duration-200 hover:text-[var(--accent-strong)]"
+        >
+          Codariq
+        </a>
+        . Verantwortlicher Anbieter dieser Website im Sinne von § 5 DDG und § 18
+        Abs. 2 MStV ist Tarik Arthur Marshall, handelnd unter Codariq.
       </p>
 
       <LegalSection title="Angaben gemäß § 5 DDG">

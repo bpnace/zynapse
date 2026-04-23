@@ -12,18 +12,18 @@ const outputAccentClasses = [
 ] as const;
 
 const frameGradients: Record<string, string> = {
-  "Natur & Architektur":
-    "linear-gradient(135deg, rgba(115,150,111,0.14) 0%, rgba(214,230,188,0.20) 58%, rgba(115,150,111,0.08) 100%)",
-  "Luxus & Spannung":
+  "Premium Look":
     "linear-gradient(135deg, rgba(24,28,32,0.14) 0%, rgba(249,197,106,0.16) 52%, rgba(24,28,32,0.08) 100%)",
-  "Editorial & Bewegung":
+  "Offer Push":
+    "linear-gradient(135deg, rgba(224,94,67,0.15) 0%, rgba(249,197,106,0.18) 58%, rgba(224,94,67,0.08) 100%)",
+  "UGC Style":
     "linear-gradient(135deg, rgba(222,228,236,0.22) 0%, rgba(255,255,255,0.32) 48%, rgba(210,217,227,0.18) 100%)",
-  "Retail & Surrealität":
+  "Founder oder Expert Style":
     "linear-gradient(135deg, rgba(182,214,158,0.18) 0%, rgba(249,197,106,0.16) 56%, rgba(196,233,217,0.12) 100%)",
-  "Industrie & Reveal":
-    "linear-gradient(135deg, rgba(56,67,84,0.10) 0%, rgba(160,174,192,0.18) 52%, rgba(249,197,106,0.08) 100%)",
-  "Food & Detail":
-    "linear-gradient(135deg, rgba(56,67,84,0.06) 0%, rgba(156,244,215,0.12) 60%, rgba(185,178,255,0.10) 100%)",
+  "Product Close-up":
+    "linear-gradient(135deg, rgba(56,67,84,0.1) 0%, rgba(160,174,192,0.18) 52%, rgba(249,197,106,0.08) 100%)",
+  "Cinematic Visuals":
+    "linear-gradient(135deg, rgba(56,67,84,0.06) 0%, rgba(156,244,215,0.12) 60%, rgba(185,178,255,0.1) 100%)",
 };
 
 function formatDuration(s: string): string {
@@ -33,8 +33,6 @@ function formatDuration(s: string): string {
   return `${min}:${sec.toString().padStart(2, "0")}`;
 }
 
-const displayVariants = videoVariants;
-
 export function VideoOutputGrid() {
   const [videoLoadFailed, setVideoLoadFailed] = useState<Record<string, boolean>>(
     {},
@@ -42,24 +40,23 @@ export function VideoOutputGrid() {
 
   return (
     <section
+      id="beispiele"
       className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="Sichtbarer Kampagnen-Output"
+        eyebrow="Output-Beispiele"
         title={
           <>
-            Nicht eine Stilrichtung. Sondern{" "}
-            <span className="title-accent">unendlich viele verschiedene Bildwelten</span>{" "}
-            für{" "}
-            <span data-animate-word>komplexe Kampagnen.</span>
+            Unterschiedliche <span className="title-accent">Looks</span> für{" "}
+            <span data-animate-word>unendliche marketing Tests</span>.
           </>
         }
-        copy="Die aktuelle Auswahl zeigt nicht nur unterschiedliche Bildwelten, sondern auch unterschiedliche Ausspielungen: von 6-Sekunden-Bumpern über Square- und Feed-Cuts bis zu vertikalen Story-Formaten. Genau so sehen Richtungen aus, die Brands direkt reviewen, schärfen und kanalgenau weiterführen können."
+        copy="Jede kreative Richtung ist bewusst darauf ausgelegt, etwas anderes zu leisten wie etwa Aufmerksamkeit zu gewinnen, Vertrauen aufzubauen, das Produkt greifbarer zu machen oder den nächsten Klick auszulösen."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {displayVariants.map((variant, index) => {
+        {videoVariants.map((variant, index) => {
           const showVideo = !videoLoadFailed[variant.id];
 
           return (
@@ -72,7 +69,8 @@ export function VideoOutputGrid() {
                 className="relative flex h-[11rem] items-center justify-center overflow-hidden"
                 style={{
                   background:
-                    frameGradients[variant.angle] ?? frameGradients["Industrie & Reveal"],
+                    frameGradients[variant.angle] ??
+                    frameGradients["Cinematic Visuals"],
                 }}
               >
                 {showVideo ? (
@@ -108,18 +106,15 @@ export function VideoOutputGrid() {
                   />
                 </div>
 
-                {/* Format badge — top right */}
                 <span className="absolute top-3 right-3 rounded-[var(--radius-chip)] border border-white/25 bg-white/55 px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-[var(--copy-strong)] backdrop-blur-sm">
                   {variant.format}
                 </span>
 
-                {/* Duration chip — bottom left */}
                 <span className="absolute bottom-3 left-3 rounded-[var(--radius-chip)] bg-[var(--copy-strong)] px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.06em] text-white/90">
                   {formatDuration(variant.length)}
                 </span>
               </div>
 
-              {/* Card content */}
               <div className="p-5">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">

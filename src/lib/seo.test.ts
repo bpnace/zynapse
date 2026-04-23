@@ -24,14 +24,14 @@ describe("buildMetadata", () => {
   it("builds indexable metadata with canonical, locale, and preview directives", () => {
     const metadata = buildMetadata({
       title: "Startseite | Zynapse",
-      description: "Kuratiertes AI-Kampagnensystem für Brands.",
+      description: "Bessere Video Creatives für Brands.",
       path: "/",
     });
 
     expect(metadata.alternates?.canonical).toBe("/");
     expect(metadata.openGraph).toMatchObject({
       title: "Startseite | Zynapse",
-      description: "Kuratiertes AI-Kampagnensystem für Brands.",
+      description: "Bessere Video Creatives für Brands.",
       url: absoluteUrl("/"),
       locale: siteConfig.locale,
       siteName: siteConfig.name,
@@ -39,7 +39,7 @@ describe("buildMetadata", () => {
     expect(metadata.twitter).toMatchObject({
       card: "summary_large_image",
       title: "Startseite | Zynapse",
-      description: "Kuratiertes AI-Kampagnensystem für Brands.",
+      description: "Bessere Video Creatives für Brands.",
     });
     expect(metadata.robots).toMatchObject({
       index: true,
@@ -59,8 +59,8 @@ describe("buildMetadata", () => {
 
   it("builds noindex metadata for non-ranking routes", () => {
     const metadata = buildMetadata({
-      title: "Brand-Anfrage | Zynapse",
-      description: "Geführte Brand-Anfrage.",
+      title: "Kreativbriefing starten | Zynapse",
+      description: "Geführtes Kreativbriefing.",
       path: "/request",
       indexable: false,
     });
@@ -81,14 +81,14 @@ describe("buildPageJsonLd", () => {
   it("connects page, service, and breadcrumbs in one graph", () => {
     const service = buildServiceJsonLd({
       path: "/brands",
-      name: "AI-Kampagnen-Setups für Brands",
-      description: "Kuratiertes Setup für Brands.",
-      serviceType: "Kuratiertes AI-Kampagnensystem für Brands",
-      audience: "Brand- und Performance-Teams",
+      name: "Video-Creative-Flows für Brands",
+      description: "Creative Flow für Brands.",
+      serviceType: "Video-Creative-Flow für Marketing- und Performance-Teams",
+      audience: "Marketing- und Performance-Teams",
     });
     const jsonLd = buildPageJsonLd({
       title: "Für Brands | Zynapse",
-      description: "Kuratiertes Setup für Brands.",
+      description: "Creative Flow für Brands.",
       path: "/brands",
       breadcrumbs: buildBreadcrumbs("Für Brands", "/brands"),
       primaryEntity: service,

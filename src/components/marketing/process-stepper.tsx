@@ -12,19 +12,20 @@ const stepAccentClasses = [
 export function ProcessStepper() {
   return (
     <section
+      id="ablauf"
       className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="So arbeitet Zynapse"
+        eyebrow="Ablauf"
         title={
           <>
-            Ein Ablauf der <span data-animate-word>Anfrage,</span> Matching und{" "}
-            <span className="title-accent">Produktion verbindet</span>.
+            Vom <span data-animate-word>Kampagnenziel</span> zum fertigen{" "}
+            <span className="title-accent">kreativen Output</span>.
           </>
         }
-        copy="Die Brand liefert Ziel, Kontext und Guardrails. Zynapse kuratiert das passende Spezialist:innen-Setup und führt daraus Produktion, Review und Handover in einem klaren Kampagnenfluss."
+        copy="Ihr gebt Ziel, Produkt, Zielgruppe und Markenregeln vor. Zynapse Core macht daraus einen klaren Kreativplan und führt den Prozess bis zu geprüften Varianten für euer Media Team."
       />
       <div className="grid gap-4 lg:grid-cols-5">
         {processSteps.map((step, index) => (
@@ -32,20 +33,17 @@ export function ProcessStepper() {
             key={step.title}
             className={`section-card section-surface-contrast flex flex-col rounded-[var(--radius-card)] p-5 ${stepAccentClasses[index % stepAccentClasses.length]}`}
           >
-            {/* Row 1: Step number + owner badge — fixed height */}
             <div className="flex h-10 items-center justify-between gap-2">
               <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
                 0{index + 1}
               </span>
-              <span className="max-w-[5.5rem] rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 text-end font-mono text-[10px] leading-tight tracking-[0.14em] uppercase text-[var(--copy-soft)]">
+              <span className="max-w-[6rem] rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 text-end font-mono text-[10px] leading-tight tracking-[0.14em] uppercase text-[var(--copy-soft)]">
                 {step.owner}
               </span>
             </div>
-            {/* Row 2: Title — fixed height so descriptions align */}
-            <h3 className="mt-4 flex h-[3.4rem] items-start font-display text-[1.25rem] leading-[1.15] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
+            <h3 className="mt-4 flex h-[3.9rem] items-start font-display text-[1.25rem] leading-[1.15] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
               {step.title}
             </h3>
-            {/* Row 3: Description */}
             <p className="mt-2 text-[0.975rem] leading-[1.65] text-[color:var(--copy-body)]">
               {step.description}
             </p>
