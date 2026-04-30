@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/ui/section-heading";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 
 const coreSteps = [
   {
@@ -7,9 +8,9 @@ const coreSteps = [
       "Website, Produkt, Zielgruppe, Markenregeln und vorhandene Assets werden zu einem belastbaren Arbeitskontext zusammengeführt.",
   },
   {
-    title: "Routen, Rollen und Aufgaben führen",
+    title: "Szenarien, Rollen und Aufgaben führen",
     description:
-      "Zynapse Core bündelt Kreativrouten, passende Rollen und klare Aufgaben, damit aus dem Briefing ein steuerbarer Arbeitsfluss wird.",
+      "Zynapse Core bündelt Creative-Szenarien, passende Rollen und klare Aufgaben, damit aus dem Briefing ein steuerbarer Arbeitsfluss wird.",
   },
   {
     title: "Review und Delivery absichern",
@@ -45,7 +46,7 @@ export function CoreSection() {
               index > 0 ? "border-t border-[rgba(56,67,84,0.14)] lg:border-t-0 lg:border-l" : ""
             } border-[rgba(56,67,84,0.14)] ${
               index === 1
-                ? "bg-[linear-gradient(135deg,#2f3745_0%,var(--accent-strong)_46%,#f0a84d_100%)] text-white"
+                ? "bg-[linear-gradient(135deg,var(--copy-strong)_0%,var(--accent)_100%)] text-white"
                 : "bg-white"
             }`}
           >
@@ -68,7 +69,7 @@ export function CoreSection() {
                 index === 1 ? "text-white/74" : "text-[color:var(--copy-body)]"
               }`}
             >
-              {step.description}
+              <BoldZynapseCore>{step.description}</BoldZynapseCore>
             </p>
           </article>
         ))}

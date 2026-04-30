@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { brandBenefits, creativeBenefits } from "@/lib/content/site";
 
 function ComparisonColumn({
@@ -51,7 +52,7 @@ function ComparisonColumn({
               isBrand ? "text-[color:var(--copy-body)]" : "text-white/74"
             }`}
           >
-            {copy}
+            <BoldZynapseCore>{copy}</BoldZynapseCore>
           </p>
         </div>
 
@@ -86,7 +87,7 @@ function ComparisonColumn({
                   isBrand ? "text-[color:var(--copy-body)]" : "text-white/74"
                 }`}
               >
-                {benefit}
+                <BoldZynapseCore>{benefit}</BoldZynapseCore>
               </p>
             </div>
           ))}
@@ -98,9 +99,11 @@ function ComparisonColumn({
               isBrand ? "text-[color:var(--copy-soft)]" : "text-white/62"
             }`}
           >
-            {isBrand
-              ? "Für Brands, die Paid Social, Reels und Short Form sauber in einen laufenden Zynapse-Core-Prozess bringen wollen."
-              : "Für AI Creatives, die Strategie, Prompting und Produktion ihre profession nennen."}
+            <BoldZynapseCore>
+              {isBrand
+                ? "Für Brands, die Paid Social, Reels und Short Form sauber in einen laufenden Zynapse-Core-Prozess bringen wollen."
+                : "Für AI Creatives, die Strategie, Prompting und Produktion ihre profession nennen."}
+            </BoldZynapseCore>
           </p>
           <ButtonLink
             href={href}
@@ -151,7 +154,7 @@ export function SplitBenefits() {
               headline={
                 <>
                   Klare{" "}
-                  <span className="bg-[linear-gradient(120deg,#fff_0%,#ffe8d8_38%,var(--accent)_74%,#f0a84d_100%)] bg-clip-text text-transparent">
+                  <span className="bg-[linear-gradient(120deg,#fff_0%,var(--accent)_100%)] bg-clip-text text-transparent">
                     Aufgaben
                   </span>{" "}
                   statt{" "}

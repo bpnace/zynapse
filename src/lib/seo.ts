@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "Zynapse",
   legalContextName: "Codariq",
   description:
-    "Zynapse hilft Brands, schneller bessere Video Creatives zu bekommen. Zynapse Core versteht Marke, Ziel und Zielgruppe, plant passende Kreativrouten und liefert geprüfte Creative Packs für Paid Social und Short Form.",
+    "Zynapse hilft Brands, schneller bessere Video Creatives zu bekommen. Zynapse Core versteht Marke, Ziel und Zielgruppe, plant passende Creative-Szenarien und liefert geprüfte Creative Packs für Paid Social und Short Form.",
   url: env.siteUrl,
   language: "de",
   languageTag: "de",
@@ -60,6 +60,7 @@ type ServiceJsonLdInput = {
 export const indexableSitemapEntries = [
   { path: "/", pageFile: "src/app/page.tsx" },
   { path: "/brands", pageFile: "src/app/brands/page.tsx" },
+  { path: "/cases", pageFile: "src/app/cases/page.tsx" },
   { path: "/creatives", pageFile: "src/app/creatives/page.tsx" },
   { path: "/about", pageFile: "src/app/about/page.tsx" },
   { path: "/pricing", pageFile: "src/app/pricing/page.tsx" },

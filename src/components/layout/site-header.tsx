@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import appIcon from "@/app/apple-touch-icon.png";
-import { primaryCta, siteNav } from "@/lib/content/site";
+import { loginCta, primaryCta, siteNav } from "@/lib/content/site";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SiteNavLink } from "@/components/layout/site-nav-link";
@@ -93,11 +93,17 @@ export function SiteHeader() {
             })}
           </nav>
 
-          {/* Right: login (desktop) + CTA */}
+          {/* Right: CTA */}
           <div className="flex items-center gap-2 md:justify-self-end">
-            <Link href="/login" className="hidden rounded-full px-4 py-2 text-sm text-[color:var(--copy-muted)] hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)] md:inline-flex">
-              <b>Login</b>
-            </Link>
+            <ButtonLink
+              href={loginCta.href}
+              onClick={closeMenu}
+              variant="secondary"
+              size="md"
+              className="hidden !rounded-full !bg-white/72 !px-5 !text-[var(--copy-strong)] !shadow-none hover:!border-[rgba(56,67,84,0.34)] hover:!bg-white md:inline-flex"
+            >
+              {loginCta.label}
+            </ButtonLink>
             <ButtonLink
               href={primaryCta.href}
               onClick={closeMenu}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { startTransition, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { createBrandInquiryDefaults } from "@/lib/forms/storage";
 import {
   brandInquirySchema,
@@ -268,7 +269,7 @@ export function BrandInquiryWizard() {
     if (!normalizeText(getValues("styleDirection"))) {
       setValue(
         "styleDirection",
-        `${routeSuggestions[0]}, ${routeSuggestions[1]} und ${routeSuggestions[2]} als erste Kreativrouten`,
+        `${routeSuggestions[0]}, ${routeSuggestions[1]} und ${routeSuggestions[2]} als erste Creative-Szenarien`,
         { shouldDirty: true },
       );
     }
@@ -556,9 +557,11 @@ export function BrandInquiryWizard() {
               Danke, dein Kreativbriefing ist eingegangen.
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
-              Wir prüfen deine Angaben und melden uns mit dem passenden nächsten
-              Schritt für Zynapse Core. Wenn noch etwas für den ersten
-              Kreativplan fehlt, sagen wir es konkret.
+              <BoldZynapseCore>
+                Wir prüfen deine Angaben und melden uns mit dem passenden
+                nächsten Schritt für Zynapse Core. Wenn noch etwas für den
+                ersten Kreativplan fehlt, sagen wir es konkret.
+              </BoldZynapseCore>
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
@@ -569,7 +572,7 @@ export function BrandInquiryWizard() {
               href="/pricing"
               className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
             >
-              Zynapse Core ansehen
+              <strong>Zynapse Core</strong> ansehen
             </ButtonLink>
           </div>
         </div>
@@ -589,7 +592,7 @@ export function BrandInquiryWizard() {
               Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
             </h2>
             <p className="mt-2 line-clamp-1 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)]">
-              {currentStep.copy}
+              <BoldZynapseCore>{currentStep.copy}</BoldZynapseCore>
             </p>
           </div>
           <div className="rounded-[0.55rem] bg-[rgba(31,36,48,0.04)] p-3">
@@ -644,7 +647,7 @@ export function BrandInquiryWizard() {
             </p>
             {stepAlert ? (
               <p className="rounded-[0.45rem] bg-[rgba(184,58,44,0.06)] px-4 py-3 text-sm text-[#8f241b]">
-                {stepAlert}
+                <BoldZynapseCore>{stepAlert}</BoldZynapseCore>
               </p>
             ) : null}
           </div>
@@ -688,7 +691,7 @@ export function BrandInquiryWizard() {
 
       <aside className="h-fit rounded-[0.75rem] bg-[var(--copy-strong)] p-4 text-white shadow-[0_18px_44px_rgba(31,36,48,0.12)] xl:sticky xl:top-24">
         <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-white/[0.62]">
-          Zynapse Core prüft mit
+          <BoldZynapseCore>Zynapse Core prüft mit</BoldZynapseCore>
         </p>
         <div className="mt-3 flex items-end justify-between gap-4">
           <div>
@@ -712,7 +715,7 @@ export function BrandInquiryWizard() {
         <div className="mt-4 grid gap-4">
           <section>
             <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
-              Kreativrouten
+              Creative-Szenarien
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {routeSuggestions.map((route) => (

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button, ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { pricingPlans } from "@/lib/content/pricing";
 import { createContactInquiryDefaults } from "@/lib/forms/storage";
 import {
@@ -274,9 +275,11 @@ export function ContactIntakeForm() {
               Erzähl uns kurz, worum es geht.
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)]">
-              Wenn du schon aus den Preisen kommst, ist der passende
-              Zynapse-Core-Rahmen vorausgewählt. Wenn nicht, reichen ein paar
-              klare Sätze zu Team, Thema und Ziel.
+              <BoldZynapseCore>
+                Wenn du schon aus den Preisen kommst, ist der passende
+                Zynapse-Core-Rahmen vorausgewählt. Wenn nicht, reichen ein paar
+                klare Sätze zu Team, Thema und Ziel.
+              </BoldZynapseCore>
             </p>
           </div>
           <div className="rounded-[0.55rem] bg-[rgba(31,36,48,0.04)] p-3">
@@ -449,10 +452,10 @@ export function ContactIntakeForm() {
           {briefingRows.map((row) => (
             <section key={row.label}>
               <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
-                {row.label}
+                <BoldZynapseCore>{row.label}</BoldZynapseCore>
               </p>
               <p className="mt-2 text-sm leading-5 text-white/[0.75]">
-                {row.value}
+                <BoldZynapseCore>{row.value}</BoldZynapseCore>
               </p>
             </section>
           ))}

@@ -1,186 +1,88 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import {
-  BRAND_INQUIRY_STORAGE_KEY,
-  createBrandInquiryDefaults,
-} from "@/lib/forms/storage";
-import { Button } from "@/components/ui/button";
-
-const initialFields = createBrandInquiryDefaults();
+import { ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 
 export function FinalCta() {
-  const router = useRouter();
-  const [values, setValues] = useState({
-    industry: initialFields.industry,
-    productUrl: initialFields.productUrl,
-    goal: initialFields.goal,
-    channels: initialFields.channels,
-    budgetRange: initialFields.budgetRange,
-    website: initialFields.website,
-  });
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (values.website.trim().length > 0) {
-      return;
-    }
-
-    window.localStorage.setItem(
-      BRAND_INQUIRY_STORAGE_KEY,
-      JSON.stringify(
-        createBrandInquiryDefaults({
-          ...values,
-          startedAt: Date.now(),
-        }),
-      ),
-    );
-
-    router.push("/request");
-  }
-
   return (
     <section
       className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
-      <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white p-7 shadow-[0_24px_54px_rgba(31,36,48,0.1)] sm:p-9">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
-          <div className="space-y-5">
-            <span className="eyebrow" data-animate-heading>
-              Finaler Startpunkt
-            </span>
-            <h2
-              className="font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance text-[var(--copy-strong)] sm:text-5xl"
-              data-animate-heading
-            >
-              Starte mit einem <span data-animate-word>kurzen</span>{" "}
-              <span className="title-accent">Briefing</span>.
-            </h2>
-            <p
-              className="max-w-xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
-              data-animate-copy
-            >
-              Zeig uns Produkt, Ziel, Kanäle und Timing. Zynapse Core schlägt
-              dir daraus den passenden Kampagnenplan vor.
-            </p>
-            <p
-              className="max-w-xl text-sm leading-6 text-[color:var(--copy-soft)]"
-              data-animate-copy
-            >
-              Keine lange Vorbereitung nötig. Ein erster Überblick reicht, um
-              den passenden nächsten Schritt zu planen.
-            </p>
-          </div>
-          <form
-            onSubmit={handleSubmit}
-            className="grid gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] bg-[rgba(248,250,252,0.92)] p-5 md:grid-cols-2 md:p-6"
+      <div className="grid gap-8 border-t border-[rgba(56,67,84,0.14)] pt-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)]">
+        <article
+          className="overflow-hidden rounded-[0.55rem] bg-[var(--copy-strong)] p-7 text-white shadow-[0_24px_54px_rgba(31,36,48,0.12)] sm:p-9"
+          data-animate-item
+        >
+          <p className="font-mono text-xs tracking-[0.18em] text-white/58 uppercase">
+            Für Brands
+          </p>
+          <h2
+            className="mt-5 max-w-3xl overflow-visible pb-[0.08em] pr-[0.08em] font-display text-4xl leading-[0.96] font-semibold tracking-[-0.05em] text-balance sm:text-[3.4rem]"
+            data-animate-heading
           >
-            <label className="field-shell">
-              <span className="field-label">Branche</span>
-              <input
-                required
-                className="field-input"
-                value={values.industry}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    industry: event.target.value,
-                  }))
-                }
-                placeholder="z. B. DTC Wellness"
-              />
-            </label>
-            <label className="field-shell">
-              <span className="field-label">Produktlink</span>
-              <input
-                required
-                className="field-input"
-                value={values.productUrl}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    productUrl: event.target.value,
-                  }))
-                }
-                placeholder="https://"
-              />
-            </label>
-            <label className="field-shell">
-              <span className="field-label">Ziel</span>
-              <input
-                required
-                className="field-input"
-                value={values.goal}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    goal: event.target.value,
-                  }))
-                }
-                placeholder="z. B. mehr Creatives für Conversion-Tests"
-              />
-            </label>
-            <label className="field-shell">
-              <span className="field-label">Kanäle</span>
-              <input
-                required
-                className="field-input"
-                value={values.channels.join(", ")}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    channels: event.target.value
-                      .split(",")
-                      .map((value) => value.trim())
-                      .filter(Boolean),
-                  }))
-                }
-                placeholder="Meta Ads, TikTok, Reels"
-              />
-            </label>
-            <label className="field-shell md:col-span-2">
-              <span className="field-label">Budgetrahmen</span>
-              <input
-                required
-                className="field-input"
-                value={values.budgetRange}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    budgetRange: event.target.value,
-                  }))
-                }
-                placeholder="z. B. Pilot, laufender Zynapse-Core-Prozess oder individueller Rahmen"
-              />
-            </label>
-            <label className="hidden" aria-hidden="true">
-              <span>Website</span>
-              <input
-                tabIndex={-1}
-                autoComplete="off"
-                value={values.website}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    website: event.target.value,
-                  }))
-                }
-              />
-            </label>
-            <Button
-              type="submit"
+            Der <span data-animate-word>nächste</span> Schritt passt zu{" "}
+            <span data-animate-word>eurer</span>{" "}
+            <span data-animate-word>Rolle</span>.
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/74">
+            <BoldZynapseCore>
+              Wenn ihr bereits ein Kampagnenziel, Produkt oder Material habt,
+              könnt ihr direkt einen Pilot oder Sprint anfragen. Wenn ihr erst
+              verstehen wollt, wie Zynapse Core mit Briefing, Review und
+              Delivery arbeitet, führt der zweite Weg zur Brand-Seite.
+            </BoldZynapseCore>
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink
+              href="/request"
               size="lg"
-              className="justify-self-start md:col-span-2"
+              className="w-full justify-center border-white bg-white text-[var(--copy-strong)] hover:border-[rgba(246,107,76,0.9)] hover:text-white focus-visible:border-[rgba(246,107,76,0.9)] focus-visible:text-white sm:w-auto"
+              primaryFillClassName="bg-[var(--accent)]"
             >
               Kampagne anfragen
-            </Button>
-          </form>
-        </div>
+            </ButtonLink>
+            <ButtonLink
+              href="/brands"
+              variant="ghost"
+              size="lg"
+              className="w-full justify-center !rounded-[var(--radius-card)] !border !border-white/30 !bg-transparent !text-white !shadow-none hover:!border-white hover:!bg-white hover:!text-[var(--copy-strong)] focus-visible:!border-white focus-visible:!bg-white focus-visible:!text-[var(--copy-strong)] sm:w-auto"
+            >
+              Für Brands ansehen
+            </ButtonLink>
+          </div>
+        </article>
+
+        <article
+          className="flex flex-col rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] bg-white p-6 shadow-[0_14px_28px_rgba(31,36,48,0.06)] sm:p-7"
+          data-animate-item
+        >
+          <p className="font-mono text-xs tracking-[0.18em] text-[var(--copy-soft)] uppercase">
+            Für Kreative
+          </p>
+          <h3 className="mt-5 font-display text-[2.3rem] leading-[0.94] font-semibold tracking-[-0.055em] text-balance text-[var(--copy-strong)]">
+            Bewerbung mit Portfolio und Fokusbereich.
+          </h3>
+          <p className="mt-5 text-base leading-7 text-[color:var(--copy-body)]">
+            Für AI Creatives, die in klaren Kampagnen statt losen Einzelanfragen
+            arbeiten wollen. Die Bewerbung fragt Portfolio, Fokusbereich und
+            Arbeitsweise ab, damit wir passende Rollen und Kampagnen besser
+            zuordnen können.
+          </p>
+          <div className="mt-auto pt-8">
+            <ButtonLink href="/creatives" variant="secondary" size="lg" className="w-full justify-center">
+              Für Kreative ansehen
+            </ButtonLink>
+          </div>
+        </article>
       </div>
+
+      <p className="mt-6 text-sm leading-6 text-[color:var(--copy-soft)]">
+        <BoldZynapseCore>
+          Erstgespräche sind kurz, konkret und unverbindlich. Wir klären vor
+          allem Ziel, vorhandenes Material, Timing und ob ein Pilot oder ein
+          laufender Zynapse-Core-Rahmen sinnvoller ist.
+        </BoldZynapseCore>
+      </p>
     </section>
   );
 }

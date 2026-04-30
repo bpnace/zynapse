@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PageMotion } from "@/components/animation/page-motion";
 import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
@@ -184,10 +185,12 @@ export default function CreativesPage() {
               className="max-w-2xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Zynapse verbindet dich mit echten Kampagnen, klaren Aufgaben und
-              AI-gestützten Workflows. Zynapse Core hilft dabei, Briefings zu
-              strukturieren, Markenregeln sichtbar zu machen und Feedback in
-              klare nächste Schritte zu übersetzen.
+              <BoldZynapseCore>
+                Zynapse verbindet dich mit echten Kampagnen, klaren Aufgaben
+                und AI-gestützten Workflows. Zynapse Core hilft dabei,
+                Briefings zu strukturieren, Markenregeln sichtbar zu machen und
+                Feedback in klare nächste Schritte zu übersetzen.
+              </BoldZynapseCore>
             </p>
             <div className="flex flex-wrap justify-center gap-3 sm:justify-start" data-animate-item>
               <ButtonLink href="/apply" size="lg">
@@ -214,8 +217,9 @@ export default function CreativesPage() {
       </section>
 
       <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
+        className="mx-auto flex w-full max-w-7xl flex-col gap-10 overflow-hidden px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
+        data-worry-scroll
       >
         <SectionHeading
           eyebrow="Bekannte Probleme"
@@ -230,7 +234,7 @@ export default function CreativesPage() {
           }
           copy="Viele Teams haben Talent, aber keinen sauberen Ablauf von Strategie über Prompting bis Produktion. Genau dort setzt Zynapse Core an."
         />
-        <ProblemCardGrid cards={painPoints} />
+        <ProblemCardGrid cards={painPoints} revealItems={false} />
       </section>
 
       <section
@@ -259,11 +263,11 @@ export default function CreativesPage() {
               <span className="font-display text-[2.5rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
                 {step.step}
               </span>
-              <h3 className="mt-4 font-display text-[1.35rem] leading-[1.1] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
+              <h3 className="mt-5 font-display text-[1.45rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
                 {step.title}
               </h3>
-              <p className="mt-3 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
-                {step.description}
+              <p className="mt-4 text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
+                <BoldZynapseCore>{step.description}</BoldZynapseCore>
               </p>
             </article>
           ))}
@@ -314,7 +318,7 @@ export default function CreativesPage() {
               className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent-soft)]"
               data-animate-heading
             >
-              Zynapse Core für Creatives
+              <BoldZynapseCore>Zynapse Core für Creatives</BoldZynapseCore>
             </p>
             <h2
               className="max-w-3xl font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[3rem]"
@@ -361,7 +365,7 @@ export default function CreativesPage() {
                       {item.title}
                     </h3>
                     <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-                      {item.copy}
+                      <BoldZynapseCore>{item.copy}</BoldZynapseCore>
                     </p>
                   </div>
                 </article>
@@ -476,8 +480,10 @@ export default function CreativesPage() {
             Klarer Scope, bevor du zusagst.
           </h2>
           <p className="mt-4 text-sm leading-6 text-white/74" data-animate-copy>
-            Zynapse Core soll kreative Arbeit planbarer machen. Dazu gehört,
-            dass Rolle, Leistung und Vergütung vor Annahme sichtbar sind.
+            <BoldZynapseCore>
+              Zynapse Core soll kreative Arbeit planbarer machen. Dazu gehört,
+              dass Rolle, Leistung und Vergütung vor Annahme sichtbar sind.
+            </BoldZynapseCore>
           </p>
         </div>
 
@@ -494,7 +500,7 @@ export default function CreativesPage() {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <p className="text-[1rem] leading-7 text-[color:var(--copy-body)]">
-                {item}
+                <BoldZynapseCore>{item}</BoldZynapseCore>
               </p>
             </div>
           ))}
@@ -525,7 +531,7 @@ export default function CreativesPage() {
               className="section-card section-surface-contrast rounded-[var(--radius-card)] p-6"
             >
               <p className="text-[1.05rem] leading-7 text-[color:var(--copy-body)]">
-                {benefit}
+                <BoldZynapseCore>{benefit}</BoldZynapseCore>
               </p>
             </article>
           ))}
@@ -544,7 +550,7 @@ export default function CreativesPage() {
                 data-animate-heading
               >
                 <span data-animate-word>Bewirb dich</span> für den{" "}
-                <span className="title-accent">Zynapse-Core-Prozess</span>.
+                <span className="title-accent">Zynapse-Core</span>-Prozess.
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"

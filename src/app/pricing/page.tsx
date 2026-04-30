@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { pricingPlans } from "@/lib/content/pricing";
@@ -112,16 +113,18 @@ export default function PricingPage() {
             className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] overflow-visible pr-[0.2rem] text-balance sm:text-7xl"
             data-animate-heading
           >
-            Wähle den <span className="title-accent pr-[0.2rem]">Zynapse-Core-Rahmen</span>, der
+            Wähle den <span className="title-accent pr-[0.2rem]">Zynapse-Core</span>-Rahmen, der
             zu eurem Team passt.
           </h1>
           <p
             className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
             data-animate-copy
           >
-            Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core plant
-            den passenden Kreativprozess, wählt die richtigen AI Creatives aus
-            und führt euch bis zum fertigen Kampagnenpaket.
+            <BoldZynapseCore>
+              Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core
+              plant den passenden Kreativprozess, wählt die richtigen AI
+              Creatives aus und führt euch bis zum fertigen Kampagnenpaket.
+            </BoldZynapseCore>
           </p>
         </div>
       </section>
@@ -172,7 +175,7 @@ export default function PricingPage() {
                           {plan.name}
                         </h2>
                         <p className="max-w-[18rem] text-sm leading-5 text-[color:var(--copy-body)]">
-                          {plan.description}
+                          <BoldZynapseCore>{plan.description}</BoldZynapseCore>
                         </p>
                       </div>
                       <div className="grid gap-1 border-t border-[rgba(56,67,84,0.1)] pt-3">
@@ -193,7 +196,7 @@ export default function PricingPage() {
                           Schwerpunkte
                         </dt>
                         <dd className="text-sm leading-5 text-[color:var(--copy-body)]">
-                          {focusLine}
+                          <BoldZynapseCore>{focusLine}</BoldZynapseCore>
                         </dd>
                       </div>
 
@@ -212,7 +215,7 @@ export default function PricingPage() {
                                   {String(index + 1).padStart(2, "0")}
                                 </span>
                                 <span className="text-sm leading-5 text-[color:var(--copy-body)]">
-                                  {deliverable}
+                                  <BoldZynapseCore>{deliverable}</BoldZynapseCore>
                                 </span>
                               </li>
                             ))}
@@ -225,7 +228,7 @@ export default function PricingPage() {
                           Zusammenarbeit
                         </dt>
                         <dd className="text-sm leading-5 text-[color:var(--copy-body)]">
-                          {plan.collaboration}
+                          <BoldZynapseCore>{plan.collaboration}</BoldZynapseCore>
                         </dd>
                       </div>
                     </dl>
@@ -297,15 +300,15 @@ export default function PricingPage() {
                       Mit Zynapse
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {entry.zynapse}
+                      <BoldZynapseCore>{entry.zynapse}</BoldZynapseCore>
                     </p>
                   </div>
                   <div>
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                       Typisch sonst
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {entry.traditional}
+                   <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
+                      <BoldZynapseCore>{entry.traditional}</BoldZynapseCore>
                     </p>
                   </div>
                 </div>

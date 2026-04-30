@@ -1,22 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { videoVariants } from "@/lib/mock-data/studio";
 
 const frameGradients: Record<string, string> = {
-  "Premium Look":
-    "linear-gradient(135deg, rgba(24,28,32,0.14) 0%, rgba(249,197,106,0.16) 52%, rgba(24,28,32,0.08) 100%)",
-  "Offer Push":
-    "linear-gradient(135deg, rgba(224,94,67,0.15) 0%, rgba(249,197,106,0.18) 58%, rgba(224,94,67,0.08) 100%)",
-  "UGC Style":
-    "linear-gradient(135deg, rgba(222,228,236,0.22) 0%, rgba(255,255,255,0.32) 48%, rgba(210,217,227,0.18) 100%)",
-  "Founder oder Expert Style":
-    "linear-gradient(135deg, rgba(182,214,158,0.18) 0%, rgba(249,197,106,0.16) 56%, rgba(196,233,217,0.12) 100%)",
+  "Cinematic Brand World":
+    "linear-gradient(135deg, rgba(24,28,32,0.16), rgba(246,107,76,0.12))",
+  "Premium Drama":
+    "linear-gradient(135deg, rgba(24,28,32,0.24), rgba(246,107,76,0.16))",
+  "Fashion Motion":
+    "linear-gradient(135deg, rgba(222,228,236,0.24), rgba(246,107,76,0.1))",
+  "Retail Proof":
+    "linear-gradient(135deg, rgba(182,214,158,0.18), rgba(246,107,76,0.1))",
+  "Product Energy":
+    "linear-gradient(135deg, rgba(56,67,84,0.16), rgba(246,107,76,0.14))",
   "Product Close-up":
-    "linear-gradient(135deg, rgba(56,67,84,0.1) 0%, rgba(160,174,192,0.18) 52%, rgba(249,197,106,0.08) 100%)",
+    "linear-gradient(135deg, rgba(249,197,106,0.18), rgba(246,107,76,0.1))",
   "Cinematic Visuals":
-    "linear-gradient(135deg, rgba(56,67,84,0.06) 0%, rgba(156,244,215,0.12) 60%, rgba(185,178,255,0.1) 100%)",
+    "linear-gradient(135deg, rgba(56,67,84,0.1), rgba(246,107,76,0.1))",
 };
 
 function formatDuration(s: string): string {
@@ -33,7 +36,7 @@ export function VideoOutputGrid() {
 
   return (
     <section
-      id="beispiele"
+      id="szenarien"
       className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
       data-stagger="dense"
@@ -42,11 +45,11 @@ export function VideoOutputGrid() {
         eyebrow="Szenarien"
         title={
           <>
-            So kann Zynapse Core vorhandenes Material in{" "}
-            <span className="title-accent">testbare Varianten</span> führen.
+            Sechs Szenarien für{" "}
+            <span className="title-accent">testbare Video Ads</span>.
           </>
         }
-        copy="Die Beispiele sind als Szenarien formuliert: ein Ausgangsmaterial, ein Kampagnenziel und ein klarer Zynapse-Core-Prozess für neue Routen, Formate und Reviews."
+        copy="Die Szenarien zeigen nicht nur Stilrichtungen, sondern unterschiedliche Aufgaben im Funnel. Je nachdem, ob ihr Aufmerksamkeit, Vertrauen, Produktverständnis oder ein konkretes Angebot testen wollt, braucht das Creative eine andere Logik, andere Hooks und eine andere Übergabe an Media."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {videoVariants.map((variant) => {
@@ -130,6 +133,17 @@ export function VideoOutputGrid() {
             </article>
           );
         })}
+      </div>
+      <div className="flex flex-col gap-4 border-t border-[rgba(56,67,84,0.12)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <p className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)]">
+          Die Startseite zeigt die Szenarien bewusst kompakt, damit der
+          Überblick schnell bleibt. Auf der Cases-Seite werden daraus lesbare
+          Abläufe mit Ausgangslage, Materialbasis, Creative-Entscheidung und
+          Übergabe an das Kampagnenteam.
+        </p>
+        <ButtonLink href="/cases" variant="secondary" size="lg" className="w-full sm:w-auto">
+          Alle Szenarien ansehen
+        </ButtonLink>
       </div>
     </section>
   );

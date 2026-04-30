@@ -14,9 +14,9 @@ type HomeMotionProps = {
 const SECTION_REVEAL_START = "top 65%";
 const REVEAL_DURATION = 0.66;
 const WORD_REVEAL_BASE_DURATION = 0.4;
-const WORD_REVEAL_DURATION_STEP = 0.1;
-const WORD_REVEAL_START_DELAY = 0.15;
-const WORD_REVEAL_STAGGER = 0.15;
+const WORD_REVEAL_DURATION_STEP = 0.025;
+const WORD_REVEAL_START_DELAY = 0.1;
+const WORD_REVEAL_STAGGER = 0.07;
 const HERO_TITLE_REVEAL_DURATION = 1;
 const HERO_WORD_REVEAL_START_DELAY = 0.16;
 const CHAR_RAIN_DISTANCE = 100;
@@ -292,10 +292,10 @@ export function HomeMotion({ children }: HomeMotionProps) {
         if (section.hasAttribute("data-worry-scroll") && worryCards.length) {
           const startRotations = [-1.2, 0.85, -0.7];
           const startSkews = [-0.35, 0.25, -0.2];
-          const exitX = [-28, 2, 30];
-          const exitY = [34, 52, 38];
-          const exitRotations = [-6, 4.8, 6.5];
-          const exitSkews = [-2.2, 1.8, -1.6];
+          const exitX = [-42, 4, 46];
+          const exitY = [58, 74, 62];
+          const exitRotations = [-7.5, 5.6, 8];
+          const exitSkews = [-2.4, 1.9, -1.8];
 
           gsap.set(worryCards, {
             rotation: (index) => startRotations[index % startRotations.length],
@@ -310,14 +310,14 @@ export function HomeMotion({ children }: HomeMotionProps) {
             y: (index) => exitY[index % exitY.length],
             rotation: (index) => exitRotations[index % exitRotations.length],
             skewY: (index) => exitSkews[index % exitSkews.length],
-            filter: "blur(10px)",
-            autoAlpha: 0.18,
+            filter: "blur(14px)",
+            autoAlpha: 0,
             ease: "none",
             stagger: 0.035,
             scrollTrigger: {
               trigger: section,
-              start: "top 22%",
-              end: "bottom 12%",
+              start: "center center",
+              end: "bottom 18%",
               scrub: 0.7,
             },
           });

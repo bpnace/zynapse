@@ -3,11 +3,11 @@ import { AnimatedMetric } from "@/components/marketing/animated-metric";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const workspaceHighlights = [
-  "Fehlende Briefing-Infos werden vor der Produktion sichtbar.",
-  "Kreativrouten werden nach Hook, Format und CTA priorisiert.",
-  "Offene Threads bleiben im zentralen Review gebündelt.",
-  "Assets sind nach Hook, Format und Version sortiert.",
-  "Review und Media Pack bleiben in einem klaren Flow zusammen.",
+  "Fehlende Briefing-Infos werden vor der Produktion sichtbar, damit offene Fragen nicht erst im Review auftauchen.",
+  "Creative-Szenarien werden nach Hook, Format und CTA priorisiert, statt als lose Ideensammlung nebeneinander zu liegen.",
+  "Offene Threads bleiben im zentralen Review gebündelt, sodass Entscheidungen und nächste Aufgaben nachvollziehbar bleiben.",
+  "Assets sind nach Hook, Format und Version sortiert, damit das Media-Team nicht vor dem Upload neu strukturieren muss.",
+  "Review und Media Pack bleiben in einem klaren Flow zusammen, vom ersten Kommentar bis zur finalen Übergabe.",
 ];
 
 type WorkspaceStat = {
@@ -25,21 +25,24 @@ const workspaceStats: WorkspaceStat[] = [
     value: 88,
     suffix: "%",
     title: "vollständig",
-    detail: "Genug Kontext für starke Routen, bevor die Produktion startet.",
+    detail:
+      "Genug Kontext für starke Szenarien, bevor die Produktion startet: Ziel, Material, Regeln und offene Lücken sind sichtbar.",
   },
   {
     label: "Nächste Aktion",
     value: 2,
-    prefix: "Route ",
+    prefix: "Szenario ",
     title: "freigeben",
-    detail: "Danach kann der finale Export direkt ins Delivery Pack gehen.",
+    detail:
+      "Danach kann Szenario 2 freigegeben oder kommentiert werden, ohne den finalen Export aus dem Blick zu verlieren.",
   },
   {
     label: "Media Pack",
     value: 12,
     suffix: " Assets",
     title: "bereit",
-    detail: "3 offene Review-Threads, klare Delivery für das Media Team.",
+    detail:
+      "Die Assets sind vorbereitet; offene Review-Threads zeigen, was noch entschieden werden muss, bevor das Media-Team übernimmt.",
   },
 ];
 
@@ -53,14 +56,14 @@ export function CampaignPackPreview() {
     >
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Workspace Preview"
+          eyebrow="Workspace-Pack-Preview"
           title={
             <>
-              Zynapse Core macht die <span data-animate-word>Intelligenz</span>{" "}
-              im Prozess <span className="title-accent">sichtbar</span>.
+              Was aus dem Sprint als{" "}
+              <span className="title-accent">sauberes Media Pack</span> entsteht.
             </>
           }
-          copy="Im Workspace sieht euer Team nicht nur Dateien. Ihr seht Briefing-Qualität, empfohlene Kreativrouten, den Quality Check, die nächste Aktion und den Status des fertigen Media Packs."
+          copy="Die Preview zeigt, was im Hintergrund zusammengeführt wird: Briefing-Qualität, offene Fragen, Creative-Szenarien, Review-Status und Media-Pack-Übergabe. So wird sichtbar, ob ein Sprint wirklich produktionsreif ist oder ob vor dem Export noch Kontext, Freigabe oder Sortierung fehlt."
         />
         <ul className="grid max-w-[34rem] gap-2">
           {workspaceHighlights.map((item) => (

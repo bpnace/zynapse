@@ -1,5 +1,6 @@
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
@@ -71,7 +72,7 @@ const specialistRoles = [
     title: "AI Strategy",
     icon: "aiStrategy" as const,
     description:
-      "Priorisiert Zielgruppen, Hooks, Testing-Routen und kreative Hebel, damit Output in echte Kampagnenleistung übersetzt wird.",
+      "Priorisiert Zielgruppen, Hooks, Testing-Szenarien und kreative Hebel, damit Output in echte Kampagnenleistung übersetzt wird.",
   },
 ];
 
@@ -357,7 +358,7 @@ export default function AboutPage() {
                   {signal.label}
                 </p>
                 <p className="mt-2 font-display text-[1.32rem] leading-[1.02] tracking-[-0.04em] text-[var(--copy-strong)]">
-                  {signal.value}
+                  <BoldZynapseCore>{signal.value}</BoldZynapseCore>
                 </p>
               </div>
             ))}
@@ -384,7 +385,7 @@ export default function AboutPage() {
                 key={copy}
                 className="px-6 py-5 text-[1rem] leading-7 text-[color:var(--copy-body)] sm:px-7"
               >
-                {copy}
+                <BoldZynapseCore>{copy}</BoldZynapseCore>
               </p>
             ))}
           </div>

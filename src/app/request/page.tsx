@@ -1,4 +1,5 @@
 import { BrandInquiryWizard } from "@/components/forms/brand-inquiry/brand-inquiry-wizard";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -17,9 +18,11 @@ export default function RequestPage() {
           Starte dein Kreativbriefing in wenigen Minuten.
         </h1>
         <p className="max-w-3xl text-lg leading-8 text-[color:var(--copy-muted)] lg:justify-self-end lg:pb-2">
-          Du brauchst kein perfektes Briefing. Produkt, Ziel, Zielgruppe und
-          Kanäle reichen, damit Zynapse Core einen ersten Kreativplan
-          vorschlagen kann.
+          <BoldZynapseCore>
+            Du brauchst kein perfektes Briefing. Produkt, Ziel, Zielgruppe und
+            Kanäle reichen, damit Zynapse Core einen ersten Kreativplan
+            vorschlagen kann.
+          </BoldZynapseCore>
         </p>
       </div>
       <BrandInquiryWizard />

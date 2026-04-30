@@ -8,9 +8,14 @@ type ProblemCardItem = {
 type ProblemCardGridProps = {
   cards: ReadonlyArray<ProblemCardItem>;
   className?: string;
+  revealItems?: boolean;
 };
 
-export function ProblemCardGrid({ cards, className }: ProblemCardGridProps) {
+export function ProblemCardGrid({
+  cards,
+  className,
+  revealItems = true,
+}: ProblemCardGridProps) {
   const cardTilts = [
     "lg:-rotate-[1.2deg]",
     "lg:rotate-[0.85deg]",
@@ -23,7 +28,7 @@ export function ProblemCardGrid({ cards, className }: ProblemCardGridProps) {
         <article
           key={card.title}
           className="h-full"
-          data-animate-item
+          data-animate-item={revealItems ? "" : undefined}
         >
           <div
             className={cn(

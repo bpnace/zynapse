@@ -1,20 +1,19 @@
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { CampaignPackPreview } from "@/components/marketing/campaign-pack-preview";
-import { CoreSection } from "@/components/marketing/core-section";
 import { FinalCta } from "@/components/marketing/final-cta";
+import { FooterReminder } from "@/components/marketing/footer-reminder";
 import { Hero } from "@/components/marketing/hero";
+import { HomepagePricingTeaser } from "@/components/marketing/homepage-pricing-teaser";
 import { ProblemCards } from "@/components/marketing/problem-cards";
 import { ProcessStepper } from "@/components/marketing/process-stepper";
-import { SplitBenefits } from "@/components/marketing/split-benefits";
-import { TrustSection } from "@/components/marketing/trust-section";
 import { VideoOutputGrid } from "@/components/marketing/video-output-grid";
 import { HomeMotion } from "@/components/animation/home-motion";
 import { buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
 
 const homePageSeo = {
-  title: "Bessere Video Creatives für Brands | Zynapse",
+  title: "Mehr testbare Video Ads für Brands | Zynapse",
   description:
-    "Zynapse hilft Brands, schneller bessere Video Creatives zu bekommen. Zynapse Core plant Kreativrouten, wählt passende AI Creatives aus und liefert geprüfte Creative Packs für Paid Social und Short Form.",
+    "Zynapse übersetzt Briefings in kreative Szenarien, Hooks und Varianten für Paid Social. Brands bekommen testbare Video Ads ohne mehr Koordination.",
   path: "/",
 } as const;
 
@@ -36,15 +35,32 @@ export default function HomePage() {
     <>
       <JsonLdScript data={homeJsonLd} />
       <HomeMotion>
-        <Hero />
-        <ProblemCards />
-        <CoreSection />
-        <ProcessStepper />
-        <CampaignPackPreview />
-        <VideoOutputGrid />
-        <SplitBenefits />
-        <TrustSection />
-        <FinalCta />
+        <div className="flex flex-col">
+          <div className="order-1">
+            <Hero />
+          </div>
+          <div className="order-2">
+            <ProblemCards />
+          </div>
+          <div className="order-3">
+            <ProcessStepper />
+          </div>
+          <div className="order-4">
+            <CampaignPackPreview />
+          </div>
+          <div className="order-5 lg:order-6">
+            <HomepagePricingTeaser />
+          </div>
+          <div className="order-6 lg:order-5">
+            <VideoOutputGrid />
+          </div>
+          <div className="order-7">
+            <FinalCta />
+          </div>
+          <div className="order-8">
+            <FooterReminder />
+          </div>
+        </div>
       </HomeMotion>
     </>
   );

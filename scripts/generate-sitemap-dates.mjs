@@ -5,6 +5,7 @@ import { writeFileSync, mkdirSync } from "fs";
 const pageFiles = [
   "src/app/page.tsx",
   "src/app/brands/page.tsx",
+  "src/app/cases/page.tsx",
   "src/app/creatives/page.tsx",
   "src/app/about/page.tsx",
   "src/app/pricing/page.tsx",

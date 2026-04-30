@@ -58,11 +58,6 @@ const nextConfig: NextConfig = {
         destination: "/creatives",
         permanent: true,
       },
-      {
-        source: "/cases",
-        destination: "/pricing",
-        permanent: true,
-      },
     ];
   },
 };

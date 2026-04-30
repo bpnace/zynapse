@@ -1,4 +1,5 @@
 import { AnimatedMetric } from "@/components/marketing/animated-metric";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { trustSignals } from "@/lib/content/site";
 
@@ -119,7 +120,7 @@ export function TrustSection() {
                     index === 1 ? "text-white/74" : "text-[color:var(--copy-body)]"
                   }`}
                 >
-                  {signal.description}
+                  <BoldZynapseCore>{signal.description}</BoldZynapseCore>
                 </p>
               </div>
             </article>

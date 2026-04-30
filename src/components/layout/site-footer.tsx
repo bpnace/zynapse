@@ -3,12 +3,13 @@ import { CookieSettingsTrigger } from "@/components/layout/cookie-settings-trigg
 import { footerGroups } from "@/lib/content/site";
 import { SiteNavLink } from "@/components/layout/site-nav-link";
 import { Wordmark } from "@/components/layout/wordmark";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-white/10 bg-[#1d1d1d] text-[color:var(--surface-paper)]">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 pt-14 pb-10 sm:px-8 lg:grid-cols-[minmax(0,0.45fr)_repeat(3,minmax(0,0.18fr))] lg:px-10">
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="grid w-fit grid-cols-[auto_1fr] items-center gap-4">
             <Image
               src="/logo/LogoSimple.png"
@@ -24,17 +25,12 @@ export function SiteFooter() {
               imageClassName="w-[10.5rem] sm:w-[12.5rem]"
             />
           </div>
-          <h2 className="font-display text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
-            Von der Idee bis zu Varianten, die euer Media Team direkt nutzen kann.
-          </h2>
-          <p className="max-w-md text-[color:var(--surface-paper)]">
-            Zynapse Core erkennt, was zu Marke, Ziel und Zielgruppe
-            passt, entwickelt daraus klare Richtungen und bringt geprüfte
-            Varianten strukturiert in Review und Übergabe.
-          </p>
-          <p className="max-w-md border-t border-white/12 pt-4 text-sm leading-6 text-white/62">
-            Wir bauen Zynapse, damit AI-Creative-Arbeit kontrollierbarer wird:
-            weniger Tool-Chaos, mehr klarer Zynapse-Core-Prozess.
+          <p className="max-w-md text-base leading-7 text-white/72">
+            <BoldZynapseCore>
+              Testbare Video Ads aus einem kurzen Briefing. Zynapse
+              Core führt Szenarien, Review und Übergabe in einem klaren Prozess
+              zusammen.
+            </BoldZynapseCore>
           </p>
         </div>
         {footerGroups.map((group) => (

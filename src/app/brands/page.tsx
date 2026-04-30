@@ -3,6 +3,7 @@ import { PageMotion } from "@/components/animation/page-motion";
 import { AnimatedMetric } from "@/components/marketing/animated-metric";
 import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
 import { JsonLdScript } from "@/components/seo/json-ld";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { brandBenefits } from "@/lib/content/site";
@@ -16,7 +17,7 @@ import {
 const pageSeo = {
   title: "Für Brands – mehr testbare Video Ads | Zynapse",
   description:
-    "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Kreativrouten, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
+    "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Creative-Szenarien, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
   path: "/brands",
 } as const;
 
@@ -47,13 +48,13 @@ const howItWorks = [
     description:
       "Ihr beschreibt Produkt, Zielgruppe, Kanal, Timing, Markenregeln und vorhandenes Material.",
     detail:
-      "Zynapse Core erkennt, was als Basis nutzbar ist und welche Lücken für die erste Route noch offen sind.",
+      "Zynapse Core erkennt, was als Basis nutzbar ist und welche Lücken für die ersten Szenarien noch offen sind.",
   },
   {
     step: "02",
     title: "Zynapse Core",
     description:
-      "Zynapse Core führt Kreativrouten, Hooks, Formate und passende AI Creatives zusammen.",
+      "Zynapse Core führt Creative-Szenarien, Hooks, Formate und passende AI Creatives zusammen.",
     detail:
       "Das ist Zynapse Core in der Praxis: ein geführter Prozess statt loser Einzelideen.",
   },
@@ -78,7 +79,7 @@ const materialOutputs = [
   "neue Hooks aus vorhandenen Proof-Punkten",
   "zusätzliche Formate für Paid Social und Short Form",
   "AI-erweiterte Visuals mit sichtbaren Markenregeln",
-  "Review-Routen, die eigenes Material und neue Varianten trennen",
+  "Review-Szenarien, die eigenes Material und neue Varianten trennen",
 ];
 
 type BrandResult = {
@@ -171,9 +172,12 @@ export default function BrandsPage() {
                 className="max-w-5xl text-lg leading-8 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Euer Team gibt Ziel, Produkt und Markenregeln vor. Zynapse Core
-                plant die passenden Kreativrouten, führt die Produktion und
-                liefert geprüfte Varianten für Paid Social und Short Form.
+                <BoldZynapseCore>
+                  Euer Team gibt Ziel, Produkt und Markenregeln vor. Zynapse
+                  Core plant die passenden Creative-Szenarien, führt die
+                  Produktion und liefert geprüfte Varianten für Paid Social und
+                  Short Form.
+                </BoldZynapseCore>
               </p>
               <p
                 className="max-w-3xl text-sm leading-6 text-[color:var(--copy-soft)]"
@@ -219,8 +223,9 @@ export default function BrandsPage() {
         </section>
 
         <section
-          className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
+          className="mx-auto w-full max-w-7xl overflow-hidden px-6 py-14 sm:px-8 lg:px-10"
           data-reveal-section
+          data-worry-scroll
         >
           <SectionHeading
             eyebrow="Typische Engpässe"
@@ -234,7 +239,11 @@ export default function BrandsPage() {
             copy="Performance wächst nicht nur durch mehr Budget. Sie wächst durch bessere Tests. Dafür braucht ihr regelmäßig neue Hooks, neue Formate und neue Varianten, ohne jedes Mal eine Produktion von null zu starten."
           />
 
-          <ProblemCardGrid cards={painPoints} className="mt-8" />
+          <ProblemCardGrid
+            cards={painPoints}
+            className="mt-8"
+            revealItems={false}
+          />
         </section>
 
         <section
@@ -247,10 +256,10 @@ export default function BrandsPage() {
             title={
               <>
                 Drei <span data-animate-word>Schritte</span> im{" "}
-                <span className="title-accent">Zynapse-Core-Prozess</span>.
+                <span className="title-accent">Zynapse-Core</span>-Prozess.
               </>
             }
-            copy="Ihr bringt Ziel, Marke, Timing und vorhandenes Material mit. Zynapse Core führt daraus Routen, Aufgaben, Qualitätssignale und Review zusammen."
+            copy="Ihr bringt Ziel, Marke, Timing und vorhandenes Material mit. Zynapse Core führt daraus Szenarien, Aufgaben, Qualitätssignale und Review zusammen."
           />
 
           <div className="mt-8 section-card section-surface-paper overflow-hidden rounded-[calc(var(--radius-panel)+0.08rem)] border-[rgba(56,67,84,0.12)]">
@@ -271,10 +280,10 @@ export default function BrandsPage() {
                       {step.title}
                     </h3>
                     <p className="text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
-                      {step.description}
+                      <BoldZynapseCore>{step.description}</BoldZynapseCore>
                     </p>
                     <p className="text-sm leading-6 text-[color:var(--copy-soft)]">
-                      {step.detail}
+                      <BoldZynapseCore>{step.detail}</BoldZynapseCore>
                     </p>
                   </div>
                 </article>
@@ -296,7 +305,7 @@ export default function BrandsPage() {
                   <span className="title-accent">AI-Erweiterung</span>.
                 </>
               }
-              copy="Zynapse Core muss nicht alles neu erzeugen. Bestehendes Material kann die Basis sein, während AI zusätzliche Varianten, Formate und Routen ergänzt."
+              copy="Zynapse Core muss nicht alles neu erzeugen. Bestehendes Material kann die Basis sein, während AI zusätzliche Varianten, Formate und Szenarien ergänzt."
             />
 
             <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)]">
@@ -325,7 +334,7 @@ export default function BrandsPage() {
                     AI-Erweiterung
                   </p>
                   <h3 className="mt-4 font-display text-[1.65rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                    Zynapse Core baut daraus mehr testbare Routen.
+                    Zynapse Core baut daraus mehr testbare Szenarien.
                   </h3>
                   <ul className="mt-5 grid gap-3">
                     {materialOutputs.map((item) => (
@@ -345,9 +354,11 @@ export default function BrandsPage() {
                   Brand-Schutz
                 </p>
                 <p className="mt-2 text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
-                  Wir arbeiten in einem laufenden Zynapse-Core-Prozess nicht
-                  parallel für zwei direkte Wettbewerber derselben engen
-                  Kategorie.
+                  <BoldZynapseCore>
+                    Wir arbeiten in einem laufenden Zynapse-Core-Prozess nicht
+                    parallel für zwei direkte Wettbewerber derselben engen
+                    Kategorie.
+                  </BoldZynapseCore>
                 </p>
               </div>
             </div>
@@ -423,7 +434,7 @@ export default function BrandsPage() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <p className="text-[1rem] leading-7 text-[color:var(--copy-body)]">
-                    {item}
+                    <BoldZynapseCore>{item}</BoldZynapseCore>
                   </p>
                 </div>
               ))}
@@ -449,8 +460,10 @@ export default function BrandsPage() {
                   className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                   data-animate-copy
                 >
-                  Produkt, Ziel, Kanäle und Timing reichen, damit Zynapse Core
-                  einen ersten Kreativplan vorschlagen kann.
+                  <BoldZynapseCore>
+                    Produkt, Ziel, Kanäle und Timing reichen, damit Zynapse
+                    Core einen ersten Kreativplan vorschlagen kann.
+                  </BoldZynapseCore>
                 </p>
               </div>
               <ButtonLink href="/request" size="lg" data-animate-item>

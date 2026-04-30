@@ -2,16 +2,21 @@ import type { NavItem } from "@/types/site";
 
 export const siteNav: NavItem[] = [
   { href: "/brands", label: "Für Brands" },
-  { href: "/#beispiele", label: "Beispiele" },
+  { href: "/cases", label: "Cases" },
   { href: "/pricing", label: "Preise" },
   { href: "/creatives", label: "Für Kreative" },
-  { href: "/contact", label: "Kontakt" },
 ];
 
 export const primaryCta: NavItem = {
   href: "/request",
   label: "Kampagne anfragen",
   kind: "cta",
+};
+
+export const loginCta: NavItem = {
+  href: "/login",
+  label: "Login",
+  kind: "link",
 };
 
 export const heroMetrics = [
@@ -22,55 +27,55 @@ export const heroMetrics = [
 
 export const problemCards = [
   {
-    title: "Zu wenig neue Varianten",
+    title: "Creative Fatigue",
     description:
-      "Euer Media Team braucht frische Creatives für Tests, aber jede neue Runde kostet wieder Zeit, Abstimmung und Energie.",
+      "Eure Top-Assets ziehen nicht mehr, aber neue Varianten brauchen zu lange, weil Briefing, Material und Freigabe jedes Mal neu organisiert werden.",
   },
   {
-    title: "Zu viel Feedback-Chaos",
+    title: "Review-Drift",
     description:
-      "Kommentare liegen in Slack, E-Mails, Calls und Ordnern. Am Ende ist unklar, welche Version wirklich freigegeben ist.",
+      "Feedback liegt in Slack, Mail und Calls. Dadurch wird unklar, welche Entscheidung final ist, welche Änderung noch offen bleibt und wer den nächsten Schritt besitzt.",
   },
   {
-    title: "Zu wenig System im Creative Testing",
+    title: "Volumen ohne Lernen",
     description:
-      "Hooks, Formate und Botschaften werden oft einzeln gedacht. Dadurch entstehen Assets, aber keine klare Lernkurve für die nächste Runde.",
+      "Mehr Varianten erzeugen nur dann bessere Daten, wenn klar ist, welche Hook, welches Format und welche Funnel-Aufgabe wirklich getestet wird.",
   },
 ];
 
 export const processSteps = [
   {
-    title: "Briefing & Material",
+    title: "Briefing",
     owner: "Brand Team",
     description:
-      "Ihr gebt Ziel, Produkt, Zielgruppe, Markenregeln und vorhandenes Material vor. Zynapse Core erkennt daraus, was nutzbar ist und was fehlt.",
+      "Ihr beschreibt Produkt, Ziel, Zielgruppe und Brand-Regeln. Vorhandene Produktshots, Creator-Clips, Packshots oder Guidelines werden direkt als Materialbasis eingeordnet.",
   },
   {
-    title: "Zynapse Core",
-    owner: "Zynapse Core",
+    title: "Produktion und Review",
+    owner: "ZYNAPSE",
     description:
-      "Briefing, Kreativrouten, passende Rollen, Qualitätssignale und nächste Aufgaben laufen in einem geführten System zusammen.",
+      "Zynapse Core entwickelt daraus Szenarien, Hooks und Varianten. Die Review-Runde bleibt zentral, damit Feedback nicht zwischen Dateien, Calls und Nachrichten zerläuft.",
   },
   {
-    title: "Review & Delivery",
+    title: "Creative Pack",
     owner: "Media Team",
     description:
-      "Euer Team reviewt zentral, gibt frei und bekommt geprüfte Varianten samt Kontext für Paid Social, Reels und Short Form.",
+      "Das fertige Creative Pack kommt sortiert nach Naming, Format und Funnel-Aufgabe. Euer Media-Team sieht, was getestet werden soll und wie die Varianten zusammenhängen.",
   },
 ];
 
 export const brandBenefits = [
-  "Mehr Varianten für Paid Social, Reels und Short Form",
-  "Kreativrouten statt einzelner Ad-Ideen",
-  "Zentraler Review mit klaren Freigaben",
-  "Fertiges Creative Pack für euer Media Team",
+  "Mehr Varianten für Paid Social, Reels und Short Form, ohne jedes Mal neue Einzelproduktionen oder lose Abstimmungen anstoßen zu müssen",
+  "Creative-Szenarien statt einzelner Ad-Ideen, damit Hooks, Formate und Funnel-Aufgaben zusammen gedacht werden",
+  "Zentraler Review mit klaren Freigaben, damit Feedback nicht zwischen Slack, Mail und Calls zerläuft",
+  "Fertiges Creative Pack für euer Media Team, inklusive Kontext für Naming, Nutzung und nächste Tests",
 ];
 
 export const creativeBenefits = [
-  "Klare Aufgaben statt chaotischer Briefings",
-  "Markenregeln, No-Gos und Ziel klar sichtbar",
-  "Feedback als konkrete nächste Aufgabe statt verstreuter Kommentare",
-  "Echte Kampagnen mit sauberem Beitrag zum finalen Output",
+  "Klare Aufgaben statt chaotischer Briefings, damit du vor dem Start weißt, welchen Beitrag deine Rolle leisten soll",
+  "Markenregeln, No-Gos und Ziel sichtbar im Flow, nicht nur als lose Hinweise in einem alten Briefing",
+  "Feedback als konkrete nächste Aufgabe statt verstreuter Kommentare, damit Iterationen schneller und sauberer werden",
+  "Echte Kampagnen mit sauberem Beitrag zum finalen Output, nicht nur Einzelprompts ohne Anschluss an Review und Delivery",
 ];
 
 export const trustSignals = [
@@ -97,9 +102,9 @@ export const trustSignals = [
 ];
 
 export const studioPrinciples = [
-  "Brands geben Ziel, Marke und Kanal vor, Zynapse Core baut daraus den Kreativplan",
-  "Jede Anfrage führt zu testbaren Creative Packs statt zu losen Einzelassets",
-  "Review, Freigaben und Delivery bleiben in einem klaren Flow zusammen",
+  "Brands geben Ziel, Marke und Kanal vor, Zynapse Core baut daraus einen Kreativplan mit Szenarien, Formaten und Review-Schritten",
+  "Jede Anfrage führt zu testbaren Creative Packs statt zu losen Einzelassets, damit Output und Lernziel zusammenbleiben",
+  "Review, Freigaben und Delivery bleiben in einem klaren Flow zusammen, vom ersten Kommentar bis zur Media-Übergabe",
 ];
 
 export const footerGroups = [
