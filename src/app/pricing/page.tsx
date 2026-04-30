@@ -13,9 +13,9 @@ import {
 import Link from "next/link";
 
 const pageSeo = {
-  title: "Preise – Pilot, Growth Flow, Scale | Zynapse",
+  title: "Preise – Pilot, Growth, Scale | Zynapse",
   description:
-    "Wähle den Creative Flow, der zu eurem Team passt: Pilot für den ersten Test, Growth Flow für laufende Kampagnen und Scale für mehrere Workstreams.",
+    "Wähle den Zynapse-Core-Rahmen, der zu eurem Team passt: Pilot für den ersten Test, Growth für laufende Kampagnen und Scale für mehrere Workstreams.",
   path: "/pricing",
 } as const;
 
@@ -38,21 +38,21 @@ const serviceComparisons = [
   {
     label: "Einzelproduktion",
     zynapse:
-      "Nicht nur ein Asset-Paket, sondern ein Creative Flow mit Briefing-Analyse, zentralem Review und klarer Anschlussfähigkeit an die nächste Kampagnenrunde.",
+      "Nicht nur ein Asset-Paket, sondern Zynapse Core mit Briefing-Analyse, zentralem Review und klarer Anschlussfähigkeit an die nächste Kampagnenrunde.",
     traditional:
       "Ein einzelner Sprint oder ein einzelnes Video löst den Moment. Beim nächsten Briefing beginnen Planung, Abstimmung und Produktionslogik oft wieder von vorn.",
   },
   {
     label: "Offener Creator-Marktplatz",
     zynapse:
-      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Creative Flow mit konsistentem Output, klaren Übergaben und laufender Priorisierung.",
+      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Zynapse-Core-Prozess mit konsistentem Output, klaren Übergaben und laufender Priorisierung.",
     traditional:
       "Der Schwerpunkt liegt auf Sourcing. Ohne übergeordneten Flow streuen Qualität, Messaging und Learnings zwischen einzelnen Creator-Lieferungen.",
   },
   {
     label: "Inhouse-Aufbau",
     zynapse:
-      "Teams bekommen schneller den passenden Creative Flow, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
+      "Teams bekommen schneller den passenden Zynapse-Core-Rahmen, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
     traditional:
       "Volle Kontrolle, aber hoher Vorlauf. Bevor das erste System sauber läuft, müssen Rollen besetzt, Prozesse definiert und Produktionsstandards erst aufgebaut werden.",
   },
@@ -71,9 +71,9 @@ export default function PricingPage() {
     breadcrumbs: buildBreadcrumbs("Preise", pageSeo.path),
     primaryEntity: buildServiceJsonLd({
       path: pageSeo.path,
-      name: "Pricing für Zynapse Creative Flows",
+      name: "Pricing für Zynapse Core",
       description: pageSeo.description,
-      serviceType: "Creative-Flow-Pricing für Brands",
+      serviceType: "Zynapse-Core-Pricing für Brands",
       audience: "Brands mit laufendem Kampagnenbedarf",
       offers: buildOfferJsonLd([
         {
@@ -112,7 +112,7 @@ export default function PricingPage() {
             className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] overflow-visible pr-[0.2rem] text-balance sm:text-7xl"
             data-animate-heading
           >
-            Wähle den <span className="title-accent pr-[0.2rem]">Creative Flow</span>, der
+            Wähle den <span className="title-accent pr-[0.2rem]">Zynapse-Core-Rahmen</span>, der
             zu eurem Team passt.
           </h1>
           <p
@@ -271,7 +271,7 @@ export default function PricingPage() {
               data-animate-copy
             >
               Nicht jede Alternative löst dasselbe Problem. Entscheidend ist,
-              wie gut ein Flow Briefing, Review, Delivery und laufende
+              wie gut ein Prozess Briefing, Review, Delivery und laufende
               Kampagnenkontinuität zusammenhält.
             </p>
           </div>
@@ -417,7 +417,7 @@ export default function PricingPage() {
         className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+        <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white p-7 shadow-[0_18px_42px_rgba(31,36,48,0.07)] sm:p-9">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
               <h2
@@ -425,7 +425,7 @@ export default function PricingPage() {
                 data-animate-heading
               >
                 <span data-animate-word>Bereit</span> für das passende{" "}
-                <span className="title-accent">Creative Flow</span>?
+                <span className="title-accent">Zynapse Core</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
@@ -433,7 +433,7 @@ export default function PricingPage() {
               >
                 Wenn ihr eure aktuelle Phase schon kennt, startet direkt mit
                 einer Anfrage. Wenn nicht, klären wir gemeinsam, ob Pilot,
-                Growth Flow oder Scale gerade zu eurem Bedarf passt.
+                Growth oder Scale gerade zu eurem Bedarf passt.
               </p>
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>

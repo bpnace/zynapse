@@ -134,6 +134,13 @@ const profileFits = [
   "Du suchst ein Umfeld, in dem Strategie, Prompting und Produktion sauber zusammenspielen",
 ];
 
+const compensationNotes = [
+  "projektbasierte Vergütung pro Rolle",
+  "marktübliche Sätze je nach Scope und Verantwortung",
+  "transparenter Betrag vor Annahme",
+  "keine unbezahlten Pitch-Schleifen",
+];
+
 const results = [
   { value: "1", label: "klare Aufgabe pro Rolle" },
   { value: "6", label: "Rollen in einem sichtbaren Flow" },
@@ -149,7 +156,7 @@ export default function CreativesPage() {
       path: pageSeo.path,
       name: "AI-Netzwerk für Kreative",
       description: pageSeo.description,
-      serviceType: "AI-Creative-Flow für Kampagnenarbeit",
+      serviceType: "Zynapse-Core-Prozess für Kampagnenarbeit",
       audience: "AI Creatives und kreative Spezialist:innen",
     }),
   });
@@ -289,7 +296,7 @@ export default function CreativesPage() {
               <p className="mt-4 text-[0.95rem] leading-7 text-[color:var(--copy-body)]">
                 {entry.example}
               </p>
-              <p className="mt-4 rounded-[0.55rem] border border-[rgba(224,94,67,0.16)] bg-[rgba(255,240,232,0.5)] px-4 py-3 text-sm leading-6 text-[color:var(--copy-body)]">
+              <p className="mt-4 border-t border-[rgba(56,67,84,0.12)] pt-3 text-sm leading-6 text-[color:var(--copy-body)]">
                 {entry.output}
               </p>
             </article>
@@ -368,7 +375,7 @@ export default function CreativesPage() {
         className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-warm rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+        <div className="rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white p-7 shadow-[0_18px_42px_rgba(31,36,48,0.07)] sm:p-9">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.5fr)_minmax(0,0.5fr)] lg:items-center">
             <div className="space-y-5">
               <span className="eyebrow" data-animate-heading>
@@ -432,24 +439,65 @@ export default function CreativesPage() {
           />
         </div>
         <div
-          className="section-card section-surface-paper rounded-[var(--radius-card)] p-6"
+          className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_14px_28px_rgba(31,36,48,0.06)]"
         >
-          <ul className="grid gap-3">
-            {profileFits.map((item) => (
+          <ul className="grid">
+            {profileFits.map((item, index) => (
               <li
                 key={item}
-                className="flex items-start gap-3 rounded-[0.55rem] border border-[rgba(224,94,67,0.16)] bg-[rgba(255,240,232,0.55)] px-4 py-3.5 text-[0.95rem] leading-6 text-[color:var(--copy-body)]"
+                className={`grid gap-4 px-5 py-4 sm:grid-cols-[auto_minmax(0,1fr)] ${
+                  index > 0 ? "border-t border-[rgba(56,67,84,0.12)]" : ""
+                }`}
               >
-                <span
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[rgba(156,244,215,0.28)] text-[10px] font-bold text-[#236851]"
-                  aria-hidden="true"
-                >
-                  ✓
+                <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-                {item}
+                <span className="text-[0.95rem] leading-6 text-[color:var(--copy-body)]">
+                  {item}
+                </span>
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section
+        className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:px-10"
+        data-reveal-section
+      >
+        <div className="rounded-[0.55rem] bg-[var(--copy-strong)] p-6 text-white shadow-[0_18px_42px_rgba(31,36,48,0.12)] sm:p-7">
+          <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/58">
+            Vergütung
+          </p>
+          <h2
+            className="mt-4 font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em]"
+            data-animate-heading
+          >
+            Klarer Scope, bevor du zusagst.
+          </h2>
+          <p className="mt-4 text-sm leading-6 text-white/74" data-animate-copy>
+            Zynapse Core soll kreative Arbeit planbarer machen. Dazu gehört,
+            dass Rolle, Leistung und Vergütung vor Annahme sichtbar sind.
+          </p>
+        </div>
+
+        <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_14px_28px_rgba(31,36,48,0.06)]">
+          {compensationNotes.map((item, index) => (
+            <div
+              key={item}
+              className={`grid gap-4 px-5 py-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:px-6 ${
+                index > 0 ? "border-t border-[rgba(56,67,84,0.12)]" : ""
+              }`}
+              data-animate-item
+            >
+              <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <p className="text-[1rem] leading-7 text-[color:var(--copy-body)]">
+                {item}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -496,7 +544,7 @@ export default function CreativesPage() {
                 data-animate-heading
               >
                 <span data-animate-word>Bewirb dich</span> für den{" "}
-                <span className="title-accent">Creative Flow</span>.
+                <span className="title-accent">Zynapse-Core-Prozess</span>.
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"

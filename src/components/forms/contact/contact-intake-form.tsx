@@ -85,7 +85,7 @@ export function ContactIntakeForm() {
 
     return [
       {
-        label: "Creative Flow",
+        label: "Zynapse Core",
         value: activePlan.name,
       },
       {
@@ -274,9 +274,9 @@ export function ContactIntakeForm() {
               Erzähl uns kurz, worum es geht.
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)]">
-              Wenn du schon aus den Preisen kommst, ist der passende Creative
-              Flow vorausgewählt. Wenn nicht, reichen ein paar klare Sätze zu
-              Team, Thema und Ziel.
+              Wenn du schon aus den Preisen kommst, ist der passende
+              Zynapse-Core-Rahmen vorausgewählt. Wenn nicht, reichen ein paar
+              klare Sätze zu Team, Thema und Ziel.
             </p>
           </div>
           <div className="rounded-[0.55rem] bg-[rgba(31,36,48,0.04)] p-3">

@@ -40,34 +40,22 @@ export const problemCards = [
 
 export const processSteps = [
   {
-    title: "Briefing starten",
-    owner: "Marketing Team",
+    title: "Briefing & Material",
+    owner: "Brand Team",
     description:
-      "Ihr gebt Produkt, Ziel, Kanäle, Timing und Markenregeln vor. Mehr braucht Zynapse Core nicht für den ersten sauberen Start.",
+      "Ihr gebt Ziel, Produkt, Zielgruppe, Markenregeln und vorhandenes Material vor. Zynapse Core erkennt daraus, was nutzbar ist und was fehlt.",
   },
   {
-    title: "Kreativplan erhalten",
+    title: "Zynapse Core",
     owner: "Zynapse Core",
     description:
-      "Aus Ziel, Zielgruppe und Angebot entstehen klare Kreativrouten, Formate und Testschwerpunkte statt lose Einzelideen.",
+      "Briefing, Kreativrouten, passende Rollen, Qualitätssignale und nächste Aufgaben laufen in einem geführten System zusammen.",
   },
   {
-    title: "AI Creatives arbeiten geführt daran",
-    owner: "Creative Team",
-    description:
-      "Die passenden Rollen bekommen klare Aufgaben, Qualitätskriterien und einen gemeinsamen Fokus auf Hooks, Botschaften und Formate.",
-  },
-  {
-    title: "Varianten werden geprüft",
-    owner: "Zynapse Core",
-    description:
-      "Bevor euer Team reviewt, prüft Zynapse Core Markenfit, Format, Verständlichkeit, Wiederholung und mögliche Risiken.",
-  },
-  {
-    title: "Creative Pack geht live",
+    title: "Review & Delivery",
     owner: "Media Team",
     description:
-      "Euer Team reviewt zentral und bekommt fertige Assets, Versionen und Empfehlungen direkt nutzbar für Paid Social und Short Form.",
+      "Euer Team reviewt zentral, gibt frei und bekommt geprüfte Varianten samt Kontext für Paid Social, Reels und Short Form.",
   },
 ];
 
@@ -102,9 +90,9 @@ export const trustSignals = [
       "Finale Assets kommen mit klaren Hinweisen zur Nutzung, damit Übergabe und Weiterarbeit nicht in Rückfragen hängen bleiben.",
   },
   {
-    title: "Datenschutz bleibt schlank",
+    title: "Direkte Wettbewerber bleiben getrennt",
     description:
-      "Zynapse fragt nur die Informationen ab, die für Briefing, Produktion, Review und die nächsten sauberen Schritte wirklich nötig sind.",
+      "Wir arbeiten in einem laufenden Zynapse-Core-Prozess nicht parallel für zwei direkte Wettbewerber derselben engen Kategorie.",
   },
 ];
 
@@ -117,7 +105,7 @@ export const studioPrinciples = [
 export const footerGroups = [
   {
     title: "Navigation",
-    links: siteNav,
+    links: [...siteNav, { href: "/about", label: "Über uns" }],
   },
   {
     title: "Ressourcen",
@@ -140,7 +128,7 @@ export const contactChannels = [
   {
     label: "Allgemein",
     value: "hello@zynapse.eu",
-    copy: "Wenn du eine Kampagne anfragen oder herausfinden willst, welcher Creative Flow zu eurem Team passt.",
+    copy: "Wenn du eine Kampagne anfragen oder herausfinden willst, welcher Zynapse-Core-Rahmen zu eurem Team passt.",
   },
   {
     label: "Netzwerk für Kreative",

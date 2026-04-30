@@ -1,14 +1,6 @@
 import { SectionHeading } from "@/components/ui/section-heading";
 import { processSteps } from "@/lib/content/site";
 
-const stepAccentClasses = [
-  "border-t-[3px] border-t-[rgba(224,94,67,0.28)]",
-  "border-t-[3px] border-t-[rgba(56,67,84,0.22)]",
-  "border-t-[3px] border-t-[rgba(249,197,106,0.3)]",
-  "border-t-[3px] border-t-[rgba(156,244,215,0.28)]",
-  "border-t-[3px] border-t-[rgba(185,178,255,0.28)]",
-] as const;
-
 export function ProcessStepper() {
   return (
     <section
@@ -21,30 +13,52 @@ export function ProcessStepper() {
         eyebrow="Ablauf"
         title={
           <>
-            Vom <span data-animate-word>Kampagnenziel</span> zum fertigen{" "}
-            <span className="title-accent">kreativen Output</span>.
+            Drei Schritte. Ein{" "}
+            <span className="title-accent">Zynapse-Core-Prozess</span>.
           </>
         }
-        copy="Ihr gebt Ziel, Produkt, Zielgruppe und Markenregeln vor. Zynapse Core macht daraus einen klaren Kreativplan und führt den Prozess bis zu geprüften Varianten für euer Media Team."
+        copy="Zynapse Core übersetzt Briefing und Material in klare Kreativrouten, geführte Aufgaben und geprüfte Varianten für euer Media Team."
       />
-      <div className="grid gap-4 lg:grid-cols-5">
+      <div className="grid overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)] lg:grid-cols-3">
         {processSteps.map((step, index) => (
           <article
             key={step.title}
-            className={`section-card section-surface-contrast flex flex-col rounded-[var(--radius-card)] p-5 ${stepAccentClasses[index % stepAccentClasses.length]}`}
+            className={`flex min-h-[15rem] flex-col p-5 sm:p-6 ${
+              index > 0 ? "border-t border-[rgba(56,67,84,0.14)] lg:border-t-0 lg:border-l" : ""
+            } border-[rgba(56,67,84,0.14)] ${
+              step.title === "Zynapse Core"
+                ? "bg-[linear-gradient(135deg,#2f3745_0%,var(--accent-strong)_46%,#f0a84d_100%)] text-white"
+                : "bg-white"
+            }`}
           >
-            <div className="flex h-10 items-center justify-between gap-2">
-              <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
+            <div className="flex items-start justify-between gap-4">
+              <span
+                className={`font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] ${
+                  step.title === "Zynapse Core" ? "text-white" : "text-[var(--copy-strong)]"
+                }`}
+              >
                 0{index + 1}
               </span>
-              <span className="max-w-[6rem] rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.14)] bg-[rgba(255,255,255,0.78)] px-2.5 py-1 text-end font-mono text-[10px] leading-tight tracking-[0.14em] uppercase text-[var(--copy-soft)]">
+              <span
+                className={`max-w-[7rem] text-right font-mono text-[10px] leading-tight tracking-[0.14em] uppercase ${
+                  step.title === "Zynapse Core" ? "text-white/58" : "text-[var(--copy-soft)]"
+                }`}
+              >
                 {step.owner}
               </span>
             </div>
-            <h3 className="mt-4 flex h-[3.9rem] items-start font-display text-[1.25rem] leading-[1.15] font-semibold tracking-[-0.035em] text-[var(--copy-strong)]">
+            <h3
+              className={`mt-6 font-display text-[1.45rem] leading-[1.02] font-semibold tracking-[-0.04em] ${
+                step.title === "Zynapse Core" ? "text-white" : "text-[var(--copy-strong)]"
+              }`}
+            >
               {step.title}
             </h3>
-            <p className="mt-2 text-[0.975rem] leading-[1.65] text-[color:var(--copy-body)]">
+            <p
+              className={`mt-4 text-[0.975rem] leading-[1.65] ${
+                step.title === "Zynapse Core" ? "text-white/74" : "text-[color:var(--copy-body)]"
+              }`}
+            >
               {step.description}
             </p>
           </article>

@@ -16,7 +16,7 @@ export function TrustSection() {
       data-reveal-section
       data-stagger="dense"
     >
-      <div className="overflow-hidden ">
+      <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)]">
         <div className="grid gap-8 border-b border-[rgba(56,67,84,0.12)] px-6 py-7 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)]">
           <div className="space-y-5">
             <p
@@ -96,33 +96,29 @@ export function TrustSection() {
                 index % 2 === 1 ? "md:border-l md:border-[rgba(56,67,84,0.12)] xl:border-l-0" : ""
               } ${
                 index > 1 ? "xl:border-l xl:border-[rgba(56,67,84,0.12)]" : ""
-              }`}
+              } ${index === 1 ? "bg-[var(--copy-strong)]" : "bg-white"}`}
               data-animate-item
             >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    index === 0
-                      ? "radial-gradient(circle at top left, rgba(56,67,84,0.08), transparent 44%), linear-gradient(180deg, rgba(255,255,255,0.48), rgba(236,240,246,0.34))"
-                      : index === 1
-                        ? "radial-gradient(circle at top left, rgba(91,100,114,0.08), transparent 46%), linear-gradient(180deg, rgba(255,255,255,0.46), rgba(240,242,246,0.32))"
-                        : index === 2
-                          ? "radial-gradient(circle at top left, rgba(224,94,67,0.08), transparent 46%), linear-gradient(180deg, rgba(255,252,248,0.5), rgba(248,238,232,0.34))"
-                          : "radial-gradient(circle at top left, rgba(240,168,77,0.08), transparent 48%), linear-gradient(180deg, rgba(255,252,246,0.5), rgba(248,242,230,0.34))",
-                  backdropFilter: "blur(8px)",
-                  WebkitBackdropFilter: "blur(8px)",
-                }}
-              />
               <div className="relative z-10 space-y-4">
-                <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                <span
+                  className={`font-mono text-[11px] tracking-[0.16em] uppercase ${
+                    index === 1 ? "text-white/56" : "text-[var(--copy-soft)]"
+                  }`}
+                >
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-display text-[1.5rem] leading-[0.98] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                <h3
+                  className={`font-display text-[1.5rem] leading-[0.98] font-semibold tracking-[-0.04em] ${
+                    index === 1 ? "text-white" : "text-[var(--copy-strong)]"
+                  }`}
+                >
                   {signal.title}
                 </h3>
-                <p className="text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
+                <p
+                  className={`text-[0.98rem] leading-7 ${
+                    index === 1 ? "text-white/74" : "text-[color:var(--copy-body)]"
+                  }`}
+                >
                   {signal.description}
                 </p>
               </div>

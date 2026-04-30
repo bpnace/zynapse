@@ -326,7 +326,7 @@ export function BrandInquiryWizard() {
           <Field label="Budgetrahmen" error={errors.budgetRange?.message} hint="Hilft beim Paket- und Scope-Fit">
             <TextInput
               {...register("budgetRange")}
-              placeholder="z. B. Pilot, 5k bis 8k monatlich, laufender Creative Flow"
+              placeholder="z. B. Pilot, 5k bis 8k monatlich, laufender Zynapse-Core-Prozess"
             />
           </Field>
         </div>
@@ -557,7 +557,7 @@ export function BrandInquiryWizard() {
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
               Wir prüfen deine Angaben und melden uns mit dem passenden nächsten
-              Schritt für euren Creative Flow. Wenn noch etwas für den ersten
+              Schritt für Zynapse Core. Wenn noch etwas für den ersten
               Kreativplan fehlt, sagen wir es konkret.
             </p>
           </div>
@@ -569,7 +569,7 @@ export function BrandInquiryWizard() {
               href="/pricing"
               className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
             >
-              Creative Flows ansehen
+              Zynapse Core ansehen
             </ButtonLink>
           </div>
         </div>

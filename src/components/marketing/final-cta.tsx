@@ -47,7 +47,7 @@ export function FinalCta() {
       data-reveal-section
       data-stagger="dense"
     >
-      <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 shadow-[0_24px_54px_rgba(31,36,48,0.1)] sm:p-9">
+      <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white p-7 shadow-[0_24px_54px_rgba(31,36,48,0.1)] sm:p-9">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]">
           <div className="space-y-5">
             <span className="eyebrow" data-animate-heading>
@@ -77,7 +77,7 @@ export function FinalCta() {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="section-surface-paper grid gap-4 rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.14)] p-5 md:grid-cols-2 md:p-6"
+            className="grid gap-4 rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] bg-[rgba(248,250,252,0.92)] p-5 md:grid-cols-2 md:p-6"
           >
             <label className="field-shell">
               <span className="field-label">Branche</span>
@@ -154,7 +154,7 @@ export function FinalCta() {
                     budgetRange: event.target.value,
                   }))
                 }
-                placeholder="z. B. Pilot, laufender Creative Flow oder individueller Rahmen"
+                placeholder="z. B. Pilot, laufender Zynapse-Core-Prozess oder individueller Rahmen"
               />
             </label>
             <label className="hidden" aria-hidden="true">

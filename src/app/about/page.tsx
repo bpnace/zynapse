@@ -7,7 +7,7 @@ import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 const pageSeo = {
   title: "Über Zynapse – wie Zynapse Core Teams und Creatives verbindet | Zynapse",
   description:
-    "Zynapse verbindet Brands und AI Creatives in einem klaren Creative Flow. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
+    "Zynapse verbindet Brands und AI Creatives in einem klaren Zynapse-Core-Prozess. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
   path: "/about",
 } as const;
 
@@ -16,7 +16,7 @@ export const metadata = buildMetadata(pageSeo);
 const heroSignals = [
   {
     label: "Für Brands",
-    value: "Ein klarer Creative Flow statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
+    value: "Ein klarer Zynapse-Core-Prozess statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
   },
   {
     label: "Für AI Creatives",
@@ -109,6 +109,11 @@ const valueCards = [
     description:
       "Wenn Kampagnen weiterlaufen oder skaliert werden, bleibt das Produktionswissen im System. So sinkt die Reibung von Sprint zu Sprint.",
   },
+];
+
+const founderStatement = [
+  "Zynapse entsteht aus einer einfachen Beobachtung: Brands brauchen nicht noch ein weiteres loses KI-Tool, sondern einen geführten Prozess, der Briefing, Material, Kreativrollen und Review zusammenhält.",
+  "Wir bauen Zynapse Core deshalb als Arbeitslogik zwischen Marketing-Team und AI Creatives. Vorhandenes Material soll nutzbar bleiben, neue Varianten sollen kontrollierbar entstehen und Entscheidungen sollen im Review nachvollziehbar sein.",
 ];
 
 function RoleCardIcon({ icon }: { icon: SpecialistIcon }) {
@@ -357,6 +362,32 @@ export default function AboutPage() {
               </div>
             ))}
           </aside>
+        </div>
+      </section>
+
+      <section
+        className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-10"
+        data-reveal-section
+      >
+        <div className="grid overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)] lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
+          <div className="bg-[var(--copy-strong)] p-6 text-white sm:p-7">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/58">
+              Founder Statement
+            </p>
+            <h2 className="mt-4 font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em]">
+              Warum wir Zynapse bauen.
+            </h2>
+          </div>
+          <div className="grid divide-y divide-[rgba(56,67,84,0.12)]">
+            {founderStatement.map((copy) => (
+              <p
+                key={copy}
+                className="px-6 py-5 text-[1rem] leading-7 text-[color:var(--copy-body)] sm:px-7"
+              >
+                {copy}
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 

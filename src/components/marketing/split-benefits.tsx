@@ -23,40 +23,34 @@ function ComparisonColumn({
   return (
     <div
       className={`relative flex h-full flex-col px-6 py-7 sm:px-8 sm:py-8 ${
-        isBrand
-          ? "bg-[linear-gradient(180deg,rgba(255,252,246,0.96),rgba(250,240,228,0.9))]"
-          : "bg-[linear-gradient(180deg,rgba(252,253,255,0.98),rgba(243,246,251,0.92))]"
+        isBrand ? "bg-white" : "bg-[var(--copy-strong)]"
       }`}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: isBrand
-            ? "radial-gradient(circle at bottom left, rgba(246,107,76,0.1), transparent 26%), radial-gradient(circle at top right, rgba(249,197,106,0.12), transparent 28%)"
-            : "radial-gradient(circle at top right, rgba(185,178,255,0.12), transparent 28%), radial-gradient(circle at bottom left, rgba(56,67,84,0.05), transparent 24%)",
-        }}
-      />
-
       <div className="relative z-10 flex h-full flex-col">
         <div className="space-y-5">
           <p
-            className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]"
+            className={`font-mono text-xs tracking-[0.18em] uppercase ${
+              isBrand ? "text-[var(--copy-soft)]" : "text-white/58"
+            }`}
             data-animate-heading
           >
             {title}
           </p>
           <h3
-            className={`font-display font-semibold tracking-[-0.05em] text-[var(--copy-strong)] ${
+            className={`font-display font-semibold tracking-[-0.05em] ${
               isBrand
-                ? "max-w-3xl text-4xl leading-[0.92] sm:text-[3.15rem]"
-                : "max-w-2xl text-[2.35rem] leading-[0.95] sm:text-[2.7rem]"
+                ? "max-w-3xl text-4xl leading-[0.92] text-[var(--copy-strong)] sm:text-[3.15rem]"
+                : "max-w-2xl text-[2.35rem] leading-[0.95] text-white sm:text-[2.7rem]"
             }`}
             data-animate-heading
           >
             {headline}
           </h3>
-          <p className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)]">
+          <p
+            className={`max-w-3xl text-base leading-7 ${
+              isBrand ? "text-[color:var(--copy-body)]" : "text-white/74"
+            }`}
+          >
             {copy}
           </p>
         </div>
@@ -66,8 +60,8 @@ function ComparisonColumn({
             isBrand ? "gap-0" : "gap-0"
           } border-t ${
             isBrand
-              ? "border-[rgba(191,106,83,0.14)]"
-              : "border-[rgba(56,67,84,0.12)]"
+              ? "border-[rgba(56,67,84,0.14)]"
+              : "border-white/14"
           }`}
         >
           {benefits.map((benefit, index) => (
@@ -75,19 +69,23 @@ function ComparisonColumn({
               key={benefit}
               className={`grid gap-3 py-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start sm:gap-5 ${
                 isBrand
-                  ? "border-b border-[rgba(191,106,83,0.14)]"
-                  : "border-b border-[rgba(56,67,84,0.12)]"
+                  ? "border-b border-[rgba(56,67,84,0.14)]"
+                  : "border-b border-white/14"
               }`}
               data-animate-item
             >
               <span
                 className={`font-mono text-[11px] tracking-[0.16em] uppercase ${
-                  isBrand ? "text-[var(--accent-soft)]" : "text-[var(--copy-soft)]"
+                  isBrand ? "text-[var(--copy-soft)]" : "text-white/52"
                 }`}
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <p className="text-[1rem] leading-7 text-[color:var(--copy-body)]">
+              <p
+                className={`text-[1rem] leading-7 ${
+                  isBrand ? "text-[color:var(--copy-body)]" : "text-white/74"
+                }`}
+              >
                 {benefit}
               </p>
             </div>
@@ -95,9 +93,13 @@ function ComparisonColumn({
         </div>
 
         <div className="mt-auto flex flex-col gap-4 pt-6 sm:flex-row sm:items-end sm:justify-between">
-          <p className="max-w-md text-sm leading-6 text-[color:var(--copy-soft)]">
+          <p
+            className={`max-w-md text-sm leading-6 ${
+              isBrand ? "text-[color:var(--copy-soft)]" : "text-white/62"
+            }`}
+          >
             {isBrand
-              ? "Für Brands, die Paid Social, Reels und Short Form sauber in einen laufenden Creative Flow bringen wollen."
+              ? "Für Brands, die Paid Social, Reels und Short Form sauber in einen laufenden Zynapse-Core-Prozess bringen wollen."
               : "Für AI Creatives, die Strategie, Prompting und Produktion ihre profession nennen."}
           </p>
           <ButtonLink
@@ -148,7 +150,11 @@ export function SplitBenefits() {
               title="Für AI Creatives"
               headline={
                 <>
-                  Klare <span className="title-accent">Aufgaben</span> statt{" "}
+                  Klare{" "}
+                  <span className="bg-[linear-gradient(120deg,#fff_0%,#ffe8d8_38%,var(--accent)_74%,#f0a84d_100%)] bg-clip-text text-transparent">
+                    Aufgaben
+                  </span>{" "}
+                  statt{" "}
                   <span data-animate-word>Briefing-Verwirrung</span>.
                 </>
               }

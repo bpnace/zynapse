@@ -8,6 +8,7 @@ export function ProblemCards() {
       id="problem"
       className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
       data-reveal-section
+      data-worry-scroll
     >
       <SectionHeading
         eyebrow="Der eigentliche Engpass"

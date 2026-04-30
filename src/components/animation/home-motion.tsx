@@ -190,6 +190,9 @@ export function HomeMotion({ children }: HomeMotionProps) {
         const heading = section.querySelectorAll<HTMLElement>("[data-animate-heading]");
         const copy = section.querySelectorAll<HTMLElement>("[data-animate-copy]");
         const items = section.querySelectorAll<HTMLElement>("[data-animate-item]");
+        const worryCards = Array.from(
+          section.querySelectorAll<HTMLElement>("[data-worry-card]"),
+        );
         const words = Array.from(
           section.querySelectorAll<HTMLElement>("[data-animate-word]"),
         );
@@ -283,6 +286,45 @@ export function HomeMotion({ children }: HomeMotionProps) {
                 ? `-=${Math.max(0.18, 0.1 * (lineIndex + 1))}`
                 : 0,
             );
+          });
+        }
+
+        if (section.hasAttribute("data-worry-scroll") && worryCards.length) {
+          const startRotations = [-1.2, 0.85, -0.7];
+          const startSkews = [-0.35, 0.25, -0.2];
+          const exitX = [-28, 2, 30];
+          const exitY = [34, 52, 38];
+          const exitRotations = [-6, 4.8, 6.5];
+          const exitSkews = [-2.2, 1.8, -1.6];
+
+          gsap.set(worryCards, {
+            rotation: (index) => startRotations[index % startRotations.length],
+            skewY: (index) => startSkews[index % startSkews.length],
+            filter: "blur(0px)",
+            autoAlpha: 1,
+            transformOrigin: "50% 58%",
+          });
+
+          const worryTween = gsap.to(worryCards, {
+            x: (index) => exitX[index % exitX.length],
+            y: (index) => exitY[index % exitY.length],
+            rotation: (index) => exitRotations[index % exitRotations.length],
+            skewY: (index) => exitSkews[index % exitSkews.length],
+            filter: "blur(10px)",
+            autoAlpha: 0.18,
+            ease: "none",
+            stagger: 0.035,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 22%",
+              end: "bottom 12%",
+              scrub: 0.7,
+            },
+          });
+
+          cleanupCallbacks.push(() => {
+            worryTween.scrollTrigger?.kill();
+            worryTween.kill();
           });
         }
       });

@@ -32,6 +32,10 @@ export function SiteFooter() {
             passt, entwickelt daraus klare Richtungen und bringt geprüfte
             Varianten strukturiert in Review und Übergabe.
           </p>
+          <p className="max-w-md border-t border-white/12 pt-4 text-sm leading-6 text-white/62">
+            Wir bauen Zynapse, damit AI-Creative-Arbeit kontrollierbarer wird:
+            weniger Tool-Chaos, mehr klarer Zynapse-Core-Prozess.
+          </p>
         </div>
         {footerGroups.map((group) => (
           <div key={group.title} className="space-y-4">

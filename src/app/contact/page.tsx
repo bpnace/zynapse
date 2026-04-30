@@ -44,7 +44,7 @@ export default function ContactPage() {
               data-animate-copy
             >
               Egal ob du eine Kampagne anfragen willst, wissen möchtest, welcher
-              Creative Flow gerade passt, oder ein operatives Thema klären
+              Zynapse Core gerade passt, oder ein operatives Thema klären
               musst: Deine Nachricht landet direkt beim richtigen Kontakt. Du
               musst nichts perfekt vorbereiten, ein paar klare Sätze reichen.
             </p>

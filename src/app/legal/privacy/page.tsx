@@ -126,7 +126,7 @@ export default function PrivacyPage() {
         <p>
           Wenn du ein Kreativbriefing übermittelst, verarbeiten wir die von dir
           eingegebenen Daten, um die Anfrage einzuordnen, intern zu prüfen und
-          einen passenden nächsten Schritt oder Creative Flow abzuleiten.
+          einen passenden nächsten Schritt im Zynapse-Core-Prozess abzuleiten.
         </p>
         <p>Hierzu gehören insbesondere:</p>
         <ul className="list-disc space-y-2 pl-5">

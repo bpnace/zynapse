@@ -1,15 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { videoVariants } from "@/lib/mock-data/studio";
-
-const outputAccentClasses = [
-  "border-t-[3px] border-t-[rgba(224,94,67,0.24)]",
-  "border-t-[3px] border-t-[rgba(249,197,106,0.3)]",
-  "border-t-[3px] border-t-[rgba(56,67,84,0.2)]",
-] as const;
 
 const frameGradients: Record<string, string> = {
   "Premium Look":
@@ -46,23 +39,23 @@ export function VideoOutputGrid() {
       data-stagger="dense"
     >
       <SectionHeading
-        eyebrow="Output-Beispiele"
+        eyebrow="Szenarien"
         title={
           <>
-            Unterschiedliche <span className="title-accent">Looks</span> für{" "}
-            <span data-animate-word>unendliche marketing Tests</span>.
+            So kann Zynapse Core vorhandenes Material in{" "}
+            <span className="title-accent">testbare Varianten</span> führen.
           </>
         }
-        copy="Jede kreative Richtung ist bewusst darauf ausgelegt, etwas anderes zu leisten wie etwa Aufmerksamkeit zu gewinnen, Vertrauen aufzubauen, das Produkt greifbarer zu machen oder den nächsten Klick auszulösen."
+        copy="Die Beispiele sind als Szenarien formuliert: ein Ausgangsmaterial, ein Kampagnenziel und ein klarer Zynapse-Core-Prozess für neue Routen, Formate und Reviews."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {videoVariants.map((variant, index) => {
+        {videoVariants.map((variant) => {
           const showVideo = !videoLoadFailed[variant.id];
 
           return (
             <article
               key={variant.id}
-              className={`section-card section-surface-paper overflow-hidden rounded-[var(--radius-card)] ${outputAccentClasses[index % outputAccentClasses.length]}`}
+              className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_14px_28px_rgba(31,36,48,0.06)]"
               data-animate-item
             >
               <div
@@ -106,28 +99,33 @@ export function VideoOutputGrid() {
                   />
                 </div>
 
-                <span className="absolute top-3 right-3 rounded-[var(--radius-chip)] border border-white/25 bg-white/55 px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-[var(--copy-strong)] backdrop-blur-sm">
+                <span className="absolute top-3 right-3 rounded-[0.25rem] border border-white/30 bg-white/70 px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-[var(--copy-strong)] backdrop-blur-sm">
                   {variant.format}
                 </span>
 
-                <span className="absolute bottom-3 left-3 rounded-[var(--radius-chip)] bg-[var(--copy-strong)] px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.06em] text-white/90">
+                <span className="absolute bottom-3 left-3 rounded-[0.25rem] bg-[var(--copy-strong)] px-2 py-0.5 font-mono text-[10px] font-semibold tracking-[0.06em] text-white/90">
                   {formatDuration(variant.length)}
                 </span>
               </div>
 
-              <div className="p-5">
-                <div className="flex items-center justify-between">
+              <div className="grid gap-4 p-5">
+                <div className="flex items-center justify-between gap-3 border-b border-[rgba(56,67,84,0.12)] pb-3">
                   <span className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-soft)]">
                     {variant.angle}
                   </span>
+                  <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--copy-soft)]">
+                    {variant.objective}
+                  </span>
                 </div>
-                <h3 className="mt-3 font-display text-[1.55rem] leading-[0.96] font-semibold tracking-[-0.04em] text-balance text-[var(--copy-strong)]">
+                <h3 className="font-display text-[1.55rem] leading-[0.96] font-semibold tracking-[-0.04em] text-balance text-[var(--copy-strong)]">
                   {variant.hookTitle}
                 </h3>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  <Badge tone="mint">{variant.objective}</Badge>
-                  <Badge>{variant.deliveryLabel}</Badge>
-                </div>
+                <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+                  {variant.scenarioCopy}
+                </p>
+                <p className="border-t border-[rgba(56,67,84,0.12)] pt-3 font-mono text-[10px] tracking-[0.14em] uppercase text-[var(--copy-soft)]">
+                  {variant.deliveryLabel} / {variant.format}
+                </p>
               </div>
             </article>
           );
