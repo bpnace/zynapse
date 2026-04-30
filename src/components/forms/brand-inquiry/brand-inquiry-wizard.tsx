@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import Link from "next/link";
 import { startTransition, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,31 +21,37 @@ import {
 const steps = [
   {
     title: "Produkt und Ziel",
+    shortTitle: "Produkt",
     copy: "Was soll beworben werden und was soll die Kampagne erreichen?",
     fields: ["productUrl", "goal", "budgetRange"] as const,
   },
   {
     title: "Zielgruppe",
+    shortTitle: "Zielgruppe",
     copy: "Wen wollt ihr erreichen und was ist die wichtigste Kaufbarriere?",
     fields: ["targetAudience", "keyBarrier"] as const,
   },
   {
     title: "Kanäle und Formate",
+    shortTitle: "Kanäle",
     copy: "Wo sollen die Creatives laufen und welche Ausspielungen stehen zuerst an?",
     fields: ["channels"] as const,
   },
   {
     title: "Stil und Beispiele",
+    shortTitle: "Stil",
     copy: "Welche Richtung passt zu eurer Marke und welche Hinweise sollten wir früh sehen?",
     fields: ["industry", "styleDirection", "notes"] as const,
   },
   {
     title: "Timing und Review",
+    shortTitle: "Timing",
     copy: "Wann braucht ihr den Output und wie laufen Review und Freigabe aktuell?",
     fields: ["timeline", "reviewContext"] as const,
   },
   {
     title: "Zusammenfassung",
+    shortTitle: "Kontakt",
     copy: "Zynapse Core zeigt, was vorhanden ist und was für den ersten Kreativplan noch hilfreich wäre.",
     fields: ["contactName", "workEmail", "company"] as const,
   },
@@ -245,6 +250,11 @@ export function BrandInquiryWizard() {
     setStepIndex((current) => Math.max(current - 1, 0));
   }
 
+  function goToStep(targetIndex: number) {
+    setStepAlert("");
+    setStepIndex(Math.max(0, Math.min(targetIndex, steps.length - 1)));
+  }
+
   function goToMissingInfo() {
     const firstMissing = missingInfo[0];
 
@@ -303,7 +313,7 @@ export function BrandInquiryWizard() {
   function renderStep() {
     if (stepIndex === 0) {
       return (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-3">
           <Field label="Produktlink" error={errors.productUrl?.message}>
             <TextInput {...register("productUrl")} placeholder="https://example.com" />
           </Field>
@@ -325,16 +335,18 @@ export function BrandInquiryWizard() {
 
     if (stepIndex === 1) {
       return (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-2">
           <Field label="Zielgruppe" error={errors.targetAudience?.message}>
             <TextareaInput
               {...register("targetAudience")}
+              className="min-h-[6rem]"
               placeholder="z. B. DTC Käufer:innen, SaaS Marketing Leads, Performance Teams in wachsenden Brands"
             />
           </Field>
           <Field label="Wichtigste Kaufbarriere" error={errors.keyBarrier?.message}>
             <TextareaInput
               {...register("keyBarrier")}
+              className="min-h-[6rem]"
               placeholder="z. B. zu teuer, zu wenig Vertrauen, Produktnutzen noch nicht klar"
             />
           </Field>
@@ -349,12 +361,13 @@ export function BrandInquiryWizard() {
           error={errors.channels?.message}
           hint="Mehrfachauswahl möglich"
         >
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {channelOptions.map((option) => (
               <CheckboxPill
                 key={option}
                 checked={selectedChannels.includes(option)}
                 onClick={() => toggleChannel(option)}
+                className="rounded-[0.45rem] px-3 py-2.5 text-left"
               >
                 {option}
               </CheckboxPill>
@@ -366,8 +379,8 @@ export function BrandInquiryWizard() {
 
     if (stepIndex === 3) {
       return (
-        <div className="grid gap-5">
-          <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4">
+          <div className="grid gap-4 lg:grid-cols-2">
             <Field label="Branche" error={errors.industry?.message}>
               <TextInput
                 {...register("industry")}
@@ -388,6 +401,7 @@ export function BrandInquiryWizard() {
           >
             <TextareaInput
               {...register("notes")}
+              className="min-h-[5.75rem]"
               placeholder="Was sollte das Creative Pack tonal, visuell oder rechtlich unbedingt berücksichtigen?"
             />
           </Field>
@@ -397,7 +411,7 @@ export function BrandInquiryWizard() {
 
     if (stepIndex === 4) {
       return (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]">
           <Field label="Timing" error={errors.timeline?.message}>
             <SelectInput {...register("timeline")} defaultValue="">
               <option value="" disabled>
@@ -417,6 +431,7 @@ export function BrandInquiryWizard() {
           >
             <TextareaInput
               {...register("reviewContext")}
+              className="min-h-[6rem]"
               placeholder="z. B. Marketing Lead reviewt zuerst, Founder gibt finale Claims frei"
             />
           </Field>
@@ -425,40 +440,48 @@ export function BrandInquiryWizard() {
     }
 
     return (
-      <div className="space-y-6">
-        <div className="grid gap-5 md:grid-cols-3">
+      <div className="space-y-3">
+        <div className="grid gap-4 md:grid-cols-3">
           <Field label="Name" error={errors.contactName?.message}>
-            <TextInput {...register("contactName")} placeholder="Max Mustermann" />
+            <TextInput
+              {...register("contactName")}
+              className="min-h-12 py-3"
+              placeholder="Max Mustermann"
+            />
           </Field>
           <Field label="Geschäftliche E-Mail" error={errors.workEmail?.message}>
-            <TextInput {...register("workEmail")} placeholder="team@brand.com" />
+            <TextInput
+              {...register("workEmail")}
+              className="min-h-12 py-3"
+              placeholder="team@brand.com"
+            />
           </Field>
           <Field label="Firma" error={errors.company?.message}>
-            <TextInput {...register("company")} placeholder="Beispiel GmbH" />
+            <TextInput
+              {...register("company")}
+              className="min-h-12 py-3"
+              placeholder="Beispiel GmbH"
+            />
           </Field>
         </div>
-        <div className="rounded-[1.7rem] border border-[color:var(--line)] bg-black/5 p-5">
-          <p className="font-mono text-xs tracking-[0.18em] uppercase text-[var(--copy-muted)]">
+        <div className="rounded-[0.6rem] bg-[rgba(31,36,48,0.04)] p-2.5">
+          <p className="font-mono text-[0.68rem] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
             Zusammenfassung
           </p>
-          <dl className="mt-4 grid gap-4 md:grid-cols-2">
+          <dl className="mt-2 grid gap-x-4 gap-y-2 sm:grid-cols-4">
             {[
               ["Produkt", getValues("productUrl")],
               ["Ziel", getValues("goal")],
-              ["Budget", getValues("budgetRange")],
-              ["Zielgruppe", getValues("targetAudience")],
-              ["Kaufbarriere", getValues("keyBarrier")],
               ["Kanäle", getValues("channels").join(", ")],
-              ["Branche", getValues("industry")],
-              ["Stilrichtung", getValues("styleDirection")],
               ["Timing", getValues("timeline")],
-              ["Review", getValues("reviewContext")],
             ].map(([label, value]) => (
               <div key={label}>
-                <dt className="text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
+                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-[var(--copy-muted)]">
                   {label}
                 </dt>
-                <dd className="mt-1 text-sm">{value || "Noch offen"}</dd>
+                <dd className="mt-1 line-clamp-1 text-sm leading-5 text-[color:var(--copy-body)]">
+                  {value || "Noch offen"}
+                </dd>
               </div>
             ))}
           </dl>
@@ -523,67 +546,90 @@ export function BrandInquiryWizard() {
 
   if (isSuccess) {
     return (
-      <div className="section-card relative overflow-hidden rounded-[2rem] p-8 md:grid md:grid-cols-[minmax(0,0.74fr)_minmax(0,0.26fr)] md:items-end md:gap-8">
-        <div className="relative z-10">
-          <span className="eyebrow">Briefing erhalten</span>
-          <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em]">
-            Danke, dein Kreativbriefing ist eingegangen.
-          </h2>
-          <p className="mt-4 max-w-3xl text-[color:var(--copy-muted)]">
-            Wir prüfen deine Angaben und melden uns mit dem passenden nächsten
-            Schritt für euren Creative Flow. Wenn noch etwas für den ersten
-            Kreativplan fehlt, sagen wir es konkret.
-          </p>
-          <div className="mt-8 flex gap-3">
-            <ButtonLink href="/" variant="secondary">
+      <div className="rounded-[0.75rem] bg-white p-6 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-7">
+        <p className="font-mono text-[0.7rem] tracking-[0.18em] uppercase text-[var(--copy-soft)]">
+          Briefing erhalten
+        </p>
+        <div className="mt-4 grid gap-5 md:grid-cols-[minmax(0,0.68fr)_auto] md:items-end">
+          <div>
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl">
+              Danke, dein Kreativbriefing ist eingegangen.
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
+              Wir prüfen deine Angaben und melden uns mit dem passenden nächsten
+              Schritt für euren Creative Flow. Wenn noch etwas für den ersten
+              Kreativplan fehlt, sagen wir es konkret.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
+            <ButtonLink href="/" variant="secondary" className="rounded-[0.45rem]">
               Zur Startseite
             </ButtonLink>
-            <ButtonLink href="/pricing">Creative Flows ansehen</ButtonLink>
+            <ButtonLink
+              href="/pricing"
+              className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
+            >
+              Creative Flows ansehen
+            </ButtonLink>
           </div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none relative hidden min-h-[11rem] md:block"
-        >
-          <Image
-            src="/logo/LogoSimple.png"
-            alt=""
-            width={512}
-            height={512}
-            className="absolute -right-[8rem] -bottom-[8rem] w-[20rem] opacity-[0.08] saturate-0"
-          />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)]">
-      <div className="section-card rounded-[2rem] p-6 sm:p-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
+      <div className="rounded-[0.75rem] bg-white p-4 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-5">
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start">
           <div>
-            <span className="eyebrow">Kreativbriefing</span>
-            <h2 className="mt-5 font-display text-4xl font-semibold tracking-[-0.05em]">
+            <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-[var(--copy-soft)]">
+              Kreativbriefing
+            </p>
+            <h2 className="mt-2 font-display text-2xl leading-[1] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
               Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
             </h2>
-            <p className="mt-3 max-w-2xl text-[color:var(--copy-muted)]">
+            <p className="mt-2 line-clamp-1 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)]">
               {currentStep.copy}
             </p>
           </div>
-          <div className="w-full max-w-xs">
-            <div className="mb-3 flex justify-between text-xs uppercase tracking-[0.16em] text-[var(--copy-muted)]">
+          <div className="rounded-[0.55rem] bg-[rgba(31,36,48,0.04)] p-3">
+            <div className="mb-2 flex justify-between font-mono text-[0.65rem] uppercase tracking-[0.14em] text-[var(--copy-muted)]">
               <span>Fortschritt</span>
               <span>{Math.round(((stepIndex + 1) / steps.length) * 100)}%</span>
             </div>
-            <div className="h-2 rounded-full bg-white/[0.06]">
+            <div className="h-1 rounded-[2px] bg-[rgba(31,36,48,0.12)]">
               <div
-                className="h-2 rounded-full bg-[var(--accent)]"
+                className="h-1 rounded-[2px] bg-[var(--copy-strong)]"
                 style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
               />
             </div>
           </div>
         </div>
-        <form className="mt-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
+          {steps.map((step, index) => (
+            <button
+              key={step.title}
+              type="button"
+              aria-current={index === stepIndex ? "step" : undefined}
+              onClick={() => goToStep(index)}
+              className={`min-h-10 rounded-[0.45rem] px-3 py-2 text-left transition-colors ${
+                index === stepIndex
+                  ? "bg-[var(--copy-strong)] text-white"
+                  : "bg-[rgba(31,36,48,0.04)] text-[var(--copy-body)] hover:bg-[rgba(31,36,48,0.08)]"
+              }`}
+            >
+              <span className="block font-mono text-[0.62rem] tracking-[0.12em] uppercase opacity-70">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="mt-1 block text-sm font-semibold leading-4 tracking-[-0.01em]">
+                {step.shortTitle}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <form className="mt-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" {...register("startedAt", { valueAsNumber: true })} />
           <input
             type="text"
@@ -597,29 +643,32 @@ export function BrandInquiryWizard() {
               Pflicht in diesem Schritt: {requiredStepLabels[stepIndex]?.join(", ")}.
             </p>
             {stepAlert ? (
-              <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
+              <p className="rounded-[0.45rem] bg-[rgba(184,58,44,0.06)] px-4 py-3 text-sm text-[#8f241b]">
                 {stepAlert}
               </p>
             ) : null}
           </div>
           {renderStep()}
           {submitError ? (
-            <p className="rounded-2xl border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
+            <p className="rounded-[0.45rem] bg-[rgba(184,58,44,0.06)] px-4 py-3 text-sm text-[#8f241b]">
               {submitError}
             </p>
           ) : null}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 border-t border-[rgba(31,36,48,0.12)] pt-3 sm:flex-row sm:items-center sm:justify-end">
             <div className="flex gap-3">
               <Button
                 variant="ghost"
                 onClick={goToPreviousStep}
                 disabled={stepIndex === 0}
-                className="border border-[color:var(--line)] disabled:opacity-50"
+                className="rounded-[0.45rem] border border-[rgba(31,36,48,0.16)] disabled:opacity-50"
               >
                 Zurück
               </Button>
               {stepIndex < steps.length - 1 ? (
-                <Button variant="secondary" onClick={goToNextStep}>
+                <Button
+                  onClick={goToNextStep}
+                  className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
+                >
                   Weiter
                 </Button>
               ) : null}
@@ -628,8 +677,7 @@ export function BrandInquiryWizard() {
               <Button
                 type="submit"
                 disabled={isPending || !isPrivacyAccepted}
-                size="lg"
-                className="disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
+                className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
               >
                 {isPending ? "Sende Briefing..." : "Kampagne anfragen"}
               </Button>
@@ -638,82 +686,96 @@ export function BrandInquiryWizard() {
         </form>
       </div>
 
-      <aside className="section-card section-surface-paper h-fit rounded-[2rem] p-6 sm:p-8">
-        <span className="eyebrow">Zynapse Core prüft mit</span>
-        <div className="mt-5 grid gap-4">
-          <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-              Briefing-Qualität
-            </p>
-            <p className="mt-2 font-display text-[1.9rem] leading-none font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+      <aside className="h-fit rounded-[0.75rem] bg-[var(--copy-strong)] p-4 text-white shadow-[0_18px_44px_rgba(31,36,48,0.12)] xl:sticky xl:top-24">
+        <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-white/[0.62]">
+          Zynapse Core prüft mit
+        </p>
+        <div className="mt-3 flex items-end justify-between gap-4">
+          <div>
+            <p className="font-display text-[2.6rem] leading-none font-semibold tracking-[-0.05em]">
               {briefingQuality}%
             </p>
-            <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-              {missingInfo.length
-                ? `Für bessere Routen fehlen noch ${missingInfo
-                    .slice(0, 2)
-                    .map((item) => item.label.toLowerCase())
-                    .join(" und ")}.`
-                : "Das Briefing ist stark genug für den ersten Kreativplan."}
+            <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-white/[0.55]">
+              Qualität
             </p>
-          </article>
+          </div>
+          <p className="max-w-[11rem] text-right text-sm leading-5 text-white/[0.72]">
+            {missingInfo.length
+              ? `Noch offen: ${missingInfo
+                  .slice(0, 2)
+                  .map((item) => item.label.toLowerCase())
+                  .join(", ")}.`
+              : "Bereit für den ersten Kreativplan."}
+          </p>
+        </div>
 
-          <article className="rounded-[var(--radius-card)] border border-[rgba(191,106,83,0.16)] bg-[rgba(255,244,236,0.76)] p-4">
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-              Mögliche Kreativrouten
+        <div className="mt-4 grid gap-4">
+          <section>
+            <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
+              Kreativrouten
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {routeSuggestions.map((route) => (
                 <span
                   key={route}
-                  className="rounded-full border border-[rgba(191,106,83,0.16)] bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.14em] text-[var(--copy-soft)]"
+                  className="rounded-[0.35rem] bg-white/[0.1] px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-white/[0.82]"
                 >
                   {route}
                 </span>
               ))}
             </div>
-          </article>
+          </section>
 
-          <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-              Empfohlene Formate
+          <section>
+            <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
+              Formate
             </p>
-            <ul className="mt-3 grid gap-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {formatSuggestions.map((format) => (
-                <li
+                <span
                   key={format}
-                  className="rounded-[var(--radius-chip)] border border-[rgba(56,67,84,0.1)] bg-[rgba(248,249,251,0.78)] px-3 py-2 text-sm text-[color:var(--copy-body)]"
+                  className="rounded-[0.35rem] bg-white/[0.08] px-2.5 py-1 text-xs text-white/[0.78]"
                 >
                   {format}
-                </li>
+                </span>
               ))}
-            </ul>
-          </article>
+            </div>
+          </section>
 
-          <article className="rounded-[var(--radius-card)] border border-[rgba(56,67,84,0.12)] bg-white/82 p-4">
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-              Mögliche Risiken
+          <section>
+            <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
+              Risikosignal
             </p>
-            <ul className="mt-3 grid gap-2">
-              {riskSignals.map((risk) => (
-                <li key={risk} className="text-sm leading-6 text-[color:var(--copy-body)]">
-                  • {risk}
-                </li>
-              ))}
-            </ul>
-          </article>
+            <p className="mt-2 text-sm leading-5 text-white/[0.75]">
+              {riskSignals[0]}
+            </p>
+          </section>
         </div>
 
-        <div className="mt-6 grid gap-3">
-          <Button variant="secondary" className="justify-center" onClick={applyCoreSuggestion}>
+        <div className="mt-4 grid gap-2">
+          <Button
+            variant="secondary"
+            className="justify-center rounded-[0.45rem]"
+            onClick={applyCoreSuggestion}
+          >
             Vorschlag übernehmen
           </Button>
-          <Button variant="ghost" className="justify-center border border-[color:var(--line)]" onClick={goToMissingInfo}>
-            Fehlende Info ergänzen
-          </Button>
-          <Button variant="ghost" className="justify-center border border-[color:var(--line)]" onClick={jumpToSummary}>
-            Trotzdem absenden
-          </Button>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant="ghost"
+              className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
+              onClick={goToMissingInfo}
+            >
+              Ergänzen
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
+              onClick={jumpToSummary}
+            >
+              Absenden
+            </Button>
+          </div>
         </div>
       </aside>
     </div>

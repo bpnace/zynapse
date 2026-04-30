@@ -339,7 +339,6 @@ export default function CreativesPage() {
             className="relative overflow-hidden rounded-[0.7rem] border border-[rgba(56,67,84,0.14)] bg-[rgba(248,250,252,0.92)] shadow-[0_14px_28px_rgba(31,36,48,0.05)]"
             data-animate-item
           >
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[var(--accent)]" />
             <div className="relative grid divide-y divide-[rgba(56,67,84,0.1)]">
               {creativeCoreSupports.map((item, index) => (
                 <article
@@ -347,7 +346,7 @@ export default function CreativesPage() {
                   className="grid gap-3 px-5 py-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-4 sm:px-6"
                   data-animate-item
                 >
-                  <span className="font-mono text-[10px] leading-6 tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+                  <span className="font-mono text-[10px] leading-6 tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <div className="grid gap-1.5">

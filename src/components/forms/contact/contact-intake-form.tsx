@@ -5,7 +5,7 @@ import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { pricingPlans } from "@/lib/content/pricing";
 import { createContactInquiryDefaults } from "@/lib/forms/storage";
 import {
@@ -208,43 +208,52 @@ export function ContactIntakeForm() {
 
   if (isSuccess) {
     return (
-      <div className="relative overflow-hidden rounded-[0.7rem] border border-[rgba(56,67,84,0.16)] bg-[rgba(255,252,248,0.98)] shadow-[0_14px_28px_rgba(31,36,48,0.05)]">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[var(--accent)]" />
-        <div className="relative grid gap-6 px-7 py-7 sm:px-8 sm:py-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]">
-          <div className="space-y-4">
-            <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-              Nachricht gesendet
-            </p>
-            <h2 className="font-display text-4xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-              Danke, wir haben deine Nachricht.
-            </h2>
-            <p className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]">
-              Wir haben alles übernommen und melden uns in der Regel innerhalb
-              von 24 Stunden mit einem konkreten nächsten Schritt bei dir.
-            </p>
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
+        <div className="rounded-[0.75rem] bg-white p-6 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-7">
+          <p className="font-mono text-[0.7rem] tracking-[0.18em] uppercase text-[var(--copy-soft)]">
+            Nachricht gesendet
+          </p>
+          <div className="mt-4 grid gap-5 md:grid-cols-[minmax(0,0.68fr)_auto] md:items-end">
+            <div>
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl">
+                Danke, wir haben deine Nachricht.
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
+                Wir haben alles übernommen und melden uns in der Regel innerhalb
+                von 24 Stunden mit einem konkreten nächsten Schritt bei dir.
+              </p>
+            </div>
+            <ButtonLink href="/" variant="secondary" className="rounded-[0.45rem]">
+              Zur Startseite
+            </ButtonLink>
           </div>
+        </div>
 
-          <div className="grid divide-y divide-[rgba(56,67,84,0.1)] rounded-[0.6rem] border border-[rgba(56,67,84,0.12)] bg-[rgba(247,249,252,0.76)]">
-            <div className="grid gap-1 px-5 py-4">
-              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+        <aside className="h-fit rounded-[0.75rem] bg-[var(--copy-strong)] p-4 text-white shadow-[0_18px_44px_rgba(31,36,48,0.12)]">
+          <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-white/[0.62]">
+            Was jetzt passiert
+          </p>
+          <div className="mt-4 grid gap-4">
+            <div>
+              <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
                 Antwort
               </p>
-              <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+              <p className="mt-2 text-sm leading-5 text-white/[0.75]">
                 Falls nichts Dringendes dazwischenkommt, hörst du innerhalb von
                 24 Stunden von uns.
               </p>
             </div>
-            <div className="grid gap-1 px-5 py-4">
-              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+            <div>
+              <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
                 Nächster Schritt
               </p>
-              <p className="text-sm leading-6 text-[color:var(--copy-body)]">
+              <p className="mt-2 text-sm leading-5 text-white/[0.75]">
                 Wir melden uns nicht nur mit einer Bestätigung, sondern mit
                 einem konkreten Vorschlag oder einer Rückfrage.
               </p>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     );
   }
@@ -253,43 +262,35 @@ export function ContactIntakeForm() {
     <div
       id="kontaktformular"
       ref={formContainerRef}
-      className="relative overflow-hidden rounded-[0.7rem] border border-[rgba(56,67,84,0.16)] bg-[rgba(255,252,248,0.98)] shadow-[0_14px_28px_rgba(31,36,48,0.05)]"
+      className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]"
     >
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-[3px] bg-[var(--accent)]" />
-
-      <div className="relative grid gap-0 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)]">
-        <aside className="border-b border-[rgba(56,67,84,0.1)] px-6 py-6 sm:px-8 sm:py-8 lg:border-r lg:border-b-0">
-          <div className="space-y-5">
-            <div className="space-y-3">
-              <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--accent-soft)]">
-                Kontaktformular
-              </p>
-              <h2 className="font-display text-4xl leading-[0.94] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
-                Erzähl uns kurz, worum es geht.
-              </h2>
-              <p className="text-base leading-7 text-[color:var(--copy-body)]">
-                Wenn du schon aus den Preisen kommst, ist der passende Creative
-                Flow hier bereits vorausgewählt. Wenn nicht, ist das auch okay.
-                Ein paar Stichpunkte reichen völlig.
-              </p>
-            </div>
-
-            <div className="grid divide-y divide-[rgba(56,67,84,0.1)] border-y border-[rgba(56,67,84,0.1)]">
-              {briefingRows.map((row) => (
-                <div key={row.label} className="grid gap-1 py-4">
-                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
-                    {row.label}
-                  </p>
-                  <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-                    {row.value}
-                  </p>
-                </div>
-              ))}
-            </div>
+      <div className="rounded-[0.75rem] bg-white p-4 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-5">
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-start">
+          <div>
+            <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-[var(--copy-soft)]">
+              Kontaktformular
+            </p>
+            <h2 className="mt-2 font-display text-2xl leading-[1] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
+              Erzähl uns kurz, worum es geht.
+            </h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)]">
+              Wenn du schon aus den Preisen kommst, ist der passende Creative
+              Flow vorausgewählt. Wenn nicht, reichen ein paar klare Sätze zu
+              Team, Thema und Ziel.
+            </p>
           </div>
-        </aside>
+          <div className="rounded-[0.55rem] bg-[rgba(31,36,48,0.04)] p-3">
+            <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-[var(--copy-muted)]">
+              Formularstatus
+            </p>
+            <p className="mt-2 text-sm leading-5 text-[color:var(--copy-body)]">
+              Vier kurze Angaben plus Nachricht. Wir routen sie direkt an den
+              passenden Kontakt.
+            </p>
+          </div>
+        </div>
 
-        <form className="grid gap-0" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <input
             type="hidden"
             {...register("startedAt", { valueAsNumber: true })}
@@ -302,9 +303,9 @@ export function ContactIntakeForm() {
             autoComplete="off"
           />
 
-          <section className="grid gap-5 border-b border-[rgba(56,67,84,0.1)] px-6 py-6 sm:px-8 md:grid-cols-2">
+          <section className="grid gap-4 md:grid-cols-2">
             <div className="md:col-span-2">
-              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+              <p className="font-mono text-[0.68rem] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                 Kontakt
               </p>
             </div>
@@ -316,9 +317,9 @@ export function ContactIntakeForm() {
             </Field>
           </section>
 
-          <section className="grid gap-5 border-b border-[rgba(56,67,84,0.1)] px-6 py-6 sm:px-8 md:grid-cols-2">
+          <section className="grid gap-4 border-t border-[rgba(31,36,48,0.12)] pt-4 md:grid-cols-2">
             <div className="md:col-span-2">
-              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+              <p className="font-mono text-[0.68rem] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                 Kontext
               </p>
             </div>
@@ -357,8 +358,8 @@ export function ContactIntakeForm() {
             </div>
           </section>
 
-          <section className="grid gap-5 px-6 py-6 sm:px-8">
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--accent-soft)]">
+          <section className="grid gap-4 border-t border-[rgba(31,36,48,0.12)] pt-4">
+            <p className="font-mono text-[0.68rem] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
               Nachricht
             </p>
             <Field
@@ -399,12 +400,12 @@ export function ContactIntakeForm() {
             </label>
 
             {submitError ? (
-              <p className="rounded-[0.45rem] border border-[rgba(255,142,124,0.3)] bg-[rgba(255,142,124,0.08)] px-4 py-3 text-sm text-[var(--danger)]">
+              <p className="rounded-[0.45rem] bg-[rgba(184,58,44,0.06)] px-4 py-3 text-sm text-[#8f241b]">
                 {submitError}
               </p>
             ) : null}
 
-            <div className="flex flex-wrap items-start gap-4">
+            <div className="flex flex-col gap-3 border-t border-[rgba(31,36,48,0.12)] pt-3 sm:flex-row sm:items-center sm:justify-between">
               <Button
                 type="submit"
                 disabled={isPending}
@@ -424,6 +425,39 @@ export function ContactIntakeForm() {
           </section>
         </form>
       </div>
+
+      <aside className="h-fit rounded-[0.75rem] bg-[var(--copy-strong)] p-4 text-white shadow-[0_18px_44px_rgba(31,36,48,0.12)] xl:sticky xl:top-24">
+        <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-white/[0.62]">
+          Zynapse sortiert mit
+        </p>
+        <div className="mt-3 flex items-end justify-between gap-4">
+          <div>
+            <p className="font-display text-[2.6rem] leading-none font-semibold tracking-[-0.05em]">
+              24h
+            </p>
+            <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-white/[0.55]">
+              Antwortfenster
+            </p>
+          </div>
+          <p className="max-w-[11rem] text-right text-sm leading-5 text-white/[0.72]">
+            Kein perfektes Briefing nötig. Wir klären den passenden nächsten
+            Schritt.
+          </p>
+        </div>
+
+        <div className="mt-4 grid gap-4">
+          {briefingRows.map((row) => (
+            <section key={row.label}>
+              <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
+                {row.label}
+              </p>
+              <p className="mt-2 text-sm leading-5 text-white/[0.75]">
+                {row.value}
+              </p>
+            </section>
+          ))}
+        </div>
+      </aside>
     </div>
   );
 }

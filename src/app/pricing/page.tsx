@@ -146,15 +146,6 @@ export default function PricingPage() {
                 )}
                 data-animate-item
               >
-                <div
-                  className={cn(
-                    "pointer-events-none absolute inset-y-0 left-0 w-[3px]",
-                    isFeatured
-                      ? "bg-[var(--accent)]"
-                      : "bg-[rgba(56,67,84,0.14)]",
-                  )}
-                />
-
                 <div className="relative flex h-full flex-col">
                   <div
                     className={cn(
@@ -305,7 +296,7 @@ export default function PricingPage() {
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                       Mit Zynapse
                     </p>
-                    <p className="mt-2 border-l-[3px] border-[rgba(246,107,76,0.28)] pl-3 text-sm leading-6 text-[color:var(--copy-body)]">
+                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
                       {entry.zynapse}
                     </p>
                   </div>
