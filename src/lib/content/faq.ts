@@ -7,7 +7,7 @@ export const marketingFaqItems = [
   {
     question: "Welche Botschaft trägt der erste Frame?",
     answer:
-      "Zynapse Core leitet aus Zielgruppe, Produktnutzen und vorhandenem Material eine Hook-Hypothese ab. Der erste Frame bekommt eine klare Aufgabe: Aufmerksamkeit, Kontext, Proof oder Produktdetail.",
+      "Zynapse Core leitet aus Zielgruppe, Produktnutzen und vorhandenem Material eine Hook-Hypothese ab. Der erste Frame bekommt eine konkrete Aufgabe: Aufmerksamkeit, Kontext, Proof oder Produktdetail.",
   },
   {
     question: "Welche Zielgruppe soll das Szenario erkennen?",

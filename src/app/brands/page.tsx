@@ -33,7 +33,7 @@ const painPoints = [
   {
     title: "Feedback bremst den Output",
     description:
-      "Zu viele Personen kommentieren an zu vielen Orten. Entscheidungen werden langsam, unklar und am Ende unnötig teuer.",
+      "Zu viele Personen kommentieren an zu vielen Orten. Entscheidungen werden langsam, widersprüchlich und am Ende unnötig teuer.",
   },
   {
     title: "KI-Tools allein lösen das Problem nicht",
@@ -98,7 +98,7 @@ const results: BrandResult[] = [
     label: "Bis zum ersten Kreativplan",
     value: 72,
     suffix: "h",
-    detail: "vom Briefing bis zur ersten klaren Richtung",
+    detail: "vom Briefing bis zur ersten konkreten Richtung",
   },
   {
     label: "Varianten je nach Paket",
@@ -390,7 +390,7 @@ export default function BrandsPage() {
                   className="max-w-3xl font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                   data-animate-heading
                 >
-                  Mehr <span data-animate-word>Output</span>, klarere{" "}
+                  Mehr <span data-animate-word>Output</span>, konkretere{" "}
                   <span className="title-accent">Lernschleifen</span>.
                 </h2>
                 <p
@@ -430,7 +430,7 @@ export default function BrandsPage() {
                     <span className="title-accent">konkret verbessert</span>.
                   </>
                 }
-                copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein klarer Weg vom Briefing zum Zynapse-Core-Prozess mit geprüften Varianten."
+                copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein konkreter Weg vom Briefing zum Zynapse-Core-Prozess mit geprüften Varianten."
               />
             </div>
 

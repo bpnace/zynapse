@@ -79,7 +79,7 @@ export function ContactIntakeForm() {
         },
         {
           label: "Was reicht",
-          value: "Ein paar klare Sätze zu Team, Thema und Ziel reichen für den ersten Schritt.",
+          value: "Ein paar konkrete Sätze zu Team, Thema und Ziel reichen für den ersten Schritt.",
         },
       ];
     }
@@ -278,7 +278,7 @@ export function ContactIntakeForm() {
               <BoldZynapseCore>
                 Wenn du schon aus den Preisen kommst, ist der passende
                 Zynapse-Core-Rahmen vorausgewählt. Wenn nicht, reichen ein paar
-                klare Sätze zu Team, Thema und Ziel.
+                konkrete Sätze zu Team, Thema und Ziel.
               </BoldZynapseCore>
             </p>
           </div>
@@ -421,7 +421,7 @@ export function ContactIntakeForm() {
                   : "Nachricht senden"}
               </Button>
               <p className="max-w-sm text-xs leading-5 text-[color:var(--copy-muted)]">
-                Wenn etwas unklar ist, melden wir uns zuerst mit einer
+                Wenn etwas offen bleibt, melden wir uns zuerst mit einer
                 Rückfrage statt mit einer generischen Standardantwort.
               </p>
             </div>

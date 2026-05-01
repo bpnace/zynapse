@@ -34,7 +34,7 @@ export function TrustSection() {
               bleiben.
             </h2>
             <p className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)]">
-              Nicht nur mehr Output, sondern klare Freigaben, sichtbare
+              Nicht nur mehr Output, sondern konkrete Freigaben, sichtbare
               Markenregeln und ein nachvollziehbarer Review-Status für jede
               Version.
             </p>
@@ -78,7 +78,7 @@ export function TrustSection() {
                       : item.label === "Review-Threads"
                         ? "Feedback bleibt gebündelt statt in verschiedenen Tools zu landen."
                         : item.label === "Freigaben"
-                          ? "Finale Varianten sind pro Status klar nachvollziehbar."
+                          ? "Finale Varianten sind pro Status nachvollziehbar."
                           : "Bereit für die saubere Übergabe ans Media Team."}
                   </p>
                 </div>

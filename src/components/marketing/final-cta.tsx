@@ -63,7 +63,7 @@ export function FinalCta() {
             Bewerbung mit Portfolio und Fokusbereich.
           </h3>
           <p className="mt-5 text-base leading-7 text-[color:var(--copy-body)]">
-            Für AI Creatives, die in klaren Kampagnen statt losen Einzelanfragen
+            Für AI Creatives, die in konkreten Kampagnen statt losen Einzelanfragen
             arbeiten wollen. Die Bewerbung fragt Portfolio, Fokusbereich und
             Arbeitsweise ab, damit wir passende Rollen und Kampagnen besser
             zuordnen können.

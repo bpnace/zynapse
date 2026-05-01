@@ -15,9 +15,9 @@ import {
 } from "@/lib/seo";
 
 const pageSeo = {
-  title: "Für AI Creatives – klare Aufgaben statt Briefing-Chaos | Zynapse",
+  title: "Für AI Creatives – konkrete Aufgaben statt Briefing-Chaos | Zynapse",
   description:
-    "Zynapse für AI Creatives: klare Aufgaben, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
+    "Zynapse für AI Creatives: konkrete Aufgaben, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
   path: "/creatives",
 } as const;
 
@@ -25,19 +25,19 @@ export const metadata = buildMetadata(pageSeo);
 
 const painPoints = [
   {
-    title: "Briefings sind oft zu unklar",
+    title: "Briefings sind oft zu diffus",
     description:
       "Du musst erst herausfinden, was wirklich gebraucht wird, bevor du überhaupt kreativ arbeiten kannst.",
   },
   {
     title: "Feedback ist zu verstreut",
     description:
-      "Kommentare kommen aus Calls, Chats und Dokumenten, aber selten als klare Aufgabe mit Richtung und Priorität.",
+      "Kommentare kommen aus Calls, Chats und Dokumenten, aber selten als konkrete Aufgabe mit Richtung und Priorität.",
   },
   {
     title: "Dein Beitrag wird nicht sauber eingebettet",
     description:
-      "Gute Prompts, Richtungen oder Varianten verlieren Wirkung, wenn sie nicht Teil eines klaren Kampagnenplans sind.",
+      "Gute Prompts, Richtungen oder Varianten verlieren Wirkung, wenn sie nicht Teil eines konkreten Kampagnenplans sind.",
   },
 ];
 
@@ -52,9 +52,9 @@ const howItWorks = [
   },
   {
     step: "02",
-    title: "Klare Aufgabe übernehmen",
+    title: "Konkrete Aufgabe übernehmen",
     description:
-      "Du arbeitest mit klaren Qualitätskriterien, sichtbaren No-Gos und einem konkreten Beitrag zum Kampagnenziel.",
+      "Du arbeitest mit konkreten Qualitätskriterien, sichtbaren No-Gos und einem konkreten Beitrag zum Kampagnenziel.",
     detail:
       "Deine Arbeit hängt direkt an Hook, Format, Zielgruppe oder Review-Frage. Dadurch bleibt sie Kampagnenbeitrag statt losem Einzelasset.",
   },
@@ -62,7 +62,7 @@ const howItWorks = [
     step: "03",
     title: "Feedback sauber weitergeben",
     description:
-      "Feedback wird nicht zum Slack-Chaos, sondern zu klaren nächsten Aufgaben zwischen Strategie, Prompting, Produktion und Review.",
+      "Feedback wird nicht zum Slack-Chaos, sondern zu konkreten nächsten Aufgaben zwischen Strategie, Prompting, Produktion und Review.",
     detail:
       "Richtung, Entscheidung und nächste Schleife bleiben sichtbar, damit die folgende Rolle ohne erneutes Briefing weiterarbeiten kann.",
   },
@@ -74,7 +74,7 @@ const roleExamples = [
   {
     role: "Prompt Engineering",
     example:
-      "Du entwickelst klare KI-Anweisungen für unterschiedliche Hooks, Looks und Formate.",
+      "Du entwickelst konkrete KI-Anweisungen für unterschiedliche Hooks, Looks und Formate.",
     output: "Mehr testbare Hooks ohne Qualitätsbruch zwischen Iterationen.",
   },
   {
@@ -87,7 +87,7 @@ const roleExamples = [
     role: "Prompt Design",
     example:
       "Du strukturierst Inputs so, dass sie wiederholbar gute Ergebnisse liefern.",
-    output: "Formatgerechte Assets mit klarer Wiederholbarkeit.",
+    output: "Formatgerechte Assets mit konkreter Wiederholbarkeit.",
   },
   {
     role: "AI Production",
@@ -113,7 +113,7 @@ const creativeCoreSupports = [
   {
     title: "Briefing-Zusammenfassung für deine Rolle",
     copy:
-      "Produkt, Ziel, Zielgruppe und Markenrahmen werden so verdichtet, dass dein konkreter Beitrag sofort klar ist.",
+      "Produkt, Ziel, Zielgruppe und Markenrahmen werden so verdichtet, dass dein konkreter Beitrag sofort deutlich wird.",
   },
   {
     title: "Sichtbare Markenregeln und No-Gos",
@@ -121,7 +121,7 @@ const creativeCoreSupports = [
       "Look, Tonalität und Grenzen bleiben im Flow sichtbar, statt nur einmal im Briefing-Dokument aufzutauchen.",
   },
   {
-    title: "Klare Anforderungen für deine Abgabe",
+    title: "Konkrete Anforderungen für deine Abgabe",
     copy:
       "Format, Qualitätsziel und Erwartung an deinen Output stehen vor dem Start fest und nicht erst nach der ersten Schleife.",
   },
@@ -145,7 +145,7 @@ const creativeCoreSupports = [
 const profileFits = [
   "Du willst an echten Brand-Kampagnen arbeiten statt an losem Creator-Sourcing",
   "Du denkst nicht nur in Einzelassets, sondern in Hooks, Richtungen und Testlogik",
-  "Du willst mit klaren Aufgaben und sauberen Übergaben arbeiten",
+  "Du willst mit konkreten Aufgaben und sauberen Übergaben arbeiten",
   "Du suchst ein Umfeld, in dem Strategie, Prompting und Produktion sauber zusammenspielen",
 ];
 
@@ -157,7 +157,7 @@ const compensationNotes = [
 ];
 
 const results = [
-  { value: "1", label: "klare Aufgabe pro Rolle" },
+  { value: "1", label: "konkrete Aufgabe pro Rolle" },
   { value: "6", label: "Rollen in einem sichtbaren Flow" },
   { value: "100%", label: "Feedback mit nachvollziehbarem Kontext" },
 ];
@@ -207,7 +207,7 @@ export default function CreativesPage() {
                 data-animate-copy
               >
                 <BoldZynapseCore>
-                  Zynapse verbindet dich mit echten Kampagnen, klaren Aufgaben
+                  Zynapse verbindet dich mit echten Kampagnen, konkreten Aufgaben
                   und AI-gestützten Workflows. Zynapse Core strukturiert
                   Briefings, macht Markenregeln sichtbar und übersetzt Feedback
                   in nächste Schritte, die du wirklich bearbeiten kannst.
@@ -386,11 +386,13 @@ export default function CreativesPage() {
               <BoldZynapseCore>Zynapse Core für Creatives</BoldZynapseCore>
             </p>
             <h2
-              className="max-w-3xl font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[3rem]"
+              className="max-w-4xl font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-[3rem]"
               data-animate-heading
             >
-              Zynapse Core gibt dir <span data-animate-word>klare Aufgaben</span>{" "}
-              statt unklarer <span className="title-accent">Briefings</span>.
+              Zynapse Core macht aus{" "}
+              <span className="title-accent">Briefings</span>{" "}
+              <span data-animate-word>Aufgaben</span>, die du direkt bearbeiten
+              kannst.
             </h2>
             <p
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
@@ -455,7 +457,7 @@ export default function CreativesPage() {
                 className="pb-[0.40em] font-display text-4xl leading-[1.20] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                 data-animate-heading
               >
-                Bessere Bedingungen, mehr Klarheit,{" "}
+                Bessere Bedingungen, mehr Orientierung,{" "}
                 <span className="title-accent" data-animate-word>
                   weniger Reibung
                 </span>
@@ -506,7 +508,7 @@ export default function CreativesPage() {
                 passt.
               </>
             }
-            copy="Wenn du kreative Arbeit strategisch strukturieren kannst und lieber in klaren Kampagnen als in Briefing-Chaos arbeitest. Zynapse ist für Beiträge gedacht, die in Review, Media und Testing anschlussfähig bleiben."
+            copy="Wenn du kreative Arbeit strategisch strukturieren kannst und lieber in konkreten Kampagnen als in Briefing-Chaos arbeitest. Zynapse ist für Beiträge gedacht, die in Review, Media und Testing anschlussfähig bleiben."
           />
         </div>
         <div
@@ -544,7 +546,7 @@ export default function CreativesPage() {
             className="mt-4 font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em]"
             data-animate-heading
           >
-            Klarer Scope, bevor du zusagst.
+            Konkreter Scope, bevor du zusagst.
           </h2>
           <p className="mt-4 text-sm leading-6 text-white/74" data-animate-copy>
             <BoldZynapseCore>

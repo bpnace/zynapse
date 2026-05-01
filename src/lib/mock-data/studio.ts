@@ -3,7 +3,7 @@ import type { CampaignAngle, VideoVariantPreview } from "@/types/site";
 export const campaignAngles: CampaignAngle[] = [
   {
     title: "Briefing-Qualität",
-    angle: "Mehr Klarheit vor der ersten Variante",
+    angle: "Mehr Orientierung vor der ersten Variante",
     hooks: [
       "82 Prozent vollständig, für bessere Szenarien fehlt noch die wichtigste Kaufbarriere",
       "Produkt, Ziel und Kanal reichen für den ersten Kreativplan",
@@ -40,7 +40,7 @@ export const videoVariants: VideoVariantPreview[] = [
     angle: "Cinematic Brand World",
     hookTitle: "Bambus-Tempel als ruhiger Premium-Einstieg",
     scenarioCopy:
-      "Der Clip setzt keine Produktdetails, sondern zuerst eine klare Markenwelt: Bambus, Licht und Architektur funktionieren als ruhiger Einstieg für Wellness, Travel oder Premium-Kampagnen. Im Sprint kann daraus ein Opening, ein Cutdown und eine ruhigere Awareness-Variante entstehen.",
+      "Der Clip setzt keine Produktdetails, sondern zuerst eine erkennbare Markenwelt: Bambus, Licht und Architektur funktionieren als ruhiger Einstieg für Wellness, Travel oder Premium-Kampagnen. Im Sprint kann daraus ein Opening, ein Cutdown und eine ruhigere Awareness-Variante entstehen.",
     format: "16:9",
     length: "8s",
     objective: "Markenwelt",

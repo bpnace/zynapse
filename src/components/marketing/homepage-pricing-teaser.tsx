@@ -19,7 +19,7 @@ const packageSummaries: Record<
     name: "Pilot",
     volume: "12 Varianten",
     timing: "3 Wochen",
-    summary: "Ein erster Sprint für ein klares Kampagnenziel.",
+    summary: "Ein erster Sprint für ein konkretes Kampagnenziel.",
     cta: "Pilot anfragen",
   },
   growth: {

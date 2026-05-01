@@ -18,7 +18,7 @@ export function ProblemCards() {
             Wo kreatives Tempo <span className="title-accent">verloren geht</span>.
           </>
         }
-        copy="Wenn neue Varianten zu langsam live gehen, liegt es selten nur an der Idee. Meistens ist die Richtung vorhanden, aber Briefing, Feedback, Dateien und Lernpunkte verteilen sich über zu viele Orte. Genau dort verliert ein Team Tempo, bevor überhaupt klar ist, welche Creative-Frage als nächstes getestet werden sollte."
+        copy="Wenn neue Varianten zu langsam live gehen, liegt es selten nur an der Idee. Meistens ist die Richtung vorhanden, aber Briefing, Feedback, Dateien und Lernpunkte verteilen sich über zu viele Orte. Genau dort verliert ein Team Tempo, bevor überhaupt deutlich wird, welche Creative-Frage als nächstes getestet werden sollte."
       />
       <ProblemCardGrid cards={problemCards} revealItems={false} />
       <div className="flex flex-col gap-4 border-t border-[rgba(56,67,84,0.12)] pt-6 sm:flex-row sm:items-center sm:justify-between">

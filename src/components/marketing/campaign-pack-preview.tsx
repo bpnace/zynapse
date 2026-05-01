@@ -7,7 +7,7 @@ const workspaceHighlights = [
   "Creative-Szenarien werden nach Hook, Format und CTA priorisiert, statt als lose Ideensammlung nebeneinander zu liegen.",
   "Offene Threads bleiben im zentralen Review gebündelt, sodass Entscheidungen und nächste Aufgaben nachvollziehbar bleiben.",
   "Assets sind nach Hook, Format und Version sortiert, damit das Media-Team nicht vor dem Upload neu strukturieren muss.",
-  "Review und Media Pack bleiben in einem klaren Flow zusammen, vom ersten Kommentar bis zur finalen Übergabe.",
+  "Review und Media Pack bleiben in einem durchgehenden Flow zusammen, vom ersten Kommentar bis zur finalen Übergabe.",
 ];
 
 type WorkspaceStat = {

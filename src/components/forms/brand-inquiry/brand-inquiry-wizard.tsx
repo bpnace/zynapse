@@ -209,7 +209,7 @@ export function BrandInquiryWizard() {
     }
 
     if (!normalizeText(values.reviewContext)) {
-      risks.push("Freigabeweg ist unklar. Review kann später unnötig bremsen.");
+      risks.push("Freigabeweg fehlt. Review kann später unnötig bremsen.");
     }
 
     if (!values.channels?.length) {
@@ -348,7 +348,7 @@ export function BrandInquiryWizard() {
             <TextareaInput
               {...register("keyBarrier")}
               className="min-h-[6rem]"
-              placeholder="z. B. zu teuer, zu wenig Vertrauen, Produktnutzen noch nicht klar"
+              placeholder="z. B. zu teuer, zu wenig Vertrauen, Produktnutzen noch nicht greifbar"
             />
           </Field>
         </div>
