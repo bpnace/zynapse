@@ -7,21 +7,9 @@ import { PageMotion } from "@/components/animation/page-motion";
 import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { creativeBenefits } from "@/lib/content/site";
-import {
-  buildBreadcrumbs,
-  buildMetadata,
-  buildPageJsonLd,
-  buildServiceJsonLd,
-} from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Für AI Creatives – Aufgaben mit Richtung statt Briefing-Chaos | Zynapse",
-  description:
-    "Zynapse für AI Creatives: Aufgaben mit Richtung, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
-  path: "/creatives",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/creatives");
 
 const painPoints = [
   {
@@ -163,18 +151,7 @@ const results = [
 ];
 
 export default function CreativesPage() {
-  const creativesJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    pageType: "CollectionPage",
-    breadcrumbs: buildBreadcrumbs("Für Kreative", pageSeo.path),
-    primaryEntity: buildServiceJsonLd({
-      path: pageSeo.path,
-      name: "AI-Netzwerk für Kreative",
-      description: pageSeo.description,
-      serviceType: "Zynapse-Core-Prozess für Kampagnenarbeit",
-      audience: "AI Creatives und kreative Spezialist:innen",
-    }),
-  });
+  const creativesJsonLd = buildMarketingPageJsonLd("/creatives");
 
   return (
     <>

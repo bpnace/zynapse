@@ -3,16 +3,9 @@ import { JsonLdScript } from "@/components/seo/json-ld";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Über Zynapse – wie Zynapse Core Teams und Creatives verbindet | Zynapse",
-  description:
-    "Zynapse verbindet Brands und AI Creatives in einem geführten Zynapse-Core-Prozess. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
-  path: "/about",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/about");
 
 const heroSignals = [
   {
@@ -290,11 +283,7 @@ function RoleCardIcon({ icon }: { icon: SpecialistIcon }) {
 }
 
 export default function AboutPage() {
-  const aboutJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    pageType: "AboutPage",
-    breadcrumbs: buildBreadcrumbs("Über Zynapse", pageSeo.path),
-  });
+  const aboutJsonLd = buildMarketingPageJsonLd("/about");
 
   return (
     <>

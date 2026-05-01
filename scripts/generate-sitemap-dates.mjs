@@ -1,16 +1,10 @@
 import { execFileSync } from "child_process";
-import { writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync } from "fs";
 
-// Keep in sync with indexableSitemapEntries in src/lib/seo.ts
-const pageFiles = [
-  "src/app/page.tsx",
-  "src/app/brands/page.tsx",
-  "src/app/cases/page.tsx",
-  "src/app/creatives/page.tsx",
-  "src/app/about/page.tsx",
-  "src/app/pricing/page.tsx",
-  "src/app/contact/page.tsx",
-];
+const routes = JSON.parse(readFileSync("src/lib/seo-routes.json", "utf-8"));
+const pageFiles = routes
+  .filter((route) => route.sitemap)
+  .map((route) => route.pageFile);
 
 const dates = {};
 for (const file of pageFiles) {

@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
+import { getMarketingFaqItems } from "@/lib/content/faq";
 import { getEnv } from "@/lib/env";
+import {
+  getMarketingRoute,
+  indexableMarketingRoutes,
+  type MarketingRoute,
+} from "@/lib/seo-routes";
 
 const env = getEnv();
 
@@ -14,6 +20,8 @@ export const siteConfig = {
   locale: "de_DE",
   contactEmail: "hello@zynapse.eu",
   logoPath: "/icon.png",
+  openGraphImagePath: "/opengraph-image.png",
+  twitterImagePath: "/twitter-image.png",
   publisher: "Zynapse",
   creator: "Codariq",
 } as const;
@@ -65,15 +73,15 @@ type FaqJsonLdInput = {
   }[];
 };
 
-export const indexableSitemapEntries = [
-  { path: "/", pageFile: "src/app/page.tsx" },
-  { path: "/brands", pageFile: "src/app/brands/page.tsx" },
-  { path: "/cases", pageFile: "src/app/cases/page.tsx" },
-  { path: "/creatives", pageFile: "src/app/creatives/page.tsx" },
-  { path: "/about", pageFile: "src/app/about/page.tsx" },
-  { path: "/pricing", pageFile: "src/app/pricing/page.tsx" },
-  { path: "/contact", pageFile: "src/app/contact/page.tsx" },
-] as const;
+type MarketingPageJsonLdOptions = {
+  offers?: ReturnType<typeof buildOfferJsonLd>;
+  primaryEntity?: SchemaNode;
+};
+
+export const indexableSitemapEntries = indexableMarketingRoutes.map((route) => ({
+  path: route.path,
+  pageFile: route.pageFile,
+}));
 
 function buildVerification(): Metadata["verification"] | undefined {
   const google = env.googleSiteVerification;
@@ -100,6 +108,13 @@ export function absoluteUrl(path = "/") {
 }
 
 export function buildSiteMetadata(): Metadata {
+  const openGraphImage = {
+    url: absoluteUrl(siteConfig.openGraphImagePath),
+    width: 1200,
+    height: 630,
+    alt: `${siteConfig.name} Creative Pack Preview`,
+  };
+
   return {
     metadataBase: new URL(siteConfig.url),
     applicationName: siteConfig.name,
@@ -112,9 +127,11 @@ export function buildSiteMetadata(): Metadata {
       siteName: siteConfig.name,
       locale: siteConfig.locale,
       type: "website",
+      images: [openGraphImage],
     },
     twitter: {
       card: "summary_large_image",
+      images: [absoluteUrl(siteConfig.twitterImagePath)],
     },
   };
 }
@@ -229,6 +246,63 @@ export function buildRootJsonLd() {
   };
 }
 
+export function buildMarketingMetadata(path: MarketingRoute["path"]): Metadata {
+  const route = getMarketingRoute(path);
+
+  return buildMetadata({
+    title: route.title,
+    description: route.description,
+    path: route.path,
+  });
+}
+
+export function buildMarketingPageJsonLd(
+  path: MarketingRoute["path"],
+  options: MarketingPageJsonLdOptions = {},
+) {
+  const route = getMarketingRoute(path);
+  const primaryEntity =
+    options.primaryEntity ??
+    (route.service
+      ? buildServiceJsonLd({
+          path: route.path,
+          name: route.service.name,
+          description: route.description,
+          serviceType: route.service.serviceType,
+          audience: route.service.audience,
+          offers: options.offers,
+        })
+      : undefined);
+
+  return buildPageJsonLd({
+    title: route.title,
+    description: route.description,
+    path: route.path,
+    pageType: route.schemaType,
+    breadcrumbs: route.breadcrumbLabel
+      ? buildBreadcrumbs(route.breadcrumbLabel, route.path)
+      : undefined,
+    primaryEntity,
+  });
+}
+
+export function getMarketingRouteFaqItems(path: MarketingRoute["path"]) {
+  return getMarketingFaqItems(getMarketingRoute(path).faqKey);
+}
+
+export function buildMarketingFaqJsonLd(path: MarketingRoute["path"]) {
+  const items = getMarketingRouteFaqItems(path);
+
+  if (!items.length) {
+    return null;
+  }
+
+  return buildFaqJsonLd({
+    path,
+    items,
+  });
+}
+
 export function buildBreadcrumbs(name: string, path: string): BreadcrumbItem[] {
   return [
     { name: "Startseite", path: "/" },
@@ -251,7 +325,14 @@ export function buildOfferJsonLd(
     description: offer.description,
     ...(offer.minPrice !== undefined ? { price: offer.minPrice.toString() } : {}),
     ...(offer.priceCurrency ? { priceCurrency: offer.priceCurrency } : {}),
-    ...(offer.priceNote ? { priceSpecification: { "@type": "PriceSpecification", description: offer.priceNote } } : {}),
+    ...(offer.priceNote
+      ? {
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            description: offer.priceNote,
+          },
+        }
+      : {}),
     availability: "https://schema.org/InStock",
     url: absoluteUrl("/pricing"),
   }));
@@ -277,7 +358,9 @@ export function buildServiceJsonLd({
     areaServed: "DE",
     availableLanguage: [siteConfig.languageTag],
     url: absoluteUrl(path),
-    ...(audience ? { audience: { "@type": "Audience", audienceType: audience } } : {}),
+    ...(audience
+      ? { audience: { "@type": "Audience", audienceType: audience } }
+      : {}),
     ...(offers ? { offers } : {}),
   };
 }
@@ -322,7 +405,9 @@ export function buildPageJsonLd({
       isPartOf: {
         "@id": absoluteUrl("/#website"),
       },
-      ...(primaryEntity ? { mainEntity: { "@id": (primaryEntity["@id"] as string) ?? undefined } } : {}),
+      ...(primaryEntity?.["@id"]
+        ? { mainEntity: { "@id": primaryEntity["@id"] } }
+        : {}),
     },
   ];
 

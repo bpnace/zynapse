@@ -42,7 +42,7 @@ export const videoVariants: VideoVariantPreview[] = [
     scenarioCopy:
       "Der Clip setzt keine Produktdetails, sondern zuerst eine erkennbare Markenwelt: Bambus, Licht und Architektur funktionieren als ruhiger Einstieg für Wellness, Travel oder Premium-Kampagnen. Im Sprint kann daraus ein Opening, ein Cutdown und eine ruhigere Awareness-Variante entstehen.",
     format: "16:9",
-    length: "8s",
+    plannedLength: "12s",
     objective: "Markenwelt",
     deliveryLabel: "Mood Szenario",
   },
@@ -54,7 +54,7 @@ export const videoVariants: VideoVariantPreview[] = [
     scenarioCopy:
       "Die Bullen, Kerzen und Reflexionen liefern einen kraftvollen Hook für Launches, Claims oder High-Impact-Intros, bei denen Stärke und Spannung im Vordergrund stehen. Das Material eignet sich für kurze First-Frame-Tests, Claim-Overlays und eine dramatischere Hero-Variante.",
     format: "16:9",
-    length: "8s",
+    plannedLength: "6s",
     objective: "Aufmerksamkeit",
     deliveryLabel: "Hero Hook",
   },
@@ -66,7 +66,7 @@ export const videoVariants: VideoVariantPreview[] = [
     scenarioCopy:
       "Die laufende Figur und die Papierflügel erzählen sofort eine visuelle Idee. Das passt zu Fashion-, Culture- oder Awareness-Varianten mit organischem City-Look, besonders wenn Bewegung, Haltung und ein prägnanter Hook schon in den ersten Sekunden sitzen müssen.",
     format: "16:9",
-    length: "8s",
+    plannedLength: "9s",
     objective: "Aufmerksamkeit",
     deliveryLabel: "Style Cut",
   },
@@ -78,7 +78,7 @@ export const videoVariants: VideoVariantPreview[] = [
     scenarioCopy:
       "Supermarkt, Mitarbeitende und Feld-Portal verbinden Verkaufsort und Ursprung. Der Clip eignet sich für Food-, Retail- oder Nachhaltigkeitsclaims, weil er Proof nicht abstrakt erklärt, sondern direkt zwischen Regal, Team und Herkunft sichtbar macht.",
     format: "16:9",
-    length: "8s",
+    plannedLength: "15s",
     objective: "Vertrauen",
     deliveryLabel: "Proof Szenario",
   },
@@ -90,7 +90,7 @@ export const videoVariants: VideoVariantPreview[] = [
     scenarioCopy:
       "Die explodierende Werkzeugkiste zeigt Nutzen, Kraft und Einsatzumfeld in Sekunden. Das passt zu Tools, Hardware oder B2B-Produkten, die mehr Dynamik brauchen und ihre Produktvorteile nicht nur als Liste, sondern als sofort lesbaren Action-Moment zeigen wollen.",
     format: "16:9",
-    length: "8s",
+    plannedLength: "7s",
     objective: "Produktnutzen",
     deliveryLabel: "Action Cut",
   },
@@ -102,7 +102,7 @@ export const videoVariants: VideoVariantPreview[] = [
     scenarioCopy:
       "Das Dessert öffnet sich in einem ruhigen Macro-Loop. Textur, Handwerk und Wertigkeit tragen hier den Hook für Food-, Luxury- oder Product-Detail-Szenarien, bei denen Nahbarkeit, Qualität und Appetit wichtiger sind als laute Effekte.",
     format: "16:9",
-    length: "8s",
+    plannedLength: "10s",
     objective: "Produktdetail",
     deliveryLabel: "Macro Proof",
   },

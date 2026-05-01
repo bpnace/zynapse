@@ -8,21 +8,9 @@ import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { brandBenefits } from "@/lib/content/site";
-import {
-  buildBreadcrumbs,
-  buildMetadata,
-  buildPageJsonLd,
-  buildServiceJsonLd,
-} from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Für Brands – mehr testbare Video Ads | Zynapse",
-  description:
-    "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Creative-Szenarien, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
-  path: "/brands",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/brands");
 
 const painPoints = [
   {
@@ -136,17 +124,7 @@ function BrandMetric({
 }
 
 export default function BrandsPage() {
-  const brandsJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    breadcrumbs: buildBreadcrumbs("Für Brands", pageSeo.path),
-    primaryEntity: buildServiceJsonLd({
-      path: pageSeo.path,
-      name: "Zynapse Core für Brands",
-      description: pageSeo.description,
-      serviceType: "Zynapse-Core-Prozess für Marketing- und Performance-Teams",
-      audience: "Marketing-, Growth- und Performance-Teams",
-    }),
-  });
+  const brandsJsonLd = buildMarketingPageJsonLd("/brands");
 
   return (
     <>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { AnimatedMetric } from "@/components/marketing/animated-metric";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const workspaceHighlights = [
@@ -7,7 +8,6 @@ const workspaceHighlights = [
   "Creative-Szenarien werden nach Hook, Format und CTA priorisiert, statt als lose Ideensammlung nebeneinander zu liegen.",
   "Offene Threads bleiben im zentralen Review gebündelt, sodass Entscheidungen und nächste Aufgaben nachvollziehbar bleiben.",
   "Assets sind nach Hook, Format und Version sortiert, damit das Media-Team nicht vor dem Upload neu strukturieren muss.",
-  "Review und Media Pack bleiben in einem durchgehenden Flow zusammen, vom ersten Kommentar bis zur finalen Übergabe.",
 ];
 
 type WorkspaceStat = {
@@ -30,7 +30,7 @@ const workspaceStats: WorkspaceStat[] = [
   {
     label: "Nächste Aktion",
     value: 2,
-    prefix: "Szenario ",
+    prefix: "Szene ",
     title: "freigeben",
     detail: "Freigeben oder kommentieren, bevor der Export startet.",
   },
@@ -77,6 +77,9 @@ export function CampaignPackPreview() {
             </li>
           ))}
         </ul>
+        <ButtonLink href="/login" size="lg" className="w-full justify-center sm:w-auto">
+          Frühzugang sichern
+        </ButtonLink>
       </div>
 
       <div

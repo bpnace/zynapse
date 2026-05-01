@@ -25,3 +25,13 @@ export const marketingFaqItems = [
       "Vor der Übergabe werden Freigabe, offene Annahmen, Testfrage und Media-Nutzung dokumentiert. Das Media-Team bekommt dadurch kein loses Video, sondern ein Creative Pack mit Review-Kontext.",
   },
 ] as const satisfies readonly MarketingFaqItem[];
+
+export const marketingFaqSets = {
+  marketing: marketingFaqItems,
+} as const;
+
+export type MarketingFaqKey = keyof typeof marketingFaqSets;
+
+export function getMarketingFaqItems(key?: MarketingFaqKey) {
+  return key ? marketingFaqSets[key] : [];
+}

@@ -1,12 +1,18 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { indexableMarketingRoutes } from "@/lib/seo-routes";
 import {
   absoluteUrl,
   buildBreadcrumbs,
   buildFaqJsonLd,
+  buildMarketingMetadata,
+  buildMarketingPageJsonLd,
   buildMetadata,
   buildPageJsonLd,
   buildSiteMetadata,
   buildServiceJsonLd,
+  getMarketingRouteFaqItems,
   siteConfig,
 } from "@/lib/seo";
 
@@ -31,6 +37,13 @@ describe("buildMetadata", () => {
 
     expect(metadata.alternates?.canonical).toBe("/");
     expect(metadata.openGraph).toMatchObject({
+      images: [
+        {
+          url: absoluteUrl(siteConfig.openGraphImagePath),
+          width: 1200,
+          height: 630,
+        },
+      ],
       title: "Startseite | Zynapse",
       description: "Bessere Video Creatives für Brands.",
       url: absoluteUrl("/"),
@@ -39,6 +52,7 @@ describe("buildMetadata", () => {
     });
     expect(metadata.twitter).toMatchObject({
       card: "summary_large_image",
+      images: [absoluteUrl(siteConfig.twitterImagePath)],
       title: "Startseite | Zynapse",
       description: "Bessere Video Creatives für Brands.",
     });
@@ -78,6 +92,51 @@ describe("buildMetadata", () => {
   });
 });
 
+describe("marketing route registry", () => {
+  it("builds route metadata from the shared marketing registry", () => {
+    const metadata = buildMarketingMetadata("/brands");
+
+    expect(metadata.title).toBe("Für Brands – mehr testbare Video Ads | Zynapse");
+    expect(metadata.description).toContain("Zynapse Core");
+    expect(metadata.alternates?.canonical).toBe("/brands");
+    expect(metadata.openGraph).toMatchObject({
+      title: "Für Brands – mehr testbare Video Ads | Zynapse",
+      url: absoluteUrl("/brands"),
+    });
+  });
+
+  it("builds page JSON-LD from route service and breadcrumb config", () => {
+    const jsonLd = buildMarketingPageJsonLd("/brands");
+    const graph = jsonLd["@graph"] as Array<Record<string, unknown>>;
+    const webpage = graph.find((node) => node["@type"] === "WebPage");
+    const service = graph.find((node) => node["@type"] === "Service");
+    const breadcrumbs = graph.find((node) => node["@type"] === "BreadcrumbList");
+
+    expect(webpage).toMatchObject({
+      "@id": absoluteUrl("/brands#webpage"),
+      mainEntity: {
+        "@id": absoluteUrl("/brands#service"),
+      },
+    });
+    expect(service).toMatchObject({
+      "@id": absoluteUrl("/brands#service"),
+      name: "Zynapse Core für Brands",
+      provider: {
+        "@id": absoluteUrl("/#organization"),
+      },
+    });
+    expect(breadcrumbs).toMatchObject({
+      "@id": absoluteUrl("/brands#breadcrumbs"),
+    });
+  });
+
+  it("keeps route FAQ data tied to visible FAQ routes", () => {
+    expect(getMarketingRouteFaqItems("/")).toHaveLength(4);
+    expect(getMarketingRouteFaqItems("/cases")).toHaveLength(4);
+    expect(getMarketingRouteFaqItems("/brands")).toHaveLength(0);
+  });
+});
+
 describe("buildFaqJsonLd", () => {
   it("builds FAQPage structured data from visible question-answer content", () => {
     const jsonLd = buildFaqJsonLd({
@@ -111,6 +170,24 @@ describe("buildFaqJsonLd", () => {
         },
       },
     ]);
+  });
+});
+
+describe("llms.txt", () => {
+  const llmsTxt = readFileSync(join(process.cwd(), "public/llms.txt"), "utf8");
+
+  it("exists as an AI-search map for the canonical marketing pages", () => {
+    expect(llmsTxt).toContain("# Zynapse");
+    expect(llmsTxt).toContain("Zynapse Core");
+
+    for (const route of indexableMarketingRoutes) {
+      const url =
+        route.path === "/"
+          ? "https://zynapse.eu/"
+          : `https://zynapse.eu${route.path}`;
+
+      expect(llmsTxt).toContain(url);
+    }
   });
 });
 

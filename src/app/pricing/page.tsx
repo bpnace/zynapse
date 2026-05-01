@@ -5,22 +5,13 @@ import { JsonLdScript } from "@/components/seo/json-ld";
 import { pricingPlans } from "@/lib/content/pricing";
 import { cn } from "@/lib/utils";
 import {
-  buildBreadcrumbs,
-  buildMetadata,
+  buildMarketingMetadata,
+  buildMarketingPageJsonLd,
   buildOfferJsonLd,
-  buildPageJsonLd,
-  buildServiceJsonLd,
 } from "@/lib/seo";
 import Link from "next/link";
 
-const pageSeo = {
-  title: "Preise – Pilot, Growth, Scale | Zynapse",
-  description:
-    "Wähle den Zynapse-Core-Rahmen, der zu eurem Team passt: Pilot für den ersten Test, Growth für laufende Kampagnen und Scale für mehrere Workstreams.",
-  path: "/pricing",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/pricing");
 
 function buildContactHref(planId: string) {
   return `/contact?tier=${encodeURIComponent(planId)}#kontaktformular`;
@@ -67,88 +58,80 @@ const serviceComparisons = [
 ];
 
 export default function PricingPage() {
-  const pricingJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    breadcrumbs: buildBreadcrumbs("Preise", pageSeo.path),
-    primaryEntity: buildServiceJsonLd({
-      path: pageSeo.path,
-      name: "Pricing für Zynapse Core",
-      description: pageSeo.description,
-      serviceType: "Zynapse-Core-Pricing für Brands",
-      audience: "Brands mit laufendem Kampagnenbedarf",
-      offers: buildOfferJsonLd([
-        {
-          name: pricingPlans[0].name,
-          description: pricingPlans[0].description,
-          minPrice: 2499,
-          priceCurrency: "EUR",
-          priceNote: "einmalig",
-        },
-        {
-          name: pricingPlans[1].name,
-          description: pricingPlans[1].description,
-          minPrice: 5999,
-          priceCurrency: "EUR",
-          priceNote: "pro Monat",
-        },
-        {
-          name: pricingPlans[2].name,
-          description: pricingPlans[2].description,
-          priceNote: "Individuell",
-        },
-      ]),
-    }),
+  const pricingJsonLd = buildMarketingPageJsonLd("/pricing", {
+    offers: buildOfferJsonLd([
+      {
+        name: pricingPlans[0].name,
+        description: pricingPlans[0].description,
+        minPrice: 2499,
+        priceCurrency: "EUR",
+        priceNote: "einmalig",
+      },
+      {
+        name: pricingPlans[1].name,
+        description: pricingPlans[1].description,
+        minPrice: 5999,
+        priceCurrency: "EUR",
+        priceNote: "pro Monat",
+      },
+      {
+        name: pricingPlans[2].name,
+        description: pricingPlans[2].description,
+        priceNote: "Individuell",
+      },
+    ]),
   });
 
   return (
     <>
       <JsonLdScript data={pricingJsonLd} />
       <PageMotion>
-      <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-10 sm:px-8 lg:px-10"
-        data-reveal-section
-      >
-        <div className="space-y-6">
-          <h1
-            className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] overflow-visible pr-[0.2rem] text-balance sm:text-7xl"
-            data-animate-heading
-          >
-            Wähle den <span className="title-accent pr-[0.2rem]">Zynapse Core</span> Rahmen, der
-            zu eurem Team passt.
-          </h1>
-          <p
-            className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
-            data-animate-copy
-          >
-            <BoldZynapseCore>
-              Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core
-              plant den passenden Kreativprozess, wählt die richtigen AI
-              Creatives aus und führt euch bis zum fertigen Kampagnenpaket.
-            </BoldZynapseCore>
-          </p>
-        </div>
-      </section>
+        <section
+          className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-10 sm:px-8 lg:px-10"
+          data-reveal-section
+        >
+          <div className="space-y-6">
+            <h1
+              className="overflow-visible pr-[0.2rem] font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-7xl"
+              data-animate-heading
+            >
+              Wähle den{" "}
+              <span className="title-accent pr-[0.2rem]">Zynapse Core</span>{" "}
+              Rahmen, der zu eurem Team passt.
+            </h1>
+            <p
+              className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
+              data-animate-copy
+            >
+              <BoldZynapseCore>
+                Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core
+                plant den passenden Kreativprozess, wählt die richtigen AI
+                Creatives aus und führt euch bis zum fertigen Kampagnenpaket.
+              </BoldZynapseCore>
+            </p>
+          </div>
+        </section>
 
-      <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-10 sm:px-8 lg:px-10"
-        data-reveal-section
-      >
-        <div className="grid gap-4 xl:grid-cols-3">
-          {pricingPlans.map((plan) => {
-            const isFeatured = Boolean(plan.featured);
-            const focusLine = plan.highlights.join(" / ");
+        <section
+          className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-10 sm:px-8 lg:px-10"
+          data-reveal-section
+        >
+          <div className="grid gap-4 xl:grid-cols-3">
+            {pricingPlans.map((plan) => {
+              const isFeatured = Boolean(plan.featured);
+              const focusLine = plan.highlights.join(" / ");
 
-            return (
-              <article
-                key={plan.id}
-                className={cn(
-                  "relative flex h-full flex-col overflow-hidden rounded-[0.55rem] border bg-[rgba(255,252,248,0.98)] shadow-[0_12px_24px_rgba(31,36,48,0.05)]",
-                  isFeatured
-                    ? "border-[rgba(191,106,83,0.2)] bg-[rgba(252,245,237,0.98)]"
-                    : "border-[rgba(56,67,84,0.14)]",
-                )}
-                data-animate-item
-              >
+              return (
+                <article
+                  key={plan.id}
+                  className={cn(
+                    "relative flex h-full flex-col overflow-hidden rounded-[0.55rem] border bg-[rgba(255,252,248,0.98)] shadow-[0_12px_24px_rgba(31,36,48,0.05)]",
+                    isFeatured
+                      ? "border-[rgba(191,106,83,0.2)] bg-[rgba(252,245,237,0.98)]"
+                      : "border-[rgba(56,67,84,0.14)]",
+                  )}
+                  data-animate-item
+                >
                 <div className="relative flex h-full flex-col">
                   <div
                     className={cn(
@@ -250,12 +233,12 @@ export default function PricingPage() {
                     </div>
                   </div>
                 </div>
-              </article>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
 
-        <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.14)] p-6 sm:p-8">
+          <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.14)] p-6 sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <span className="eyebrow" data-animate-heading>
@@ -307,7 +290,7 @@ export default function PricingPage() {
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                       Typisch sonst
                     </p>
-                   <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
+                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
                       <BoldZynapseCore>{entry.traditional}</BoldZynapseCore>
                     </p>
                   </div>
@@ -315,8 +298,8 @@ export default function PricingPage() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
       {/*<section
         id="referenzen"

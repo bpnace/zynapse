@@ -9,6 +9,31 @@ describe("robots route", () => {
         {
           userAgent: "*",
           allow: "/",
+          disallow: "/api/",
+        },
+        {
+          userAgent: "OAI-SearchBot",
+          allow: "/",
+        },
+        {
+          userAgent: "ChatGPT-User",
+          allow: "/",
+        },
+        {
+          userAgent: "Claude-SearchBot",
+          allow: "/",
+        },
+        {
+          userAgent: "Claude-User",
+          allow: "/",
+        },
+        {
+          userAgent: "PerplexityBot",
+          allow: "/",
+        },
+        {
+          userAgent: "Applebot-Extended",
+          allow: "/",
         },
         {
           userAgent: "GPTBot",
@@ -19,11 +44,7 @@ describe("robots route", () => {
           allow: "/",
         },
         {
-          userAgent: "PerplexityBot",
-          allow: "/",
-        },
-        {
-          userAgent: "Applebot-Extended",
+          userAgent: "Google-Extended",
           allow: "/",
         },
       ],

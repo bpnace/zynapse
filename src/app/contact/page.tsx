@@ -5,23 +5,12 @@ import { JsonLdScript } from "@/components/seo/json-ld";
 import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { contactChannels } from "@/lib/content/site";
-import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Kontakt | Zynapse",
-  description:
-    "Schreib uns direkt bei Fragen zu Brands, Preisen oder operativen Themen. Du landest ohne Umwege beim richtigen Kontakt.",
-  path: "/contact",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/contact");
 
 export default function ContactPage() {
-  const contactJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    pageType: "ContactPage",
-    breadcrumbs: buildBreadcrumbs("Kontakt", pageSeo.path),
-  });
+  const contactJsonLd = buildMarketingPageJsonLd("/contact");
 
   return (
     <>
