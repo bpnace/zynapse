@@ -22,30 +22,14 @@ function hasGradientTextClass(className: unknown) {
   );
 }
 
-function splitAnimatedWords(text: string, keyPrefix: string) {
-  const parts = text.match(/(\s+|[^\s]+)/g) ?? [];
-
-  return parts.map((part, index) => {
-    if (/^\s+$/.test(part)) {
-      return part;
-    }
-
-    return (
-      <span key={`${keyPrefix}-${index}`} data-animate-word>
-        {part}
-      </span>
-    );
-  });
-}
-
 function renderAnimatedHeadingWords(node: ReactNode, keyPrefix = "heading"): ReactNode {
   if (typeof node === "string") {
-    return splitAnimatedWords(node, keyPrefix);
+    return node;
   }
 
   return Children.map(node, (child, index) => {
     if (typeof child === "string") {
-      return splitAnimatedWords(child, `${keyPrefix}-${index}`);
+      return child;
     }
 
     if (!isValidElement(child)) {
@@ -54,8 +38,11 @@ function renderAnimatedHeadingWords(node: ReactNode, keyPrefix = "heading"): Rea
 
     const element = child as ElementWithChildren;
     const children = element.props.children;
+    const isHighlightedWord =
+      element.props["data-animate-word"] !== undefined ||
+      hasGradientTextClass(element.props.className);
 
-    if (hasGradientTextClass(element.props.className)) {
+    if (isHighlightedWord) {
       return cloneElement(element, {
         "data-animate-word": true,
         children,
@@ -75,7 +62,6 @@ function renderAnimatedHeadingWords(node: ReactNode, keyPrefix = "heading"): Rea
     }
 
     return cloneElement(element, {
-      "data-animate-word": undefined,
       children: renderAnimatedHeadingWords(children, `${keyPrefix}-${index}`),
     });
   });
@@ -104,7 +90,9 @@ export function SectionHeading({
     typeof title === "string" && accent && accentIndex >= 0 ? (
       <>
         {title.slice(0, accentIndex)}
-        <span className="title-accent">{accent}</span>
+        <span className="title-accent" data-animate-word>
+          {accent}
+        </span>
         {title.slice(accentIndex + accent.length)}
       </>
     ) : typeof title === "string" ? (

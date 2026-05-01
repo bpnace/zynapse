@@ -13,10 +13,12 @@ type HomeMotionProps = {
 
 const SECTION_REVEAL_START = "top 65%";
 const REVEAL_DURATION = 0.66;
-const WORD_REVEAL_BASE_DURATION = 0.4;
-const WORD_REVEAL_DURATION_STEP = 0.025;
+const WORD_REVEAL_DURATION = 0.44;
 const WORD_REVEAL_START_DELAY = 0.1;
-const WORD_REVEAL_STAGGER = 0.07;
+const WORD_REVEAL_STAGGER = 0.045;
+const WORD_REVEAL_Y_PERCENT = 14;
+const WORD_REVEAL_SELECTOR =
+  "[data-animate-word], .text-gradient, .title-accent, .title-accent-soft";
 const HERO_TITLE_REVEAL_DURATION = 1;
 const HERO_WORD_REVEAL_START_DELAY = 0.16;
 const CHAR_RAIN_DISTANCE = 100;
@@ -54,26 +56,27 @@ export function HomeMotion({ children }: HomeMotionProps) {
           return;
         }
 
-        words.forEach((word, index) => {
-          gsap.set(word, {
-            autoAlpha: 0,
-            yPercent: 32,
-            display: "inline-block",
-            willChange: "transform, opacity",
-          });
-
-          timeline.to(
-            word,
-            {
-              autoAlpha: 1,
-              yPercent: 0,
-              duration:
-                WORD_REVEAL_BASE_DURATION + index * WORD_REVEAL_DURATION_STEP,
-              ease: index % 2 === 0 ? "power3.out" : "power2.out",
-            },
-            startAt + index * WORD_REVEAL_STAGGER,
-          );
+        gsap.set(words, {
+          autoAlpha: 0,
+          yPercent: WORD_REVEAL_Y_PERCENT,
+          display: "inline-block",
+          willChange: "transform, opacity",
         });
+
+        timeline.to(
+          words,
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            duration: WORD_REVEAL_DURATION,
+            ease: "power3.out",
+            stagger: {
+              each: WORD_REVEAL_STAGGER,
+              from: "random",
+            },
+          },
+          startAt,
+        );
       };
 
       if (heroIntro) {
@@ -81,7 +84,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
           "[data-animate-heading]",
         );
         const heroWords = Array.from(
-          heroIntro.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          heroIntro.querySelectorAll<HTMLElement>(WORD_REVEAL_SELECTOR),
         );
 
         // Subtle scale entrance for the entire hero content block
@@ -194,7 +197,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
           section.querySelectorAll<HTMLElement>("[data-worry-card]"),
         );
         const words = Array.from(
-          section.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          section.querySelectorAll<HTMLElement>(WORD_REVEAL_SELECTOR),
         );
         const charLines = Array.from(
           section.querySelectorAll<HTMLElement>("[data-animate-char-line]"),

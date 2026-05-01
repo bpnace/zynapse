@@ -4,11 +4,18 @@ import { FinalCta } from "@/components/marketing/final-cta";
 import { FooterReminder } from "@/components/marketing/footer-reminder";
 import { Hero } from "@/components/marketing/hero";
 import { HomepagePricingTeaser } from "@/components/marketing/homepage-pricing-teaser";
+import { MarketingFaq } from "@/components/marketing/marketing-faq";
 import { ProblemCards } from "@/components/marketing/problem-cards";
 import { ProcessStepper } from "@/components/marketing/process-stepper";
 import { VideoOutputGrid } from "@/components/marketing/video-output-grid";
 import { HomeMotion } from "@/components/animation/home-motion";
-import { buildMetadata, buildPageJsonLd, buildServiceJsonLd } from "@/lib/seo";
+import { marketingFaqItems } from "@/lib/content/faq";
+import {
+  buildFaqJsonLd,
+  buildMetadata,
+  buildPageJsonLd,
+  buildServiceJsonLd,
+} from "@/lib/seo";
 
 const homePageSeo = {
   title: "Mehr testbare Video Ads für Brands | Zynapse",
@@ -30,10 +37,15 @@ export default function HomePage() {
       audience: "Brands, Marketing- und Performance-Teams",
     }),
   });
+  const homeFaqJsonLd = buildFaqJsonLd({
+    path: homePageSeo.path,
+    items: marketingFaqItems,
+  });
 
   return (
     <>
       <JsonLdScript data={homeJsonLd} />
+      <JsonLdScript data={homeFaqJsonLd} />
       <HomeMotion>
         <div className="flex flex-col">
           <div className="order-1">
@@ -60,6 +72,16 @@ export default function HomePage() {
           <div className="order-8">
             <FooterReminder />
           </div>
+          <section
+            className="order-9 mx-auto w-full max-w-7xl px-6 pt-2 pb-16 sm:px-8 lg:px-10"
+            data-reveal-section
+            data-stagger="dense"
+          >
+            <MarketingFaq
+              title="FAQ zum Creative Sprint."
+              copy="Kurz beantwortet, was vor einem testbaren Creative Pack geklärt wird und warum Zynapse Core nicht nur einzelne Videos, sondern eine saubere Kampagnenlogik vorbereitet."
+            />
+          </section>
         </div>
       </HomeMotion>
     </>

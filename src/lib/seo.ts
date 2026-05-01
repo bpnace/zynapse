@@ -57,6 +57,14 @@ type ServiceJsonLdInput = {
   offers?: ReturnType<typeof buildOfferJsonLd>;
 };
 
+type FaqJsonLdInput = {
+  path: string;
+  items: readonly {
+    question: string;
+    answer: string;
+  }[];
+};
+
 export const indexableSitemapEntries = [
   { path: "/", pageFile: "src/app/page.tsx" },
   { path: "/brands", pageFile: "src/app/brands/page.tsx" },
@@ -271,6 +279,27 @@ export function buildServiceJsonLd({
     url: absoluteUrl(path),
     ...(audience ? { audience: { "@type": "Audience", audienceType: audience } } : {}),
     ...(offers ? { offers } : {}),
+  };
+}
+
+export function buildFaqJsonLd({ path, items }: FaqJsonLdInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": absoluteUrl(`${path}#faq`),
+    url: absoluteUrl(path),
+    inLanguage: siteConfig.languageTag,
+    isPartOf: {
+      "@id": absoluteUrl(`${path}#webpage`),
+    },
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
 

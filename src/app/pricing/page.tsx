@@ -113,7 +113,7 @@ export default function PricingPage() {
             className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] overflow-visible pr-[0.2rem] text-balance sm:text-7xl"
             data-animate-heading
           >
-            Wähle den <span className="title-accent pr-[0.2rem]">Zynapse-Core</span>-Rahmen, der
+            Wähle den <span className="title-accent pr-[0.2rem]">Zynapse Core</span> Rahmen, der
             zu eurem Team passt.
           </h1>
           <p

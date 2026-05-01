@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   absoluteUrl,
   buildBreadcrumbs,
+  buildFaqJsonLd,
   buildMetadata,
   buildPageJsonLd,
   buildSiteMetadata,
@@ -74,6 +75,42 @@ describe("buildMetadata", () => {
         follow: true,
       },
     });
+  });
+});
+
+describe("buildFaqJsonLd", () => {
+  it("builds FAQPage structured data from visible question-answer content", () => {
+    const jsonLd = buildFaqJsonLd({
+      path: "/cases",
+      items: [
+        {
+          question: "Welche Botschaft trägt der erste Frame?",
+          answer: "Der erste Frame bekommt eine klare Kampagnenaufgabe.",
+        },
+      ],
+    });
+
+    expect(jsonLd).toMatchObject({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": absoluteUrl("/cases#faq"),
+      url: absoluteUrl("/cases"),
+      inLanguage: siteConfig.languageTag,
+      isPartOf: {
+        "@id": absoluteUrl("/cases#webpage"),
+      },
+    });
+
+    expect(jsonLd.mainEntity).toEqual([
+      {
+        "@type": "Question",
+        name: "Welche Botschaft trägt der erste Frame?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Der erste Frame bekommt eine klare Kampagnenaufgabe.",
+        },
+      },
+    ]);
   });
 });
 

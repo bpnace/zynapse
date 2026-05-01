@@ -9,10 +9,12 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const SECTION_REVEAL_START = "top 75%";
 const REVEAL_DURATION = 0.86;
-const WORD_REVEAL_BASE_DURATION = 0.4;
-const WORD_REVEAL_DURATION_STEP = 0.025;
+const WORD_REVEAL_DURATION = 0.44;
 const WORD_REVEAL_START_DELAY = 0.1;
-const WORD_REVEAL_STAGGER = 0.07;
+const WORD_REVEAL_STAGGER = 0.045;
+const WORD_REVEAL_Y_PERCENT = 14;
+const WORD_REVEAL_SELECTOR =
+  "[data-animate-word], .text-gradient, .title-accent, .title-accent-soft";
 
 export function PageMotion({ children }: { children: React.ReactNode }) {
   const scope = useRef<HTMLDivElement>(null);
@@ -44,7 +46,7 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
           section.querySelectorAll<HTMLElement>("[data-worry-card]"),
         );
         const words = Array.from(
-          section.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          section.querySelectorAll<HTMLElement>(WORD_REVEAL_SELECTOR),
         );
 
         const timeline = gsap.timeline({
@@ -69,28 +71,27 @@ export function PageMotion({ children }: { children: React.ReactNode }) {
         }
 
         if (words.length) {
-          words.forEach((word, index) => {
-            gsap.set(word, {
-              autoAlpha: 0,
-              yPercent: 32,
-              display: "inline-block",
-              willChange: "transform, opacity",
-            });
-
-            timeline.to(
-              word,
-              {
-                autoAlpha: 1,
-                yPercent: 0,
-                duration:
-                  WORD_REVEAL_BASE_DURATION + index * WORD_REVEAL_DURATION_STEP,
-                ease: index % 2 === 0 ? "power3.out" : "power2.out",
-              },
-              heading.length
-                ? WORD_REVEAL_START_DELAY + index * WORD_REVEAL_STAGGER
-                : index * WORD_REVEAL_STAGGER,
-            );
+          gsap.set(words, {
+            autoAlpha: 0,
+            yPercent: WORD_REVEAL_Y_PERCENT,
+            display: "inline-block",
+            willChange: "transform, opacity",
           });
+
+          timeline.to(
+            words,
+            {
+              autoAlpha: 1,
+              yPercent: 0,
+              duration: WORD_REVEAL_DURATION,
+              ease: "power3.out",
+              stagger: {
+                each: WORD_REVEAL_STAGGER,
+                from: "random",
+              },
+            },
+            heading.length ? WORD_REVEAL_START_DELAY : 0,
+          );
         }
 
         if (copy.length) {

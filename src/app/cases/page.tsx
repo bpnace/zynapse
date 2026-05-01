@@ -2,8 +2,15 @@ import { JsonLdScript } from "@/components/seo/json-ld";
 import { PageMotion } from "@/components/animation/page-motion";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
+import { MarketingFaq } from "@/components/marketing/marketing-faq";
+import { marketingFaqItems } from "@/lib/content/faq";
 import { videoVariants } from "@/lib/mock-data/studio";
-import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
+import {
+  buildBreadcrumbs,
+  buildFaqJsonLd,
+  buildMetadata,
+  buildPageJsonLd,
+} from "@/lib/seo";
 
 const pageSeo = {
   title: "Cases und Szenarien für Video Ads | Zynapse",
@@ -32,13 +39,6 @@ const coreExplainers = [
   },
 ] as const;
 
-const sprintSignals = [
-  "Welche Botschaft trägt der erste Frame?",
-  "Welche Zielgruppe soll das Szenario erkennen?",
-  "Welche Variante braucht ein anderes Format oder einen anderen Hook?",
-  "Welche Entscheidung muss vor der Übergabe noch im Review fallen?",
-] as const;
-
 function formatDuration(s: string): string {
   const seconds = parseInt(s, 10);
   const min = Math.floor(seconds / 60);
@@ -52,10 +52,15 @@ export default function CasesPage() {
     pageType: "CollectionPage",
     breadcrumbs: buildBreadcrumbs("Cases", pageSeo.path),
   });
+  const casesFaqJsonLd = buildFaqJsonLd({
+    path: pageSeo.path,
+    items: marketingFaqItems,
+  });
 
   return (
     <>
       <JsonLdScript data={casesJsonLd} />
+      <JsonLdScript data={casesFaqJsonLd} />
       <PageMotion>
         <section
           className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-14 sm:px-8 lg:px-10"
@@ -145,92 +150,75 @@ export default function CasesPage() {
           data-reveal-section
           data-stagger="dense"
         >
-          <div className="grid gap-8 border-t border-[rgba(56,67,84,0.14)] pt-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]">
-            <div className="space-y-5">
-              <p className="eyebrow" data-animate-heading>
-                Unter dem Video
-              </p>
-              <h2
-                className="font-display text-3xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance text-[var(--copy-strong)] sm:text-[3.2rem]"
-                data-animate-heading
+          <div className="border-t border-[rgba(56,67,84,0.14)] pt-10">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:items-end">
+              <div className="space-y-5">
+                <p className="eyebrow" data-animate-heading>
+                  Unter dem Video
+                </p>
+                <h2
+                  className="max-w-3xl font-display text-3xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance text-[var(--copy-strong)] sm:text-[3.2rem]"
+                  data-animate-heading
+                >
+                  Was Zynapse Core aus einem Clip macht.
+                </h2>
+                <p
+                  className="max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
+                  data-animate-copy
+                >
+                  <BoldZynapseCore>
+                    Die Videos sind keine fertigen Kundenreferenzen. Sie zeigen,
+                    wie Zynapse Core ein visuelles Signal in Kampagnenlogik
+                    übersetzt: Aufgabe, Varianten, Review und Übergabe.
+                  </BoldZynapseCore>
+                </p>
+              </div>
+
+              <aside
+                className="rounded-[0.55rem] bg-[var(--copy-strong)] p-6 text-white sm:p-7"
+                data-animate-item
               >
-                Was Zynapse Core aus einem Clip macht.
-              </h2>
-              <p
-                className="text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
-                data-animate-copy
-              >
-                <BoldZynapseCore>
-                  Die Videos sind nicht als fertige Kundenreferenzen mit
-                  Messwerten gemeint. Sie zeigen, wie Zynapse Core ein
-                  visuelles Signal in Kampagnenlogik übersetzt: Welche Aufgabe
-                  erfüllt der Clip, welche Varianten brauchen wir daraus und
-                  welche Entscheidung muss im Review fallen?
-                </BoldZynapseCore>
-              </p>
+                <p className="font-mono text-[10px] tracking-[0.16em] text-white/58 uppercase">
+                  Warum das zählt
+                </p>
+                <p className="mt-4 text-[1rem] leading-7 text-white/76">
+                  <BoldZynapseCore>
+                    Ohne Zynapse Core bleibt ein gutes Video oft nur ein
+                    schönes Asset. Im Sprint wird daraus ein System aus
+                    Einstiegen, Hypothesen, Review-Pfad und Media-Übergabe.
+                  </BoldZynapseCore>
+                </p>
+              </aside>
             </div>
 
-            <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)]">
+            <div className="mt-8 grid overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)] lg:grid-cols-3">
               {coreExplainers.map((item, index) => (
                 <article
                   key={item.title}
-                  className={`grid gap-4 px-5 py-5 sm:grid-cols-[4rem_minmax(0,1fr)] sm:px-6 ${
-                    index > 0 ? "border-t border-[rgba(56,67,84,0.12)]" : ""
-                  }`}
+                  className={`flex min-h-[14rem] flex-col p-5 sm:p-6 ${
+                    index > 0 ? "border-t border-[rgba(56,67,84,0.14)] lg:border-t-0 lg:border-l" : ""
+                  } border-[rgba(56,67,84,0.14)] bg-white`}
                   data-animate-item
                 >
-                  <p className="font-display text-[2.3rem] leading-none font-semibold tracking-[-0.055em] text-[var(--accent-strong)]">
+                  <p className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
                     {item.step}
                   </p>
-                  <div className="space-y-2">
-                    <h3 className="font-display text-[1.35rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm leading-6 text-[color:var(--copy-body)]">
-                      <BoldZynapseCore>{item.copy}</BoldZynapseCore>
-                    </p>
-                  </div>
+                  <h3 className="mt-6 font-display text-[1.45rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-[color:var(--copy-body)]">
+                    <BoldZynapseCore>{item.copy}</BoldZynapseCore>
+                  </p>
                 </article>
               ))}
             </div>
-          </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)]">
-            <div
-              className="rounded-[0.55rem] bg-[var(--copy-strong)] p-6 text-white sm:p-7"
-              data-animate-item
-            >
-              <p className="font-mono text-[10px] tracking-[0.16em] text-white/58 uppercase">
-                Warum das wichtig ist
-              </p>
-              <p className="mt-4 max-w-2xl text-[1rem] leading-7 text-white/76">
-                <BoldZynapseCore>
-                  Ohne Zynapse Core bleibt ein gutes Video oft nur ein schönes
-                  Asset. Im Sprint wird daraus ein System: mehrere Einstiege,
-                  klare Hypothesen, ein Review-Pfad und eine Übergabe, mit der
-                  Paid Social wirklich weiterarbeiten kann.
-                </BoldZynapseCore>
-              </p>
-            </div>
-
-            <div
-              className="rounded-[0.55rem] border border-[rgba(56,67,84,0.16)] bg-white p-6 sm:p-7"
-              data-animate-item
-            >
-              <p className="font-mono text-[10px] tracking-[0.16em] text-[var(--copy-soft)] uppercase">
-                Was der Sprint klärt
-              </p>
-              <ul className="mt-4 grid gap-3">
-                {sprintSignals.map((signal) => (
-                  <li
-                    key={signal}
-                    className="border-t border-[rgba(56,67,84,0.12)] pt-3 text-sm leading-6 text-[color:var(--copy-body)]"
-                  >
-                    {signal}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <MarketingFaq
+              className="mt-8"
+              eyebrow="FAQ"
+              title="Was der Sprint vor der Übergabe klärt."
+              copy="Diese Fragen sind kein loses FAQ ohne Antwort. Sie zeigen, welche Entscheidungen Zynapse Core aus Briefing, Material und Review-Kontext vorbereitet."
+            />
           </div>
 
           <div className="mt-8 flex flex-col gap-4 border-t border-[rgba(56,67,84,0.12)] pt-6 sm:flex-row sm:items-center sm:justify-between">

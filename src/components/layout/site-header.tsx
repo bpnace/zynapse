@@ -55,7 +55,7 @@ export function SiteHeader() {
             href="/"
             aria-label="Zynapse Startseite"
             onClick={closeMenu}
-            className="absolute left-1/2 -translate-x-1/2 md:hidden"
+            className="absolute left-1/2 hidden -translate-x-1/2 min-[480px]:block md:hidden"
           >
             <Image
               src={appIcon}
@@ -95,15 +95,13 @@ export function SiteHeader() {
 
           {/* Right: CTA */}
           <div className="flex items-center gap-2 md:justify-self-end">
-            <ButtonLink
+            <Link
               href={loginCta.href}
               onClick={closeMenu}
-              variant="secondary"
-              size="md"
-              className="hidden !rounded-full !bg-white/72 !px-5 !text-[var(--copy-strong)] !shadow-none hover:!border-[rgba(56,67,84,0.34)] hover:!bg-white md:inline-flex"
+              className="hidden px-3 py-2 text-sm font-semibold text-[var(--copy-strong)] transition-colors duration-200 hover:text-[var(--accent-strong)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[rgba(224,94,67,0.24)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:inline-flex"
             >
               {loginCta.label}
-            </ButtonLink>
+            </Link>
             <ButtonLink
               href={primaryCta.href}
               onClick={closeMenu}

@@ -54,6 +54,19 @@
   --font-display: var(--font-display);
 }
 
+:where(h1, h2, h3, h4, h5, h6, [class~="font-display"], [data-animate-heading]) {
+  overflow: visible;
+  padding-bottom: 0.1em;
+}
+
+.section-card:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-surface-paper:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-surface-warm:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-surface-contrast:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-card-muted:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6) {
+  overflow: visible;
+}
+
 html {
   scroll-behavior: auto;
 }
