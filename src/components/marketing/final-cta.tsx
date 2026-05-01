@@ -63,7 +63,7 @@ export function FinalCta() {
             Bewerbung mit Portfolio und Fokusbereich.
           </h3>
           <p className="mt-5 text-base leading-7 text-[color:var(--copy-body)]">
-            Für AI Creatives, die in konkreten Kampagnen statt losen Einzelanfragen
+            Für AI Creatives, die in echten Kampagnen statt losen Einzelanfragen
             arbeiten wollen. Die Bewerbung fragt Portfolio, Fokusbereich und
             Arbeitsweise ab, damit wir passende Rollen und Kampagnen besser
             zuordnen können.
@@ -78,7 +78,7 @@ export function FinalCta() {
 
       <p className="mt-6 text-sm leading-6 text-[color:var(--copy-soft)]">
         <BoldZynapseCore>
-          Erstgespräche sind kurz, konkret und unverbindlich. Wir klären vor
+          Erstgespräche sind kurz, unverbindlich und nah am Bedarf. Wir klären vor
           allem Ziel, vorhandenes Material, Timing und ob ein Pilot oder ein
           laufender Zynapse-Core-Rahmen sinnvoller ist.
         </BoldZynapseCore>

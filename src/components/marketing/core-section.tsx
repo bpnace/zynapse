@@ -10,7 +10,7 @@ const coreSteps = [
   {
     title: "Szenarien, Rollen und Aufgaben führen",
     description:
-      "Zynapse Core bündelt Creative-Szenarien, passende Rollen und konkrete Aufgaben, damit aus dem Briefing ein steuerbarer Arbeitsfluss wird.",
+      "Zynapse Core bündelt Creative-Szenarien, passende Rollen und greifbare Aufgaben, damit aus dem Briefing ein steuerbarer Arbeitsfluss wird.",
   },
   {
     title: "Review und Delivery absichern",

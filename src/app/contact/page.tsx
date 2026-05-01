@@ -48,8 +48,8 @@ export default function ContactPage() {
                 Egal ob du eine Kampagne anfragen willst, wissen möchtest,
                 welcher Zynapse Core gerade passt, oder ein operatives Thema
                 klären musst: Deine Nachricht landet direkt beim richtigen
-                Kontakt. Du musst nichts perfekt vorbereiten, ein paar konkrete
-                Sätze reichen.
+                Kontakt. Du musst nichts perfekt vorbereiten, ein paar Sätze
+                reichen.
               </BoldZynapseCore>
             </p>
           </div>

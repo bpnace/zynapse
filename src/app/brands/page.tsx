@@ -98,7 +98,7 @@ const results: BrandResult[] = [
     label: "Bis zum ersten Kreativplan",
     value: 72,
     suffix: "h",
-    detail: "vom Briefing bis zur ersten konkreten Richtung",
+    detail: "vom Briefing bis zur ersten brauchbaren Richtung",
   },
   {
     label: "Varianten je nach Paket",
@@ -390,7 +390,7 @@ export default function BrandsPage() {
                   className="max-w-3xl font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                   data-animate-heading
                 >
-                  Mehr <span data-animate-word>Output</span>, konkretere{" "}
+                  Mehr <span data-animate-word>Output</span>, schärfere{" "}
                   <span className="title-accent">Lernschleifen</span>.
                 </h2>
                 <p
@@ -427,10 +427,10 @@ export default function BrandsPage() {
                 title={
                   <>
                     Was sich für euer Team{" "}
-                    <span className="title-accent">konkret verbessert</span>.
+                    <span className="title-accent">spürbar verbessert</span>.
                   </>
                 }
-                copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein konkreter Weg vom Briefing zum Zynapse-Core-Prozess mit geprüften Varianten."
+                copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein geführter Weg vom Briefing zum Zynapse-Core-Prozess mit geprüften Varianten."
               />
             </div>
 
@@ -460,7 +460,7 @@ export default function BrandsPage() {
           data-reveal-section
         >
           <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,0.64fr)_minmax(16rem,0.36fr)] lg:items-center">
               <div className="space-y-3">
                 <h2
                   className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
@@ -479,9 +479,11 @@ export default function BrandsPage() {
                   </BoldZynapseCore>
                 </p>
               </div>
-              <ButtonLink href="/request" size="lg" data-animate-item>
-                Kampagne anfragen
-              </ButtonLink>
+              <div className="flex justify-center" data-animate-item>
+                <ButtonLink href="/request" size="lg">
+                  Kampagne anfragen
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </section>

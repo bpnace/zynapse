@@ -3,11 +3,10 @@ import { AnimatedMetric } from "@/components/marketing/animated-metric";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const workspaceHighlights = [
-  "Fehlende Briefing-Infos werden vor der Produktion sichtbar, damit offene Fragen nicht erst im Review auftauchen.",
-  "Creative-Szenarien werden nach Hook, Format und CTA priorisiert, statt als lose Ideensammlung nebeneinander zu liegen.",
-  "Offene Threads bleiben im zentralen Review gebündelt, sodass Entscheidungen und nächste Aufgaben nachvollziehbar bleiben.",
-  "Assets sind nach Hook, Format und Version sortiert, damit das Media-Team nicht vor dem Upload neu strukturieren muss.",
-  "Review und Media Pack bleiben in einem durchgehenden Flow zusammen, vom ersten Kommentar bis zur finalen Übergabe.",
+  "Briefing-Lücken werden vor der Produktion sichtbar.",
+  "Szenarien sind nach Hook, Format und CTA priorisiert.",
+  "Review-Threads bleiben an einem Ort gebündelt.",
+  "Assets sind nach Hook, Format und Version sortiert.",
 ];
 
 type WorkspaceStat = {
@@ -50,7 +49,7 @@ export function CampaignPackPreview() {
   return (
     <section
       id="workspace-preview"
-      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:px-10"
+      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
@@ -59,13 +58,14 @@ export function CampaignPackPreview() {
           eyebrow="Workspace-Pack-Preview"
           title={
             <>
-              Was aus dem Sprint als{" "}
+              Was aus dem Sprint ein{" "}
               <span className="title-accent">sauberes Media Pack</span> entsteht.
             </>
           }
-          copy="Die Preview zeigt, was im Hintergrund zusammengeführt wird: Briefing-Qualität, offene Fragen, Creative-Szenarien, Review-Status und Media-Pack-Übergabe. So wird sichtbar, ob ein Sprint wirklich produktionsreif ist oder ob vor dem Export noch Kontext, Freigabe oder Sortierung fehlt."
+          headingClassName="text-wrap sm:text-[2.85rem]"
+          copy="Die Preview bündelt Briefing-Qualität, offene Fragen, Szenarien, Review-Status und Übergabe. So sieht das Team vor dem Export, was bereit ist und was noch fehlt."
         />
-        <ul className="grid max-w-[34rem] gap-2">
+        <ul className="grid max-w-[36rem] gap-2">
           {workspaceHighlights.map((item) => (
             <li
               key={item}

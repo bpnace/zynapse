@@ -30,7 +30,7 @@ const coreExplainers = [
   {
     step: "02",
     title: "Szenario bauen",
-    copy: "Aus dem Ausgangsmaterial entsteht ein testbares Szenario mit Hook, Funnel-Aufgabe, Formatlogik und konkreter Frage für das Media-Team.",
+    copy: "Aus dem Ausgangsmaterial entsteht ein testbares Szenario mit Hook, Funnel-Aufgabe, Formatlogik und Testfrage für das Media-Team.",
   },
   {
     step: "03",

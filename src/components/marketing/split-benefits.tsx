@@ -136,7 +136,7 @@ export function SplitBenefits() {
                 <span data-animate-word>Koordination</span>.
               </>
             }
-            copy="Zynapse hilft euch, aus einem Briefing mehrere konkrete Richtungen und geprüfte Varianten zu bekommen. Ohne Freelancer-Suche, ohne Tool wechsel und ohne endlose Abstimmungen."
+            copy="Zynapse hilft euch, aus einem Briefing mehrere testbare Richtungen und geprüfte Varianten zu bekommen. Ohne Freelancer-Suche, ohne Tool wechsel und ohne endlose Abstimmungen."
             benefits={brandBenefits}
             href="/brands"
             cta="Mehr für Brands"
@@ -153,15 +153,15 @@ export function SplitBenefits() {
               title="Für AI Creatives"
               headline={
                 <>
-                  Konkrete{" "}
+                  Aufgaben mit{" "}
                   <span className="bg-[linear-gradient(120deg,#fff_0%,var(--accent)_100%)] bg-clip-text text-transparent">
-                    Aufgaben
+                    Richtung
                   </span>{" "}
                   statt{" "}
                   <span data-animate-word>Briefing-Verwirrung</span>.
                 </>
               }
-              copy="Du arbeitest nicht in losen Einzelanfragen, sondern in konkreten Kampagnen mit sauberem Briefing, definierten Aufgaben und sichtbarem Beitrag zum finalen Output."
+              copy="Du arbeitest nicht in losen Einzelanfragen, sondern in echten Kampagnen mit sauberem Briefing, definierten Aufgaben und sichtbarem Beitrag zum finalen Output."
               benefits={creativeBenefits}
               href="/creatives"
               cta="Als Creative bewerben"

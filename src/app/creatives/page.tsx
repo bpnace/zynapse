@@ -15,9 +15,9 @@ import {
 } from "@/lib/seo";
 
 const pageSeo = {
-  title: "Für AI Creatives – konkrete Aufgaben statt Briefing-Chaos | Zynapse",
+  title: "Für AI Creatives – Aufgaben mit Richtung statt Briefing-Chaos | Zynapse",
   description:
-    "Zynapse für AI Creatives: konkrete Aufgaben, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
+    "Zynapse für AI Creatives: Aufgaben mit Richtung, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
   path: "/creatives",
 } as const;
 
@@ -32,12 +32,12 @@ const painPoints = [
   {
     title: "Feedback ist zu verstreut",
     description:
-      "Kommentare kommen aus Calls, Chats und Dokumenten, aber selten als konkrete Aufgabe mit Richtung und Priorität.",
+      "Kommentare kommen aus Calls, Chats und Dokumenten, aber selten als bearbeitbare Aufgabe mit Richtung und Priorität.",
   },
   {
     title: "Dein Beitrag wird nicht sauber eingebettet",
     description:
-      "Gute Prompts, Richtungen oder Varianten verlieren Wirkung, wenn sie nicht Teil eines konkreten Kampagnenplans sind.",
+      "Gute Prompts, Richtungen oder Varianten verlieren Wirkung, wenn sie nicht Teil eines abgestimmten Kampagnenplans sind.",
   },
 ];
 
@@ -46,15 +46,15 @@ const howItWorks = [
     step: "01",
     title: "Briefing verstehen",
     description:
-      "Zynapse Core verdichtet Produkt, Ziel, Zielgruppe und Markenregeln zu einer Zusammenfassung für deine konkrete Rolle.",
+      "Zynapse Core verdichtet Produkt, Ziel, Zielgruppe und Markenregeln zu einer Zusammenfassung für deine Rolle.",
     detail:
-      "Du startest nicht mit einem Rohbriefing, sondern mit Kontext, Qualitätsmaßstab, No-Gos und dem konkreten Beitrag, den deine Rolle leisten soll.",
+      "Du startest nicht mit einem Rohbriefing, sondern mit Kontext, Qualitätsmaßstab, No-Gos und dem Beitrag, den deine Rolle leisten soll.",
   },
   {
     step: "02",
-    title: "Konkrete Aufgabe übernehmen",
+    title: "Aufgabe mit Richtung übernehmen",
     description:
-      "Du arbeitest mit konkreten Qualitätskriterien, sichtbaren No-Gos und einem konkreten Beitrag zum Kampagnenziel.",
+      "Du arbeitest mit messbaren Qualitätskriterien, sichtbaren No-Gos und deinem Beitrag zum Kampagnenziel.",
     detail:
       "Deine Arbeit hängt direkt an Hook, Format, Zielgruppe oder Review-Frage. Dadurch bleibt sie Kampagnenbeitrag statt losem Einzelasset.",
   },
@@ -62,7 +62,7 @@ const howItWorks = [
     step: "03",
     title: "Feedback sauber weitergeben",
     description:
-      "Feedback wird nicht zum Slack-Chaos, sondern zu konkreten nächsten Aufgaben zwischen Strategie, Prompting, Produktion und Review.",
+      "Feedback wird nicht zum Slack-Chaos, sondern zu priorisierten nächsten Aufgaben zwischen Strategie, Prompting, Produktion und Review.",
     detail:
       "Richtung, Entscheidung und nächste Schleife bleiben sichtbar, damit die folgende Rolle ohne erneutes Briefing weiterarbeiten kann.",
   },
@@ -74,7 +74,7 @@ const roleExamples = [
   {
     role: "Prompt Engineering",
     example:
-      "Du entwickelst konkrete KI-Anweisungen für unterschiedliche Hooks, Looks und Formate.",
+      "Du entwickelst präzise KI-Anweisungen für unterschiedliche Hooks, Looks und Formate.",
     output: "Mehr testbare Hooks ohne Qualitätsbruch zwischen Iterationen.",
   },
   {
@@ -87,7 +87,7 @@ const roleExamples = [
     role: "Prompt Design",
     example:
       "Du strukturierst Inputs so, dass sie wiederholbar gute Ergebnisse liefern.",
-    output: "Formatgerechte Assets mit konkreter Wiederholbarkeit.",
+    output: "Formatgerechte Assets mit stabiler Wiederholbarkeit.",
   },
   {
     role: "AI Production",
@@ -113,7 +113,7 @@ const creativeCoreSupports = [
   {
     title: "Briefing-Zusammenfassung für deine Rolle",
     copy:
-      "Produkt, Ziel, Zielgruppe und Markenrahmen werden so verdichtet, dass dein konkreter Beitrag sofort deutlich wird.",
+      "Produkt, Ziel, Zielgruppe und Markenrahmen werden so verdichtet, dass dein Beitrag sofort deutlich wird.",
   },
   {
     title: "Sichtbare Markenregeln und No-Gos",
@@ -121,7 +121,7 @@ const creativeCoreSupports = [
       "Look, Tonalität und Grenzen bleiben im Flow sichtbar, statt nur einmal im Briefing-Dokument aufzutauchen.",
   },
   {
-    title: "Konkrete Anforderungen für deine Abgabe",
+    title: "Anforderungen vor der Abgabe",
     copy:
       "Format, Qualitätsziel und Erwartung an deinen Output stehen vor dem Start fest und nicht erst nach der ersten Schleife.",
   },
@@ -131,7 +131,7 @@ const creativeCoreSupports = [
       "Vor der Übergabe siehst du, ob Beitrag, Richtung und Qualitätskriterien wirklich zum Kampagnenziel passen.",
   },
   {
-    title: "Feedback als konkrete Aufgaben",
+    title: "Feedback als nächste Aufgaben",
     copy:
       "Kommentare werden in priorisierte nächste Schritte übersetzt statt in lose Rückmeldungen aus Calls, Chats und Docs.",
   },
@@ -145,7 +145,7 @@ const creativeCoreSupports = [
 const profileFits = [
   "Du willst an echten Brand-Kampagnen arbeiten statt an losem Creator-Sourcing",
   "Du denkst nicht nur in Einzelassets, sondern in Hooks, Richtungen und Testlogik",
-  "Du willst mit konkreten Aufgaben und sauberen Übergaben arbeiten",
+  "Du willst mit sauber definierten Aufgaben und Übergaben arbeiten",
   "Du suchst ein Umfeld, in dem Strategie, Prompting und Produktion sauber zusammenspielen",
 ];
 
@@ -157,8 +157,8 @@ const compensationNotes = [
 ];
 
 const results = [
-  { value: "1", label: "konkrete Aufgabe pro Rolle" },
-  { value: "6", label: "Rollen in einem sichtbaren Flow" },
+  { value: "1", label: "Aufgabe pro Rolle" },
+  { value: "6+", label: "Beispielrollen in einem sichtbaren Flow" },
   { value: "100%", label: "Feedback mit nachvollziehbarem Kontext" },
 ];
 
@@ -207,7 +207,7 @@ export default function CreativesPage() {
                 data-animate-copy
               >
                 <BoldZynapseCore>
-                  Zynapse verbindet dich mit echten Kampagnen, konkreten Aufgaben
+                  Zynapse verbindet dich mit echten Kampagnen, Aufgaben mit Richtung
                   und AI-gestützten Workflows. Zynapse Core strukturiert
                   Briefings, macht Markenregeln sichtbar und übersetzt Feedback
                   in nächste Schritte, die du wirklich bearbeiten kannst.
@@ -229,7 +229,7 @@ export default function CreativesPage() {
                   Als AI Creative bewerben
                 </ButtonLink>
                 <ButtonLink href="/creatives#rollen" variant="secondary" size="lg">
-                  Rollen ansehen
+                  Beispiele ansehen
                 </ButtonLink>
               </div>
             </div>
@@ -344,14 +344,14 @@ export default function CreativesPage() {
         data-reveal-section
       >
         <SectionHeading
-          eyebrow="Rollen"
+          eyebrow="Beispielrollen"
           title={
             <>
-              <span data-animate-word>Sechs Rollen</span>. Ein gemeinsamer{" "}
+              <span data-animate-word>Beispielrollen</span> für einen gemeinsamen{" "}
               <span className="title-accent">Kampagnenbeitrag</span>.
             </>
           }
-          copy="Die Rollen können bleiben, aber die Erwartung muss präziser werden: Welche Aufgabe du übernimmst, welcher Output gebraucht wird und warum genau dieser Beitrag die Kampagne weiterbringt."
+          copy="Diese sechs Kacheln zeigen typische Einstiege in den Flow. Je nach Kampagne können weitere Spezialist:innen dazukommen, wenn Strategie, Produktion oder Testing mehr Tiefe brauchen."
         />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {roleExamples.map((entry) => (
@@ -398,7 +398,7 @@ export default function CreativesPage() {
               className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Die KI ersetzt dich nicht. Sie strukturiert Briefing, Markenregeln,
+              Die KI ersetzt Menschen nicht. Sie strukturiert Briefing, Markenregeln,
               Feedback und Übergaben so, dass dein Beitrag schneller greift und
               im Kampagnenfluss nicht verloren geht. Dadurch arbeitest du nicht
               gegen Unschärfe, sondern an einer sichtbaren Kampagnenaufgabe.
@@ -508,11 +508,11 @@ export default function CreativesPage() {
                 passt.
               </>
             }
-            copy="Wenn du kreative Arbeit strategisch strukturieren kannst und lieber in konkreten Kampagnen als in Briefing-Chaos arbeitest. Zynapse ist für Beiträge gedacht, die in Review, Media und Testing anschlussfähig bleiben."
+            copy="Wenn du kreative Arbeit strategisch strukturieren kannst und lieber in echten Kampagnen als in Briefing-Chaos arbeitest. Zynapse ist für Beiträge gedacht, die in Review, Media und Testing anschlussfähig bleiben."
           />
         </div>
         <div
-          className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_14px_28px_rgba(31,36,48,0.06)]"
+          className="self-center overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_14px_28px_rgba(31,36,48,0.06)]"
         >
           <ul className="grid">
             {profileFits.map((item, index) => (
@@ -546,7 +546,7 @@ export default function CreativesPage() {
             className="mt-4 font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em]"
             data-animate-heading
           >
-            Konkreter Scope, bevor du zusagst.
+            Scope sichtbar, bevor du zusagst.
           </h2>
           <p className="mt-4 text-sm leading-6 text-white/74" data-animate-copy>
             <BoldZynapseCore>
@@ -586,7 +586,7 @@ export default function CreativesPage() {
             <>
               Was sich für dich{" "}
               <span className="title-accent" data-animate-word>
-                konkret verbessert
+                spürbar verbessert
               </span>
               .
             </>
@@ -612,7 +612,7 @@ export default function CreativesPage() {
         data-reveal-section
       >
         <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
-          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.64fr)_minmax(16rem,0.36fr)] lg:items-center">
             <div className="space-y-3">
               <h2
                 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
@@ -629,9 +629,11 @@ export default function CreativesPage() {
                 echte Kampagnenarbeit gebaut, nicht auf generische Leads.
               </p>
             </div>
-            <ButtonLink href="/apply" size="lg" data-animate-item>
-              Als AI Creative bewerben
-            </ButtonLink>
+            <div className="flex justify-center" data-animate-item>
+              <ButtonLink href="/apply" size="lg">
+                Als AI Creative bewerben
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </section>

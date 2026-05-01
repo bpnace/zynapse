@@ -8,7 +8,7 @@ import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
 const pageSeo = {
   title: "Über Zynapse – wie Zynapse Core Teams und Creatives verbindet | Zynapse",
   description:
-    "Zynapse verbindet Brands und AI Creatives in einem konkreten Zynapse-Core-Prozess. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
+    "Zynapse verbindet Brands und AI Creatives in einem geführten Zynapse-Core-Prozess. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
   path: "/about",
 } as const;
 
@@ -17,11 +17,11 @@ export const metadata = buildMetadata(pageSeo);
 const heroSignals = [
   {
     label: "Für Brands",
-    value: "Ein konkreter Zynapse-Core-Prozess statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
+    value: "Ein geführter Zynapse-Core-Prozess statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
   },
   {
     label: "Für AI Creatives",
-    value: "Konkrete Aufgaben statt Briefing-Chaos, mit Rollen, in denen Strategie und Umsetzung sauber zusammenpassen.",
+    value: "Aufgaben mit Richtung statt Briefing-Chaos, mit Rollen, in denen Strategie und Umsetzung sauber zusammenpassen.",
   },
   {
     label: "Ergebnis",
@@ -80,7 +80,7 @@ const deliverables = [
   {
     title: "Creative Packs statt lose Einzelfiles",
     description:
-      "Teams erhalten keine lose Sammlung an Videos, sondern einen durchdachten Flow mit Varianten-Logik, konkreten Freigabepunkten und nutzbarer Delivery.",
+      "Teams erhalten keine lose Sammlung an Videos, sondern einen durchdachten Flow mit Varianten-Logik, definierten Freigabepunkten und nutzbarer Delivery.",
   },
   {
     title: "AI-Video mit System",
@@ -321,14 +321,14 @@ export default function AboutPage() {
               Zynapse ist kein klassisches Studio und kein offener
               Creator-Marktplatz. Wir verbinden Brands mit den
               passenden AI Creatives und strukturieren Briefing, Rollen,
-              Qualitätscheck, Review und Delivery in einem konkreten Creative
+              Qualitätscheck, Review und Delivery in einem geführten Creative
               Flow.
             </p>
             <p
               className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              So entsteht professionelle AI-Marketingproduktion mit konkreten
+              So entsteht professionelle AI-Marketingproduktion mit passenden
               Rollen, kontrollierten Reviews und Varianten, die nicht nur gut
               aussehen, sondern im echten Testing schneller nutzbar werden.
             </p>
@@ -487,7 +487,7 @@ export default function AboutPage() {
               <span className="title-accent">bewegliche Zusammenarbeit</span>.
             </>
           }
-          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in konkreter Struktur. Das hält Produktion näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
+          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in sauberer Struktur. Das hält Produktion näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
         />
         <div className="grid gap-4 lg:grid-cols-3">
           {valueCards.map((item, index) => (

@@ -39,14 +39,14 @@ const serviceComparisons = [
   {
     label: "Einzelproduktion",
     zynapse:
-      "Nicht nur ein Asset-Paket, sondern Zynapse Core mit Briefing-Analyse, zentralem Review und konkreter Anschlussfähigkeit an die nächste Kampagnenrunde.",
+      "Nicht nur ein Asset-Paket, sondern Zynapse Core mit Briefing-Analyse, zentralem Review und sauberer Anschlussfähigkeit an die nächste Kampagnenrunde.",
     traditional:
       "Ein einzelner Sprint oder ein einzelnes Video löst den Moment. Beim nächsten Briefing beginnen Planung, Abstimmung und Produktionslogik oft wieder von vorn.",
   },
   {
     label: "Offener Creator-Marktplatz",
     zynapse:
-      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Zynapse-Core-Prozess mit konsistentem Output, konkreten Übergaben und laufender Priorisierung.",
+      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Zynapse-Core-Prozess mit konsistentem Output, geordneten Übergaben und laufender Priorisierung.",
     traditional:
       "Der Schwerpunkt liegt auf Sourcing. Ohne übergeordneten Flow streuen Qualität, Messaging und Learnings zwischen einzelnen Creator-Lieferungen.",
   },

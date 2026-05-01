@@ -79,7 +79,7 @@ export function ContactIntakeForm() {
         },
         {
           label: "Was reicht",
-          value: "Ein paar konkrete Sätze zu Team, Thema und Ziel reichen für den ersten Schritt.",
+          value: "Wenige Sätze zu Team, Thema und Ziel reichen für den ersten Schritt.",
         },
       ];
     }
@@ -221,7 +221,7 @@ export function ContactIntakeForm() {
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
                 Wir haben alles übernommen und melden uns in der Regel innerhalb
-                von 24 Stunden mit einem konkreten nächsten Schritt bei dir.
+                von 24 Stunden mit einem nächsten Schritt bei dir.
               </p>
             </div>
             <ButtonLink href="/" variant="secondary" className="rounded-[0.45rem]">
@@ -250,7 +250,7 @@ export function ContactIntakeForm() {
               </p>
               <p className="mt-2 text-sm leading-5 text-white/[0.75]">
                 Wir melden uns nicht nur mit einer Bestätigung, sondern mit
-                einem konkreten Vorschlag oder einer Rückfrage.
+                einem passenden Vorschlag oder einer Rückfrage.
               </p>
             </div>
           </div>
@@ -278,7 +278,7 @@ export function ContactIntakeForm() {
               <BoldZynapseCore>
                 Wenn du schon aus den Preisen kommst, ist der passende
                 Zynapse-Core-Rahmen vorausgewählt. Wenn nicht, reichen ein paar
-                konkrete Sätze zu Team, Thema und Ziel.
+                wenige Sätze zu Team, Thema und Ziel.
               </BoldZynapseCore>
             </p>
           </div>

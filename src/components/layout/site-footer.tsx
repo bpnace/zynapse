@@ -28,7 +28,7 @@ export function SiteFooter() {
           <p className="max-w-md text-base leading-7 text-white/72">
             <BoldZynapseCore>
               Testbare Video Ads aus einem kurzen Briefing. Zynapse
-              Core führt Szenarien, Review und Übergabe in einem konkreten Prozess
+              Core führt Szenarien, Review und Übergabe in einem geführten Prozess
               zusammen.
             </BoldZynapseCore>
           </p>

@@ -34,7 +34,7 @@ export function TrustSection() {
               bleiben.
             </h2>
             <p className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)]">
-              Nicht nur mehr Output, sondern konkrete Freigaben, sichtbare
+              Nicht nur mehr Output, sondern verbindliche Freigaben, sichtbare
               Markenregeln und ein nachvollziehbarer Review-Status für jede
               Version.
             </p>

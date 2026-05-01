@@ -1,7 +1,7 @@
 # Zynapse
 
 Zynapse v1 ist eine brands-first Marketing-Site für AI-Marketingkampagnen mit
-zwei konkreten Onramps:
+zwei direkten Onramps:
 
 - Brand Inquiry Wizard für Brands mit Kampagnenbedarf
 - Application Flow für AI-Kreative und Spezialist:innen im kuratierten Netzwerk

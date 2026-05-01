@@ -85,7 +85,7 @@ describe("buildFaqJsonLd", () => {
       items: [
         {
           question: "Welche Botschaft trägt der erste Frame?",
-          answer: "Der erste Frame bekommt eine konkrete Kampagnenaufgabe.",
+          answer: "Der erste Frame bekommt eine Aufgabe mit Funktion.",
         },
       ],
     });
@@ -107,7 +107,7 @@ describe("buildFaqJsonLd", () => {
         name: "Welche Botschaft trägt der erste Frame?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Der erste Frame bekommt eine konkrete Kampagnenaufgabe.",
+          text: "Der erste Frame bekommt eine Aufgabe mit Funktion.",
         },
       },
     ]);

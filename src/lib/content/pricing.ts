@@ -7,9 +7,9 @@ export const pricingPlans: PricingPlan[] = [
     price: "ab 2.499€",
     cadence: "einmalig",
     description:
-      "Schnell starten und nach einem ersten, konkreten Briefing liefern.",
+      "Schnell starten und nach einem kompakten Briefing liefern.",
     audience:
-      "Ideal bei konkretem ersten Kampagnenziel und begrenzter Launch-Phase.",
+      "Ideal bei fokussiertem Kampagnenziel und begrenzter Launch-Phase.",
     highlights: ["Zynapse Core", "schneller Start", "erstes Creative Pack"],
     fit: "Ideal für den ersten Kampagnenstart, bevor ihr einen Dauerbetrieb braucht.",
     collaboration:

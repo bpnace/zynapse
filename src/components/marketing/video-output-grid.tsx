@@ -49,7 +49,7 @@ export function VideoOutputGrid() {
             <span className="title-accent">testbare Video Ads</span>.
           </>
         }
-        copy="Die Szenarien zeigen nicht nur Stilrichtungen, sondern unterschiedliche Aufgaben im Funnel. Je nachdem, ob ihr Aufmerksamkeit, Vertrauen, Produktverständnis oder ein konkretes Angebot testen wollt, braucht das Creative eine andere Logik, andere Hooks und eine andere Übergabe an Media."
+        copy="Die Szenarien zeigen nicht nur Stilrichtungen, sondern unterschiedliche Aufgaben im Funnel. Je nachdem, ob ihr Aufmerksamkeit, Vertrauen, Produktverständnis oder ein Angebot testen wollt, braucht das Creative eine andere Logik, andere Hooks und eine andere Übergabe an Media."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {videoVariants.map((variant) => {

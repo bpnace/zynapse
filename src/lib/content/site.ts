@@ -67,14 +67,14 @@ export const processSteps = [
 export const brandBenefits = [
   "Mehr Varianten für Paid Social, Reels und Short Form, ohne jedes Mal neue Einzelproduktionen oder lose Abstimmungen anstoßen zu müssen",
   "Creative-Szenarien statt einzelner Ad-Ideen, damit Hooks, Formate und Funnel-Aufgaben zusammen gedacht werden",
-  "Zentraler Review mit konkreten Freigaben, damit Feedback nicht zwischen Slack, Mail und Calls zerläuft",
+  "Zentraler Review mit verbindlichen Freigaben, damit Feedback nicht zwischen Slack, Mail und Calls zerläuft",
   "Fertiges Creative Pack für euer Media Team, inklusive Kontext für Naming, Nutzung und nächste Tests",
 ];
 
 export const creativeBenefits = [
-  "Konkrete Aufgaben statt chaotischer Briefings, damit du vor dem Start weißt, welchen Beitrag deine Rolle leisten soll",
+  "Aufgaben mit Richtung statt chaotischer Briefings, damit du vor dem Start weißt, welchen Beitrag deine Rolle leisten soll",
   "Markenregeln, No-Gos und Ziel sichtbar im Flow, nicht nur als lose Hinweise in einem alten Briefing",
-  "Feedback als konkrete nächste Aufgabe statt verstreuter Kommentare, damit Iterationen schneller und sauberer werden",
+  "Feedback als priorisierter nächster Schritt statt verstreuter Kommentare, damit Iterationen schneller und sauberer werden",
   "Echte Kampagnen mit sauberem Beitrag zum finalen Output, nicht nur Einzelprompts ohne Anschluss an Review und Delivery",
 ];
 
@@ -92,7 +92,7 @@ export const trustSignals = [
   {
     title: "Rechte und Nutzung werden dokumentiert",
     description:
-      "Finale Assets kommen mit konkreten Hinweisen zur Nutzung, damit Übergabe und Weiterarbeit nicht in Rückfragen hängen bleiben.",
+      "Finale Assets kommen mit Nutzungshinweisen, damit Übergabe und Weiterarbeit nicht in Rückfragen hängen bleiben.",
   },
   {
     title: "Direkte Wettbewerber bleiben getrennt",

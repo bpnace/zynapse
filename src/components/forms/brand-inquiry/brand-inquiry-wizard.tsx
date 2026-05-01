@@ -560,7 +560,7 @@ export function BrandInquiryWizard() {
               <BoldZynapseCore>
                 Wir prüfen deine Angaben und melden uns mit dem passenden
                 nächsten Schritt für Zynapse Core. Wenn noch etwas für den
-                ersten Kreativplan fehlt, sagen wir es konkret.
+                ersten Kreativplan fehlt, sagen wir es direkt.
               </BoldZynapseCore>
             </p>
           </div>

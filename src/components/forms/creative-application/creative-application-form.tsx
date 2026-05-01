@@ -164,10 +164,10 @@ export function CreativeApplicationForm() {
     }
 
     if (normalizeText(values.caseSummary).length < 30) {
-      return "Der Case-Teil braucht noch konkretere Erfahrung, bevor wir die Passung bewerten können.";
+      return "Der Case-Teil braucht noch aussagekräftigere Erfahrung, bevor wir die Passung bewerten können.";
     }
 
-    return "Profil ist ausreichend konkret für die erste Qualifizierung.";
+    return "Profil ist aussagekräftig genug für die erste Qualifizierung.";
   }, [selectedChannels.length, values.caseSummary]);
 
   function toggleChannel(channel: string) {
@@ -308,7 +308,7 @@ export function CreativeApplicationForm() {
             <TextareaInput
               {...register("caseSummary")}
               className="min-h-[7rem]"
-              placeholder="Welche Kreativ-Projekte, AI-Workflows oder Kampagnen hast du bereits geführt und was war dein konkreter Beitrag?"
+              placeholder="Welche Kreativ-Projekte, AI-Workflows oder Kampagnen hast du bereits geführt und was war dein Beitrag?"
             />
           </Field>
           <Field label="Preis / Vergütung" error={errors.compensationNotes?.message}>
