@@ -3,10 +3,11 @@ import { AnimatedMetric } from "@/components/marketing/animated-metric";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const workspaceHighlights = [
-  "Briefing-Lücken werden vor der Produktion sichtbar.",
-  "Szenarien sind nach Hook, Format und CTA priorisiert.",
-  "Review-Threads bleiben an einem Ort gebündelt.",
-  "Assets sind nach Hook, Format und Version sortiert.",
+  "Fehlende Briefing-Infos werden vor der Produktion sichtbar, damit offene Fragen nicht erst im Review auftauchen.",
+  "Creative-Szenarien werden nach Hook, Format und CTA priorisiert, statt als lose Ideensammlung nebeneinander zu liegen.",
+  "Offene Threads bleiben im zentralen Review gebündelt, sodass Entscheidungen und nächste Aufgaben nachvollziehbar bleiben.",
+  "Assets sind nach Hook, Format und Version sortiert, damit das Media-Team nicht vor dem Upload neu strukturieren muss.",
+  "Review und Media Pack bleiben in einem durchgehenden Flow zusammen, vom ersten Kommentar bis zur finalen Übergabe.",
 ];
 
 type WorkspaceStat = {
@@ -24,24 +25,21 @@ const workspaceStats: WorkspaceStat[] = [
     value: 88,
     suffix: "%",
     title: "vollständig",
-    detail:
-      "Genug Kontext für starke Szenarien, bevor die Produktion startet: Ziel, Material, Regeln und offene Lücken sind sichtbar.",
+    detail: "Ziel, Material und Regeln sind vor der Produktion sichtbar.",
   },
   {
     label: "Nächste Aktion",
     value: 2,
     prefix: "Szenario ",
     title: "freigeben",
-    detail:
-      "Danach kann Szenario 2 freigegeben oder kommentiert werden, ohne den finalen Export aus dem Blick zu verlieren.",
+    detail: "Freigeben oder kommentieren, bevor der Export startet.",
   },
   {
     label: "Media Pack",
     value: 12,
     suffix: " Assets",
     title: "bereit",
-    detail:
-      "Die Assets sind vorbereitet; offene Review-Threads zeigen, was noch entschieden werden muss, bevor das Media-Team übernimmt.",
+    detail: "Assets sind sortiert; offene Entscheidungen bleiben sichtbar.",
   },
 ];
 
@@ -58,8 +56,8 @@ export function CampaignPackPreview() {
           eyebrow="Workspace-Pack-Preview"
           title={
             <>
-              Was aus dem Sprint ein{" "}
-              <span className="title-accent">sauberes Media Pack</span> entsteht.
+              Wie durch saubere Planung {" "}
+              <span className="title-accent">besserer Output</span> entsteht.
             </>
           }
           headingClassName="text-wrap sm:text-[2.85rem]"
