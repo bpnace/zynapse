@@ -1,26 +1,20 @@
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Über Zynapse – wie Zynapse Core Teams und Creatives verbindet | Zynapse",
-  description:
-    "Zynapse verbindet Brands und AI Creatives in einem klaren Creative Flow. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
-  path: "/about",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/about");
 
 const heroSignals = [
   {
     label: "Für Brands",
-    value: "Ein klarer Creative Flow statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
+    value: "Ein geführter Zynapse-Core-Prozess statt neuer Abstimmungsschleifen zwischen Briefing, Produktion und Review.",
   },
   {
     label: "Für AI Creatives",
-    value: "Klare Aufgaben statt Briefing-Chaos, mit Rollen, in denen Strategie und Umsetzung sauber zusammenpassen.",
+    value: "Aufgaben mit Richtung statt Briefing-Chaos, mit Rollen, in denen Strategie und Umsetzung sauber zusammenpassen.",
   },
   {
     label: "Ergebnis",
@@ -71,7 +65,7 @@ const specialistRoles = [
     title: "AI Strategy",
     icon: "aiStrategy" as const,
     description:
-      "Priorisiert Zielgruppen, Hooks, Testing-Routen und kreative Hebel, damit Output in echte Kampagnenleistung übersetzt wird.",
+      "Priorisiert Zielgruppen, Hooks, Testing-Szenarien und kreative Hebel, damit Output in echte Kampagnenleistung übersetzt wird.",
   },
 ];
 
@@ -79,7 +73,7 @@ const deliverables = [
   {
     title: "Creative Packs statt lose Einzelfiles",
     description:
-      "Teams erhalten keine lose Sammlung an Videos, sondern einen durchdachten Flow mit Varianten-Logik, klaren Freigabepunkten und nutzbarer Delivery.",
+      "Teams erhalten keine lose Sammlung an Videos, sondern einen durchdachten Flow mit Varianten-Logik, definierten Freigabepunkten und nutzbarer Delivery.",
   },
   {
     title: "AI-Video mit System",
@@ -109,6 +103,11 @@ const valueCards = [
     description:
       "Wenn Kampagnen weiterlaufen oder skaliert werden, bleibt das Produktionswissen im System. So sinkt die Reibung von Sprint zu Sprint.",
   },
+];
+
+const founderStatement = [
+  "Zynapse entsteht aus einer einfachen Beobachtung: Brands brauchen nicht noch ein weiteres loses KI-Tool, sondern einen geführten Prozess, der Briefing, Material, Kreativrollen und Review zusammenhält.",
+  "Wir bauen Zynapse Core deshalb als Arbeitslogik zwischen Marketing-Team und AI Creatives. Vorhandenes Material soll nutzbar bleiben, neue Varianten sollen kontrollierbar entstehen und Entscheidungen sollen im Review nachvollziehbar sein.",
 ];
 
 function RoleCardIcon({ icon }: { icon: SpecialistIcon }) {
@@ -284,11 +283,7 @@ function RoleCardIcon({ icon }: { icon: SpecialistIcon }) {
 }
 
 export default function AboutPage() {
-  const aboutJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    pageType: "AboutPage",
-    breadcrumbs: buildBreadcrumbs("Über Zynapse", pageSeo.path),
-  });
+  const aboutJsonLd = buildMarketingPageJsonLd("/about");
 
   return (
     <>
@@ -315,14 +310,14 @@ export default function AboutPage() {
               Zynapse ist kein klassisches Studio und kein offener
               Creator-Marktplatz. Wir verbinden Brands mit den
               passenden AI Creatives und strukturieren Briefing, Rollen,
-              Qualitätscheck, Review und Delivery in einem klaren Creative
+              Qualitätscheck, Review und Delivery in einem geführten Creative
               Flow.
             </p>
             <p
               className="max-w-3xl text-base leading-7 text-[color:var(--copy-body)] sm:text-[1.0625rem]"
               data-animate-copy
             >
-              So entsteht professionelle AI-Marketingproduktion mit klaren
+              So entsteht professionelle AI-Marketingproduktion mit passenden
               Rollen, kontrollierten Reviews und Varianten, die nicht nur gut
               aussehen, sondern im echten Testing schneller nutzbar werden.
             </p>
@@ -352,11 +347,37 @@ export default function AboutPage() {
                   {signal.label}
                 </p>
                 <p className="mt-2 font-display text-[1.32rem] leading-[1.02] tracking-[-0.04em] text-[var(--copy-strong)]">
-                  {signal.value}
+                  <BoldZynapseCore>{signal.value}</BoldZynapseCore>
                 </p>
               </div>
             ))}
           </aside>
+        </div>
+      </section>
+
+      <section
+        className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-10"
+        data-reveal-section
+      >
+        <div className="grid overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)] lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
+          <div className="bg-[var(--copy-strong)] p-6 text-white sm:p-7">
+            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/58">
+              Founder Statement
+            </p>
+            <h2 className="mt-4 font-display text-[2.35rem] leading-[0.96] font-semibold tracking-[-0.05em]">
+              Warum wir Zynapse bauen.
+            </h2>
+          </div>
+          <div className="grid divide-y divide-[rgba(56,67,84,0.12)]">
+            {founderStatement.map((copy) => (
+              <p
+                key={copy}
+                className="px-6 py-5 text-[1rem] leading-7 text-[color:var(--copy-body)] sm:px-7"
+              >
+                <BoldZynapseCore>{copy}</BoldZynapseCore>
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -455,7 +476,7 @@ export default function AboutPage() {
               <span className="title-accent">bewegliche Zusammenarbeit</span>.
             </>
           }
-          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in klarer Struktur. Das hält Produktion näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
+          copy="Die Stärke von Zynapse liegt nicht in maximaler Größe, sondern in sauberer Struktur. Das hält Produktion näher an der Marke, näher am Briefing und wirtschaftlicher im laufenden Betrieb."
         />
         <div className="grid gap-4 lg:grid-cols-3">
           {valueCards.map((item, index) => (

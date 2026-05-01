@@ -26,9 +26,9 @@ export default function RootLayout({
           strategy="beforeInteractive"
           referrerPolicy="origin"
         />
+        <JsonLdScript data={siteJsonLd} />
       </head>
       <body className="antialiased">
-        <JsonLdScript data={siteJsonLd} />
         <RouteScrollReset />
         <AppShell>{children}</AppShell>
         <SiteAnalytics analyticsId={analyticsId} />

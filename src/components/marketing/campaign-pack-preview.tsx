@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { AnimatedMetric } from "@/components/marketing/animated-metric";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const workspaceHighlights = [
-  "Fehlende Briefing-Infos werden vor der Produktion sichtbar.",
-  "Kreativrouten werden nach Hook, Format und CTA priorisiert.",
-  "Offene Threads bleiben im zentralen Review gebündelt.",
-  "Assets sind nach Hook, Format und Version sortiert.",
-  "Review und Media Pack bleiben in einem klaren Flow zusammen.",
+  "Fehlende Briefing-Infos werden vor der Produktion sichtbar, damit offene Fragen nicht erst im Review auftauchen.",
+  "Creative-Szenarien werden nach Hook, Format und CTA priorisiert, statt als lose Ideensammlung nebeneinander zu liegen.",
+  "Offene Threads bleiben im zentralen Review gebündelt, sodass Entscheidungen und nächste Aufgaben nachvollziehbar bleiben.",
+  "Assets sind nach Hook, Format und Version sortiert, damit das Media-Team nicht vor dem Upload neu strukturieren muss.",
 ];
 
 type WorkspaceStat = {
@@ -25,21 +25,21 @@ const workspaceStats: WorkspaceStat[] = [
     value: 88,
     suffix: "%",
     title: "vollständig",
-    detail: "Genug Kontext für starke Routen, bevor die Produktion startet.",
+    detail: "Ziel, Material und Regeln sind vor der Produktion sichtbar.",
   },
   {
     label: "Nächste Aktion",
     value: 2,
-    prefix: "Route ",
+    prefix: "Szene ",
     title: "freigeben",
-    detail: "Danach kann der finale Export direkt ins Delivery Pack gehen.",
+    detail: "Freigeben oder kommentieren, bevor der Export startet.",
   },
   {
     label: "Media Pack",
     value: 12,
     suffix: " Assets",
     title: "bereit",
-    detail: "3 offene Review-Threads, klare Delivery für das Media Team.",
+    detail: "Assets sind sortiert; offene Entscheidungen bleiben sichtbar.",
   },
 ];
 
@@ -47,22 +47,23 @@ export function CampaignPackPreview() {
   return (
     <section
       id="workspace-preview"
-      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:px-10"
+      className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:px-10"
       data-reveal-section
       data-stagger="dense"
     >
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Workspace Preview"
+          eyebrow="Workspace-Pack-Preview"
           title={
             <>
-              Zynapse Core macht die <span data-animate-word>Intelligenz</span>{" "}
-              im Prozess <span className="title-accent">sichtbar</span>.
+              Wie durch saubere Planung {" "}
+              <span className="title-accent">besserer Output</span> entsteht.
             </>
           }
-          copy="Im Workspace sieht euer Team nicht nur Dateien. Ihr seht Briefing-Qualität, empfohlene Kreativrouten, den Quality Check, die nächste Aktion und den Status des fertigen Media Packs."
+          headingClassName="text-wrap sm:text-[2.85rem]"
+          copy="Die Preview bündelt Briefing-Qualität, offene Fragen, Szenarien, Review-Status und Übergabe. So sieht das Team vor dem Export, was bereit ist und was noch fehlt."
         />
-        <ul className="grid max-w-[34rem] gap-2">
+        <ul className="grid max-w-[36rem] gap-2">
           {workspaceHighlights.map((item) => (
             <li
               key={item}
@@ -76,6 +77,9 @@ export function CampaignPackPreview() {
             </li>
           ))}
         </ul>
+        <ButtonLink href="/login" size="lg" className="w-full justify-center sm:w-auto">
+          Frühzugang sichern
+        </ButtonLink>
       </div>
 
       <div

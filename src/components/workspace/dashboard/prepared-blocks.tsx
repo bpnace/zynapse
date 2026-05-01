@@ -1,3 +1,5 @@
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
+
 type PreparedBlocksProps = {
   prepared: string;
   review: string;
@@ -28,7 +30,7 @@ export function PreparedBlocks({
           >
             <p className="workspace-section-label">{item.title}</p>
             <p className="mt-3 text-sm leading-6 text-[var(--workspace-copy-body)]">
-              {item.copy}
+              <BoldZynapseCore>{item.copy}</BoldZynapseCore>
             </p>
           </article>
         ))}

@@ -1,25 +1,17 @@
 import { ButtonLink } from "@/components/ui/button";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { pricingPlans } from "@/lib/content/pricing";
 import { cn } from "@/lib/utils";
 import {
-  buildBreadcrumbs,
-  buildMetadata,
+  buildMarketingMetadata,
+  buildMarketingPageJsonLd,
   buildOfferJsonLd,
-  buildPageJsonLd,
-  buildServiceJsonLd,
 } from "@/lib/seo";
 import Link from "next/link";
 
-const pageSeo = {
-  title: "Preise – Pilot, Growth Flow, Scale | Zynapse",
-  description:
-    "Wähle den Creative Flow, der zu eurem Team passt: Pilot für den ersten Test, Growth Flow für laufende Kampagnen und Scale für mehrere Workstreams.",
-  path: "/pricing",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/pricing");
 
 function buildContactHref(planId: string) {
   return `/contact?tier=${encodeURIComponent(planId)}#kontaktformular`;
@@ -38,21 +30,21 @@ const serviceComparisons = [
   {
     label: "Einzelproduktion",
     zynapse:
-      "Nicht nur ein Asset-Paket, sondern ein Creative Flow mit Briefing-Analyse, zentralem Review und klarer Anschlussfähigkeit an die nächste Kampagnenrunde.",
+      "Nicht nur ein Asset-Paket, sondern Zynapse Core mit Briefing-Analyse, zentralem Review und sauberer Anschlussfähigkeit an die nächste Kampagnenrunde.",
     traditional:
       "Ein einzelner Sprint oder ein einzelnes Video löst den Moment. Beim nächsten Briefing beginnen Planung, Abstimmung und Produktionslogik oft wieder von vorn.",
   },
   {
     label: "Offener Creator-Marktplatz",
     zynapse:
-      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Creative Flow mit konsistentem Output, klaren Übergaben und laufender Priorisierung.",
+      "Zynapse verbindet nicht nur einzelne Talente, sondern einen zusammenhängenden Zynapse-Core-Prozess mit konsistentem Output, geordneten Übergaben und laufender Priorisierung.",
     traditional:
       "Der Schwerpunkt liegt auf Sourcing. Ohne übergeordneten Flow streuen Qualität, Messaging und Learnings zwischen einzelnen Creator-Lieferungen.",
   },
   {
     label: "Inhouse-Aufbau",
     zynapse:
-      "Teams bekommen schneller den passenden Creative Flow, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
+      "Teams bekommen schneller den passenden Zynapse-Core-Rahmen, ohne erst Hiring, Tooling und Prozessdesign selbst aufzubauen. So kann Kampagnenarbeit früher in einen Rhythmus kommen.",
     traditional:
       "Volle Kontrolle, aber hoher Vorlauf. Bevor das erste System sauber läuft, müssen Rollen besetzt, Prozesse definiert und Produktionsstandards erst aufgebaut werden.",
   },
@@ -66,95 +58,80 @@ const serviceComparisons = [
 ];
 
 export default function PricingPage() {
-  const pricingJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    breadcrumbs: buildBreadcrumbs("Preise", pageSeo.path),
-    primaryEntity: buildServiceJsonLd({
-      path: pageSeo.path,
-      name: "Pricing für Zynapse Creative Flows",
-      description: pageSeo.description,
-      serviceType: "Creative-Flow-Pricing für Brands",
-      audience: "Brands mit laufendem Kampagnenbedarf",
-      offers: buildOfferJsonLd([
-        {
-          name: pricingPlans[0].name,
-          description: pricingPlans[0].description,
-          minPrice: 2499,
-          priceCurrency: "EUR",
-          priceNote: "einmalig",
-        },
-        {
-          name: pricingPlans[1].name,
-          description: pricingPlans[1].description,
-          minPrice: 5999,
-          priceCurrency: "EUR",
-          priceNote: "pro Monat",
-        },
-        {
-          name: pricingPlans[2].name,
-          description: pricingPlans[2].description,
-          priceNote: "Individuell",
-        },
-      ]),
-    }),
+  const pricingJsonLd = buildMarketingPageJsonLd("/pricing", {
+    offers: buildOfferJsonLd([
+      {
+        name: pricingPlans[0].name,
+        description: pricingPlans[0].description,
+        minPrice: 2499,
+        priceCurrency: "EUR",
+        priceNote: "einmalig",
+      },
+      {
+        name: pricingPlans[1].name,
+        description: pricingPlans[1].description,
+        minPrice: 5999,
+        priceCurrency: "EUR",
+        priceNote: "pro Monat",
+      },
+      {
+        name: pricingPlans[2].name,
+        description: pricingPlans[2].description,
+        priceNote: "Individuell",
+      },
+    ]),
   });
 
   return (
     <>
       <JsonLdScript data={pricingJsonLd} />
       <PageMotion>
-      <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-10 sm:px-8 lg:px-10"
-        data-reveal-section
-      >
-        <div className="space-y-6">
-          <h1
-            className="font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] overflow-visible pr-[0.2rem] text-balance sm:text-7xl"
-            data-animate-heading
-          >
-            Wähle den <span className="title-accent pr-[0.2rem]">Creative Flow</span>, der
-            zu eurem Team passt.
-          </h1>
-          <p
-            className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
-            data-animate-copy
-          >
-            Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core plant
-            den passenden Kreativprozess, wählt die richtigen AI Creatives aus
-            und führt euch bis zum fertigen Kampagnenpaket.
-          </p>
-        </div>
-      </section>
+        <section
+          className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pt-15 pb-10 sm:px-8 lg:px-10"
+          data-reveal-section
+        >
+          <div className="space-y-6">
+            <h1
+              className="overflow-visible pr-[0.2rem] font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-balance sm:text-7xl"
+              data-animate-heading
+            >
+              Wähle den{" "}
+              <span className="title-accent pr-[0.2rem]">Zynapse Core</span>{" "}
+              Rahmen, der zu eurem Team passt.
+            </h1>
+            <p
+              className="max-w-5xl text-lg leading-8 text-[color:var(--copy-muted)]"
+              data-animate-copy
+            >
+              <BoldZynapseCore>
+                Ob erster Test oder laufender Kampagnenrhythmus: Zynapse Core
+                plant den passenden Kreativprozess, wählt die richtigen AI
+                Creatives aus und führt euch bis zum fertigen Kampagnenpaket.
+              </BoldZynapseCore>
+            </p>
+          </div>
+        </section>
 
-      <section
-        className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-10 sm:px-8 lg:px-10"
-        data-reveal-section
-      >
-        <div className="grid gap-4 xl:grid-cols-3">
-          {pricingPlans.map((plan) => {
-            const isFeatured = Boolean(plan.featured);
-            const focusLine = plan.highlights.join(" / ");
+        <section
+          className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-10 sm:px-8 lg:px-10"
+          data-reveal-section
+        >
+          <div className="grid gap-4 xl:grid-cols-3">
+            {pricingPlans.map((plan) => {
+              const isFeatured = Boolean(plan.featured);
+              const focusLine = plan.highlights.join(" / ");
 
-            return (
-              <article
-                key={plan.id}
-                className={cn(
-                  "relative flex h-full flex-col overflow-hidden rounded-[0.55rem] border bg-[rgba(255,252,248,0.98)] shadow-[0_12px_24px_rgba(31,36,48,0.05)]",
-                  isFeatured
-                    ? "border-[rgba(191,106,83,0.2)] bg-[rgba(252,245,237,0.98)]"
-                    : "border-[rgba(56,67,84,0.14)]",
-                )}
-                data-animate-item
-              >
-                <div
+              return (
+                <article
+                  key={plan.id}
                   className={cn(
-                    "pointer-events-none absolute inset-y-0 left-0 w-[3px]",
+                    "relative flex h-full flex-col overflow-hidden rounded-[0.55rem] border bg-[rgba(255,252,248,0.98)] shadow-[0_12px_24px_rgba(31,36,48,0.05)]",
                     isFeatured
-                      ? "bg-[var(--accent)]"
-                      : "bg-[rgba(56,67,84,0.14)]",
+                      ? "border-[rgba(191,106,83,0.2)] bg-[rgba(252,245,237,0.98)]"
+                      : "border-[rgba(56,67,84,0.14)]",
                   )}
-                />
-
+                  data-animate-item
+                >
                 <div className="relative flex h-full flex-col">
                   <div
                     className={cn(
@@ -181,7 +158,7 @@ export default function PricingPage() {
                           {plan.name}
                         </h2>
                         <p className="max-w-[18rem] text-sm leading-5 text-[color:var(--copy-body)]">
-                          {plan.description}
+                          <BoldZynapseCore>{plan.description}</BoldZynapseCore>
                         </p>
                       </div>
                       <div className="grid gap-1 border-t border-[rgba(56,67,84,0.1)] pt-3">
@@ -202,7 +179,7 @@ export default function PricingPage() {
                           Schwerpunkte
                         </dt>
                         <dd className="text-sm leading-5 text-[color:var(--copy-body)]">
-                          {focusLine}
+                          <BoldZynapseCore>{focusLine}</BoldZynapseCore>
                         </dd>
                       </div>
 
@@ -221,7 +198,7 @@ export default function PricingPage() {
                                   {String(index + 1).padStart(2, "0")}
                                 </span>
                                 <span className="text-sm leading-5 text-[color:var(--copy-body)]">
-                                  {deliverable}
+                                  <BoldZynapseCore>{deliverable}</BoldZynapseCore>
                                 </span>
                               </li>
                             ))}
@@ -234,7 +211,7 @@ export default function PricingPage() {
                           Zusammenarbeit
                         </dt>
                         <dd className="text-sm leading-5 text-[color:var(--copy-body)]">
-                          {plan.collaboration}
+                          <BoldZynapseCore>{plan.collaboration}</BoldZynapseCore>
                         </dd>
                       </div>
                     </dl>
@@ -256,12 +233,12 @@ export default function PricingPage() {
                     </div>
                   </div>
                 </div>
-              </article>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
 
-        <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.14)] p-6 sm:p-8">
+          <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(56,67,84,0.14)] p-6 sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <span className="eyebrow" data-animate-heading>
@@ -280,7 +257,7 @@ export default function PricingPage() {
               data-animate-copy
             >
               Nicht jede Alternative löst dasselbe Problem. Entscheidend ist,
-              wie gut ein Flow Briefing, Review, Delivery und laufende
+              wie gut ein Prozess Briefing, Review, Delivery und laufende
               Kampagnenkontinuität zusammenhält.
             </p>
           </div>
@@ -305,8 +282,8 @@ export default function PricingPage() {
                     <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
                       Mit Zynapse
                     </p>
-                    <p className="mt-2 border-l-[3px] border-[rgba(246,107,76,0.28)] pl-3 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {entry.zynapse}
+                    <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
+                      <BoldZynapseCore>{entry.zynapse}</BoldZynapseCore>
                     </p>
                   </div>
                   <div>
@@ -314,15 +291,15 @@ export default function PricingPage() {
                       Typisch sonst
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[color:var(--copy-body)]">
-                      {entry.traditional}
+                      <BoldZynapseCore>{entry.traditional}</BoldZynapseCore>
                     </p>
                   </div>
                 </div>
               </article>
             ))}
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
 
       {/*<section
         id="referenzen"
@@ -426,7 +403,7 @@ export default function PricingPage() {
         className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10"
         data-reveal-section
       >
-        <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+        <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white p-7 shadow-[0_18px_42px_rgba(31,36,48,0.07)] sm:p-9">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-3">
               <h2
@@ -434,7 +411,7 @@ export default function PricingPage() {
                 data-animate-heading
               >
                 <span data-animate-word>Bereit</span> für das passende{" "}
-                <span className="title-accent">Creative Flow</span>?
+                <span className="title-accent">Zynapse Core</span>?
               </h2>
               <p
                 className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
@@ -442,7 +419,7 @@ export default function PricingPage() {
               >
                 Wenn ihr eure aktuelle Phase schon kennt, startet direkt mit
                 einer Anfrage. Wenn nicht, klären wir gemeinsam, ob Pilot,
-                Growth Flow oder Scale gerade zu eurem Bedarf passt.
+                Growth oder Scale gerade zu eurem Bedarf passt.
               </p>
             </div>
             <div className="flex flex-wrap gap-3" data-animate-item>

@@ -3,24 +3,14 @@ import { PageMotion } from "@/components/animation/page-motion";
 import { AnimatedMetric } from "@/components/marketing/animated-metric";
 import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
 import { JsonLdScript } from "@/components/seo/json-ld";
+import { AiSparkleMark } from "@/components/ui/ai-sparkle-mark";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { brandBenefits } from "@/lib/content/site";
-import {
-  buildBreadcrumbs,
-  buildMetadata,
-  buildPageJsonLd,
-  buildServiceJsonLd,
-} from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Für Brands – mehr testbare Video Ads | Zynapse",
-  description:
-    "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Kreativrouten, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
-  path: "/brands",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/brands");
 
 const painPoints = [
   {
@@ -31,7 +21,7 @@ const painPoints = [
   {
     title: "Feedback bremst den Output",
     description:
-      "Zu viele Personen kommentieren an zu vielen Orten. Entscheidungen werden langsam, unklar und am Ende unnötig teuer.",
+      "Zu viele Personen kommentieren an zu vielen Orten. Entscheidungen werden langsam, widersprüchlich und am Ende unnötig teuer.",
   },
   {
     title: "KI-Tools allein lösen das Problem nicht",
@@ -43,29 +33,45 @@ const painPoints = [
 const howItWorks = [
   {
     step: "01",
-    title: "Briefing einreichen",
+    title: "Briefing & Material",
     description:
-      "Ihr beschreibt Produkt, Zielgruppe, Kanal, Timing und wichtige Markenregeln.",
+      "Ihr beschreibt Produkt, Zielgruppe, Kanal, Timing, Markenregeln und vorhandenes Material.",
     detail:
-      "Mehr braucht Zynapse Core nicht, um den ersten klaren Kreativplan aufzusetzen.",
+      "Zynapse Core erkennt, was als Basis nutzbar ist und welche Lücken für die ersten Szenarien noch offen sind.",
   },
   {
     step: "02",
-    title: "Kampagnenplan erhalten",
+    title: "Zynapse Core",
     description:
-      "Zynapse Core schlägt Routen, Hooks, Formate und passende AI Creatives vor.",
+      "Zynapse Core führt Creative-Szenarien, Hooks, Formate und passende AI Creatives zusammen.",
     detail:
-      "Der Plan ist auf Kampagnenziel, Kanal und Testdruck abgestimmt, nicht nur auf Output-Menge.",
+      "Das ist Zynapse Core in der Praxis: ein geführter Prozess statt loser Einzelideen.",
   },
   {
     step: "03",
-    title: "Varianten reviewen und nutzen",
+    title: "Review & Delivery",
     description:
-      "Euer Team prüft zentral, gibt Feedback und bekommt ein fertiges Creative Pack.",
+      "Euer Team prüft zentral, gibt Feedback und bekommt geprüfte Varianten für Media und Content.",
     detail:
       "So gehen Paid Social und Short Form schneller live, ohne neue Abstimmungsschleifen zu starten.",
   },
 ] as const;
+
+const howItWorksOwners = ["Brand Team", "ZYNAPSE", "Media Team"] as const;
+
+const materialInputs = [
+  "Produktshots und Packshots",
+  "Creator-Clips oder UGC-Rohmaterial",
+  "Founder- oder Expert:innen-Material",
+  "Brand Guidelines, Claims und No-Gos",
+];
+
+const materialOutputs = [
+  "neue Hooks aus vorhandenen Proof-Punkten",
+  "zusätzliche Formate für Paid Social und Short Form",
+  "AI-erweiterte Visuals mit sichtbaren Markenregeln",
+  "Review-Szenarien, die eigenes Material und neue Varianten trennen",
+];
 
 type BrandResult = {
   label: string;
@@ -80,7 +86,7 @@ const results: BrandResult[] = [
     label: "Bis zum ersten Kreativplan",
     value: 72,
     suffix: "h",
-    detail: "vom Briefing bis zur ersten klaren Richtung",
+    detail: "vom Briefing bis zur ersten brauchbaren Richtung",
   },
   {
     label: "Varianten je nach Paket",
@@ -118,17 +124,7 @@ function BrandMetric({
 }
 
 export default function BrandsPage() {
-  const brandsJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    breadcrumbs: buildBreadcrumbs("Für Brands", pageSeo.path),
-    primaryEntity: buildServiceJsonLd({
-      path: pageSeo.path,
-      name: "Video-Creative-Flows für Brands",
-      description: pageSeo.description,
-      serviceType: "Video-Creative-Flow für Marketing- und Performance-Teams",
-      audience: "Marketing-, Growth- und Performance-Teams",
-    }),
-  });
+  const brandsJsonLd = buildMarketingPageJsonLd("/brands");
 
   return (
     <>
@@ -157,9 +153,12 @@ export default function BrandsPage() {
                 className="max-w-5xl text-lg leading-8 text-[color:var(--copy-body)]"
                 data-animate-copy
               >
-                Euer Team gibt Ziel, Produkt und Markenregeln vor. Zynapse Core
-                plant die passenden Kreativrouten, führt die Produktion und
-                liefert geprüfte Varianten für Paid Social und Short Form.
+                <BoldZynapseCore>
+                  Euer Team gibt Ziel, Produkt und Markenregeln vor. Zynapse
+                  Core plant die passenden Creative-Szenarien, führt die
+                  Produktion und liefert geprüfte Varianten für Paid Social und
+                  Short Form.
+                </BoldZynapseCore>
               </p>
               <p
                 className="max-w-3xl text-sm leading-6 text-[color:var(--copy-soft)]"
@@ -205,26 +204,31 @@ export default function BrandsPage() {
         </section>
 
         <section
-          className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
+          className="mx-auto w-full max-w-7xl overflow-hidden px-6 py-14 sm:px-8 lg:px-10"
           data-reveal-section
+          data-worry-scroll
         >
           <SectionHeading
             eyebrow="Typische Engpässe"
             title={
               <>
-                Euer Media Team braucht neue Creatives. Euer{" "}
+                Euer Media Team braucht neue Creatives? Euer{" "}
                 <span data-animate-word>Prozess</span> ist{" "}
-                <span className="title-accent">zu langsam</span>.
+                <span className="title-accent">zu langsam</span>?
               </>
             }
             copy="Performance wächst nicht nur durch mehr Budget. Sie wächst durch bessere Tests. Dafür braucht ihr regelmäßig neue Hooks, neue Formate und neue Varianten, ohne jedes Mal eine Produktion von null zu starten."
           />
 
-          <ProblemCardGrid cards={painPoints} className="mt-8" />
+          <ProblemCardGrid
+            cards={painPoints}
+            className="mt-8"
+            revealItems={false}
+          />
         </section>
 
         <section
-          className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
+          className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-14 sm:px-8 lg:px-10"
           data-reveal-section
           data-stagger="dense"
         >
@@ -232,39 +236,122 @@ export default function BrandsPage() {
             eyebrow="So funktioniert es"
             title={
               <>
-                Drei <span data-animate-word>Schritte</span> bis zum nächsten{" "}
-                <span className="title-accent">Creative Pack</span>.
+                Drei <span data-animate-word>Schritte</span> im{" "}
+                <span className="title-accent">Zynapse Core</span> Prozess.
               </>
             }
-            copy="Ihr bringt Ziel, Marke und Timing mit. Zynapse Core übersetzt das in einen klaren Kreativplan, geführte Produktion und einen zentralen Review."
+            copy="Ihr bringt Ziel, Marke, Timing und vorhandenes Material mit. Zynapse Core führt daraus Szenarien, Aufgaben, Qualitätssignale und Review zusammen."
           />
 
-          <div className="mt-8 section-card section-surface-paper overflow-hidden rounded-[calc(var(--radius-panel)+0.08rem)] border-[rgba(56,67,84,0.12)]">
-            <div className="grid lg:grid-cols-3">
-              {howItWorks.map((step, index) => (
+          <div className="grid overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)] lg:grid-cols-3">
+            {howItWorks.map((step, index) => {
+              const isAiStep = index === 1;
+
+              return (
                 <article
                   key={step.step}
-                  className={`px-6 py-6 sm:px-8 ${
-                    index > 0 ? "border-t border-[rgba(56,67,84,0.12)] lg:border-t-0 lg:border-l" : ""
-                  } border-[rgba(56,67,84,0.12)]`}
+                  className={`flex min-h-[15rem] flex-col p-5 sm:p-6 ${
+                    index > 0 ? "border-t border-[rgba(56,67,84,0.14)] lg:border-t-0 lg:border-l" : ""
+                  } border-[rgba(56,67,84,0.14)] ${
+                    isAiStep
+                      ? "bg-[linear-gradient(180deg,rgba(255,249,239,0.92),rgba(255,255,255,0.98))] ring-1 ring-inset ring-[rgba(246,107,76,0.16)]"
+                      : "bg-white"
+                  }`}
                   data-animate-item
                 >
-                  <div className="space-y-4">
-                    <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--accent-strong)]">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
                       {step.step}
                     </span>
-                    <h3 className="font-display text-[1.45rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
-                      {step.title}
-                    </h3>
-                    <p className="text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
-                      {step.description}
-                    </p>
-                    <p className="text-sm leading-6 text-[color:var(--copy-soft)]">
-                      {step.detail}
-                    </p>
+                    <span className="flex max-w-[7rem] items-center justify-end gap-1 text-right font-mono text-[10px] leading-tight tracking-[0.14em] text-[var(--copy-soft)] uppercase">
+                      <span>{howItWorksOwners[index]}</span>
+                      {isAiStep ? <AiSparkleMark /> : null}
+                    </span>
                   </div>
+                  <h3 className="mt-6 font-display text-[1.45rem] leading-[1.02] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-4 text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
+                    <BoldZynapseCore>{step.description}</BoldZynapseCore>
+                  </p>
+                  <p className="mt-auto min-h-[6rem] border-t border-[rgba(56,67,84,0.12)] pt-4 text-sm leading-6 text-[color:var(--copy-soft)]">
+                    <BoldZynapseCore>{step.detail}</BoldZynapseCore>
+                  </p>
                 </article>
-              ))}
+              );
+            })}
+          </div>
+        </section>
+
+        <section
+          className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 lg:px-10"
+          data-reveal-section
+        >
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:items-start">
+            <SectionHeading
+              eyebrow="Hybrid-Use-Case"
+              title={
+                <>
+                  Eigenes Material +{" "}
+                  <span className="title-accent">AI-Erweiterung</span>.
+                </>
+              }
+              copy="Zynapse Core muss nicht alles neu erzeugen. Bestehendes Material kann die Basis sein, während AI zusätzliche Varianten, Formate und Szenarien ergänzt."
+            />
+
+            <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white shadow-[0_18px_42px_rgba(31,36,48,0.07)]">
+              <div className="grid md:grid-cols-2">
+                <div className="bg-[var(--copy-strong)] p-6 text-white sm:p-7">
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/58">
+                    Ausgangsmaterial
+                  </p>
+                  <h3 className="mt-4 font-display text-[1.65rem] leading-[1] font-semibold tracking-[-0.04em]">
+                    Was ihr schon habt, bleibt nutzbar.
+                  </h3>
+                  <ul className="mt-5 grid gap-3">
+                    {materialInputs.map((item) => (
+                      <li
+                        key={item}
+                        className="border-t border-white/14 pt-3 text-sm leading-6 text-white/76"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="p-6 sm:p-7">
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                    AI-Erweiterung
+                  </p>
+                  <h3 className="mt-4 font-display text-[1.65rem] leading-[1] font-semibold tracking-[-0.04em] text-[var(--copy-strong)]">
+                    Zynapse Core baut daraus mehr testbare Szenarien.
+                  </h3>
+                  <ul className="mt-5 grid gap-3">
+                    {materialOutputs.map((item) => (
+                      <li
+                        key={item}
+                        className="border-t border-[rgba(56,67,84,0.12)] pt-3 text-sm leading-6 text-[color:var(--copy-body)]"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="border-t border-[rgba(56,67,84,0.14)] px-6 py-5 sm:px-7">
+                <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--copy-soft)]">
+                  <b>Brand-Schutz</b>
+                </p>
+                <p className="mt-2 text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
+                  <BoldZynapseCore>
+                    Wir arbeiten in einem laufenden Zynapse-Core-Prozess nicht
+                    parallel für zwei direkte Wettbewerber derselben engen
+                    Kategorie.
+                  </BoldZynapseCore>
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -274,14 +361,14 @@ export default function BrandsPage() {
           data-reveal-section
           data-stagger="dense"
         >
-          <div className="section-card section-surface-warm overflow-hidden rounded-[calc(var(--radius-panel)+0.1rem)] border-[rgba(191,106,83,0.16)] p-7 sm:p-9">
+          <div className="overflow-hidden rounded-[0.55rem] border border-[rgba(56,67,84,0.18)] bg-white p-7 shadow-[0_18px_42px_rgba(31,36,48,0.07)] sm:p-9">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
               <div className="space-y-5">
                 <h2
                   className="max-w-3xl font-display text-4xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-5xl"
                   data-animate-heading
                 >
-                  Mehr <span data-animate-word>Output</span>, klarere{" "}
+                  Mehr <span data-animate-word>Output</span>, schärfere{" "}
                   <span className="title-accent">Lernschleifen</span>.
                 </h2>
                 <p
@@ -318,10 +405,10 @@ export default function BrandsPage() {
                 title={
                   <>
                     Was sich für euer Team{" "}
-                    <span className="title-accent">konkret verbessert</span>.
+                    <span className="title-accent">spürbar verbessert</span>.
                   </>
                 }
-                copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein klarer Weg vom Briefing zum fertigen Creative Pack."
+                copy="Kein Tool-Chaos und keine Freelancer-Suche, sondern ein geführter Weg vom Briefing zum Zynapse-Core-Prozess mit geprüften Varianten."
               />
             </div>
 
@@ -338,7 +425,7 @@ export default function BrandsPage() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <p className="text-[1rem] leading-7 text-[color:var(--copy-body)]">
-                    {item}
+                    <BoldZynapseCore>{item}</BoldZynapseCore>
                   </p>
                 </div>
               ))}
@@ -351,7 +438,7 @@ export default function BrandsPage() {
           data-reveal-section
         >
           <div className="section-card section-surface-contrast rounded-[calc(var(--radius-panel)+0.1rem)] p-7 sm:p-9">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,0.64fr)_minmax(16rem,0.36fr)] lg:items-center">
               <div className="space-y-3">
                 <h2
                   className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl"
@@ -364,13 +451,17 @@ export default function BrandsPage() {
                   className="max-w-xl text-base leading-7 text-[color:var(--copy-body)]"
                   data-animate-copy
                 >
-                  Produkt, Ziel, Kanäle und Timing reichen, damit Zynapse Core
-                  einen ersten Kreativplan vorschlagen kann.
+                  <BoldZynapseCore>
+                    Produkt, Ziel, Kanäle und Timing reichen, damit Zynapse
+                    Core einen ersten Kreativplan vorschlagen kann.
+                  </BoldZynapseCore>
                 </p>
               </div>
-              <ButtonLink href="/request" size="lg" data-animate-item>
-                Kampagne anfragen
-              </ButtonLink>
+              <div className="flex justify-center" data-animate-item>
+                <ButtonLink href="/request" size="lg">
+                  Kampagne anfragen
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </section>

@@ -7,15 +7,15 @@ export const pricingPlans: PricingPlan[] = [
     price: "ab 2.499€",
     cadence: "einmalig",
     description:
-      "Schnell starten und nach einem ersten, klaren Briefing liefern.",
+      "Schnell starten und nach einem kompakten Briefing liefern.",
     audience:
-      "Ideal bei klarem ersten Kampagnenziel und begrenzter Launch-Phase.",
+      "Ideal bei fokussiertem Kampagnenziel und begrenzter Launch-Phase.",
     highlights: ["Zynapse Core", "schneller Start", "erstes Creative Pack"],
     fit: "Ideal für den ersten Kampagnenstart, bevor ihr einen Dauerbetrieb braucht.",
     collaboration:
-      "Briefing-Analyse, Route-Skizze, AI-Selection, Qualitätscheck, zentrale Übergabe.",
+      "Briefing-Analyse, Szenario-Skizze, AI-Selection, Qualitätscheck, zentrale Übergabe.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für euren Pilot Flow. Wir möchten eine erste Kampagne testen und verstehen, welchen Kreativplan, welches Timing und welche Review-Struktur ihr dafür empfehlt.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für euren Pilot-Rahmen. Wir möchten eine erste Kampagne testen und verstehen, welchen Kreativplan, welches Timing und welche Review-Struktur ihr dafür empfehlt.\n\nViele Grüße",
     deliverables: [
       "Kreativplan für 1 Pilot-Kampagne",
       "12 Video-Varianten in 2 Formaten",
@@ -25,7 +25,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: "growth",
-    name: "Growth Flow",
+    name: "Growth",
     price: "ab 5.999€",
     cadence: "pro Monat",
     description:
@@ -36,11 +36,11 @@ export const pricingPlans: PricingPlan[] = [
     highlights: ["Zynapse Core", "laufender Rhythmus", "sichtbare Learnings"],
     fit: "Ideal, wenn aus Einzeltests ein planbarer Monatsbetrieb werden soll.",
     collaboration:
-      "Monatliche Route, AI-Selection, Review, Learnings, feste Übergaben.",
+      "Monatliche Szenarien, AI-Selection, Review, Learnings, feste Übergaben.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für euren Growth Flow. Wir suchen einen laufenden Modus für wiederkehrende Kampagnen und möchten verstehen, wie ihr Kreativplan, Iteration und Delivery über mehrere Sprints organisiert.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für euren Growth-Rahmen. Wir suchen einen laufenden Modus für wiederkehrende Kampagnen und möchten verstehen, wie ihr Kreativplan, Iteration und Delivery über mehrere Sprints organisiert.\n\nViele Grüße",
     deliverables: [
-      "Laufender Kreativplan für mehrere Messaging-Routen",
+      "Laufender Kreativplan für mehrere Messaging-Szenarien",
       "24 bis 36 Video-Varianten",
       "Priorisierte Review- und Iterations-Slots",
       "Monatliche Learnings für den nächsten Sprint",
@@ -60,7 +60,7 @@ export const pricingPlans: PricingPlan[] = [
     collaboration:
       "Zentrale Priorisierung, Freigabelogik und Delivery für komplexe Kampagnenblöcke.",
     contactMessage:
-      "Hallo Zynapse,\n\nwir interessieren uns für euren Scale Flow. Wir planen mehrere Kampagnen oder Märkte parallel und möchten besprechen, wie ihr Struktur, Freigaben und Delivery dafür aufsetzt.\n\nViele Grüße",
+      "Hallo Zynapse,\n\nwir interessieren uns für euren Scale-Rahmen. Wir planen mehrere Kampagnen oder Märkte parallel und möchten besprechen, wie ihr Struktur, Freigaben und Delivery dafür aufsetzt.\n\nViele Grüße",
     deliverables: [
       "Mehrere Kampagnen-Workstreams",
       "Skalierbare Review- und Freigabelogik",

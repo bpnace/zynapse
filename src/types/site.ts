@@ -33,8 +33,9 @@ export type VideoVariantPreview = {
   src: string;
   angle: string;
   hookTitle: string;
+  scenarioCopy: string;
   format: string;
-  length: string;
+  plannedLength: string;
   objective: string;
   deliveryLabel: string;
 };

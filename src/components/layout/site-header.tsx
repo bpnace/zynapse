@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import appIcon from "@/app/apple-touch-icon.png";
-import { primaryCta, siteNav } from "@/lib/content/site";
+import { loginCta, primaryCta, siteNav } from "@/lib/content/site";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SiteNavLink } from "@/components/layout/site-nav-link";
@@ -55,7 +55,7 @@ export function SiteHeader() {
             href="/"
             aria-label="Zynapse Startseite"
             onClick={closeMenu}
-            className="absolute left-1/2 -translate-x-1/2 md:hidden"
+            className="absolute left-1/2 hidden -translate-x-1/2 min-[480px]:block md:hidden"
           >
             <Image
               src={appIcon}
@@ -93,10 +93,14 @@ export function SiteHeader() {
             })}
           </nav>
 
-          {/* Right: login (desktop) + CTA */}
+          {/* Right: CTA */}
           <div className="flex items-center gap-2 md:justify-self-end">
-            <Link href="/login" className="hidden rounded-full px-4 py-2 text-sm text-[color:var(--copy-muted)] hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)] md:inline-flex">
-              <b>Login</b>
+            <Link
+              href={loginCta.href}
+              onClick={closeMenu}
+              className="hidden px-3 py-2 text-sm font-semibold text-[var(--copy-strong)] transition-colors duration-200 hover:text-[var(--accent-strong)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[rgba(224,94,67,0.24)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:inline-flex"
+            >
+              {loginCta.label}
             </Link>
             <ButtonLink
               href={primaryCta.href}

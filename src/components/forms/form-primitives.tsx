@@ -50,10 +50,12 @@ export function CheckboxPill({
   checked,
   children,
   onClick,
+  className,
 }: {
   checked: boolean;
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 }) {
   return (
     <button
@@ -64,6 +66,7 @@ export function CheckboxPill({
         checked
           ? "border-[rgba(224,94,67,0.28)] bg-[rgba(246,107,76,0.12)] text-[var(--accent-strong)]"
           : "border-[color:var(--line)] bg-white/[0.04] text-[var(--foreground)] hover:border-[color:var(--line-strong)]",
+        className,
       )}
     >
       {children}

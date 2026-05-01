@@ -54,11 +54,16 @@ export function Hero() {
         data-hero-intro
       >
         <h1
-          className="font-display text-[clamp(3.15rem,9vw,5.85rem)] leading-[0.88] pt-15 font-semibold tracking-[-0.055em] text-balance sm:px-[0.1em] sm:pr-[0.16em] lg:px-[0.12em]"
+          className="overflow-visible pt-15 pr-[0.12em] pb-[0.08em] font-display text-[clamp(3.15rem,9vw,5.85rem)] leading-[0.9] font-semibold tracking-[-0.05em] text-balance sm:px-[0.1em] sm:pr-[0.16em] lg:px-[0.12em]"
           data-animate-heading
         >
-          Bessere <span data-animate-word>Video Ads, </span>ohne dass dein Team{" "}
-          <span className="text-gradient">mehr koordinieren</span> muss.
+          <span data-animate-word>Bessere</span>{" "}
+          <span data-animate-word>Video Ads,</span> ohne dass dein{" "}
+          <span data-animate-word>Team</span>{" "}
+          <span className="text-gradient" data-animate-word>
+            mehr koordinieren
+          </span>{" "}
+          muss.
         </h1>
 
         <div className="mt-24 w-full max-w-5xl lg:grid lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)] lg:items-start lg:gap-8">
@@ -67,17 +72,18 @@ export function Hero() {
               className="mx-auto max-w-2xl text-base leading-7 text-[color:var(--copy-body)] sm:text-lg sm:leading-8 lg:mx-0 lg:max-w-none lg:text-left"
               data-animate-copy
             >
-                  Von Thema, Zielgruppe und Angebot bis zur Auswahl der
-                  passenden AI Creatives hilft Zynapse Core dabei, dass jede
-                  Kampagne mit dem richtigen kreativen Fit startet und nicht erst
-                  in der Produktion sortiert werden muss.
+              ZYNAPSE übersetzt euer Briefing in kreative Szenarien, Hooks und
+              Varianten für Paid Social. Aus Produkt, Zielgruppe, Kanal und
+              Markenregeln entsteht ein Creative Pack, das euer Team prüfen,
+              freigeben und direkt an Media übergeben kann.
             </p>
             <p
               className="mx-auto max-w-2xl text-sm leading-6 text-[color:var(--copy-soft)] lg:mx-0 lg:max-w-none lg:text-left"
               data-animate-copy
             >
-              Für Brands, die mehr testen wollen, ohne jede Produktion
-              neu aufzusetzen.
+              Für Brands, die mehr testen wollen, ohne jede Produktion neu
+              aufzusetzen, Feedback neu einzusammeln oder aus losen Dateien ein
+              Kampagnenpaket bauen zu müssen.
             </p>
           </div>
 
@@ -94,12 +100,12 @@ export function Hero() {
               Kampagne anfragen
             </ButtonLink>
             <ButtonLink
-              href="/#ablauf"
+              href="/brands"
               variant="secondary"
               size="lg"
               className={heroCtaClassName}
             >
-              Ablauf ansehen
+              Für Brands ansehen
             </ButtonLink>
           </div>
         </div>

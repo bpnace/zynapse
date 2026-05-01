@@ -1,0 +1,93 @@
+[
+  {
+    "key": "home",
+    "path": "/",
+    "pageFile": "src/app/page.tsx",
+    "title": "Mehr testbare Video Ads für Brands | Zynapse",
+    "description": "Zynapse übersetzt Briefings in kreative Szenarien, Hooks und Varianten für Paid Social. Brands bekommen testbare Video Ads ohne mehr Koordination.",
+    "schemaType": "WebPage",
+    "sitemap": true,
+    "faqKey": "marketing",
+    "service": {
+      "name": "Kuratiertes AI-Kampagnensystem für Brands",
+      "serviceType": "Kuratiertes AI-Kampagnensystem",
+      "audience": "Brands, Marketing- und Performance-Teams"
+    }
+  },
+  {
+    "key": "brands",
+    "path": "/brands",
+    "pageFile": "src/app/brands/page.tsx",
+    "title": "Für Brands – mehr testbare Video Ads | Zynapse",
+    "description": "Mehr testbare Video Ads für Marketing- und Performance-Teams. Zynapse Core plant Creative-Szenarien, führt die Produktion und liefert geprüfte Varianten für Paid Social und Short Form.",
+    "schemaType": "WebPage",
+    "breadcrumbLabel": "Für Brands",
+    "sitemap": true,
+    "service": {
+      "name": "Zynapse Core für Brands",
+      "serviceType": "Zynapse-Core-Prozess für Marketing- und Performance-Teams",
+      "audience": "Marketing-, Growth- und Performance-Teams"
+    }
+  },
+  {
+    "key": "cases",
+    "path": "/cases",
+    "pageFile": "src/app/cases/page.tsx",
+    "title": "Cases und Szenarien für Video Ads | Zynapse",
+    "description": "Sechs kompakte Szenarien zeigen, wie Zynapse Core aus vorhandenem Material, Kampagnenziel und Review-Logik testbare Video-Ads entwickelt.",
+    "schemaType": "CollectionPage",
+    "breadcrumbLabel": "Cases",
+    "sitemap": true,
+    "faqKey": "marketing"
+  },
+  {
+    "key": "creatives",
+    "path": "/creatives",
+    "pageFile": "src/app/creatives/page.tsx",
+    "title": "Für AI Creatives – Aufgaben mit Richtung statt Briefing-Chaos | Zynapse",
+    "description": "Zynapse für AI Creatives: Aufgaben mit Richtung, sichtbare Markenregeln und echte Kampagnen statt chaotischer Briefings und verstreuter Feedback-Schleifen.",
+    "schemaType": "CollectionPage",
+    "breadcrumbLabel": "Für Kreative",
+    "sitemap": true,
+    "service": {
+      "name": "AI-Netzwerk für Kreative",
+      "serviceType": "Zynapse-Core-Prozess für Kampagnenarbeit",
+      "audience": "AI Creatives und kreative Spezialist:innen"
+    }
+  },
+  {
+    "key": "about",
+    "path": "/about",
+    "pageFile": "src/app/about/page.tsx",
+    "title": "Über Zynapse – wie Zynapse Core Teams und Creatives verbindet | Zynapse",
+    "description": "Zynapse verbindet Brands und AI Creatives in einem geführten Zynapse-Core-Prozess. Zynapse Core strukturiert Briefings, Rollen, Reviews und Delivery für bessere Video Creatives.",
+    "schemaType": "AboutPage",
+    "breadcrumbLabel": "Über Zynapse",
+    "sitemap": true
+  },
+  {
+    "key": "pricing",
+    "path": "/pricing",
+    "pageFile": "src/app/pricing/page.tsx",
+    "title": "Preise – Pilot, Growth, Scale | Zynapse",
+    "description": "Wähle den Zynapse-Core-Rahmen, der zu eurem Team passt: Pilot für den ersten Test, Growth für laufende Kampagnen und Scale für mehrere Workstreams.",
+    "schemaType": "WebPage",
+    "breadcrumbLabel": "Preise",
+    "sitemap": true,
+    "service": {
+      "name": "Pricing für Zynapse Core",
+      "serviceType": "Zynapse-Core-Pricing für Brands",
+      "audience": "Brands mit laufendem Kampagnenbedarf"
+    }
+  },
+  {
+    "key": "contact",
+    "path": "/contact",
+    "pageFile": "src/app/contact/page.tsx",
+    "title": "Kontakt | Zynapse",
+    "description": "Schreib uns direkt bei Fragen zu Brands, Preisen oder operativen Themen. Du landest ohne Umwege beim richtigen Kontakt.",
+    "schemaType": "ContactPage",
+    "breadcrumbLabel": "Kontakt",
+    "sitemap": true
+  }
+]

@@ -54,6 +54,19 @@
   --font-display: var(--font-display);
 }
 
+:where(h1, h2, h3, h4, h5, h6, [class~="font-display"], [data-animate-heading]) {
+  overflow: visible;
+  padding-bottom: 0.1em;
+}
+
+.section-card:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-surface-paper:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-surface-warm:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-surface-contrast:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6),
+.section-card-muted:has([class~="font-display"], [data-animate-heading], h1, h2, h3, h4, h5, h6) {
+  overflow: visible;
+}
+
 html {
   scroll-behavior: auto;
 }
@@ -290,32 +303,49 @@ select {
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, var(--foreground) 0%, var(--accent) 56%, #f0a84d 100%);
+  background: linear-gradient(120deg, var(--foreground) 0%, var(--accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   color: transparent;
+  margin-inline-end: -0.04em;
+  padding-inline-end: 0.08em;
 }
 
 .title-accent {
-  background: linear-gradient(120deg, var(--foreground) 0%, var(--accent) 56%, #f0a84d 100%);
+  background: linear-gradient(120deg, var(--foreground) 0%, var(--accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   color: transparent;
+  margin-inline-end: -0.04em;
+  padding-inline-end: 0.08em;
 }
 
 .title-accent-soft {
   background: linear-gradient(120deg, var(--accent-strong) 0%, #f0a84d 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   color: transparent;
+  margin-inline-end: -0.04em;
+  padding-inline-end: 0.08em;
 }
 
 [data-animate-word] {
   display: inline-block;
+  line-height: inherit;
+  overflow: visible;
+  padding-bottom: 0.08em;
 }
 
 [data-animate-heading]:has([data-animate-word]) {
-  padding-bottom: 0.08em;
+  overflow: visible;
+  padding-bottom: 0.1em;
+  padding-right: 0.08em;
 }
 
 .eyebrow {

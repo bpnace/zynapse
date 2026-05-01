@@ -3,24 +3,14 @@ import { Suspense } from "react";
 import { PageMotion } from "@/components/animation/page-motion";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { ContactIntakeForm } from "@/components/forms/contact/contact-intake-form";
+import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { contactChannels } from "@/lib/content/site";
-import { buildBreadcrumbs, buildMetadata, buildPageJsonLd } from "@/lib/seo";
+import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
-const pageSeo = {
-  title: "Kontakt | Zynapse",
-  description:
-    "Schreib uns direkt bei Fragen zu Brands, Preisen oder operativen Themen. Du landest ohne Umwege beim richtigen Kontakt.",
-  path: "/contact",
-} as const;
-
-export const metadata = buildMetadata(pageSeo);
+export const metadata = buildMarketingMetadata("/contact");
 
 export default function ContactPage() {
-  const contactJsonLd = buildPageJsonLd({
-    ...pageSeo,
-    pageType: "ContactPage",
-    breadcrumbs: buildBreadcrumbs("Kontakt", pageSeo.path),
-  });
+  const contactJsonLd = buildMarketingPageJsonLd("/contact");
 
   return (
     <>
@@ -43,10 +33,13 @@ export default function ContactPage() {
               className="max-w-4xl text-lg leading-8 text-[color:var(--copy-body)]"
               data-animate-copy
             >
-              Egal ob du eine Kampagne anfragen willst, wissen möchtest, welcher
-              Creative Flow gerade passt, oder ein operatives Thema klären
-              musst: Deine Nachricht landet direkt beim richtigen Kontakt. Du
-              musst nichts perfekt vorbereiten, ein paar klare Sätze reichen.
+              <BoldZynapseCore>
+                Egal ob du eine Kampagne anfragen willst, wissen möchtest,
+                welcher Zynapse Core gerade passt, oder ein operatives Thema
+                klären musst: Deine Nachricht landet direkt beim richtigen
+                Kontakt. Du musst nichts perfekt vorbereiten, ein paar Sätze
+                reichen.
+              </BoldZynapseCore>
             </p>
           </div>
           <div className="hidden lg:flex lg:absolute lg:top-7 lg:right-12 lg:z-10">
@@ -118,7 +111,7 @@ function ContactChannelCard({
       </a>
 
       <p className="mt-5 text-[0.98rem] leading-7 text-[color:var(--copy-body)]">
-        {channel.copy}
+        <BoldZynapseCore>{channel.copy}</BoldZynapseCore>
       </p>
     </article>
   );

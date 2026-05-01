@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import { siteNav } from "@/lib/content/site";
+import { loginCta, siteNav } from "@/lib/content/site";
 import { SiteNavLink } from "@/components/layout/site-nav-link";
 import { Wordmark } from "@/components/layout/wordmark";
 import { cn } from "@/lib/utils";
@@ -105,17 +104,18 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           })}
         </ul>
 
-        <div className="soft-divider" />
-
-        {/* Registrieren */}
-        <div className="px-5 py-4">
-          <Link
-            href="/login"
-            onClick={onClose}
-            className="block rounded-[var(--radius-chip)] px-4 py-3 text-base text-[color:var(--copy-muted)] transition-colors duration-200 hover:bg-[rgba(31,36,48,0.05)] hover:text-[var(--foreground)]"
+        <div className="px-5 pb-5">
+          <SiteNavLink
+            href={loginCta.href}
+            onNavigate={onClose}
+            className={cn(
+              "flex min-h-12 items-center justify-center rounded-full border border-[rgba(56,67,84,0.18)] bg-white px-4 text-sm font-semibold text-[var(--copy-strong)] shadow-[0_10px_22px_rgba(31,36,48,0.05)] transition-colors duration-200 hover:border-[rgba(56,67,84,0.3)]",
+              pathname === loginCta.href &&
+                "border-[rgba(246,107,76,0.32)] text-[var(--accent-strong)]",
+            )}
           >
-            Registrieren
-          </Link>
+            {loginCta.label}
+          </SiteNavLink>
         </div>
       </nav>
     </>

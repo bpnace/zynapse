@@ -13,10 +13,12 @@ type HomeMotionProps = {
 
 const SECTION_REVEAL_START = "top 65%";
 const REVEAL_DURATION = 0.66;
-const WORD_REVEAL_BASE_DURATION = 0.4;
-const WORD_REVEAL_DURATION_STEP = 0.1;
-const WORD_REVEAL_START_DELAY = 0.15;
-const WORD_REVEAL_STAGGER = 0.15;
+const WORD_REVEAL_DURATION = 0.44;
+const WORD_REVEAL_START_DELAY = 0.1;
+const WORD_REVEAL_STAGGER = 0.045;
+const WORD_REVEAL_Y_PERCENT = 14;
+const WORD_REVEAL_SELECTOR =
+  "[data-animate-word], .text-gradient, .title-accent, .title-accent-soft";
 const HERO_TITLE_REVEAL_DURATION = 1;
 const HERO_WORD_REVEAL_START_DELAY = 0.16;
 const CHAR_RAIN_DISTANCE = 100;
@@ -54,26 +56,27 @@ export function HomeMotion({ children }: HomeMotionProps) {
           return;
         }
 
-        words.forEach((word, index) => {
-          gsap.set(word, {
-            autoAlpha: 0,
-            yPercent: 32,
-            display: "inline-block",
-            willChange: "transform, opacity",
-          });
-
-          timeline.to(
-            word,
-            {
-              autoAlpha: 1,
-              yPercent: 0,
-              duration:
-                WORD_REVEAL_BASE_DURATION + index * WORD_REVEAL_DURATION_STEP,
-              ease: index % 2 === 0 ? "power3.out" : "power2.out",
-            },
-            startAt + index * WORD_REVEAL_STAGGER,
-          );
+        gsap.set(words, {
+          autoAlpha: 0,
+          yPercent: WORD_REVEAL_Y_PERCENT,
+          display: "inline-block",
+          willChange: "transform, opacity",
         });
+
+        timeline.to(
+          words,
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            duration: WORD_REVEAL_DURATION,
+            ease: "power3.out",
+            stagger: {
+              each: WORD_REVEAL_STAGGER,
+              from: "random",
+            },
+          },
+          startAt,
+        );
       };
 
       if (heroIntro) {
@@ -81,7 +84,7 @@ export function HomeMotion({ children }: HomeMotionProps) {
           "[data-animate-heading]",
         );
         const heroWords = Array.from(
-          heroIntro.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          heroIntro.querySelectorAll<HTMLElement>(WORD_REVEAL_SELECTOR),
         );
 
         // Subtle scale entrance for the entire hero content block
@@ -190,8 +193,11 @@ export function HomeMotion({ children }: HomeMotionProps) {
         const heading = section.querySelectorAll<HTMLElement>("[data-animate-heading]");
         const copy = section.querySelectorAll<HTMLElement>("[data-animate-copy]");
         const items = section.querySelectorAll<HTMLElement>("[data-animate-item]");
+        const worryCards = Array.from(
+          section.querySelectorAll<HTMLElement>("[data-worry-card]"),
+        );
         const words = Array.from(
-          section.querySelectorAll<HTMLElement>("[data-animate-word]"),
+          section.querySelectorAll<HTMLElement>(WORD_REVEAL_SELECTOR),
         );
         const charLines = Array.from(
           section.querySelectorAll<HTMLElement>("[data-animate-char-line]"),
@@ -283,6 +289,45 @@ export function HomeMotion({ children }: HomeMotionProps) {
                 ? `-=${Math.max(0.18, 0.1 * (lineIndex + 1))}`
                 : 0,
             );
+          });
+        }
+
+        if (section.hasAttribute("data-worry-scroll") && worryCards.length) {
+          const startRotations = [-1.2, 0.85, -0.7];
+          const startSkews = [-0.35, 0.25, -0.2];
+          const exitX = [-42, 4, 46];
+          const exitY = [58, 74, 62];
+          const exitRotations = [-7.5, 5.6, 8];
+          const exitSkews = [-2.4, 1.9, -1.8];
+
+          gsap.set(worryCards, {
+            rotation: (index) => startRotations[index % startRotations.length],
+            skewY: (index) => startSkews[index % startSkews.length],
+            filter: "blur(0px)",
+            autoAlpha: 1,
+            transformOrigin: "50% 58%",
+          });
+
+          const worryTween = gsap.to(worryCards, {
+            x: (index) => exitX[index % exitX.length],
+            y: (index) => exitY[index % exitY.length],
+            rotation: (index) => exitRotations[index % exitRotations.length],
+            skewY: (index) => exitSkews[index % exitSkews.length],
+            filter: "blur(14px)",
+            autoAlpha: 0,
+            ease: "none",
+            stagger: 0.035,
+            scrollTrigger: {
+              trigger: section,
+              start: "center center",
+              end: "bottom 18%",
+              scrub: 0.7,
+            },
+          });
+
+          cleanupCallbacks.push(() => {
+            worryTween.scrollTrigger?.kill();
+            worryTween.kill();
           });
         }
       });
