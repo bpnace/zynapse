@@ -44,6 +44,7 @@ describe("brandInquirySchema", () => {
         budgetRange: "",
         timeline: "",
         notes: "",
+        newsletterOptIn: false,
         website: "",
       });
     }

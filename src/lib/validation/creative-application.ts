@@ -14,6 +14,7 @@ export const creativeApplicationSchema = z.object({
   availability: z.string().trim().min(2, "Bitte Verfügbarkeit angeben."),
   compensationNotes: z.string().trim().max(1200, "Bitte auf maximal 1200 Zeichen kürzen."),
   location: z.string().trim().min(2, "Bitte Standort oder Zeitzone angeben."),
+  newsletterOptIn: z.boolean().default(false),
   datenschutzAccepted: z
     .boolean()
     .refine((value) => value, "Bitte bestätige die Datenschutzerklärung."),
@@ -21,4 +22,5 @@ export const creativeApplicationSchema = z.object({
   website: z.string().trim(),
 });
 
-export type CreativeApplicationInput = z.infer<typeof creativeApplicationSchema>;
+export type CreativeApplicationInput = z.output<typeof creativeApplicationSchema>;
+export type CreativeApplicationFormInput = z.input<typeof creativeApplicationSchema>;

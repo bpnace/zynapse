@@ -56,6 +56,7 @@ export const brandInquirySchema = z.object({
     .trim()
     .email("Bitte eine gültige E-Mail-Adresse angeben."),
   company: z.string().trim().min(2, "Bitte den Firmennamen angeben."),
+  newsletterOptIn: z.boolean().default(false),
   datenschutzAccepted: z
     .boolean()
     .refine((value) => value, "Bitte bestätige die Datenschutzerklärung."),

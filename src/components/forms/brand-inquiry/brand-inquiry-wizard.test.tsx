@@ -43,6 +43,7 @@ describe("BrandInquiryWizard", () => {
     fireEvent.change(screen.getByLabelText("Firma"), {
       target: { value: "Hydra Labs" },
     });
+    fireEvent.click(screen.getByLabelText(/Newsletter Updates erhalten/i));
     fireEvent.click(screen.getByLabelText(/Ich akzeptiere die Datenschutzerklärung/i));
     fireEvent.click(screen.getByRole("button", { name: "Kampagne anfragen" }));
 
@@ -73,6 +74,7 @@ describe("BrandInquiryWizard", () => {
     fireEvent.change(screen.getByLabelText("Firma"), {
       target: { value: "Hydra Labs" },
     });
+    fireEvent.click(screen.getByLabelText(/Newsletter Updates erhalten/i));
     fireEvent.click(screen.getByLabelText(/Ich akzeptiere die Datenschutzerklärung/i));
     fireEvent.click(screen.getByRole("button", { name: "Kampagne anfragen" }));
 
@@ -88,6 +90,7 @@ describe("BrandInquiryWizard", () => {
       contactName: "Mia Brand",
       workEmail: "mia@example.com",
       company: "Hydra Labs",
+      newsletterOptIn: true,
       datenschutzAccepted: true,
     });
     expect(
