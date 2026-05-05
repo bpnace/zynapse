@@ -321,30 +321,6 @@ export function BrandInquiryWizard() {
     }
   }
 
-  function applyCoreSuggestion() {
-    if (!normalizeText(getValues("styleDirection"))) {
-      setValue(
-        "styleDirection",
-        `${routeSuggestions[0]}, ${routeSuggestions[1]} und ${routeSuggestions[2]} als erste Creative-Szenarien`,
-        { shouldDirty: true },
-      );
-    }
-
-    if (!normalizeText(getValues("reviewContext"))) {
-      setValue(
-        "reviewContext",
-        "Zentraler Review mit einer finalen Freigabe durch Marketing oder Brand Lead",
-        { shouldDirty: true },
-      );
-    }
-
-    if (stepIndex < 3) {
-      setStepIndex(3);
-    }
-
-    setStepAlert("");
-  }
-
   function toggleChannel(channel: string) {
     const current = new Set(getValues("channels"));
 
@@ -674,7 +650,7 @@ export function BrandInquiryWizard() {
   }
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
+    <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
       <div className="rounded-[0.75rem] bg-white p-4 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-5">
         <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start">
           <div>
@@ -817,7 +793,7 @@ export function BrandInquiryWizard() {
               {routeSuggestions.map((route) => (
                 <span
                   key={route}
-                  className="rounded-[0.35rem] bg-white/[0.1] px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-white/[0.82]"
+                  className="inline-flex shrink-0 whitespace-nowrap rounded-[0.35rem] bg-white/[0.1] px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-white/[0.82]"
                 >
                   {route}
                 </span>
@@ -833,7 +809,7 @@ export function BrandInquiryWizard() {
               {formatSuggestions.map((format) => (
                 <span
                   key={format}
-                  className="rounded-[0.35rem] bg-white/[0.08] px-2.5 py-1 text-xs text-white/[0.78]"
+                  className="inline-flex shrink-0 whitespace-nowrap rounded-[0.35rem] bg-white/[0.08] px-2 py-1 text-[0.7rem] text-white/[0.78]"
                 >
                   {format}
                 </span>
@@ -852,13 +828,6 @@ export function BrandInquiryWizard() {
         </div>
 
         <div className="mt-4 grid gap-2">
-          <Button
-            variant="secondary"
-            className="justify-center rounded-[0.45rem]"
-            onClick={applyCoreSuggestion}
-          >
-            Vorschlag übernehmen
-          </Button>
           <Button
             variant="ghost"
             className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"

@@ -157,6 +157,43 @@ describe("brand and creative intake waitlist routing", () => {
     });
   });
 
+  it("accepts inactive development webhook-test endpoints as a local log fallback", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv(
+      "WAITLIST_WEBHOOK_URL_DEV",
+      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
+    );
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
+    fetchMock.mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+    });
+
+    const response = await postBrand(
+      new Request("http://localhost:3000/api/intake/brand", {
+        method: "POST",
+        headers: {
+          origin: "http://localhost:3000",
+          "user-agent": "vitest-brand-dev-webhook-inactive",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productUrl: "Neues Serum",
+          goal: "Launch testen",
+          contactName: "Mia Brand",
+          workEmail: "mia.local@example.com",
+          company: "Hydra Labs",
+          datenschutzAccepted: true,
+          startedAt: HUMAN_STARTED_AT,
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true, mode: "log" });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
   it("routes creative applications to the production waitlist webhook with the full envelope", async () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv(

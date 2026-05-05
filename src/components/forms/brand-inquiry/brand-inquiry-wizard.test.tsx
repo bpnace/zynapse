@@ -26,6 +26,12 @@ describe("BrandInquiryWizard", () => {
     render(<BrandInquiryWizard />);
 
     expect(screen.queryByRole("button", { name: "Absenden" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Vorschlag übernehmen" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Details ergänzen" }),
+    ).toBeInTheDocument();
 
     goToContactStep();
     fireEvent.change(screen.getByLabelText("Name"), {

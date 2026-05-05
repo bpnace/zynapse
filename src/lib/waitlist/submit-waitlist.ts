@@ -11,6 +11,20 @@ function getWaitlistWebhookEnvironment(): WaitlistWebhookEnvironment {
   return process.env.NODE_ENV === "production" ? "production" : "development";
 }
 
+function shouldFallbackInactiveDevelopmentWebhook({
+  status,
+  webhookUrl,
+}: {
+  status: number;
+  webhookUrl: string;
+}) {
+  return (
+    process.env.NODE_ENV !== "production" &&
+    status === 404 &&
+    webhookUrl.includes("/webhook-test/")
+  );
+}
+
 export function buildWaitlistWebhookEnvelope<
   TRaw extends Record<string, unknown>,
 >({
@@ -74,6 +88,23 @@ export async function submitWaitlistSignup(
   });
 
   if (!response.ok) {
+    if (
+      shouldFallbackInactiveDevelopmentWebhook({
+        status: response.status,
+        webhookUrl: env.waitlistWebhookUrl,
+      })
+    ) {
+      console.warn(
+        "[zynapse:waitlist:fallback]",
+        `Development webhook-test endpoint returned ${response.status}; accepting locally.`,
+      );
+
+      return {
+        mode: "log",
+        accepted: true,
+      };
+    }
+
     throw new Error(`Webhook delivery failed with status ${response.status}.`);
   }
 
