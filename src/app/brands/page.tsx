@@ -7,6 +7,7 @@ import { AiSparkleMark } from "@/components/ui/ai-sparkle-mark";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { WaitlistButton } from "@/components/ui/waitlist-cta";
 import { brandBenefits } from "@/lib/content/site";
 import { buildMarketingMetadata, buildMarketingPageJsonLd } from "@/lib/seo";
 
@@ -174,6 +175,7 @@ export default function BrandsPage() {
                 <ButtonLink href="/pricing" variant="secondary" size="lg">
                   Preise ansehen
                 </ButtonLink>
+                <WaitlistButton className="self-center" />
               </div>
             </div>
 
@@ -457,10 +459,11 @@ export default function BrandsPage() {
                   </BoldZynapseCore>
                 </p>
               </div>
-              <div className="flex justify-center" data-animate-item>
+              <div className="flex flex-wrap justify-center gap-3" data-animate-item>
                 <ButtonLink href="/request" size="lg">
                   Kampagne anfragen
                 </ButtonLink>
+                <WaitlistButton className="self-center" />
               </div>
             </div>
           </div>

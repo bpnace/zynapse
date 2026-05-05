@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/ui/button";
 import { FlickeringGrid } from "@/components/ui/flickering-grid-hero";
+import { WaitlistTextLink } from "@/components/ui/waitlist-cta";
 
 export function Hero() {
   const heroCtaClassName = "w-full justify-center sm:w-[16rem]";
@@ -107,6 +108,7 @@ export function Hero() {
             >
               Für Brands ansehen
             </ButtonLink>
+            <WaitlistTextLink className="self-center pt-1 sm:min-h-12 sm:px-2 sm:pt-0 lg:min-h-0 lg:self-start lg:px-0" />
           </div>
         </div>
       </div>

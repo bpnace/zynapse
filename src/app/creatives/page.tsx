@@ -3,6 +3,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { AiSparkleMark } from "@/components/ui/ai-sparkle-mark";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { WaitlistButton } from "@/components/ui/waitlist-cta";
 import { PageMotion } from "@/components/animation/page-motion";
 import { ProblemCardGrid } from "@/components/marketing/problem-card-grid";
 import { JsonLdScript } from "@/components/seo/json-ld";
@@ -208,6 +209,7 @@ export default function CreativesPage() {
                 <ButtonLink href="/creatives#rollen" variant="secondary" size="lg">
                   Beispiele ansehen
                 </ButtonLink>
+                <WaitlistButton className="self-center" />
               </div>
             </div>
 
@@ -606,10 +608,11 @@ export default function CreativesPage() {
                 echte Kampagnenarbeit gebaut, nicht auf generische Leads.
               </p>
             </div>
-            <div className="flex justify-center" data-animate-item>
+            <div className="flex flex-wrap justify-center gap-3" data-animate-item>
               <ButtonLink href="/apply" size="lg">
                 Als AI Creative bewerben
               </ButtonLink>
+              <WaitlistButton className="self-center" />
             </div>
           </div>
         </div>
