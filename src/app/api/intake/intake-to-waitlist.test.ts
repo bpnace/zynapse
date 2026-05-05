@@ -1,12 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST as postBrand } from "@/app/api/intake/brand/route";
 import { POST as postCreative } from "@/app/api/intake/creative/route";
+import { POST as postWaitlist } from "@/app/api/waitlist/route";
 import { resetIntakeRateLimitStore } from "@/lib/intake/rate-limit";
 
 const FIXED_TIMESTAMP = "2026-04-09T12:34:56.000Z";
 const HUMAN_STARTED_AT = Date.parse(FIXED_TIMESTAMP) - 5_000;
 
-describe("brand webforms and creative waitlist routing", () => {
+describe("webforms and waitlist routing", () => {
   const fetchMock = vi.fn();
 
   beforeEach(() => {
@@ -173,25 +174,16 @@ describe("brand webforms and creative waitlist routing", () => {
         status: 201,
       });
 
-    const response = await postCreative(
-      new Request("http://localhost:3000/api/intake/creative", {
+    const response = await postWaitlist(
+      new Request("http://localhost:3000/api/waitlist", {
         method: "POST",
         headers: {
           origin: "http://localhost:3000",
-          "user-agent": "vitest-creative-dev-webhook-inactive",
+          "user-agent": "vitest-waitlist-dev-webhook-inactive",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: "Alex Creative",
           email: "alex.local@example.com",
-          portfolioUrl: "https://portfolio.example/alex",
-          focusChannels: ["Prompt Engineering"],
-          caseSummary:
-            "Managed recurring paid social testing for multiple consumer brands and owned concept to delivery.",
-          availability: "2 neue Kunden pro Monat",
-          compensationNotes: "Retainer oder Projektbasis",
-          location: "Berlin / CET",
-          datenschutzAccepted: true,
           startedAt: HUMAN_STARTED_AT,
           website: "",
         }),
@@ -209,11 +201,11 @@ describe("brand webforms and creative waitlist routing", () => {
     );
   });
 
-  it("routes creative applications to the production waitlist webhook with the full envelope", async () => {
+  it("routes creative applications to the webforms intake webhook with the full envelope", async () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv(
-      "WAITLIST_WEBHOOK_URL_PROD",
-      "https://automation.codariq.de/webhook/179939e2-cef1-4b9f-b513-272b356d7e57",
+      "INTAKE_WEBHOOK_URL",
+      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
     );
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
 
@@ -248,21 +240,16 @@ describe("brand webforms and creative waitlist routing", () => {
 
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     expect(url).toBe(
-      "https://automation.codariq.de/webhook/179939e2-cef1-4b9f-b513-272b356d7e57",
+      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
     );
 
     expect(JSON.parse(String(init.body))).toEqual({
-      source: "creative_application",
-      env: "production",
-      timestamp: FIXED_TIMESTAMP,
-      userAgent: "vitest-creative",
+      kind: "creative",
       origin: "https://zynapse.eu",
       siteUrl: "https://zynapse.eu",
-      contact: {
-        name: "Alex Creative",
-        email: "alex@example.com",
-      },
-      raw: {
+      notifyEmail: "ops@zynapse.eu",
+      submittedAt: FIXED_TIMESTAMP,
+      payload: {
         name: "Alex Creative",
         email: "alex@example.com",
         portfolioUrl: "https://portfolio.example/alex",
@@ -274,6 +261,8 @@ describe("brand webforms and creative waitlist routing", () => {
         location: "Berlin / CET",
         datenschutzAccepted: true,
         startedAt: HUMAN_STARTED_AT,
+        userAgent: "vitest-creative",
+        website: "",
       },
     });
   });

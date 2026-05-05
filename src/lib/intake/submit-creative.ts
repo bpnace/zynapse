@@ -1,7 +1,5 @@
-import {
-  buildWaitlistWebhookEnvelope,
-  submitWaitlistSignup,
-} from "@/lib/waitlist/submit-waitlist";
+import { getEnv } from "@/lib/env";
+import { dispatchIntakeSubmission } from "@/lib/intake/providers/webhook";
 import type { CreativeApplication } from "@/types/intake";
 
 export async function submitCreativeApplication(
@@ -11,27 +9,17 @@ export async function submitCreativeApplication(
     userAgent: string;
   },
 ) {
-  return submitWaitlistSignup(
-    buildWaitlistWebhookEnvelope({
-      source: "creative_application",
+  const env = getEnv();
+
+  return dispatchIntakeSubmission({
+    kind: "creative",
+    origin: context.origin,
+    siteUrl: env.siteUrl,
+    notifyEmail: env.notifyEmail,
+    submittedAt: new Date().toISOString(),
+    payload: {
+      ...payload,
       userAgent: context.userAgent,
-      origin: context.origin,
-      contact: {
-        name: payload.name,
-        email: payload.email,
-      },
-      raw: {
-        name: payload.name,
-        email: payload.email,
-        portfolioUrl: payload.portfolioUrl,
-        focusChannels: payload.focusChannels,
-        caseSummary: payload.caseSummary,
-        availability: payload.availability,
-        compensationNotes: payload.compensationNotes,
-        location: payload.location,
-        datenschutzAccepted: payload.datenschutzAccepted,
-        startedAt: payload.startedAt,
-      },
-    }),
-  );
+    },
+  });
 }
