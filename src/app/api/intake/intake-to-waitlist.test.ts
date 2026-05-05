@@ -6,7 +6,7 @@ import { resetIntakeRateLimitStore } from "@/lib/intake/rate-limit";
 const FIXED_TIMESTAMP = "2026-04-09T12:34:56.000Z";
 const HUMAN_STARTED_AT = Date.parse(FIXED_TIMESTAMP) - 5_000;
 
-describe("brand and creative intake waitlist routing", () => {
+describe("brand webforms and creative waitlist routing", () => {
   const fetchMock = vi.fn();
 
   beforeEach(() => {
@@ -27,11 +27,11 @@ describe("brand and creative intake waitlist routing", () => {
     vi.clearAllMocks();
   });
 
-  it("routes brand inquiries to the development waitlist webhook with the full envelope", async () => {
+  it("routes brand inquiries to the webforms intake webhook with the full envelope", async () => {
     vi.stubEnv("NODE_ENV", "development");
     vi.stubEnv(
-      "WAITLIST_WEBHOOK_URL_DEV",
-      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
+      "INTAKE_WEBHOOK_URL",
+      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
     );
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
 
@@ -67,22 +67,16 @@ describe("brand and creative intake waitlist routing", () => {
 
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     expect(url).toBe(
-      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
+      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
     );
 
     expect(JSON.parse(String(init.body))).toEqual({
-      source: "brand_inquiry",
-      env: "development",
-      timestamp: FIXED_TIMESTAMP,
-      userAgent: "vitest-brand",
+      kind: "brand",
       origin: "http://localhost:3000",
       siteUrl: "https://zynapse.eu",
-      contact: {
-        name: "Max Mustermann",
-        email: "team@brand.com",
-        company: "Beispiel GmbH",
-      },
-      raw: {
+      notifyEmail: "ops@zynapse.eu",
+      submittedAt: FIXED_TIMESTAMP,
+      payload: {
         industry: "D2C Wellness",
         productUrl: "https://example.com",
         goal: "Conversion-Testing",
@@ -95,6 +89,8 @@ describe("brand and creative intake waitlist routing", () => {
         company: "Beispiel GmbH",
         datenschutzAccepted: true,
         startedAt: HUMAN_STARTED_AT,
+        userAgent: "vitest-brand",
+        website: "",
       },
     });
   });
@@ -102,8 +98,8 @@ describe("brand and creative intake waitlist routing", () => {
   it("routes minimum quick brand inquiries without optional briefing fields", async () => {
     vi.stubEnv("NODE_ENV", "development");
     vi.stubEnv(
-      "WAITLIST_WEBHOOK_URL_DEV",
-      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
+      "INTAKE_WEBHOOK_URL",
+      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
     );
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
 
@@ -134,13 +130,10 @@ describe("brand and creative intake waitlist routing", () => {
     const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
 
     expect(JSON.parse(String(init.body))).toMatchObject({
-      source: "brand_inquiry",
-      contact: {
-        name: "Mia Brand",
-        email: "mia.quick@example.com",
-        company: "Hydra Labs",
-      },
-      raw: {
+      kind: "brand",
+      origin: "http://localhost:3000",
+      siteUrl: "https://zynapse.eu",
+      payload: {
         industry: "",
         productUrl: "Neues Serum",
         goal: "Launch testen",
@@ -153,11 +146,13 @@ describe("brand and creative intake waitlist routing", () => {
         company: "Hydra Labs",
         datenschutzAccepted: true,
         startedAt: HUMAN_STARTED_AT,
+        userAgent: "vitest-brand-minimum",
+        website: "",
       },
     });
   });
 
-  it("retries the active webhook when the development webhook-test endpoint is inactive", async () => {
+  it("retries the active waitlist webhook when the development webhook-test endpoint is inactive", async () => {
     vi.stubEnv("NODE_ENV", "development");
     vi.stubEnv(
       "WAITLIST_WEBHOOK_URL_DEV",
@@ -178,22 +173,27 @@ describe("brand and creative intake waitlist routing", () => {
         status: 201,
       });
 
-    const response = await postBrand(
-      new Request("http://localhost:3000/api/intake/brand", {
+    const response = await postCreative(
+      new Request("http://localhost:3000/api/intake/creative", {
         method: "POST",
         headers: {
           origin: "http://localhost:3000",
-          "user-agent": "vitest-brand-dev-webhook-inactive",
+          "user-agent": "vitest-creative-dev-webhook-inactive",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          productUrl: "Neues Serum",
-          goal: "Launch testen",
-          contactName: "Mia Brand",
-          workEmail: "mia.local@example.com",
-          company: "Hydra Labs",
+          name: "Alex Creative",
+          email: "alex.local@example.com",
+          portfolioUrl: "https://portfolio.example/alex",
+          focusChannels: ["Prompt Engineering"],
+          caseSummary:
+            "Managed recurring paid social testing for multiple consumer brands and owned concept to delivery.",
+          availability: "2 neue Kunden pro Monat",
+          compensationNotes: "Retainer oder Projektbasis",
+          location: "Berlin / CET",
           datenschutzAccepted: true,
           startedAt: HUMAN_STARTED_AT,
+          website: "",
         }),
       }),
     );
