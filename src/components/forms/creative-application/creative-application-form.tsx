@@ -223,11 +223,6 @@ export function CreativeApplicationForm() {
     }
   }
 
-  function jumpToSummary() {
-    setStepAlert("");
-    setStepIndex(steps.length - 1);
-  }
-
   function renderStep() {
     if (stepIndex === 0) {
       return (
@@ -602,13 +597,6 @@ export function CreativeApplicationForm() {
             onClick={goToMissingInfo}
           >
             Offene Info ergänzen
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
-            onClick={jumpToSummary}
-          >
-            Zum Absenden
           </Button>
         </div>
       </aside>
