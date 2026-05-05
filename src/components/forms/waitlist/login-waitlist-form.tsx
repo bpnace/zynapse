@@ -116,7 +116,7 @@ export function LoginWaitlistForm() {
           className="min-w-[11rem] justify-center whitespace-nowrap disabled:cursor-wait"
           disabled={isPending}
         >
-          {isPending ? "Wird eingetragen..." : "Join Waitlist"}
+          {isPending ? "Wird eingetragen..." : "Warteliste beitreten"}
         </Button>
       </form>
 

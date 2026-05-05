@@ -407,7 +407,7 @@ export function CreativeApplicationForm() {
               href="/creatives"
               className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
             >
-              Track ansehen
+              Witere Infos
             </ButtonLink>
           </div>
         </div>

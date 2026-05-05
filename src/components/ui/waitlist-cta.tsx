@@ -29,7 +29,7 @@ export function WaitlistButton({
       className={cn(buttonBaseClassName, buttonToneClassName[tone], className)}
       {...props}
     >
-      Join Waitlist
+      Warteliste beitreten
     </Link>
   );
 }
@@ -44,7 +44,7 @@ export function WaitlistTextLink({ className, ...props }: WaitlistLinkProps) {
       )}
       {...props}
     >
-      Join Waitlist
+      Warteliste beitreten
     </Link>
   );
 }
