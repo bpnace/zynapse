@@ -623,7 +623,7 @@ export function BrandInquiryWizard() {
         <div className="mt-4 grid gap-5 md:grid-cols-[minmax(0,0.68fr)_auto] md:items-end">
           <div>
             <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl">
-              Danke, dein Kreativbriefing ist eingegangen.
+              Danke, dein Briefing ist eingegangen.
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
               <BoldZynapseCore>
@@ -641,7 +641,7 @@ export function BrandInquiryWizard() {
               href="/pricing"
               className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
             >
-              <strong>Zynapse Core</strong> ansehen
+              Pakete ansehen
             </ButtonLink>
           </div>
         </div>
@@ -655,7 +655,7 @@ export function BrandInquiryWizard() {
         <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start">
           <div>
             <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-[var(--copy-soft)]">
-              Kreativbriefing
+              Briefing
             </p>
             <h2 className="mt-2 font-display text-2xl leading-[1] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
               Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}

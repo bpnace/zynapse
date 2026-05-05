@@ -3,9 +3,9 @@ import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Kreativbriefing starten | Zynapse",
+  title: "Kampagne starten | Zynapse",
   description:
-    "Starte dein Kreativbriefing in wenigen Minuten. Produkt oder Link, Ziel und Kontakt reichen, damit Zynapse Core die Anfrage einordnen kann.",
+    "Starte deine Kampagne in wenigen Minuten. Produkt oder Link, Ziel und Kontakt reichen, damit Zynapse Core die Anfrage einordnen kann.",
   path: "/request",
   indexable: false,
 });
@@ -15,7 +15,7 @@ export default function RequestPage() {
     <section className="mx-auto flex w-full max-w-[96rem] flex-col gap-8 px-6 pt-15 pb-16 sm:px-8 lg:px-10">
       <div className="grid gap-5 lg:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] lg:items-end">
         <h1 className="max-w-6xl font-display text-5xl leading-[0.92] font-semibold tracking-[-0.06em] text-[var(--copy-strong)] sm:text-6xl lg:text-7xl">
-          Starte dein Kreativbriefing in wenigen Minuten.
+          Starte deine Kampagne in wenigen Minuten.
         </h1>
         <p className="max-w-3xl text-lg leading-8 text-[color:var(--copy-muted)] lg:justify-self-end lg:pb-2">
           <BoldZynapseCore>

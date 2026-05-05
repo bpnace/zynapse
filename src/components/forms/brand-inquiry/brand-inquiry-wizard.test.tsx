@@ -91,7 +91,7 @@ describe("BrandInquiryWizard", () => {
       datenschutzAccepted: true,
     });
     expect(
-      await screen.findByText(/Danke, dein Kreativbriefing ist eingegangen/i),
+      await screen.findByText(/Danke, dein Briefing ist eingegangen/i),
     ).toBeInTheDocument();
   });
 });

@@ -74,8 +74,8 @@ describe("buildMetadata", () => {
 
   it("builds noindex metadata for non-ranking routes", () => {
     const metadata = buildMetadata({
-      title: "Kreativbriefing starten | Zynapse",
-      description: "Geführtes Kreativbriefing.",
+      title: "Kampagne starten | Zynapse",
+      description: "Geführte Kampagne.",
       path: "/request",
       indexable: false,
     });
