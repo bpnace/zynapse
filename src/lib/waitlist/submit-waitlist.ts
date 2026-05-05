@@ -11,7 +11,7 @@ function getWaitlistWebhookEnvironment(): WaitlistWebhookEnvironment {
   return process.env.NODE_ENV === "production" ? "production" : "development";
 }
 
-function shouldFallbackInactiveDevelopmentWebhook({
+function shouldRetryInactiveDevelopmentWebhook({
   status,
   webhookUrl,
 }: {
@@ -23,6 +23,19 @@ function shouldFallbackInactiveDevelopmentWebhook({
     status === 404 &&
     webhookUrl.includes("/webhook-test/")
   );
+}
+
+function resolveDevelopmentWebhookRetryUrl(currentWebhookUrl: string) {
+  if (process.env.NODE_ENV === "production") {
+    return "";
+  }
+
+  const retryUrl =
+    process.env.WAITLIST_WEBHOOK_URL_PROD ||
+    process.env.WAITLIST_WEBHOOK_URL ||
+    "";
+
+  return retryUrl && retryUrl !== currentWebhookUrl ? retryUrl : "";
 }
 
 export function buildWaitlistWebhookEnvelope<
@@ -89,20 +102,41 @@ export async function submitWaitlistSignup(
 
   if (!response.ok) {
     if (
-      shouldFallbackInactiveDevelopmentWebhook({
+      shouldRetryInactiveDevelopmentWebhook({
         status: response.status,
         webhookUrl: env.waitlistWebhookUrl,
       })
     ) {
+      const retryUrl = resolveDevelopmentWebhookRetryUrl(env.waitlistWebhookUrl);
+
+      if (!retryUrl) {
+        throw new Error(
+          `Development webhook-test endpoint returned ${response.status} and no active webhook retry URL is configured.`,
+        );
+      }
+
       console.warn(
-        "[zynapse:waitlist:fallback]",
-        `Development webhook-test endpoint returned ${response.status}; accepting locally.`,
+        "[zynapse:waitlist:retry]",
+        `Development webhook-test endpoint returned ${response.status}; retrying active webhook.`,
       );
 
-      return {
-        mode: "log",
-        accepted: true,
-      };
+      const retryResponse = await fetch(retryUrl, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload),
+        cache: "no-store",
+      });
+
+      if (retryResponse.ok) {
+        return {
+          mode: "webhook",
+          accepted: true,
+        };
+      }
+
+      throw new Error(
+        `Webhook retry failed with status ${retryResponse.status}.`,
+      );
     }
 
     throw new Error(`Webhook delivery failed with status ${response.status}.`);
