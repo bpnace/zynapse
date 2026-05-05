@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Kreativbriefing starten | Zynapse",
   description:
-    "Starte dein Kreativbriefing in wenigen Minuten. Produkt, Ziel, Zielgruppe und Kanäle reichen, damit Zynapse Core einen ersten Kreativplan vorschlagen kann.",
+    "Starte dein Kreativbriefing in wenigen Minuten. Produkt oder Link, Ziel und Kontakt reichen, damit Zynapse Core die Anfrage einordnen kann.",
   path: "/request",
   indexable: false,
 });
@@ -19,9 +19,8 @@ export default function RequestPage() {
         </h1>
         <p className="max-w-3xl text-lg leading-8 text-[color:var(--copy-muted)] lg:justify-self-end lg:pb-2">
           <BoldZynapseCore>
-            Du brauchst kein perfektes Briefing. Produkt, Ziel, Zielgruppe und
-            Kanäle reichen, damit Zynapse Core einen ersten Kreativplan
-            vorschlagen kann.
+            Du brauchst kein perfektes Briefing. Produkt oder Link, Ziel und
+            Kontakt reichen, damit Zynapse Core die Anfrage einordnen kann.
           </BoldZynapseCore>
         </p>
       </div>

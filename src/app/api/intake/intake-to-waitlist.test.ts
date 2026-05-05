@@ -99,6 +99,64 @@ describe("brand and creative intake waitlist routing", () => {
     });
   });
 
+  it("routes minimum quick brand inquiries without optional briefing fields", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv(
+      "WAITLIST_WEBHOOK_URL_DEV",
+      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
+    );
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
+
+    const response = await postBrand(
+      new Request("http://localhost:3000/api/intake/brand", {
+        method: "POST",
+        headers: {
+          origin: "http://localhost:3000",
+          "user-agent": "vitest-brand-minimum",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productUrl: "Neues Serum",
+          goal: "Launch testen",
+          contactName: "Mia Brand",
+          workEmail: "mia.quick@example.com",
+          company: "Hydra Labs",
+          datenschutzAccepted: true,
+          startedAt: HUMAN_STARTED_AT,
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true, mode: "webhook" });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+
+    expect(JSON.parse(String(init.body))).toMatchObject({
+      source: "brand_inquiry",
+      contact: {
+        name: "Mia Brand",
+        email: "mia.quick@example.com",
+        company: "Hydra Labs",
+      },
+      raw: {
+        industry: "",
+        productUrl: "Neues Serum",
+        goal: "Launch testen",
+        channels: [],
+        budgetRange: "",
+        timeline: "",
+        notes: "",
+        contactName: "Mia Brand",
+        workEmail: "mia.quick@example.com",
+        company: "Hydra Labs",
+        datenschutzAccepted: true,
+        startedAt: HUMAN_STARTED_AT,
+      },
+    });
+  });
+
   it("routes creative applications to the production waitlist webhook with the full envelope", async () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv(
