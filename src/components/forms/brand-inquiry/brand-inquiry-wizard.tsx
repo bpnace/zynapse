@@ -536,21 +536,14 @@ export function BrandInquiryWizard() {
             ))}
           </dl>
         </div>
-        <label
-          className={`flex min-h-12 cursor-pointer items-center justify-between gap-4 rounded-[0.45rem] border px-4 py-3 text-left text-sm transition-colors ${
-            values.newsletterOptIn
-              ? "border-[rgba(224,94,67,0.28)] bg-[rgba(246,107,76,0.12)] text-[var(--accent-strong)]"
-              : "border-[color:var(--line)] bg-white text-[var(--copy-body)] hover:border-[color:var(--line-strong)]"
-          }`}
-        >
-          <input
-            type="checkbox"
-            {...register("newsletterOptIn")}
-            className="sr-only"
-          />
-          <span className="font-semibold">Newsletter Updates erhalten</span>
-          <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] opacity-70">
-            {values.newsletterOptIn ? "Aktiv" : "Optional"}
+        <label className="grid gap-2">
+          <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+            <input
+              type="checkbox"
+              {...register("newsletterOptIn")}
+              className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+            />
+            <span>Newsletter Updates zu Zynapse erhalten.</span>
           </span>
         </label>
         <label className="grid gap-2">

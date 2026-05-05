@@ -43,7 +43,7 @@ describe("BrandInquiryWizard", () => {
     fireEvent.change(screen.getByLabelText("Firma"), {
       target: { value: "Hydra Labs" },
     });
-    fireEvent.click(screen.getByLabelText(/Newsletter Updates erhalten/i));
+    fireEvent.click(screen.getByLabelText(/Newsletter Updates zu Zynapse erhalten/i));
     fireEvent.click(screen.getByLabelText(/Ich akzeptiere die Datenschutzerklärung/i));
     fireEvent.click(screen.getByRole("button", { name: "Kampagne anfragen" }));
 
@@ -74,7 +74,7 @@ describe("BrandInquiryWizard", () => {
     fireEvent.change(screen.getByLabelText("Firma"), {
       target: { value: "Hydra Labs" },
     });
-    fireEvent.click(screen.getByLabelText(/Newsletter Updates erhalten/i));
+    fireEvent.click(screen.getByLabelText(/Newsletter Updates zu Zynapse erhalten/i));
     fireEvent.click(screen.getByLabelText(/Ich akzeptiere die Datenschutzerklärung/i));
     fireEvent.click(screen.getByRole("button", { name: "Kampagne anfragen" }));
 
