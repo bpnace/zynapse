@@ -89,26 +89,28 @@ export function Hero() {
           </div>
 
           <div
-            className="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:flex-col lg:items-start lg:justify-self-end"
+            className="mt-7 flex flex-col items-center gap-5 lg:mt-0 lg:w-[16rem] lg:justify-self-end"
             data-animate-item
           >
-            <ButtonLink
-              href="/request"
-              size="lg"
-              className={heroPrimaryCtaClassName}
-              primaryFillClassName="bg-white"
-            >
-              Kampagne anfragen
-            </ButtonLink>
-            <ButtonLink
-              href="/brands"
-              variant="secondary"
-              size="lg"
-              className={heroCtaClassName}
-            >
-              Für Brands ansehen
-            </ButtonLink>
-            <WaitlistTextLink className="self-center pt-1 sm:min-h-12 sm:px-2 sm:pt-0 lg:min-h-0 lg:self-start lg:px-0" />
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:w-full lg:flex-col">
+              <ButtonLink
+                href="/request"
+                size="lg"
+                className={heroPrimaryCtaClassName}
+                primaryFillClassName="bg-white"
+              >
+                Kampagne anfragen
+              </ButtonLink>
+              <ButtonLink
+                href="/brands"
+                variant="secondary"
+                size="lg"
+                className={heroCtaClassName}
+              >
+                Für Brands ansehen
+              </ButtonLink>
+            </div>
+            <WaitlistTextLink className="justify-center" />
           </div>
         </div>
       </div>
