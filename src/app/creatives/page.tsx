@@ -606,7 +606,7 @@ export default function CreativesPage() {
                 echte Kampagnenarbeit gebaut, nicht auf generische Leads.
               </p>
             </div>
-            <div className="flex justify-center" data-animate-item>
+            <div className="flex flex-wrap justify-center gap-3" data-animate-item>
               <ButtonLink href="/apply" size="lg">
                 Als AI Creative bewerben
               </ButtonLink>

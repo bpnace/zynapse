@@ -457,7 +457,7 @@ export default function BrandsPage() {
                   </BoldZynapseCore>
                 </p>
               </div>
-              <div className="flex justify-center" data-animate-item>
+              <div className="flex flex-wrap justify-center gap-3" data-animate-item>
                 <ButtonLink href="/request" size="lg">
                   Kampagne anfragen
                 </ButtonLink>

@@ -1,7 +1,5 @@
-import {
-  buildWaitlistWebhookEnvelope,
-  submitWaitlistSignup,
-} from "@/lib/waitlist/submit-waitlist";
+import { getEnv } from "@/lib/env";
+import { dispatchIntakeSubmission } from "@/lib/intake/providers/webhook";
 import type { BrandInquiry } from "@/types/intake";
 
 export async function submitBrandInquiry(
@@ -11,34 +9,17 @@ export async function submitBrandInquiry(
     userAgent: string;
   },
 ) {
-  return submitWaitlistSignup(
-    buildWaitlistWebhookEnvelope({
-      source: "brand_inquiry",
+  const env = getEnv();
+
+  return dispatchIntakeSubmission({
+    kind: "brand",
+    origin: context.origin,
+    siteUrl: env.siteUrl,
+    notifyEmail: env.notifyEmail,
+    submittedAt: new Date().toISOString(),
+    payload: {
+      ...payload,
       userAgent: context.userAgent,
-      origin: context.origin,
-      contact: {
-        name: payload.contactName,
-        email: payload.workEmail,
-        company: payload.company,
-      },
-      raw: {
-        industry: payload.industry,
-        productUrl: payload.productUrl,
-        goal: payload.goal,
-        targetAudience: payload.targetAudience,
-        keyBarrier: payload.keyBarrier,
-        channels: payload.channels,
-        budgetRange: payload.budgetRange,
-        styleDirection: payload.styleDirection,
-        timeline: payload.timeline,
-        reviewContext: payload.reviewContext,
-        notes: payload.notes,
-        contactName: payload.contactName,
-        workEmail: payload.workEmail,
-        company: payload.company,
-        datenschutzAccepted: payload.datenschutzAccepted,
-        startedAt: payload.startedAt,
-      },
-    }),
-  );
+    },
+  });
 }

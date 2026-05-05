@@ -19,6 +19,10 @@ describe("creativeApplicationSchema", () => {
     });
 
     expect(result.success).toBe(true);
+
+    if (result.success) {
+      expect(result.data.newsletterOptIn).toBe(false);
+    }
   });
 
   it("requires at least one focus channel", () => {

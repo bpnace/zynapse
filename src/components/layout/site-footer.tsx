@@ -4,6 +4,7 @@ import { footerGroups } from "@/lib/content/site";
 import { SiteNavLink } from "@/components/layout/site-nav-link";
 import { Wordmark } from "@/components/layout/wordmark";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
+import { WaitlistButton } from "@/components/ui/waitlist-cta";
 
 export function SiteFooter() {
   return (
@@ -32,6 +33,7 @@ export function SiteFooter() {
               zusammen.
             </BoldZynapseCore>
           </p>
+          <WaitlistButton tone="dark" />
         </div>
         {footerGroups.map((group) => (
           <div key={group.title} className="space-y-4">

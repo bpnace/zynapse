@@ -3,12 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { startTransition, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { createBrandInquiryDefaults } from "@/lib/forms/storage";
 import {
   brandInquirySchema,
+  type BrandInquiryFormInput,
   type BrandInquiryInput,
 } from "@/lib/validation/brand-inquiry";
 import {
@@ -23,37 +24,41 @@ const steps = [
   {
     title: "Produkt und Ziel",
     shortTitle: "Produkt",
-    copy: "Was soll beworben werden und was soll die Kampagne erreichen?",
+    copy: "Für eine schnelle Anfrage reichen Produkt oder Link und das Ziel.",
     fields: ["productUrl", "goal", "budgetRange"] as const,
   },
   {
     title: "Zielgruppe",
     shortTitle: "Zielgruppe",
-    copy: "Wen wollt ihr erreichen und was ist die wichtigste Kaufbarriere?",
+    copy:
+      "Optional: Wen wollt ihr erreichen und was ist die wichtigste Kaufbarriere?",
     fields: ["targetAudience", "keyBarrier"] as const,
   },
   {
     title: "Kanäle und Formate",
     shortTitle: "Kanäle",
-    copy: "Wo sollen die Creatives laufen und welche Ausspielungen stehen zuerst an?",
+    copy:
+      "Optional: Wo sollen die Creatives laufen und welche Ausspielungen stehen zuerst an?",
     fields: ["channels"] as const,
   },
   {
     title: "Stil und Beispiele",
     shortTitle: "Stil",
-    copy: "Welche Richtung passt zu eurer Marke und welche Hinweise sollten wir früh sehen?",
+    copy:
+      "Optional: Welche Richtung passt zu eurer Marke und welche Hinweise sollten wir früh sehen?",
     fields: ["industry", "styleDirection", "notes"] as const,
   },
   {
     title: "Timing und Review",
     shortTitle: "Timing",
-    copy: "Wann braucht ihr den Output und wie laufen Review und Freigabe aktuell?",
+    copy:
+      "Optional: Wann braucht ihr den Output und wie laufen Review und Freigabe aktuell?",
     fields: ["timeline", "reviewContext"] as const,
   },
   {
     title: "Zusammenfassung",
     shortTitle: "Kontakt",
-    copy: "Zynapse Core zeigt, was vorhanden ist und was für den ersten Kreativplan noch hilfreich wäre.",
+    copy: "Kontaktdaten reichen, wenn die Anfrage erst kurz eingeordnet werden soll.",
     fields: ["contactName", "workEmail", "company"] as const,
   },
 ] as const;
@@ -75,33 +80,65 @@ const channelOptions = [
 ] as const;
 
 const requiredStepLabels: Record<number, string[]> = {
-  0: ["Produktlink", "Ziel", "Budgetrahmen"],
-  1: ["Zielgruppe", "wichtigste Kaufbarriere"],
-  2: ["mindestens ein Kanal"],
-  3: ["Branche"],
-  4: ["Timing"],
+  0: ["Produkt oder Link", "Ziel"],
+  1: [],
+  2: [],
+  3: [],
+  4: [],
   5: ["Name", "geschäftliche E-Mail", "Firma", "Datenschutzerklärung"],
+};
+
+const stepRequirementCopy: Record<number, string> = {
+  0: "Pflicht: Produkt oder Link und Ziel.",
+  1: "Optional: Zielgruppe oder Kaufbarriere.",
+  2: "Optional: Kanalpriorität.",
+  3: "Optional: Branche, Stil oder Hinweise.",
+  4: "Optional: Timing und Review.",
+  5: "Pflicht: Name, geschäftliche E-Mail, Firma und Datenschutz.",
 };
 
 const requiredBriefingChecks = [
   "productUrl",
   "goal",
-  "budgetRange",
-  "targetAudience",
-  "keyBarrier",
-  "channels",
-  "industry",
-  "timeline",
-  "reviewContext",
+  "contactName",
+  "workEmail",
+  "company",
 ] as const;
+
+const fieldStepIndex: Partial<Record<keyof BrandInquiryFormInput, number>> = {
+  productUrl: 0,
+  goal: 0,
+  budgetRange: 0,
+  targetAudience: 1,
+  keyBarrier: 1,
+  channels: 2,
+  industry: 3,
+  styleDirection: 3,
+  notes: 3,
+  timeline: 4,
+  reviewContext: 4,
+  contactName: 5,
+  workEmail: 5,
+  company: 5,
+  datenschutzAccepted: 5,
+};
+
+const fieldLabels: Partial<Record<keyof BrandInquiryFormInput, string>> = {
+  productUrl: "Produkt oder Link",
+  goal: "Ziel",
+  contactName: "Name",
+  workEmail: "geschäftliche E-Mail",
+  company: "Firma",
+  datenschutzAccepted: "Datenschutzerklärung",
+};
 
 function normalizeText(value: string | undefined) {
   return value?.trim() ?? "";
 }
 
-function buildRouteSuggestions(values: BrandInquiryInput) {
+function buildRouteSuggestions(values: BrandInquiryFormInput) {
   const goal = normalizeText(values.goal).toLowerCase();
-  const channels = values.channels.join(" ").toLowerCase();
+  const channels = (values.channels ?? []).join(" ").toLowerCase();
 
   if (goal.includes("launch") || goal.includes("aktion") || goal.includes("offer")) {
     return ["Offer Push", "Product Proof", "Founder oder Expert Style"];
@@ -132,6 +169,8 @@ export function BrandInquiryWizard() {
   const [stepAlert, setStepAlert] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isPending, setIsPending] = useState(false);
+  const [pendingFocusField, setPendingFocusField] =
+    useState<keyof BrandInquiryFormInput | null>(null);
 
   const {
     register,
@@ -142,7 +181,7 @@ export function BrandInquiryWizard() {
     getValues,
     setFocus,
     formState: { errors },
-  } = useForm<BrandInquiryInput>({
+  } = useForm<BrandInquiryFormInput, unknown, BrandInquiryInput>({
     resolver: zodResolver(brandInquirySchema),
     defaultValues: createBrandInquiryDefaults(),
     mode: "onChange",
@@ -150,24 +189,34 @@ export function BrandInquiryWizard() {
 
   const values = watch();
   const selectedChannels = values.channels ?? [];
-  const isPrivacyAccepted = values.datenschutzAccepted;
 
   const briefingQuality = useMemo(() => {
-    const completed = requiredBriefingChecks.filter((field) => {
-      const value = values[field];
+    const completedFields = requiredBriefingChecks.filter(
+      (field) => normalizeText(values[field]).length > 0,
+    ).length;
+    const completed = completedFields + (values.datenschutzAccepted ? 1 : 0);
+    const total = requiredBriefingChecks.length + 1;
 
-      if (Array.isArray(value)) {
-        return value.length > 0;
-      }
-
-      return normalizeText(value).length > 0;
-    }).length;
-
-    return Math.round((completed / requiredBriefingChecks.length) * 100);
+    return Math.round((completed / total) * 100);
   }, [values]);
 
   const missingInfo = useMemo(() => {
     const candidates = [
+      {
+        label: "Kanalpriorität",
+        missing: !values.channels?.length,
+        step: 2,
+      },
+      {
+        label: "Budgetrahmen",
+        missing: normalizeText(values.budgetRange).length === 0,
+        step: 0,
+      },
+      {
+        label: "Timing",
+        missing: normalizeText(values.timeline).length === 0,
+        step: 4,
+      },
       {
         label: "Wichtigste Kaufbarriere",
         missing: normalizeText(values.keyBarrier).length === 0,
@@ -204,26 +253,31 @@ export function BrandInquiryWizard() {
   const riskSignals = useMemo(() => {
     const risks: string[] = [];
 
-    if (!normalizeText(values.keyBarrier)) {
-      risks.push("Die wichtigste Kaufbarriere fehlt noch für bessere Hooks.");
+    if (!values.channels?.length) {
+      risks.push("Optional hilfreich: ein Kanal macht die Formatpriorisierung konkreter.");
+    }
+
+    if (!normalizeText(values.targetAudience)) {
+      risks.push("Optional hilfreich: eine grobe Zielgruppe schärft die Hook-Richtung.");
     }
 
     if (!normalizeText(values.reviewContext)) {
-      risks.push("Freigabeweg fehlt. Review kann später unnötig bremsen.");
-    }
-
-    if (!values.channels?.length) {
-      risks.push("Ohne Kanal ist die Formatpriorisierung noch zu offen.");
+      risks.push("Optional hilfreich: ein Freigabehinweis verhindert spätere Rückfragen.");
     }
 
     return risks.length
       ? risks
-      : ["Keine offensichtlichen Risiken. Briefing ist bereit für den ersten Kreativplan."];
+      : ["Mindestangaben reichen für die Anfrage. Mehr Kontext verbessert nur die Einordnung."];
   }, [values]);
 
   useEffect(() => {
-    setStepAlert("");
-  }, [stepIndex]);
+    if (!pendingFocusField || fieldStepIndex[pendingFocusField] !== stepIndex) {
+      return;
+    }
+
+    setFocus(pendingFocusField);
+    setPendingFocusField(null);
+  }, [pendingFocusField, setFocus, stepIndex]);
 
   async function goToNextStep() {
     const currentStep = steps[stepIndex];
@@ -235,9 +289,11 @@ export function BrandInquiryWizard() {
       return;
     }
 
-    const labels = requiredStepLabels[stepIndex] ?? ["die fehlenden Angaben"];
+    const labels = requiredStepLabels[stepIndex] ?? [];
     setStepAlert(
-      `Bitte ergänze ${labels.join(", ")}, damit Zynapse Core den nächsten Schritt sinnvoll vorbereiten kann.`,
+      labels.length
+        ? `Bitte ergänze ${labels.join(", ")}.`
+        : "Bitte prüfe die markierten optionalen Angaben.",
     );
 
     const firstField = currentStep.fields[0];
@@ -265,35 +321,6 @@ export function BrandInquiryWizard() {
     }
   }
 
-  function applyCoreSuggestion() {
-    if (!normalizeText(getValues("styleDirection"))) {
-      setValue(
-        "styleDirection",
-        `${routeSuggestions[0]}, ${routeSuggestions[1]} und ${routeSuggestions[2]} als erste Creative-Szenarien`,
-        { shouldDirty: true },
-      );
-    }
-
-    if (!normalizeText(getValues("reviewContext"))) {
-      setValue(
-        "reviewContext",
-        "Zentraler Review mit einer finalen Freigabe durch Marketing oder Brand Lead",
-        { shouldDirty: true },
-      );
-    }
-
-    if (stepIndex < 3) {
-      setStepIndex(3);
-    }
-
-    setStepAlert("");
-  }
-
-  function jumpToSummary() {
-    setStepAlert("");
-    setStepIndex(steps.length - 1);
-  }
-
   function toggleChannel(channel: string) {
     const current = new Set(getValues("channels"));
 
@@ -315,19 +342,29 @@ export function BrandInquiryWizard() {
     if (stepIndex === 0) {
       return (
         <div className="grid gap-4 lg:grid-cols-3">
-          <Field label="Produktlink" error={errors.productUrl?.message}>
-            <TextInput {...register("productUrl")} placeholder="https://example.com" />
+          <Field
+            label="Produkt, Website oder Link"
+            error={errors.productUrl?.message}
+          >
+            <TextInput
+              {...register("productUrl")}
+              placeholder="Produktname, Shop-Link oder Landingpage"
+            />
           </Field>
           <Field label="Ziel" error={errors.goal?.message}>
             <TextInput
               {...register("goal")}
-              placeholder="z. B. mehr testbare Creatives für Conversion-Tests"
+              placeholder="z. B. Launch testen, mehr Leads, Conversion-Creatives"
             />
           </Field>
-          <Field label="Budgetrahmen" error={errors.budgetRange?.message} hint="Hilft beim Paket- und Scope-Fit">
+          <Field
+            label="Budgetrahmen"
+            error={errors.budgetRange?.message}
+            hint="Optional"
+          >
             <TextInput
               {...register("budgetRange")}
-              placeholder="z. B. Pilot, 5k bis 8k monatlich, laufender Zynapse-Core-Prozess"
+              placeholder="z. B. Pilot, 5k bis 8k, noch offen"
             />
           </Field>
         </div>
@@ -337,14 +374,22 @@ export function BrandInquiryWizard() {
     if (stepIndex === 1) {
       return (
         <div className="grid gap-4 lg:grid-cols-2">
-          <Field label="Zielgruppe" error={errors.targetAudience?.message}>
+          <Field
+            label="Zielgruppe"
+            error={errors.targetAudience?.message}
+            hint="Optional"
+          >
             <TextareaInput
               {...register("targetAudience")}
               className="min-h-[6rem]"
-              placeholder="z. B. DTC Käufer:innen, SaaS Marketing Leads, Performance Teams in wachsenden Brands"
+              placeholder="z. B. DTC Käufer:innen, Marketing Leads, Performance Teams"
             />
           </Field>
-          <Field label="Wichtigste Kaufbarriere" error={errors.keyBarrier?.message}>
+          <Field
+            label="Wichtigste Kaufbarriere"
+            error={errors.keyBarrier?.message}
+            hint="Optional"
+          >
             <TextareaInput
               {...register("keyBarrier")}
               className="min-h-[6rem]"
@@ -360,7 +405,7 @@ export function BrandInquiryWizard() {
         <Field
           label="Kanäle"
           error={errors.channels?.message}
-          hint="Mehrfachauswahl möglich"
+          hint="Optional, Mehrfachauswahl möglich"
         >
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {channelOptions.map((option) => (
@@ -382,13 +427,17 @@ export function BrandInquiryWizard() {
       return (
         <div className="grid gap-4">
           <div className="grid gap-4 lg:grid-cols-2">
-            <Field label="Branche" error={errors.industry?.message}>
+            <Field label="Branche" error={errors.industry?.message} hint="Optional">
               <TextInput
                 {...register("industry")}
                 placeholder="z. B. DTC Wellness, Beauty, Food, B2B SaaS"
               />
             </Field>
-            <Field label="Stilrichtung" error={errors.styleDirection?.message}>
+            <Field
+              label="Stilrichtung"
+              error={errors.styleDirection?.message}
+              hint="Optional"
+            >
               <TextInput
                 {...register("styleDirection")}
                 placeholder="z. B. Premium Look, UGC Style, Product Proof, Founder Clip"
@@ -413,7 +462,7 @@ export function BrandInquiryWizard() {
     if (stepIndex === 4) {
       return (
         <div className="grid gap-4 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]">
-          <Field label="Timing" error={errors.timeline?.message}>
+          <Field label="Timing" error={errors.timeline?.message} hint="Optional">
             <SelectInput {...register("timeline")} defaultValue="">
               <option value="" disabled>
                 Bitte auswählen
@@ -473,7 +522,7 @@ export function BrandInquiryWizard() {
             {[
               ["Produkt", getValues("productUrl")],
               ["Ziel", getValues("goal")],
-              ["Kanäle", getValues("channels").join(", ")],
+              ["Kanäle", (getValues("channels") ?? []).join(", ")],
               ["Timing", getValues("timeline")],
             ].map(([label, value]) => (
               <div key={label}>
@@ -487,6 +536,16 @@ export function BrandInquiryWizard() {
             ))}
           </dl>
         </div>
+        <label className="grid gap-2">
+          <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+            <input
+              type="checkbox"
+              {...register("newsletterOptIn")}
+              className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+            />
+            <span>Newsletter Updates zu Zynapse erhalten.</span>
+          </span>
+        </label>
         <label className="grid gap-2">
           <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
             <input
@@ -545,6 +604,26 @@ export function BrandInquiryWizard() {
     });
   }
 
+  function onInvalidSubmit(invalidErrors: FieldErrors<BrandInquiryFormInput>) {
+    const firstField = (
+      Object.keys(fieldStepIndex) as Array<keyof BrandInquiryFormInput>
+    ).find((field) => invalidErrors[field]);
+    const targetStep = firstField ? fieldStepIndex[firstField] ?? stepIndex : stepIndex;
+    const label = firstField
+      ? fieldLabels[firstField] ?? "die markierte Angabe"
+      : "die markierten Angaben";
+
+    setSubmitError("");
+    setStepIndex(targetStep);
+    setStepAlert(
+      `Bitte ergänze ${label}. Für eine schnelle Anfrage reichen Produkt oder Link, Ziel, Kontakt und Datenschutz.`,
+    );
+
+    if (firstField) {
+      setPendingFocusField(firstField);
+    }
+  }
+
   if (isSuccess) {
     return (
       <div className="rounded-[0.75rem] bg-white p-6 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-7">
@@ -554,7 +633,7 @@ export function BrandInquiryWizard() {
         <div className="mt-4 grid gap-5 md:grid-cols-[minmax(0,0.68fr)_auto] md:items-end">
           <div>
             <h2 className="font-display text-3xl font-semibold tracking-[-0.05em] text-[var(--copy-strong)] sm:text-4xl">
-              Danke, dein Kreativbriefing ist eingegangen.
+              Danke, dein Briefing ist eingegangen.
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[color:var(--copy-body)] sm:text-base">
               <BoldZynapseCore>
@@ -572,7 +651,7 @@ export function BrandInquiryWizard() {
               href="/pricing"
               className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
             >
-              <strong>Zynapse Core</strong> ansehen
+              Pakete ansehen
             </ButtonLink>
           </div>
         </div>
@@ -581,12 +660,12 @@ export function BrandInquiryWizard() {
   }
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
+    <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_21rem]">
       <div className="rounded-[0.75rem] bg-white p-4 shadow-[0_18px_44px_rgba(31,36,48,0.08)] sm:p-5">
         <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start">
           <div>
             <p className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-[var(--copy-soft)]">
-              Kreativbriefing
+              Briefing
             </p>
             <h2 className="mt-2 font-display text-2xl leading-[1] font-semibold tracking-[-0.05em] text-[var(--copy-strong)]">
               Schritt {stepIndex + 1} von {steps.length}: {currentStep.title}
@@ -632,7 +711,10 @@ export function BrandInquiryWizard() {
           ))}
         </div>
 
-        <form className="mt-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="mt-4 space-y-4"
+          onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
+        >
           <input type="hidden" {...register("startedAt", { valueAsNumber: true })} />
           <input
             type="text"
@@ -643,7 +725,7 @@ export function BrandInquiryWizard() {
           />
           <div className="grid gap-2">
             <p className="text-sm leading-6 text-[color:var(--copy-soft)]">
-              Pflicht in diesem Schritt: {requiredStepLabels[stepIndex]?.join(", ")}.
+              {stepRequirementCopy[stepIndex]}
             </p>
             {stepAlert ? (
               <p className="rounded-[0.45rem] bg-[rgba(184,58,44,0.06)] px-4 py-3 text-sm text-[#8f241b]">
@@ -679,7 +761,7 @@ export function BrandInquiryWizard() {
             {stepIndex === steps.length - 1 ? (
               <Button
                 type="submit"
-                disabled={isPending || !isPrivacyAccepted}
+                disabled={isPending}
                 className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-100 disabled:border-[rgba(56,67,84,0.16)] disabled:text-[var(--copy-soft)] disabled:shadow-none"
               >
                 {isPending ? "Sende Briefing..." : "Kampagne anfragen"}
@@ -699,12 +781,12 @@ export function BrandInquiryWizard() {
               {briefingQuality}%
             </p>
             <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-white/[0.55]">
-              Qualität
+              Sendebereit
             </p>
           </div>
           <p className="max-w-[11rem] text-right text-sm leading-5 text-white/[0.72]">
             {missingInfo.length
-              ? `Noch offen: ${missingInfo
+              ? `Optional offen: ${missingInfo
                   .slice(0, 2)
                   .map((item) => item.label.toLowerCase())
                   .join(", ")}.`
@@ -721,7 +803,7 @@ export function BrandInquiryWizard() {
               {routeSuggestions.map((route) => (
                 <span
                   key={route}
-                  className="rounded-[0.35rem] bg-white/[0.1] px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-white/[0.82]"
+                  className="inline-flex shrink-0 whitespace-nowrap rounded-[0.35rem] bg-white/[0.1] px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-white/[0.82]"
                 >
                   {route}
                 </span>
@@ -737,7 +819,7 @@ export function BrandInquiryWizard() {
               {formatSuggestions.map((format) => (
                 <span
                   key={format}
-                  className="rounded-[0.35rem] bg-white/[0.08] px-2.5 py-1 text-xs text-white/[0.78]"
+                  className="inline-flex shrink-0 whitespace-nowrap rounded-[0.35rem] bg-white/[0.08] px-2 py-1 text-[0.7rem] text-white/[0.78]"
                 >
                   {format}
                 </span>
@@ -747,7 +829,7 @@ export function BrandInquiryWizard() {
 
           <section>
             <p className="font-mono text-[0.65rem] tracking-[0.16em] uppercase text-white/[0.55]">
-              Risikosignal
+              Hinweis
             </p>
             <p className="mt-2 text-sm leading-5 text-white/[0.75]">
               {riskSignals[0]}
@@ -757,28 +839,13 @@ export function BrandInquiryWizard() {
 
         <div className="mt-4 grid gap-2">
           <Button
-            variant="secondary"
-            className="justify-center rounded-[0.45rem]"
-            onClick={applyCoreSuggestion}
+            variant="ghost"
+            className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
+            onClick={goToMissingInfo}
+            disabled={!missingInfo.length}
           >
-            Vorschlag übernehmen
+            Details ergänzen
           </Button>
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              variant="ghost"
-              className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
-              onClick={goToMissingInfo}
-            >
-              Ergänzen
-            </Button>
-            <Button
-              variant="ghost"
-              className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
-              onClick={jumpToSummary}
-            >
-              Absenden
-            </Button>
-          </div>
         </div>
       </aside>
     </div>

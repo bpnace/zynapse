@@ -8,6 +8,7 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { createCreativeApplicationDefaults } from "@/lib/forms/storage";
 import {
   creativeApplicationSchema,
+  type CreativeApplicationFormInput,
   type CreativeApplicationInput,
 } from "@/lib/validation/creative-application";
 import {
@@ -74,7 +75,7 @@ function normalizeText(value: string | undefined) {
   return value?.trim() ?? "";
 }
 
-function buildFitSignals(values: CreativeApplicationInput) {
+function buildFitSignals(values: CreativeApplicationFormInput) {
   const focus = values.focusChannels.join(" ").toLowerCase();
 
   if (focus.includes("direction") || focus.includes("strategy")) {
@@ -104,7 +105,7 @@ export function CreativeApplicationForm() {
     getValues,
     setFocus,
     formState: { errors },
-  } = useForm<CreativeApplicationInput>({
+  } = useForm<CreativeApplicationFormInput, unknown, CreativeApplicationInput>({
     resolver: zodResolver(creativeApplicationSchema),
     defaultValues: createCreativeApplicationDefaults(),
     mode: "onChange",
@@ -222,11 +223,6 @@ export function CreativeApplicationForm() {
     }
   }
 
-  function jumpToSummary() {
-    setStepAlert("");
-    setStepIndex(steps.length - 1);
-  }
-
   function renderStep() {
     if (stepIndex === 0) {
       return (
@@ -323,6 +319,16 @@ export function CreativeApplicationForm() {
           <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
             <input
               type="checkbox"
+              {...register("newsletterOptIn")}
+              className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
+            />
+            <span>Newsletter Updates zu Zynapse erhalten.</span>
+          </span>
+        </label>
+        <label className="grid gap-2">
+          <span className="inline-flex items-start gap-3 text-sm text-[color:var(--copy-body)]">
+            <input
+              type="checkbox"
               {...register("datenschutzAccepted")}
               className="mt-0.5 h-4 w-4 rounded border-[color:var(--line)] accent-[var(--accent)]"
             />
@@ -401,7 +407,7 @@ export function CreativeApplicationForm() {
               href="/creatives"
               className="rounded-[0.45rem] hover:rounded-[0.45rem] focus-visible:rounded-[0.45rem]"
             >
-              Track ansehen
+              Witere Infos
             </ButtonLink>
           </div>
         </div>
@@ -591,13 +597,6 @@ export function CreativeApplicationForm() {
             onClick={goToMissingInfo}
           >
             Offene Info ergänzen
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-center rounded-[0.45rem] border border-white/[0.18] px-3 text-white hover:bg-white/[0.1]"
-            onClick={jumpToSummary}
-          >
-            Zum Absenden
           </Button>
         </div>
       </aside>

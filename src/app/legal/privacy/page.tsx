@@ -40,7 +40,7 @@ export default function PrivacyPage() {
         Nachfolgend informieren wir dich über Art, Umfang und Zwecke der
         Verarbeitung personenbezogener Daten im Zusammenhang mit dem
         Webauftritt von Zynapse, den Kontaktmöglichkeiten auf der Website sowie
-        den Formularen für Kreativbriefings und Bewerbungen als AI Creative.
+        den Formularen für Briefings und Bewerbungen als AI Creative.
       </p>
 
       <LegalSection title="1. Verantwortlicher">
@@ -122,9 +122,9 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="4. Kreativbriefing">
+      <LegalSection title="4. Briefing">
         <p>
-          Wenn du ein Kreativbriefing übermittelst, verarbeiten wir die von dir
+          Wenn du ein Briefing übermittelst, verarbeiten wir die von dir
           eingegebenen Daten, um die Anfrage einzuordnen, intern zu prüfen und
           einen passenden nächsten Schritt im{" "}
           <strong>Zynapse-Core</strong>-Prozess abzuleiten.
@@ -170,7 +170,7 @@ export default function PrivacyPage() {
 
       <LegalSection title="6. Lokale Zwischenspeicherung im Browser">
         <p>
-          Für das Kreativbriefing und die Bewerbung als AI Creative werden
+          Für das Briefing und die Bewerbung als AI Creative werden
           Formulareingaben im Browser zwischengespeichert, damit begonnene
           Eingaben nach einem Reload oder Seitenwechsel nicht verloren gehen.
         </p>

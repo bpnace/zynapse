@@ -11,6 +11,33 @@ function getWaitlistWebhookEnvironment(): WaitlistWebhookEnvironment {
   return process.env.NODE_ENV === "production" ? "production" : "development";
 }
 
+function shouldRetryInactiveDevelopmentWebhook({
+  status,
+  webhookUrl,
+}: {
+  status: number;
+  webhookUrl: string;
+}) {
+  return (
+    process.env.NODE_ENV !== "production" &&
+    status === 404 &&
+    webhookUrl.includes("/webhook-test/")
+  );
+}
+
+function resolveDevelopmentWebhookRetryUrl(currentWebhookUrl: string) {
+  if (process.env.NODE_ENV === "production") {
+    return "";
+  }
+
+  const retryUrl =
+    process.env.WAITLIST_WEBHOOK_URL_PROD ||
+    process.env.WAITLIST_WEBHOOK_URL ||
+    "";
+
+  return retryUrl && retryUrl !== currentWebhookUrl ? retryUrl : "";
+}
+
 export function buildWaitlistWebhookEnvelope<
   TRaw extends Record<string, unknown>,
 >({
@@ -74,6 +101,44 @@ export async function submitWaitlistSignup(
   });
 
   if (!response.ok) {
+    if (
+      shouldRetryInactiveDevelopmentWebhook({
+        status: response.status,
+        webhookUrl: env.waitlistWebhookUrl,
+      })
+    ) {
+      const retryUrl = resolveDevelopmentWebhookRetryUrl(env.waitlistWebhookUrl);
+
+      if (!retryUrl) {
+        throw new Error(
+          `Development webhook-test endpoint returned ${response.status} and no active webhook retry URL is configured.`,
+        );
+      }
+
+      console.warn(
+        "[zynapse:waitlist:retry]",
+        `Development webhook-test endpoint returned ${response.status}; retrying active webhook.`,
+      );
+
+      const retryResponse = await fetch(retryUrl, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload),
+        cache: "no-store",
+      });
+
+      if (retryResponse.ok) {
+        return {
+          mode: "webhook",
+          accepted: true,
+        };
+      }
+
+      throw new Error(
+        `Webhook retry failed with status ${retryResponse.status}.`,
+      );
+    }
+
     throw new Error(`Webhook delivery failed with status ${response.status}.`);
   }
 

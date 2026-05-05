@@ -13,6 +13,7 @@ export type BrandInquiry = {
   contactName: string;
   workEmail: string;
   company: string;
+  newsletterOptIn: boolean;
   datenschutzAccepted: boolean;
   startedAt: number;
   website: string;
@@ -27,6 +28,7 @@ export type CreativeApplication = {
   availability: string;
   compensationNotes: string;
   location: string;
+  newsletterOptIn: boolean;
   datenschutzAccepted: boolean;
   startedAt: number;
   website: string;

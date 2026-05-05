@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json(
       {
-        error: "Ungültiges Kreativbriefing.",
+        error: "Ungültiges Briefing.",
         details: parsed.error.flatten(),
       },
       { status: 400 },
