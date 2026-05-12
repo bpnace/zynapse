@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { startTransition, useEffect, useMemo, useState } from "react";
-import { useForm, type FieldErrors } from "react-hook-form";
+import { startTransition, useMemo, useState } from "react";
+import { useForm, useWatch, type FieldErrors } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { BoldZynapseCore } from "@/components/ui/bold-zynapse-core";
 import { createBrandInquiryDefaults } from "@/lib/forms/storage";
@@ -169,13 +169,10 @@ export function BrandInquiryWizard() {
   const [stepAlert, setStepAlert] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  const [pendingFocusField, setPendingFocusField] =
-    useState<keyof BrandInquiryFormInput | null>(null);
-
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     trigger,
     setValue,
     getValues,
@@ -187,7 +184,7 @@ export function BrandInquiryWizard() {
     mode: "onChange",
   });
 
-  const values = watch();
+  const values = useWatch({ control }) as BrandInquiryFormInput;
   const selectedChannels = values.channels ?? [];
 
   const briefingQuality = useMemo(() => {
@@ -269,15 +266,6 @@ export function BrandInquiryWizard() {
       ? risks
       : ["Mindestangaben reichen für die Anfrage. Mehr Kontext verbessert nur die Einordnung."];
   }, [values]);
-
-  useEffect(() => {
-    if (!pendingFocusField || fieldStepIndex[pendingFocusField] !== stepIndex) {
-      return;
-    }
-
-    setFocus(pendingFocusField);
-    setPendingFocusField(null);
-  }, [pendingFocusField, setFocus, stepIndex]);
 
   async function goToNextStep() {
     const currentStep = steps[stepIndex];
@@ -620,7 +608,7 @@ export function BrandInquiryWizard() {
     );
 
     if (firstField) {
-      setPendingFocusField(firstField);
+      window.setTimeout(() => setFocus(firstField), 0);
     }
   }
 

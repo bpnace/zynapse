@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { startTransition, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { createCreativeApplicationDefaults } from "@/lib/forms/storage";
 import {
@@ -99,7 +99,7 @@ export function CreativeApplicationForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     trigger,
     setValue,
     getValues,
@@ -111,7 +111,7 @@ export function CreativeApplicationForm() {
     mode: "onChange",
   });
 
-  const values = watch();
+  const values = useWatch({ control }) as CreativeApplicationFormInput;
   const selectedChannels = values.focusChannels ?? [];
   const isPrivacyAccepted = values.datenschutzAccepted;
   const currentStep = steps[stepIndex];
