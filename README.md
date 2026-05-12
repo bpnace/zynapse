@@ -1,10 +1,20 @@
 # Zynapse
 
 <p>
-  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white" />
-  <img alt="React" src="https://img.shields.io/badge/React-19-20232A?style=flat-square&logo=react&logoColor=61DAFB" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-3178C6?style=flat-square&logo=typescript&logoColor=white" />
-  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=0B1220" />
+  <a href="https://github.com/bpnace/zynapse/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/bpnace/zynapse/actions/workflows/ci.yml/badge.svg?branch=main" />
+  </a>
+  <a href="https://github.com/bpnace/zynapse/actions/workflows/deploy.yml">
+    <img alt="Deploy" src="https://github.com/bpnace/zynapse/actions/workflows/deploy.yml/badge.svg?branch=main" />
+  </a>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-2563EB?style=flat-square" />
+  <img alt="Status" src="https://img.shields.io/badge/status-product_prototype-1F2937?style=flat-square" />
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=nextdotjs&logoColor=white" />
+  <img alt="React" src="https://img.shields.io/badge/React-19.2.4-20232A?style=flat-square&logo=react&logoColor=61DAFB" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6.0-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-4.2-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" />
+  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-2.101-3ECF8E?style=flat-square&logo=supabase&logoColor=0B1220" />
+  <img alt="Vitest" src="https://img.shields.io/badge/Vitest-4.1-6E9F18?style=flat-square&logo=vitest&logoColor=white" />
   <img alt="Playwright" src="https://img.shields.io/badge/Playwright-E2E-2EAD33?style=flat-square&logo=playwright&logoColor=white" />
 </p>
 
