@@ -42,6 +42,7 @@
 
 # misc
 .DS_Store
+.codex
 *.pem
 *.key
 *.crt
