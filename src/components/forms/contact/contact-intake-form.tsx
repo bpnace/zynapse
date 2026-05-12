@@ -44,10 +44,15 @@ function resolvePlanFromQuery(tier: string | null): PricingPlan | null {
 
 export function ContactIntakeForm() {
   const searchParams = useSearchParams();
+  const queryPlan = useMemo(
+    () => resolvePlanFromQuery(searchParams.get("tier")),
+    [searchParams],
+  );
   const [isPending, setIsPending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [activePlan, setActivePlan] = useState<PricingPlan | null>(null);
+  const [manualPlan, setManualPlan] = useState<PricingPlan | null>();
+  const activePlan = manualPlan === undefined ? queryPlan : manualPlan;
   const appliedMessageRef = useRef("");
   const formContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -101,26 +106,23 @@ export function ContactIntakeForm() {
   }, [activePlan]);
 
   useEffect(() => {
-    const plan = resolvePlanFromQuery(searchParams.get("tier"));
-
-    if (!plan) {
+    if (!queryPlan) {
       return;
     }
 
-    setActivePlan(plan);
-    setValue("topic", plan.name, { shouldDirty: false });
+    setValue("topic", queryPlan.name, { shouldDirty: false });
 
     if (!getValues("teamContext")) {
-      setValue("teamContext", plan.audience, { shouldDirty: false });
+      setValue("teamContext", queryPlan.audience, { shouldDirty: false });
     }
 
     const currentMessage = getValues("message");
 
     if (!currentMessage || currentMessage === appliedMessageRef.current) {
-      setValue("message", plan.contactMessage, { shouldDirty: false });
-      appliedMessageRef.current = plan.contactMessage;
+      setValue("message", queryPlan.contactMessage, { shouldDirty: false });
+      appliedMessageRef.current = queryPlan.contactMessage;
     }
-  }, [getValues, searchParams, setValue]);
+  }, [getValues, queryPlan, setValue]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -149,7 +151,7 @@ export function ContactIntakeForm() {
     const previousPlan = activePlan;
     const plan = planByName.get(value) ?? null;
 
-    setActivePlan(plan);
+    setManualPlan(plan);
 
     if (!plan) {
       if (

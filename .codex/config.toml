@@ -1,0 +1,11 @@
+# Project-scoped Codex config for zynapse.
+# Loaded only when the zynapse project is trusted.
+
+[mcp_servers.supabase]
+url = "https://mcp.supabase.com/mcp?project_ref=fqvxcyttyardsqugowjl"
+
+[mcp_servers.supabase.tools.apply_migration]
+approval_mode = "approve"
+
+[mcp_servers.supabase.tools.execute_sql]
+approval_mode = "approve"
