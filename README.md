@@ -4,9 +4,6 @@
   <a href="https://github.com/bpnace/zynapse/actions/workflows/ci.yml">
     <img alt="CI" src="https://github.com/bpnace/zynapse/actions/workflows/ci.yml/badge.svg?branch=main" />
   </a>
-  <a href="https://github.com/bpnace/zynapse/actions/workflows/deploy.yml">
-    <img alt="Deploy" src="https://github.com/bpnace/zynapse/actions/workflows/deploy.yml/badge.svg?branch=main" />
-  </a>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-2563EB?style=flat-square" />
   <img alt="Status" src="https://img.shields.io/badge/status-product_prototype-1F2937?style=flat-square" />
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2.1-000000?style=flat-square&logo=nextdotjs&logoColor=white" />
