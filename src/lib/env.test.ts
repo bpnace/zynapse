@@ -15,6 +15,7 @@ describe("getEnv", () => {
 
     const env = getEnv();
 
+    expect(env.supabaseUrl).toBe("");
     expect(env.waitlistWebhookUrl).toBe("");
     expect(env.intakeWebhookUrl).toBe("");
     expect(env.pilotRequestWebhookUrl).toBe("");

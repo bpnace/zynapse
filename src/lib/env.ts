@@ -28,9 +28,7 @@ export function getEnv() {
   return {
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://zynapse.eu",
     analyticsId: process.env.NEXT_PUBLIC_ANALYTICS_ID ?? "",
-    supabaseUrl:
-      process.env.NEXT_PUBLIC_SUPABASE_URL ??
-      "https://fqvxcyttyardsqugowjl.supabase.co",
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
     supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
     googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION ?? "",
     bingSiteVerification: process.env.BING_SITE_VERIFICATION ?? "",

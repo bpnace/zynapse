@@ -280,6 +280,76 @@ describe("webforms and waitlist routing", () => {
     });
   });
 
+  it("fails production creative intake when no intake webhook is configured", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("INTAKE_WEBHOOK_URL", "");
+
+    const response = await postCreative(
+      new Request("https://zynapse.eu/api/intake/creative", {
+        method: "POST",
+        headers: {
+          origin: "https://zynapse.eu",
+          "user-agent": "vitest-creative-missing-webhook",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "Alex Creative",
+          email: "alex@example.com",
+          portfolioUrl: "https://portfolio.example/alex",
+          focusChannels: ["Prompt Engineering"],
+          caseSummary:
+            "Managed recurring paid social testing for multiple consumer brands and owned concept to delivery.",
+          availability: "2 neue Kunden pro Monat",
+          compensationNotes: "Retainer oder Projektbasis",
+          location: "Berlin / CET",
+          datenschutzAccepted: true,
+          startedAt: HUMAN_STARTED_AT,
+          website: "",
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(500);
+    await expect(response.json()).resolves.toEqual({
+      error: "Die Bewerbung konnte aktuell nicht übergeben werden.",
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
+
+  it("fails production waitlist signup when no waitlist webhook is configured", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("WAITLIST_WEBHOOK_URL", "");
+    vi.stubEnv("WAITLIST_WEBHOOK_URL_PROD", "");
+
+    const response = await postWaitlist(
+      new Request("https://zynapse.eu/api/waitlist", {
+        method: "POST",
+        headers: {
+          origin: "https://zynapse.eu",
+          "user-agent": "vitest-waitlist-missing-webhook",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "alex.local@example.com",
+          startedAt: HUMAN_STARTED_AT,
+          website: "",
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(500);
+    await expect(response.json()).resolves.toEqual({
+      error: "Dein Eintrag konnte gerade nicht gespeichert werden. Versuch es bitte noch einmal.",
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
+
   it("rate limits repeated brand submissions with the same ip and email", async () => {
     vi.stubEnv("NODE_ENV", "development");
     vi.stubEnv(

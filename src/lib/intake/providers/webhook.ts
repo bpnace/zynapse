@@ -7,7 +7,15 @@ export async function dispatchIntakeSubmission<TPayload>(
   const env = getEnv();
 
   if (!env.intakeWebhookUrl) {
-    console.info("[zynapse:intake:fallback]", JSON.stringify(envelope));
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Intake webhook URL is not configured.");
+    }
+
+    console.info("[zynapse:intake:fallback]", {
+      kind: envelope.kind,
+      submittedAt: envelope.submittedAt,
+      origin: envelope.origin,
+    });
 
     return {
       mode: "log",

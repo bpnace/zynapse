@@ -73,7 +73,15 @@ export async function submitWaitlistSignup(
   const env = getEnv();
 
   if (!env.waitlistWebhookUrl) {
-    console.info("[zynapse:waitlist:fallback]", JSON.stringify(payload));
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Waitlist webhook URL is not configured.");
+    }
+
+    console.info("[zynapse:waitlist:fallback]", {
+      source: payload.source,
+      env: payload.env,
+      timestamp: payload.timestamp,
+    });
 
     return {
       mode: "log",
