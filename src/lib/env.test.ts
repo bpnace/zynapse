@@ -12,6 +12,7 @@ describe("getEnv", () => {
     vi.stubEnv("WAITLIST_WEBHOOK_URL", "");
     vi.stubEnv("INTAKE_WEBHOOK_URL", "");
     vi.stubEnv("PILOT_REQUEST_WEBHOOK_URL", "");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
 
     const env = getEnv();
 
