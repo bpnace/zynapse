@@ -6,6 +6,11 @@ import { resetIntakeRateLimitStore } from "@/lib/intake/rate-limit";
 
 const FIXED_TIMESTAMP = "2026-04-09T12:34:56.000Z";
 const HUMAN_STARTED_AT = Date.parse(FIXED_TIMESTAMP) - 5_000;
+const TEST_INTAKE_WEBHOOK_URL = "https://workflow.example.invalid/webhook/intake";
+const TEST_WAITLIST_WEBHOOK_DEV_URL =
+  "https://workflow.example.invalid/webhook-test/waitlist";
+const TEST_WAITLIST_WEBHOOK_PROD_URL =
+  "https://workflow.example.invalid/webhook/waitlist";
 
 describe("webforms and waitlist routing", () => {
   const fetchMock = vi.fn();
@@ -30,10 +35,7 @@ describe("webforms and waitlist routing", () => {
 
   it("routes brand inquiries to the webforms intake webhook with the full envelope", async () => {
     vi.stubEnv("NODE_ENV", "development");
-    vi.stubEnv(
-      "INTAKE_WEBHOOK_URL",
-      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
-    );
+    vi.stubEnv("INTAKE_WEBHOOK_URL", TEST_INTAKE_WEBHOOK_URL);
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
 
     const response = await postBrand(
@@ -72,9 +74,7 @@ describe("webforms and waitlist routing", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe(
-      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
-    );
+    expect(url).toBe(TEST_INTAKE_WEBHOOK_URL);
 
     expect(JSON.parse(String(init.body))).toEqual({
       kind: "brand",
@@ -108,10 +108,7 @@ describe("webforms and waitlist routing", () => {
 
   it("routes minimum quick brand inquiries without optional briefing fields", async () => {
     vi.stubEnv("NODE_ENV", "development");
-    vi.stubEnv(
-      "INTAKE_WEBHOOK_URL",
-      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
-    );
+    vi.stubEnv("INTAKE_WEBHOOK_URL", TEST_INTAKE_WEBHOOK_URL);
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
 
     const response = await postBrand(
@@ -166,14 +163,8 @@ describe("webforms and waitlist routing", () => {
 
   it("retries the active waitlist webhook when the development webhook-test endpoint is inactive", async () => {
     vi.stubEnv("NODE_ENV", "development");
-    vi.stubEnv(
-      "WAITLIST_WEBHOOK_URL_DEV",
-      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
-    );
-    vi.stubEnv(
-      "WAITLIST_WEBHOOK_URL_PROD",
-      "https://automation.codariq.de/webhook/179939e2-cef1-4b9f-b513-272b356d7e57",
-    );
+    vi.stubEnv("WAITLIST_WEBHOOK_URL_DEV", TEST_WAITLIST_WEBHOOK_DEV_URL);
+    vi.stubEnv("WAITLIST_WEBHOOK_URL_PROD", TEST_WAITLIST_WEBHOOK_PROD_URL);
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
     fetchMock
       .mockResolvedValueOnce({
@@ -204,20 +195,13 @@ describe("webforms and waitlist routing", () => {
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ ok: true, mode: "webhook" });
     expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(fetchMock.mock.calls[0]?.[0]).toBe(
-      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
-    );
-    expect(fetchMock.mock.calls[1]?.[0]).toBe(
-      "https://automation.codariq.de/webhook/179939e2-cef1-4b9f-b513-272b356d7e57",
-    );
+    expect(fetchMock.mock.calls[0]?.[0]).toBe(TEST_WAITLIST_WEBHOOK_DEV_URL);
+    expect(fetchMock.mock.calls[1]?.[0]).toBe(TEST_WAITLIST_WEBHOOK_PROD_URL);
   });
 
   it("routes creative applications to the webforms intake webhook with the full envelope", async () => {
     vi.stubEnv("NODE_ENV", "production");
-    vi.stubEnv(
-      "INTAKE_WEBHOOK_URL",
-      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
-    );
+    vi.stubEnv("INTAKE_WEBHOOK_URL", TEST_INTAKE_WEBHOOK_URL);
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://zynapse.eu");
 
     const response = await postCreative(
@@ -251,9 +235,7 @@ describe("webforms and waitlist routing", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe(
-      "https://automation.codariq.de/webhook/95d1df54-a4c7-449c-9f02-531a75922e05",
-    );
+    expect(url).toBe(TEST_INTAKE_WEBHOOK_URL);
 
     expect(JSON.parse(String(init.body))).toEqual({
       kind: "creative",
@@ -352,10 +334,7 @@ describe("webforms and waitlist routing", () => {
 
   it("rate limits repeated brand submissions with the same ip and email", async () => {
     vi.stubEnv("NODE_ENV", "development");
-    vi.stubEnv(
-      "WAITLIST_WEBHOOK_URL_DEV",
-      "https://automation.codariq.de/webhook-test/179939e2-cef1-4b9f-b513-272b356d7e57",
-    );
+    vi.stubEnv("WAITLIST_WEBHOOK_URL_DEV", TEST_WAITLIST_WEBHOOK_DEV_URL);
 
     for (let index = 0; index < 5; index += 1) {
       const response = await postBrand(
