@@ -6,11 +6,11 @@ const cspDirectives = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self'",
-  "connect-src 'self' https://cloud.ccm19.de https://www.google-analytics.com https://automation.codariq.de https://*.supabase.co wss://*.supabase.co",
+  "connect-src 'self' https://cloud.ccm19.de https://www.google-analytics.com https://*.supabase.co wss://*.supabase.co",
   "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self' https://automation.codariq.de",
+  "form-action 'self'",
 ];
 
 const securityHeaders = [
